@@ -89,14 +89,14 @@ export const ContextProvider = ({ children }) => {
 
   const toastSuccess = (text) => {
     toast.success(text, {
-      position: 'top-center',  // Use string for position
+      position: 'top-right',  // Use string for position
       autoClose: 3000,
     });
   };
 
   const toastError = (text) => {
     toast.error(text, {
-      position: 'top-center',  // Use string for position
+      position: 'top-right',  // Use string for position
       autoClose: 3000,
     });
   };
