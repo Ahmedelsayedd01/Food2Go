@@ -12,14 +12,14 @@ export default {
       },
       colors: {
         mainColor: "#9E090F",
-        secoundColor: "#fff",
-        thirdColor: "#B3B3B3",
+        secoundColor: "#6B6A6A",
+        thirdColor: "#6B6A6A",
         AddText: "#5E5E5E",
       },
       backgroundColor: {
         mainBgColor: "#E5E5E5",
-        secoundBgColor: "#cccccc",
-        thirdBgColor: "#f6f6f6",
+        secoundBgColor: "#F5F5F5",
+        thirdBgColor: "#9D9D9D",
         AddButton: "#ffffff",
       },
       screens: {
