@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate, Outlet, useNavigate, useLocation } from 'react-router-dom';
+import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../Context/Auth';
 
 const ProtectedLogin = () => {
@@ -10,7 +10,7 @@ const ProtectedLogin = () => {
 
        useEffect(() => {
               // Simulating async check for auth status (if useAuth() does that)
-              if (auth.user) {
+              if (!auth.user) {
                      // Redirect to dashboard if user is authenticated
                      // <Navigate to={'/dashboard'} />
                      navigate('/dashboard', { state: { from: location }, replace: true });

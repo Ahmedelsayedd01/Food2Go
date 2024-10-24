@@ -20,14 +20,18 @@ export const router = createBrowserRouter([
   /* Dashboard or main app routes after login */
   {
     path: "/dashboard",
-    element: <ProtectedLogin> {/* Protect the entire dashboard */}
-      <App /> {/* Main app/dashboard element */}
-    </ProtectedLogin>,
+    element: <ProtectedLogin />,
     children: [
       {
         path: '',
-        element: <DashboardLayout />  // This is fine if you have nested routes
-      }
+        element: <App />,  // This is fine if you have nested routes
+        children: [
+          {
+            path: '',
+            element: <DashboardLayout />  // This is fine if you have nested routes
+          },
+        ]
+      },
     ],
   },
 
