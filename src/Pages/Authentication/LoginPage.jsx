@@ -10,7 +10,7 @@ const LoginPage = () => {
 
   
   return (
-    <>
+    <> 
       <div className="w-full flex items-center justify-center mx-auto h-screen overflow-hidden">
         <div className="w-11/12 flex items-start justify-between h-5/6">
 
