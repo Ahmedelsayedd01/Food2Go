@@ -1,108 +1,77 @@
-// import React, { createContext, useState, useEffect } from 'react';
-// import { toast, ToastContainer } from 'react-toastify'
-// import 'react-toastify/dist/ReactToastify.css'; // Import the toastify styles
-// // Create a context
-// const AuthContext = createContext();
-
-// // Provide the context
-// export const ContextProvider = ({ children }) => {
-//   const [user, setUser] = useState(() => {
-//     const userData = localStorage.getItem('user');
-//     return userData ? JSON.parse(userData) : null;
-//   });
-
-//   useEffect(() => {
-//     if (user) {
-//       localStorage.setItem('user', JSON.stringify(user));
-//     } else {
-//       localStorage.removeItem('user');
-//       localStorage.removeItem("sidebarState")
-//     }
-//   }, [user]);
-
-//   const login = (userData) => {
-//     setUser(userData);
-//   };
-
-//   const logout = () => {
-//     setUser(null);
-//     localStorage.removeItem("sidebarState")
-//     localStorage.removeItem('user');
-//   };
-//   const toastSuccess = (text) => {
-//     toast.success(text);
-
-//   };
-//   const toastError = (text) => {
-//     toast.error(text);
-
-//   };
-
-//   return (
-//     <AuthContext.Provider value={{ user, login, logout, toastSuccess, toastError }}>
-//       <ToastContainer />
-//       {children}
-//     </AuthContext.Provider>
-//   );
-// };
-
-// // Custom hook to use auth context
-// export const useAuth = () => {
-//   return React.useContext(AuthContext);
-// };
-
-
 import React, { createContext, useState, useEffect } from 'react';
 import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'; // Import the toastify styles
+import 'react-toastify/dist/ReactToastify.css';
 
 // Create a context
 const AuthContext = createContext();
 
-// Provide the context
 export const ContextProvider = ({ children }) => {
+
+  const [hideSidebar, setHideSidebar] = useState(() => {
+    const savedState = localStorage.getItem('stateSidebar');
+    return savedState ? JSON.parse(savedState) : true; // Ensure boolean
+  });
+
+
+  const [sidebar, setSidebar] = useState(null);
+  // const [sidebar, setSidebar] = useState(() => {
+  //   const saveLinks = localStorage.getItem('stateLinks');
+  //   return saveLinks ? JSON.parse(saveLinks) : null;
+  // });
+
+
   const [user, setUser] = useState(() => {
     const userData = localStorage.getItem('user');
     return userData ? JSON.parse(userData) : null;
   });
+
 
   useEffect(() => {
     if (user) {
       localStorage.setItem('user', JSON.stringify(user));
     } else {
       localStorage.removeItem('user');
-      localStorage.removeItem('sidebarState');
+      setSidebar(null); // Reset sidebar state when the user logs out
     }
   }, [user]);
 
   const login = (userData) => {
     setUser(userData);
-    toast.success('Login successful!');
+    toast.success(`Welcome ${userData.name}`);
   };
 
   const logout = () => {
     setUser(null);
+    setSidebar(null);
+    setHideSidebar(true);
     localStorage.removeItem('user');
-    localStorage.removeItem('sidebarState');
-    toast.success('Logout successful!');
+    localStorage.removeItem('stateSidebar');
+    localStorage.removeItem('stateLinks');
   };
 
-  const toastSuccess = (text) => {
-    toast.success(text, {
-      position: 'top-right',  // Use string for position
-      autoClose: 3000,
-    });
-  };
+  // const updateSidebar = (list) => {
+  //   setSidebar(list);
+  // };
 
-  const toastError = (text) => {
-    toast.error(text, {
-      position: 'top-right',  // Use string for position
-      autoClose: 3000,
-    });
+  const hideSide = (isHidden) => {
+    setHideSidebar(isHidden);
+    localStorage.setItem('stateSidebar', JSON.stringify(isHidden)); // Sync to localStorage
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, toastSuccess, toastError }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        login,
+        logout,
+        toastSuccess: (text) => toast.success(text),
+        toastError: (text) => toast.error(text),
+        sidebar,
+        // updateSidebar,
+        hideSide,
+        hideSidebar
+      }}
+    >
       <ToastContainer />
       {children}
     </AuthContext.Provider>
