@@ -32,6 +32,59 @@
     url("../public/assets/Fonts/Poppins-SemiBold.ttf") format("truetype");
 }
 
+.active {
+  border-radius: 12px;
+  background-color: white;
+  padding: 8px 4px 8px 8px;
+}
+
+/* WebKit Scrollbar Page Styles */
+.scrollPage::-webkit-scrollbar {
+  width: 6px;
+  padding-left: 10px;
+}
+
+.scrollPage::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+
+.scrollPage::-webkit-scrollbar-thumb {
+  background-color: #e4e2e2;
+  border-radius: 10px;
+}
+
+/* WebKit Scrollbar Styles */
+.scrollSection::-webkit-scrollbar {
+  height: 6px;
+}
+
+.scrollSection::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+
+.scrollSection::-webkit-scrollbar-thumb {
+  background-color: #E5E5E5;
+  border-radius: 10px;
+}
+
+/* WebKit Scrollbar DropDown Styles */
+.scrollDrop::-webkit-scrollbar {
+  width: 5px;
+  height: 6px;
+}
+
+.scrollDrop::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+
+.scrollDrop::-webkit-scrollbar-thumb {
+  background-color: #E5E5E5;
+  border-radius: 10px;
+}
+
 
 
 
@@ -60,3 +113,7 @@
   border-color: #D01025;
   box-shadow: 0 0 10px #D01025;
 }
+
+/* .p-multiselect-items-wrapper {
+  background-color: #9E090F !important;
+} */
