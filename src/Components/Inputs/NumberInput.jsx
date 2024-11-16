@@ -1,10 +1,10 @@
 
 
-const TextInput = ({ value, onChange, placeholder, backgound = 'white', placeholderSize = false, borderColor = "none", paddinLeft = 'pl-2', paddinRight = 'pr-2' }) => {
+const NumberInput = ({ value, onChange, placeholder, backgound = 'white', placeholderSize = false, borderColor = "none", paddinLeft = 'pl-2', paddinRight = 'pr-2' }) => {
        return (
               <>
                      <div className="w-full h-12">
-                            <input type="text"
+                            <input type="number"
                                    value={value}
                                    onChange={onChange}
                                    className={`w-full border-2 rounded-2xl border-${borderColor}
@@ -22,4 +22,4 @@ const TextInput = ({ value, onChange, placeholder, backgound = 'white', placehol
        )
 }
 
-export default TextInput
+export default NumberInput
