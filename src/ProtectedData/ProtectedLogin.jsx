@@ -1,33 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../Context/Auth';
+import { useSelector } from 'react-redux';
 
 const ProtectedLogin = () => {
        const auth = useAuth();
        const navigate = useNavigate();
-       const location = useLocation(); // to get the previous location
-       const [loading, setLoading] = useState(false); // State to handle async auth
-
+       const location = useLocation();
+       const user = useSelector(state => state.user)
        useEffect(() => {
-              // Simulating async check for auth status (if useAuth() does that)
-              if (!auth.user) {
-                     // Redirect to dashboard if user is authenticated
-                     // <Navigate to={'/dashboard'} />
-                     navigate('/dashboard', { state: { from: location }, replace: true });
-              } else {
-                     // <Navigate to={'/login'} />
-                     auth.toastError('sadasd')
+              const isAuthRoute = location.pathname === '/login' || location.pathname === '/forget_password';
+
+              if (user && isAuthRoute) {
+                     // If user is logged in and trying to access `/login` or `/forget_password`, redirect to dashboard
+                     navigate('/dashboard', { replace: true });
+              } else if (!user && !isAuthRoute) {
+                     // If user is not logged in and trying to access a protected route, redirect to login
                      navigate('/login', { state: { from: location }, replace: true });
-                     setLoading(false); // Set loading to false if no user found
               }
-       }, [auth.user]);
+              // Otherwise, allow the requested route to render
+       }, [user, location.pathname]);
 
-       // If loading, we can display a loading screen (or return null to avoid any flashing UI)
-       if (loading) {
-              return <div>Loading...</div>;
-       }
-
-       // If no user is found, render the child routes (Outlet)
        return <Outlet />;
 };
 
