@@ -6,9 +6,11 @@ import {
   DashboardLayout,
   EditAddonsLayout,
   EditCategoryLayout,
+  EditPaymentMethodLayout,
   EditProductLayout,
   ForgetPassLayout,
   LoginLayout,
+  PaymentMethodLayout,
   ProductLayout
 } from "./layouts/Layouts";
 import ProtectedLogin from "./ProtectedData/ProtectedLogin";
@@ -16,6 +18,9 @@ import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
 import App from "./App";
 
 const ProductSetupLayout = () => {
+  return <Outlet />;
+}
+const SettingLayout = () => {
   return <Outlet />;
 }
 export const router = createBrowserRouter([
@@ -98,6 +103,25 @@ export const router = createBrowserRouter([
                 path: 'product/edit/:productId',
                 element: <EditProductLayout />,
               }
+            ]
+          },
+          {
+            path: 'setting',
+            element: <SettingLayout />,
+            children: [
+              {
+                path: 'payment_method',
+                children: [
+                  {
+                    path: '',
+                    element: <PaymentMethodLayout />
+                  },
+                  {
+                    path: 'edit/:paymentMethodId',
+                    element: <EditPaymentMethodLayout />
+                  }
+                ]
+              },
             ]
           }
 

@@ -19,3 +19,7 @@ export { default as EditCategoryPage } from "./Dashboard/Admin/CategorySetup/Edi
 export { default as ProductPage } from "./Dashboard/Admin/ProductSetup/ProductPage";
 export { default as AddProductPage } from "./Dashboard/Admin/ProductSetup/AddProductPage";
 export { default as EditProductPage } from "./Dashboard/Admin/ProductSetup/EditProductPage";
+// Setting
+export { default as PaymentMethodPage } from "./Dashboard/Admin/Setting/PaymentMethod/PaymentMethodPage";
+export { default as AddPaymentMethodSection } from "./Dashboard/Admin/Setting/PaymentMethod/AddPaymentMethodSection";
+export { default as EditPaymentMethodPage } from "./Dashboard/Admin/Setting/PaymentMethod/EditPaymentMethodPage";
