@@ -207,9 +207,9 @@ const CategoryPage = () => {
 
                                           )}
                                    </tbody>
-                            </table >
+                            </table>
                      )}
-              </div >
+              </div>
        );
 };
 
