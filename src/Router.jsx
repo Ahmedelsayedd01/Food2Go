@@ -2,13 +2,16 @@ import { createBrowserRouter, Outlet } from "react-router-dom";
 import {
   AddonsLayout,
   AddProductLayout,
+  AllOrdersLayout,
   CategoryLayout,
   DashboardLayout,
+  DetailsOrderLayout,
   EditAddonsLayout,
   EditCategoryLayout,
   EditPaymentMethodLayout,
   EditProductLayout,
   ForgetPassLayout,
+  InvoiceOrderLayout,
   LoginLayout,
   PaymentMethodLayout,
   ProductLayout
@@ -21,6 +24,9 @@ const ProductSetupLayout = () => {
   return <Outlet />;
 }
 const SettingLayout = () => {
+  return <Outlet />;
+}
+const OrderLayout = () => {
   return <Outlet />;
 }
 export const router = createBrowserRouter([
@@ -121,6 +127,27 @@ export const router = createBrowserRouter([
                     element: <EditPaymentMethodLayout />
                   }
                 ]
+              },
+            ]
+          },
+          {
+            path: 'orders',
+            element: <OrderLayout />,
+            children: [
+              {
+                path: 'all',
+                element: <AllOrdersLayout />
+              },
+              
+              /* Details Order */
+              {
+                path: 'details/:orderId',
+                element: <DetailsOrderLayout />
+              },
+              /* Invoice Order */
+              {
+                path: 'invoice/:orderId',
+                element: <InvoiceOrderLayout />
               },
             ]
           }
