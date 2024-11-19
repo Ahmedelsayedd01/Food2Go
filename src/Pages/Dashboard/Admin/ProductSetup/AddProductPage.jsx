@@ -150,6 +150,8 @@ const AddProductPage = () => {
 
   /* Handle Function */
 
+  useEffect(() => { console.log('productNames', productNames) }, [productNames])
+
   // Exclude Product
   const handleAddExclude = () => {
     const newExclude = {
@@ -576,6 +578,7 @@ const AddProductPage = () => {
     console.log('productExtra', productExtra)
 
   };
+  useEffect(() => { console.log('selectedAddonsId', selectedAddonsId) }, [selectedAddonsId])
 
   /* Add Product */
   const handleproductAdd = (e) => {
@@ -595,7 +598,7 @@ const AddProductPage = () => {
 
     // Filter out any invalid or empty entries in product Names
     const validProductNames = productNames.filter(
-      (product) => product && product.tranlation_id && product.productription_name && product.tranlation_name
+      (product) => product && product.tranlation_id && product.product_name && product.tranlation_name
     );
 
     if (validProductNames.length === 0) {
@@ -709,6 +712,15 @@ const AddProductPage = () => {
     formData.append('recommended', productRecommended)
     formData.append('status', productStatus)
     formData.append('image', productImage)
+
+    const addonIds = selectedAddonsId.map((addon) => addon.id); // Extracts only the IDs
+
+    addonIds.forEach((id,indexID) => {
+        formData.append(`addons[${indexID}]`, id); // Appending each ID separately with 'addons[]'
+    });
+    
+
+
 
     {
       productNames.forEach((name, index) => {
