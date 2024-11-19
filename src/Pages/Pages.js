@@ -23,3 +23,7 @@ export { default as EditProductPage } from "./Dashboard/Admin/ProductSetup/EditP
 export { default as PaymentMethodPage } from "./Dashboard/Admin/Setting/PaymentMethod/PaymentMethodPage";
 export { default as AddPaymentMethodSection } from "./Dashboard/Admin/Setting/PaymentMethod/AddPaymentMethodSection";
 export { default as EditPaymentMethodPage } from "./Dashboard/Admin/Setting/PaymentMethod/EditPaymentMethodPage";
+// Orders
+export { default as AllOrdersPage } from "./Dashboard/Admin/Orders/AllOrders/AllOrdersPage";
+export { default as DetailsOrdersPage } from "./Dashboard/Admin/Orders/DetailsOrder/DetailsOrderPage";
+export { default as InvoiceOrdersPage } from "./Dashboard/Admin/Orders/InvoiceOrder/InvoiceOrderPage";
