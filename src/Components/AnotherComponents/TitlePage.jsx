@@ -3,7 +3,7 @@ const TitlePage = ({ text }) => {
        return (
               <>
                      <div className="w-full py-2">
-                            <span className="text-2xl font-TextFontMedium text-mainColor">{text}</span>
+                            <span className="text-3xl font-TextFontMedium text-mainColor">{text}</span>
                      </div>
               </>
        )

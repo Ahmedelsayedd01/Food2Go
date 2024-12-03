@@ -10,7 +10,7 @@ const DateInput = ({ required = true, minDate = true, borderColor = "none", valu
                             type="date"
                             placeholder={placeholder} // Add this prop to the component
                             className={classNames(
-                                   'w-full border-2 rounded-2xl outline-none px-2 py-3 text-2xl text-thirdColor',
+                                   'w-full border-2 py-2 px-3 h-14 shadow rounded-xl outline-none text-2xl text-thirdColor ',
                                    {
                                           'border-none': borderColor === 'none',
                                           'border-mainColor': borderColor === 'mainColor',
@@ -19,6 +19,7 @@ const DateInput = ({ required = true, minDate = true, borderColor = "none", valu
                             value={value}
                             onChange={onChange}
                             min={minDate ? formattedDate : ''} // Use the correctly formatted date
+                            max={formattedDate}
                             required={required}
                      />
               </>

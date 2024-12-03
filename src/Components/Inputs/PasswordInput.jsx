@@ -8,6 +8,7 @@ const PasswordInput = ({
        value,
        required = true,
        onChange,
+       backgound = 'secoundBgColor',
        iconDirection = false,
        textDirection = false,
        paddingLeft = 'pl-2',
@@ -22,7 +23,7 @@ const PasswordInput = ({
                                    type={show ? "text" : "password"}
                                    placeholder={placeholder}
                                    className={classNames(
-                                          'w-full h-full border-2 rounded-2xl outline-none px-2 py-3 text-2xl bg-secoundBgColor font-TextFontRegular text-thirdColor',
+                                          `w-full h-full border-2 rounded-2xl outline-none px-2 py-3 text-2xl shadow bg-${backgound} font-TextFontRegular text-thirdColor`,
                                           textDirection ? 'text-right' : 'text-left', // Text alignment logic
                                           paddingLeft, // Dynamic padding left
                                           paddingRight, // Dynamic padding right

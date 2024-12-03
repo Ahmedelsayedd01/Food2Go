@@ -24,7 +24,7 @@ const DropDown = forwardRef(({
                             type="button"
                             aria-expanded={openMenu}
                             aria-haspopup="listbox"
-                            className={`flex ${iconDirection ? 'flex-row-reverse' : 'flex-row'} items-center justify-between w-full py-2 px-3 h-14 shadow rounded-xl outline-none font-TextFontRegular text-thirdColor bg-white`}
+                            className={`flex ${iconDirection ? 'flex-row-reverse' : 'flex-row'} items-center justify-between w-full py-2 px-3 h-14 shadow border-2 border-gray-400 rounded-xl outline-none font-TextFontRegular text-thirdColor bg-white`}
                             onClick={handleOpen}
                      >
                             <div className="text-mainColor text-2xl">{iconMenu}</div>
@@ -35,7 +35,7 @@ const DropDown = forwardRef(({
                      <div className={`${openMenu ? "block" : "hidden"} scrollSection absolute w-full min-h-10 max-h-32 sm:top-16 bg-white rounded-xl shadow-lg overflow-y-scroll scrollDrop z-20`}> {/* Higher z-index */}
                             {options.map((option, index) => (
                                    <div
-                                          key={option?.id || index}
+                                          key={`${option.id}-${index}`}
                                           className="flex items-center py-1 px-2 gap-2 justify-center text-xl font-medium text-mainColor hover:cursor-pointer hover:bg-mainColor hover:text-white transition-colors duration-300"
                                           onClick={() => handleOptionClick(option)}
                                    >

@@ -5,6 +5,8 @@ import { IoIosArrowForward } from 'react-icons/io';
 import { CategoryIcon, HomeIcon, OrderIcon, ProductIcon } from '../../Assets/Icons/AllIcons';
 import { RiVipDiamondLine } from 'react-icons/ri';
 import { CiSettings } from 'react-icons/ci';
+import { useSelector } from 'react-redux';
+import { MdOutlineDeliveryDining, MdOutlinePayments } from 'react-icons/md';
 
 const LinksSidebar = () => {
        const auth = useAuth();
@@ -13,6 +15,30 @@ const LinksSidebar = () => {
        const pathName = location.pathname;
        const hideSide = auth.hideSidebar;
 
+       /* orders length */
+       const ordersAllCount = useSelector(state => state.ordersAll.data);
+       const ordersPendingCount = useSelector(state => state.ordersPending.data);
+       const ordersConfirmedCount = useSelector(state => state.ordersConfirmed.data);
+       const ordersProcessingCount = useSelector(state => state.ordersProcessing.data);
+       const ordersOutForDeliveryCount = useSelector(state => state.ordersOutForDelivery.data);
+       const ordersDeliveredCount = useSelector(state => state.ordersDelivered.data);
+       const ordersReturnedCount = useSelector(state => state.ordersReturned.data);
+       const ordersFailedCount = useSelector(state => state.ordersFailed.data);
+       const ordersCanceledCount = useSelector(state => state.ordersCanceled.data);
+       const ordersScheduleCount = useSelector(state => state.ordersSchedule.data);
+
+       const lengths = {
+              ordersAll: ordersAllCount.length,
+              ordersPending: ordersPendingCount.length,
+              ordersConfirmed: ordersConfirmedCount.length,
+              ordersProcessing: ordersProcessingCount.length,
+              ordersOutForDelivery: ordersOutForDeliveryCount.length,
+              ordersDelivered: ordersDeliveredCount.length,
+              ordersReturned: ordersReturnedCount.length,
+              ordersFailed: ordersFailedCount.length,
+              ordersCanceled: ordersCanceledCount.length,
+              ordersSchedule: ordersScheduleCount.length,
+       }
        const stateLink = auth.sidebar ? JSON.parse(auth.sidebar) : {};
        console.log('stateLink', stateLink)
 
@@ -39,6 +65,14 @@ const LinksSidebar = () => {
        const [isActiveSettingIcon, setIsActiveSettingIcon] = useState(stateLink.isActiveSettingIcon ?? false);
        const [isActiveSetting, setIsActiveSetting] = useState(stateLink.isActiveSetting ?? false);
        const [isActivePaymentMethod, setIsActivePaymentMethod] = useState(stateLink.isActivePaymentMethod ?? false);
+
+       /* Orders Payment */
+       const [isActiveOrdersPayment, setIsActiveOrdersPayment] = useState(stateLink.isActiveOrdersPayment ?? false);
+       const [isActiveOrdersPaymentIcon, setIsActiveOrdersPaymentIcon] = useState(stateLink.isActiveOrdersPaymentIcon ?? false);
+
+       /* Delivery Man */
+       const [isActiveDeliveryMan, setIsActiveDeliveryMan] = useState(stateLink.isActiveDeliveryMan ?? false);
+       const [isActiveDeliveryManIcon, setIsActiveDeliveryManIcon] = useState(stateLink.isActiveDeliveryManIcon ?? false);
 
        /* Order */
        const [isOpenOrders, setIsOpenOrders] = useState(stateLink.isOpenOrders ?? false);
@@ -70,6 +104,13 @@ const LinksSidebar = () => {
                      isActiveProductSetupIcon,
                      isActiveProduct,
                      isActiveAddProduct,
+
+                     isActiveOrdersPayment,
+                     isActiveOrdersPaymentIcon,
+
+                     isActiveDeliveryMan,
+                     isActiveDeliveryManIcon,
+
                      isOpenOrders,
                      isActiveOrdersIcon,
                      isActiveOrders,
@@ -98,6 +139,13 @@ const LinksSidebar = () => {
               isActiveProductSetupIcon,
               isActiveProduct,
               isActiveAddProduct,
+
+              isActiveOrdersPayment,
+              isActiveOrdersPaymentIcon,
+
+              isActiveDeliveryMan,
+              isActiveDeliveryManIcon,
+
               isOpenOrders,
               isActiveOrdersIcon,
               isActiveOrders,
@@ -129,7 +177,27 @@ const LinksSidebar = () => {
               isActiveProductSetupIcon,
               isActiveProduct,
               isActiveAddProduct,
-              // saveActiveLinksState
+
+              isActiveOrdersPayment,
+              isActiveOrdersPaymentIcon,
+
+              isActiveDeliveryMan,
+              isActiveDeliveryManIcon,
+
+              isOpenOrders,
+              isActiveOrdersIcon,
+              isActiveOrders,
+              isActiveOrdersAll,
+
+              isActiveOrdersPending,
+              isActiveOrdersConfirmed,
+              isActiveOrdersProcessing,
+              isActiveOrdersOutForDelivery,
+              isActiveOrdersDelivered,
+              isActiveOrdersReturned,
+              isActiveOrdersFailed,
+              isActiveOrdersCanceled,
+              isActiveOrdersSchedule,
        ]);
 
        // Handler functions to manage all state
@@ -150,6 +218,12 @@ const LinksSidebar = () => {
               setIsActiveSetting(false);
               setIsActiveSettingIcon(false);
               setIsActivePaymentMethod(false);
+
+              setIsActiveOrdersPayment(false)
+              setIsActiveOrdersPaymentIcon(false)
+
+              setIsActiveDeliveryMan(false)
+              setIsActiveDeliveryManIcon(false)
 
               setIsOpenOrders(false);
               setIsActiveOrders(false);
@@ -299,6 +373,37 @@ const LinksSidebar = () => {
                      handleClickPaymentMethod()
               }
        }, [location])
+
+
+
+       /* Orders Payment */
+       const handleClickOrdersPayment = useCallback(() => {
+              handleStateLinks();
+              setIsActiveOrdersPayment(true);
+       }, []);
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard/orders_payment") {
+                     handleClickOrdersPayment()
+              }
+       }, [location])
+
+       /* Delivery Man */
+       const handleClickDeliveryMan = useCallback(() => {
+              handleStateLinks();
+              setIsActiveDeliveryMan(true);
+              setIsActiveDeliveryManIcon(true);
+       }, []);
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard/delivery_man") {
+                     handleClickDeliveryMan()
+              }
+       }, [location])
+
+
        /* Order */
        const handleClickOrders = useCallback(() => {
               handleStateLinks()
@@ -310,14 +415,15 @@ const LinksSidebar = () => {
        }, []);
        useEffect(() => {
               const part = pathName.split('/');
-              const result = part.slice(0, 3).join('/');
+              const result = part.slice(0, 4).join('/');
 
               // Only navigate if on `/dashboard/setup_product` but not on paths starting with `/dashboard/setup_product/product`
-              if (result === "/dashboard/orders" && !pathName.startsWith("/dashboard/orders/all")) {
+              if (result === "/dashboard/orders" || result === "/dashboard/orders/") {
                      handleClickOrders();
                      navigate('/dashboard/orders/all');
               }
-              console.log('result', result);
+              console.log('result order', result);
+              console.log('part order', part);
        }, [pathName]);
 
 
@@ -337,158 +443,172 @@ const LinksSidebar = () => {
               }
        }, [location])
 
-       const handleClickOrdersAll = useCallback(() => {
+       const handleClickOrdersPending = useCallback(() => {
               handleStateLinks()
 
               setIsOpenOrders(true);
               setIsActiveOrders(true);
               setIsActiveOrdersIcon(true);
-              setIsActiveOrdersAll(true);
+              setIsActiveOrdersPending(true);
        }, []);
        useEffect(() => {
               const part = pathName.split('/');
               const result = part.slice(0, 4).join('/');
-              if (result == "/dashboard/orders/all") {
-                     handleClickOrdersAll()
+              if (result == "/dashboard/orders/pending") {
+                     handleClickOrdersPending()
               }
        }, [location])
 
-       const handleClickOrdersAll = useCallback(() => {
+       const handleClickOrdersConfirmed = useCallback(() => {
               handleStateLinks()
 
               setIsOpenOrders(true);
               setIsActiveOrders(true);
               setIsActiveOrdersIcon(true);
-              setIsActiveOrdersAll(true);
+              setIsActiveOrdersConfirmed(true);
        }, []);
        useEffect(() => {
               const part = pathName.split('/');
               const result = part.slice(0, 4).join('/');
-              if (result == "/dashboard/orders/all") {
-                     handleClickOrdersAll()
+              if (result == "/dashboard/orders/confirmed") {
+                     handleClickOrdersConfirmed()
               }
        }, [location])
 
-       const handleClickOrdersAll = useCallback(() => {
+       const handleClickOrdersProcessing = useCallback(() => {
               handleStateLinks()
 
               setIsOpenOrders(true);
               setIsActiveOrders(true);
               setIsActiveOrdersIcon(true);
-              setIsActiveOrdersAll(true);
+              setIsActiveOrdersProcessing(true);
        }, []);
        useEffect(() => {
               const part = pathName.split('/');
               const result = part.slice(0, 4).join('/');
-              if (result == "/dashboard/orders/all") {
-                     handleClickOrdersAll()
+              if (result == "/dashboard/orders/processing") {
+                     handleClickOrdersProcessing()
               }
        }, [location])
 
-       const handleClickOrdersAll = useCallback(() => {
+       const handleClickOrdersOutForDelivery = useCallback(() => {
               handleStateLinks()
 
               setIsOpenOrders(true);
               setIsActiveOrders(true);
               setIsActiveOrdersIcon(true);
-              setIsActiveOrdersAll(true);
+              setIsActiveOrdersOutForDelivery(true);
        }, []);
        useEffect(() => {
               const part = pathName.split('/');
               const result = part.slice(0, 4).join('/');
-              if (result == "/dashboard/orders/all") {
-                     handleClickOrdersAll()
+              if (result == "/dashboard/orders/out_for_delivery") {
+                     handleClickOrdersOutForDelivery()
               }
        }, [location])
 
-       const handleClickOrdersAll = useCallback(() => {
+       const handleClickOrdersDelivered = useCallback(() => {
               handleStateLinks()
 
               setIsOpenOrders(true);
               setIsActiveOrders(true);
               setIsActiveOrdersIcon(true);
-              setIsActiveOrdersAll(true);
+              setIsActiveOrdersDelivered(true);
        }, []);
        useEffect(() => {
               const part = pathName.split('/');
               const result = part.slice(0, 4).join('/');
-              if (result == "/dashboard/orders/all") {
-                     handleClickOrdersAll()
+              if (result == "/dashboard/orders/delivered") {
+                     handleClickOrdersDelivered()
               }
        }, [location])
 
-       const handleClickOrdersAll = useCallback(() => {
+       const handleClickOrdersReturned = useCallback(() => {
               handleStateLinks()
 
               setIsOpenOrders(true);
               setIsActiveOrders(true);
               setIsActiveOrdersIcon(true);
-              setIsActiveOrdersAll(true);
+              setIsActiveOrdersReturned(true);
        }, []);
        useEffect(() => {
               const part = pathName.split('/');
               const result = part.slice(0, 4).join('/');
-              if (result == "/dashboard/orders/all") {
-                     handleClickOrdersAll()
+              if (result == "/dashboard/orders/returned") {
+                     handleClickOrdersReturned()
               }
        }, [location])
-       
-       const handleClickOrdersAll = useCallback(() => {
+
+       const handleClickOrdersFailed = useCallback(() => {
               handleStateLinks()
 
               setIsOpenOrders(true);
               setIsActiveOrders(true);
               setIsActiveOrdersIcon(true);
-              setIsActiveOrdersAll(true);
+              setIsActiveOrdersFailed(true);
        }, []);
        useEffect(() => {
               const part = pathName.split('/');
               const result = part.slice(0, 4).join('/');
-              if (result == "/dashboard/orders/all") {
-                     handleClickOrdersAll()
+              if (result == "/dashboard/orders/failed") {
+                     handleClickOrdersFailed()
               }
        }, [location])
 
-       const handleClickOrdersAll = useCallback(() => {
+       const handleClickOrdersCanceled = useCallback(() => {
               handleStateLinks()
 
               setIsOpenOrders(true);
               setIsActiveOrders(true);
               setIsActiveOrdersIcon(true);
-              setIsActiveOrdersAll(true);
+              setIsActiveOrdersCanceled(true);
        }, []);
        useEffect(() => {
               const part = pathName.split('/');
               const result = part.slice(0, 4).join('/');
-              if (result == "/dashboard/orders/all") {
-                     handleClickOrdersAll()
+              if (result == "/dashboard/orders/canceled") {
+                     handleClickOrdersCanceled()
               }
        }, [location])
 
-       const handleClickOrdersAll = useCallback(() => {
+       const handleClickOrdersSchedule = useCallback(() => {
               handleStateLinks()
 
               setIsOpenOrders(true);
               setIsActiveOrders(true);
               setIsActiveOrdersIcon(true);
-              setIsActiveOrdersAll(true);
+              setIsActiveOrdersSchedule(true);
        }, []);
        useEffect(() => {
               const part = pathName.split('/');
               const result = part.slice(0, 4).join('/');
-              if (result == "/dashboard/orders/all") {
-                     handleClickOrdersAll()
+              if (result == "/dashboard/orders/schedule") {
+                     handleClickOrdersSchedule()
               }
        }, [location])
 
-       
+
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 5).join('/');
+              if (result.startsWith("/dashboard/orders/details/") || result.startsWith("/dashboard/orders/invoice/")) {
+                     handleStateLinks();
+
+                     setIsOpenOrders(true);
+                     setIsActiveOrders(true);
+                     setIsActiveOrdersIcon(true);
+              }
+
+       }, [location])
+
+
 
 
 
 
 
        return (
-              <div className="LinksSidebar w-full h-full flex flex-col items-center justify-start gap-y-3">
+              <div className="LinksSidebar w-full flex flex-col items-center justify-start gap-y-3">
                      {/* Dashboard */}
                      <Link to="/dashboard"
                             onMouseMove={() => setIsActiveHomeIcon(true)}
@@ -592,7 +712,6 @@ const LinksSidebar = () => {
                                    <IoIosArrowForward className={`${isActiveProductSetup ? 'text-mainColor rotate-90' : 'text-white rotate-0'} text-xl transition-all duration-300 group-hover:text-mainColor`} />
                             </div>
                      </Link>
-                     {/* {isOpenProductSetup &&()} */}
                      <div className={`${isOpenProductSetup && hideSide ? "h-20" : "h-0 "} overflow-hidden flex items-start justify-end  w-full transition-all duration-700`}>
                             <ul className='list-disc w-full pl-10 transition-all duration-700 flex flex-col gap-y-2'>
                                    <Link to={"setup_product/product"} onClick={handleClickProduct}>
@@ -655,6 +774,58 @@ const LinksSidebar = () => {
                             </ul>
 
                      </div>
+                     {/* Orders Payment */}
+                     <Link to="orders_payment"
+                            onMouseMove={() => setIsActiveOrdersPaymentIcon(true)}
+                            onMouseOut={() => setIsActiveOrdersPaymentIcon(false)}
+                            onClick={handleClickOrdersPayment}
+                            className={`
+                                   ${isActiveOrdersPayment ? 'active' : ''}
+                                   ${hideSide ? 'justify-between' : 'justify-center'} 
+                                   hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
+                                   hover:text-mainColor w-full flex items-center 
+                                   transition-all duration-300 group`}
+                     >
+                            <div className="flex items-center gap-x-2">
+                                   <MdOutlinePayments
+                                          className={`${isActiveOrdersPaymentIcon || isActiveOrdersPayment ? 'text-[#9E090F]' : 'text-[#fff]'} text-2xl`}
+                                   />
+                                   <span
+                                          className={`${hideSide ? 'block' : 'hidden'}
+                                           ${isActiveOrdersPayment ? "text-mainColor" : "text-white"}
+                                          text-lg font-TextFontRegular transition-all duration-300
+                                          group-hover:text-mainColor`}
+                                   >
+                                          Orders Payment
+                                   </span>
+                            </div>
+                     </Link>
+                     {/* Delivery Man */}
+                     <Link to="delivery_man"
+                            onMouseMove={() => setIsActiveDeliveryManIcon(true)}
+                            onMouseOut={() => setIsActiveDeliveryManIcon(false)}
+                            onClick={handleClickDeliveryMan}
+                            className={`
+                                   ${isActiveDeliveryMan ? 'active' : ''}
+                                   ${hideSide ? 'justify-between' : 'justify-center'} 
+                                   hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
+                                   hover:text-mainColor w-full flex items-center 
+                                   transition-all duration-300 group`}
+                     >
+                            <div className="flex items-center gap-x-2">
+                                   <MdOutlineDeliveryDining
+                                          className={`${isActiveDeliveryManIcon || isActiveDeliveryMan ? 'text-[#9E090F]' : 'text-[#fff]'} text-3xl`}
+                                   />
+                                   <span
+                                          className={`${hideSide ? 'block' : 'hidden'}
+                                           ${isActiveDeliveryMan ? "text-mainColor" : "text-white"}
+                                          text-lg font-TextFontRegular transition-all duration-300
+                                          group-hover:text-mainColor`}
+                                   >
+                                          Delivery Man
+                                   </span>
+                            </div>
+                     </Link>
                      {/* Order */}
                      <Link to="orders"
                             onMouseMove={() => setIsActiveOrdersIcon(true)}
@@ -683,16 +854,16 @@ const LinksSidebar = () => {
                                    <IoIosArrowForward className={`${isActiveOrders ? 'text-mainColor rotate-90' : 'text-white rotate-0'} text-xl transition-all duration-300 group-hover:text-mainColor`} />
                             </div>
                      </Link>
-                     <div className={`${isOpenOrders && hideSide ? "h-20" : "h-0 "} overflow-hidden flex items-start justify-end  w-full transition-all duration-700`}>
-                            <ul className='list-disc w-full pl-10 transition-all duration-700 flex flex-col gap-y-2'>
+                     <div className={`${isOpenOrders && hideSide ? "h-[29rem]" : "h-0 "}  overflow-hidden flex items-start justify-end  w-full transition-all duration-700`}>
+                            <ul className='list-disc w-full pl-2 transition-all duration-700 flex flex-col gap-y-2'>
                                    <Link to={"orders/all"} onClick={handleClickOrdersAll}>
                                           <li
                                                  className={`${isActiveOrdersAll ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
                                                  text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
                                                  hover:bg-white transition-all duration-300 hover:text-mainColor`
                                                  }>
-                                                 <span >All</span>
-                                                 <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>556</span>
+                                                 <span>All</span>
+                                                 <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersAll || 0}</span>
                                           </li>
                                    </Link>
                                    <Link to={"orders/pending"} onClick={handleClickOrdersPending}>
@@ -701,8 +872,8 @@ const LinksSidebar = () => {
                                                  text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
                                                  hover:bg-white transition-all duration-300 hover:text-mainColor`
                                                  }>
-                                                 <span >Pending</span>
-                                                 <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>556</span>
+                                                 <span>Pending</span>
+                                                 <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersPending || 0}</span>
                                           </li>
                                    </Link>
                                    <Link to={"orders/confirmed"} onClick={handleClickOrdersConfirmed}>
@@ -711,8 +882,8 @@ const LinksSidebar = () => {
                                                  text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
                                                  hover:bg-white transition-all duration-300 hover:text-mainColor`
                                                  }>
-                                                 <span >Confirmed</span>
-                                                 <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>556</span>
+                                                 <span>Confirmed</span>
+                                                 <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersConfirmed || 0}</span>
                                           </li>
                                    </Link>
                                    <Link to={"orders/processing"} onClick={handleClickOrdersProcessing}>
@@ -721,8 +892,8 @@ const LinksSidebar = () => {
                                                  text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
                                                  hover:bg-white transition-all duration-300 hover:text-mainColor`
                                                  }>
-                                                 <span >Processing</span>
-                                                 <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>556</span>
+                                                 <span>Processing</span>
+                                                 <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersProcessing || 0}</span>
                                           </li>
                                    </Link>
                                    <Link to={"orders/out_for_delivery"} onClick={handleClickOrdersOutForDelivery}>
@@ -731,8 +902,8 @@ const LinksSidebar = () => {
                                                  text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
                                                  hover:bg-white transition-all duration-300 hover:text-mainColor`
                                                  }>
-                                                 <span >OutForDelivery</span>
-                                                 <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>556</span>
+                                                 <span>OutForDelivery</span>
+                                                 <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersOutForDelivery || 0}</span>
                                           </li>
                                    </Link>
                                    <Link to={"orders/delivered"} onClick={handleClickOrdersDelivered}>
@@ -741,8 +912,8 @@ const LinksSidebar = () => {
                                                  text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
                                                  hover:bg-white transition-all duration-300 hover:text-mainColor`
                                                  }>
-                                                 <span >Delivered</span>
-                                                 <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>556</span>
+                                                 <span>Delivered</span>
+                                                 <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersDelivered || 0}</span>
                                           </li>
                                    </Link>
                                    <Link to={"orders/returned"} onClick={handleClickOrdersReturned}>
@@ -751,8 +922,8 @@ const LinksSidebar = () => {
                                                  text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
                                                  hover:bg-white transition-all duration-300 hover:text-mainColor`
                                                  }>
-                                                 <span >Returned</span>
-                                                 <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>556</span>
+                                                 <span>Returned</span>
+                                                 <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersReturned || 0}</span>
                                           </li>
                                    </Link>
                                    <Link to={"orders/failed"} onClick={handleClickOrdersFailed}>
@@ -761,8 +932,8 @@ const LinksSidebar = () => {
                                                  text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
                                                  hover:bg-white transition-all duration-300 hover:text-mainColor`
                                                  }>
-                                                 <span >Failed To Delivered</span>
-                                                 <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>556</span>
+                                                 <span>Failed To Delivered</span>
+                                                 <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersFailed || 0}</span>
                                           </li>
                                    </Link>
                                    <Link to={"orders/canceled"} onClick={handleClickOrdersCanceled}>
@@ -771,25 +942,23 @@ const LinksSidebar = () => {
                                                  text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
                                                  hover:bg-white transition-all duration-300 hover:text-mainColor`
                                                  }>
-                                                 <span >Canceled</span>
-                                                 <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>556</span>
+                                                 <span>Canceled</span>
+                                                 <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersCanceled || 0}</span>
                                           </li>
                                    </Link>
-                                   <Link to={"orders/schedule"} onClick={handleClickOrdersschedule}>
+                                   <Link to={"orders/schedule"} onClick={handleClickOrdersSchedule}>
                                           <li
                                                  className={`${isActiveOrdersSchedule ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
                                                  text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
                                                  hover:bg-white transition-all duration-300 hover:text-mainColor`
                                                  }>
-                                                 <span >Schedule</span>
-                                                 <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>556</span>
+                                                 <span>Schedule</span>
+                                                 <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersSchedule || 0}</span>
                                           </li>
                                    </Link>
                             </ul>
 
                      </div>
-
-
               </div>
        );
 };
