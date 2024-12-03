@@ -20,7 +20,7 @@ export const useChangeState = () => {
 
       // Send the "data" object directly as the request body
 
-      const response = await axios.put(url, data, config);
+      const response = await axios.put(url, data || {}, config);
 
       if (response.status === 200) {
         setResponseChange(response);

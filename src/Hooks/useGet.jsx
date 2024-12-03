@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useEffect, useState, useCallback } from "react";
-import { useAuth } from "../Context/Auth";
+// import { useAuth } from "../Context/Auth";
 import { useSelector } from "react-redux";
 
 export const useGet = ({ url }) => {
-    const auth = useAuth();
+    // const auth = useAuth();
     const user = useSelector(state => state.user);
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);

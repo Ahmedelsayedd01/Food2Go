@@ -29,7 +29,8 @@ export const usePost = ({ url, login = false, type = false }) => {
 
                      if (response.status === 200) {
                             setResponse(response);
-                            auth.toastSuccess(name)
+                            { name ? auth.toastSuccess(name) : '' }   
+                            // auth.toastSuccess(name)
                      }
               } catch (error) {
                      auth.toastError(error.message)
