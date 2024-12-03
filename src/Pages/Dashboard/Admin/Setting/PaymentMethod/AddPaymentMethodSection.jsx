@@ -4,7 +4,7 @@ import { usePost } from '../../../../../Hooks/usePostJson';
 import { useAuth } from '../../../../../Context/Auth';
 
 
-const AddPaymentMethodSection = () => {
+const AddPaymentMethodSection = ({ update, setUpdate }) => {
        const { postData, loadingPost, response } = usePost({ url: 'https://Bcknd.food2go.online/admin/settings/payment_methods/add' });
 
        const ImageRef = useRef();
@@ -39,6 +39,7 @@ const AddPaymentMethodSection = () => {
               if (!loadingPost) {
                      handleReset()
               }
+              setUpdate(!update)
        }, [response])
 
        const handleReset = () => {
@@ -93,7 +94,7 @@ const AddPaymentMethodSection = () => {
                                                         <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                                                                <span className="text-xl font-TextFontRegular text-thirdColor">payment Method Name:</span>
                                                                <TextInput
-                                                                      value={paymentMethodName || ''} // Access category_name property
+                                                                      value={paymentMethodName || '-'} // Access category_name property
                                                                       onChange={(e) => setPaymentMethodName(e.target.value)}
                                                                       placeholder="payment Method Name"
                                                                />
@@ -101,7 +102,7 @@ const AddPaymentMethodSection = () => {
                                                         <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                                                                <span className="text-xl font-TextFontRegular text-thirdColor">payment Method Description:</span>
                                                                <TextInput
-                                                                      value={paymentMethodDescription || ''} // Access category_Des property
+                                                                      value={paymentMethodDescription || '-'} // Access category_Des property
                                                                       onChange={(e) => setPaymentMethodDescription(e.target.value)}
                                                                       placeholder="payment Method Description"
                                                                />

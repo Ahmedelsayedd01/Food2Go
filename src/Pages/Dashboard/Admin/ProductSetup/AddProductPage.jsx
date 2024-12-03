@@ -133,7 +133,7 @@ const AddProductPage = () => {
     }
     /* Set data to Categories && Addons && SubCategories */
     if (dataCategory) {
-      setCategories(dataCategory?.categories || [])
+      setCategories(dataCategory?.parent_categories || [])
       setSubCategories(dataCategory?.sub_categories || [])
       setAddons(dataCategory?.addons || [])
     }
@@ -217,7 +217,6 @@ const AddProductPage = () => {
     const newVariation = {
       type: '',
       required: 0,
-      points: '',
       min: '',
       max: '',
       names: taps.map(tap => ({
@@ -242,6 +241,7 @@ const AddProductPage = () => {
               extra_price: '',
             },
           ],
+          points: '',
           price: '',
           status: 0,
         },
@@ -297,6 +297,7 @@ const AddProductPage = () => {
         },
       ],
       price: '',
+      points: '',
       status: 0,
     };
 
@@ -337,6 +338,19 @@ const AddProductPage = () => {
     );
   };
 
+  // Remove an option from a specific Option within a Variation
+  const handleRemoveOption = (variationIndex, optionIndex) => {
+    setProductVariations((prevVariations) =>
+      prevVariations.map((variation, vIdx) =>
+        vIdx === variationIndex
+          ? {
+            ...variation,
+            options: variation.options.filter((_, oIdx) => oIdx !== optionIndex),
+          }
+          : variation
+      )
+    );
+  };
   // Remove an Extra from a specific Option within a Variation
   const handleRemoveExtraAtOption = (variationIndex, optionIndex, extraIndex) => {
     setProductVariations((prevVariations) =>
@@ -715,10 +729,10 @@ const AddProductPage = () => {
 
     const addonIds = selectedAddonsId.map((addon) => addon.id); // Extracts only the IDs
 
-    addonIds.forEach((id,indexID) => {
-        formData.append(`addons[${indexID}]`, id); // Appending each ID separately with 'addons[]'
+    addonIds.forEach((id, indexID) => {
+      formData.append(`addons[${indexID}]`, id); // Appending each ID separately with 'addons[]'
     });
-    
+
 
 
 
@@ -744,9 +758,9 @@ const AddProductPage = () => {
       productExclude.forEach((exclude, index) => {
         if (Array.isArray(exclude.names)) {
           exclude.names.forEach((exName, exInd) => {
-            formData.append(`excludes[${index}][names][${exInd}][exclude_name]`, exName.exclude_name || '');
-            formData.append(`excludes[${index}][names][${exInd}][tranlation_id]`, exName.tranlation_id || '');
-            formData.append(`excludes[${index}][names][${exInd}][tranlation_name]`, exName.tranlation_name || '');
+            formData.append(`excludes[${index}][names][${exInd}][exclude_name]`, exName.exclude_name || '-');
+            formData.append(`excludes[${index}][names][${exInd}][tranlation_id]`, exName.tranlation_id || '-');
+            formData.append(`excludes[${index}][names][${exInd}][tranlation_name]`, exName.tranlation_name || '-');
           });
         }
 
@@ -759,13 +773,13 @@ const AddProductPage = () => {
       productExtra.forEach((extra, index) => {
         if (Array.isArray(extra.names)) {
           extra.names.forEach((exName, exInd) => {
-            formData.append(`extra[${index}][names][${exInd}][extra_name]`, exName.extra_name || '');
-            formData.append(`extra[${index}][names][${exInd}][tranlation_id]`, exName.tranlation_id || '');
-            formData.append(`extra[${index}][names][${exInd}][tranlation_name]`, exName.tranlation_name || '');
+            formData.append(`extra[${index}][names][${exInd}][extra_name]`, exName.extra_name || '-');
+            formData.append(`extra[${index}][names][${exInd}][tranlation_id]`, exName.tranlation_id || '-');
+            formData.append(`extra[${index}][names][${exInd}][tranlation_name]`, exName.tranlation_name || '-');
           });
         }
 
-        formData.append(`extra[${index}][extra_price]`, extra.extra_price || '');
+        formData.append(`extra[${index}][extra_price]`, extra.extra_price || '-');
       });
     } else {
       console.error("productExtra is not a valid array.");
@@ -783,7 +797,7 @@ const AddProductPage = () => {
             console.log(`Processing name at index ${index}:`, name);
 
             // Append formData fields for names
-            formData.append(`variations[${indexVar}][names][${index}][name]`, name.name || '');
+            formData.append(`variations[${indexVar}][names][${index}][name]`, name.name || '-');
             formData.append(`variations[${indexVar}][names][${index}][tranlation_name]`,
               typeof name.tranlation_name === 'string' ? name.tranlation_name : '');
             formData.append(`variations[${indexVar}][names][${index}][tranlation_id]`,
@@ -806,7 +820,7 @@ const AddProductPage = () => {
                 if (Array.isArray(extraOption.extra_names)) {
                   extraOption.extra_names.forEach((extraName, indexNextra) => {
                     formData.append(`variations[${indexVar}][options][${indexOption}][extra][${indexExtra}][extra_names][${indexNextra}][extra_name]`,
-                      extraName.extra_name || '');
+                      extraName.extra_name || '-');
                     formData.append(`variations[${indexVar}][options][${indexOption}][extra][${indexExtra}][extra_names][${indexNextra}][tranlation_name]`,
                       typeof extraName.tranlation_name === 'string' ? extraName.tranlation_name : '');
                     formData.append(`variations[${indexVar}][options][${indexOption}][extra][${indexExtra}][extra_names][${indexNextra}][tranlation_id]`,
@@ -816,7 +830,7 @@ const AddProductPage = () => {
                   console.warn(`extraOption.extra_names is not a valid array at index ${indexExtra}`);
                 }
 
-                formData.append(`variations[${indexVar}][options][${indexOption}][extra][${indexExtra}][extra_price]`, extraOption.extra_price || '');
+                formData.append(`variations[${indexVar}][options][${indexOption}][extra][${indexExtra}][extra_price]`, extraOption.extra_price || '-');
               });
             }
 
@@ -825,7 +839,7 @@ const AddProductPage = () => {
               option.names.forEach((optionNa, indexOpNa) => {
                 console.log(`Processing option name at index ${indexOpNa}:`, optionNa);
 
-                formData.append(`variations[${indexVar}][options][${indexOption}][names][${indexOpNa}][name]`, optionNa.name || '');
+                formData.append(`variations[${indexVar}][options][${indexOption}][names][${indexOpNa}][name]`, optionNa.name || '-');
                 formData.append(`variations[${indexVar}][options][${indexOption}][names][${indexOpNa}][tranlation_id]`,
                   optionNa.tranlation_id !== undefined ? String(optionNa.tranlation_id) : '');
                 formData.append(`variations[${indexVar}][options][${indexOption}][names][${indexOpNa}][tranlation_name]`,
@@ -834,18 +848,18 @@ const AddProductPage = () => {
             }
 
             // Append other option-specific data
-            formData.append(`variations[${indexVar}][options][${indexOption}][price]`, option.price || '');
-            formData.append(`variations[${indexVar}][options][${indexOption}][status]`, option.status || '');
+            formData.append(`variations[${indexVar}][options][${indexOption}][price]`, option.price || '-');
+            formData.append(`variations[${indexVar}][options][${indexOption}][status]`, option.status || '-');
+            formData.append(`variations[${indexVar}][options][${indexOption}][points]`, option.points || '-');
           });
         } else {
           console.warn(`variation.options is not a valid array for variation index ${indexVar}`);
         }
 
         // Append general variation data
-        formData.append(`variations[${indexVar}][type]`, variation.type || '');
-        formData.append(`variations[${indexVar}][min]`, variation.min || '');
-        formData.append(`variations[${indexVar}][max]`, variation.max || '');
-        formData.append(`variations[${indexVar}][points]`, variation.points || '');
+        formData.append(`variations[${indexVar}][type]`, variation.type || '-');
+        formData.append(`variations[${indexVar}][min]`, variation.min || '-');
+        formData.append(`variations[${indexVar}][max]`, variation.max || '-');
         formData.append(`variations[${indexVar}][required]`, variation.required ? 1 : 0); // Convert boolean to 1/0
       });
     } else {
@@ -911,7 +925,7 @@ const AddProductPage = () => {
                       <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                         <span className="text-xl font-TextFontRegular text-thirdColor">Product Name {tap.name}:</span>
                         <TextInput
-                          value={productNames[index]?.product_name || ''} // Access category_name property
+                          value={productNames[index]?.product_name || '-'} // Access category_name property
                           onChange={(e) => {
                             const inputValue = e.target.value; // Ensure this is a string
                             setProductNames(prev => {
@@ -941,7 +955,7 @@ const AddProductPage = () => {
                       <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                         <span className="text-xl font-TextFontRegular text-thirdColor">Product Description {tap.name}:</span>
                         <TextInput
-                          value={descriptionNames[index]?.description_name || ''} // Access category_name property
+                          value={descriptionNames[index]?.description_name || '-'} // Access category_name property
                           onChange={(e) => {
                             const inputValue = e.target.value; // Ensure this is a string
                             setDescriptionNames(prev => {
@@ -1010,7 +1024,7 @@ const AddProductPage = () => {
                               Exclude Name {tap.name}:
                             </span>
                             <TextInput
-                              value={ele.names.find(name => name.tranlation_name === tap.name)?.exclude_name || ''}
+                              value={ele.names.find(name => name.tranlation_name === tap.name)?.exclude_name || '-'}
                               onChange={(e) => {
                                 const updatedValue = e.target.value;
                                 setProductExclude((prevProductExclude) =>
@@ -1093,7 +1107,7 @@ const AddProductPage = () => {
                               Extra Name {tap.name}:
                             </span>
                             <TextInput
-                              value={ele.names.find(name => name.tranlation_name === tap.name)?.extra_name || ''}
+                              value={ele.names.find(name => name.tranlation_name === tap.name)?.extra_name || '-'}
                               onChange={(e) => {
                                 const updatedValue = e.target.value;
                                 setProductExtra((prevProductExtra) =>
@@ -1122,7 +1136,7 @@ const AddProductPage = () => {
                                 Price:
                               </span>
                               <NumberInput
-                                value={ele.extra_price || ''}
+                                value={ele.extra_price || '-'}
                                 onChange={(e) => {
                                   const updatedPrice = e.target.value;
                                   setProductExtra((prevProductExtra) =>
@@ -1200,7 +1214,7 @@ const AddProductPage = () => {
                                 Variation Name {tap.name}:
                               </span>
                               <TextInput
-                                value={ele.names.find(name => name.tranlation_name === tap.name)?.name || ''}
+                                value={ele.names.find(name => name.tranlation_name === tap.name)?.name || '-'}
                                 onChange={(e) => updateVariationState(setProductVariations, indexVariation, 'names', tap.name, e.target.value)}
                                 placeholder="Variation Name"
                               />
@@ -1226,7 +1240,7 @@ const AddProductPage = () => {
                                   <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
                                     <span className="text-xl font-TextFontRegular text-thirdColor">Min:</span>
                                     <NumberInput
-                                      value={ele.min || ''}  // Ensure `ele.points` has a default if undefined
+                                      value={ele.min || '-'}  // Ensure `ele.points` has a default if undefined
                                       onChange={(e) => {
                                         const updatedValue = e.target.value;
                                         setProductVariations((prevProductVariations) =>
@@ -1247,7 +1261,7 @@ const AddProductPage = () => {
                                   <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
                                     <span className="text-xl font-TextFontRegular text-thirdColor">Max:</span>
                                     <NumberInput
-                                      value={ele.max || ''}  // Ensure `ele.points` has a default if undefined
+                                      value={ele.max || '-'}  // Ensure `ele.points` has a default if undefined
                                       onChange={(e) => {
                                         const updatedValue = e.target.value;
                                         setProductVariations((prevProductVariations) =>
@@ -1267,10 +1281,10 @@ const AddProductPage = () => {
                                 </>
                               )}
 
-                              <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
+                              {/* <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
                                 <span className="text-xl font-TextFontRegular text-thirdColor">Point:</span>
                                 <NumberInput
-                                  value={ele.points || ''}  // Ensure `ele.points` has a default if undefined
+                                  value={ele.points || '-'}  // Ensure `ele.points` has a default if undefined
                                   onChange={(e) => {
                                     const updatedValue = e.target.value;
                                     setProductVariations((prevProductVariations) =>
@@ -1286,9 +1300,9 @@ const AddProductPage = () => {
                                   }}
                                   placeholder={'Point'}
                                 />
-                              </div>
+                              </div> */}
 
-                              <div className='w-[32%] flex items-center justify-start gap-x-3'>
+                              <div className='w-[32%] flex mt-10 items-center justify-center gap-x-3'>
                                 <span className="text-xl font-TextFontRegular text-thirdColor">Required:</span>
                                 <Switch
                                   handleClick={() => {
@@ -1346,7 +1360,7 @@ const AddProductPage = () => {
                                             </span>
                                             <TextInput
                                               value={
-                                                option.names.find(nameObj => nameObj.tranlation_name === tapOption.name)?.name || ''
+                                                option.names.find(nameObj => nameObj.tranlation_name === tapOption.name)?.name || '-'
                                               }
                                               onChange={(e) => {
                                                 const updatedValue = e.target.value;
@@ -1381,7 +1395,7 @@ const AddProductPage = () => {
                                               <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
                                                 <span className="text-xl font-TextFontRegular text-thirdColor">Price:</span>
                                                 <NumberInput
-                                                  value={option.price || ''}
+                                                  value={option.price || '-'}
                                                   onChange={(e) => {
                                                     const updatedValue = e.target.value;
                                                     setProductVariations((prevProductVariations) =>
@@ -1402,9 +1416,33 @@ const AddProductPage = () => {
                                                   placeholder="Price"
                                                 />
                                               </div>
+                                              <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
+                                                <span className="text-xl font-TextFontRegular text-thirdColor">Point:</span>
+                                                <NumberInput
+                                                  value={option.points || '-'}  // Ensure `ele.points` has a default if undefined
+                                                  onChange={(e) => {
+                                                    const updatedValue = e.target.value;
+                                                    setProductVariations((prevProductVariations) =>
+                                                      prevProductVariations.map((item, idx) =>
+                                                        idx === indexVariation
+                                                          ? {
+                                                            ...item,
+                                                            options: item.options.map((opt, optIdx) =>
+                                                              optIdx === indexOption
+                                                                ? { ...opt, points: updatedValue }
+                                                                : opt
+                                                            ),
+                                                          }
+                                                          : item
+                                                      )
+                                                    );
+                                                  }}
+                                                  placeholder={'Point'}
+                                                />
+                                              </div>
 
                                               {/* Option Status */}
-                                              <div className="w-[20%] flex items-center justify-start gap-x-3 lg:mt-10">
+                                              <div className="w-[20%] flex items-center justify-start gap-x-3 lg:mt-3">
                                                 <span className="text-xl font-TextFontRegular text-thirdColor">Status:</span>
                                                 <Switch
                                                   handleClick={() =>
@@ -1443,7 +1481,7 @@ const AddProductPage = () => {
                                                   value={
                                                     extra.extra_names.find(
                                                       (extraNameObj) => extraNameObj.tranlation_name === tapOption.name
-                                                    )?.extra_name || ''
+                                                    )?.extra_name || '-'
                                                   }
                                                   onChange={(e) => {
                                                     const updatedValue = e.target.value;
@@ -1486,7 +1524,7 @@ const AddProductPage = () => {
                                                   <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
                                                     <span className="text-xl font-TextFontRegular text-thirdColor">Extra Price:</span>
                                                     <NumberInput
-                                                      value={extra.extra_price || ''}
+                                                      value={extra.extra_price || '-'}
                                                       onChange={(e) => {
                                                         const updatedValue = e.target.value;
                                                         setProductVariations((prevVariations) =>
@@ -1538,6 +1576,17 @@ const AddProductPage = () => {
                                               handleClick={() => handleAddExtraAtOption(indexVariation, indexOption)}
                                             />
                                           </div>
+                                          {ele.options.length > 1 && (
+
+                                            <div className="sm:w-full lg:w-[20%] flex items-center justify-center lg:mt-8">
+                                              <StaticButton
+                                                text="Remove option"
+                                                handleClick={() =>
+                                                  handleRemoveOption(indexVariation, indexOption)
+                                                }
+                                              />
+                                            </div>
+                                          )}
                                         </div>
                                       ))}
                                     </div>

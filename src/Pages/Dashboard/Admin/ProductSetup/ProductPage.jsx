@@ -89,25 +89,6 @@ const ProductPage = () => {
               'From',
               'To',
               'Action'
-              // 'SL',
-              // 'name',
-              // 'image',
-              // 'price',
-              // 'description',
-              // "category_id",
-              // 'sub_category_id',
-              // 'addons',
-              // 'variations',
-              // 'discount_id',
-              // 'tax_id',
-              // 'excludes',
-              // 'extra',
-              // 'item_type',
-              // 'number',
-              // 'stock_type',
-              // 'from',
-              // 'to',
-              // 'points',
        ];
        return (
               <>
@@ -139,7 +120,7 @@ const ProductPage = () => {
                                                                              {index + 1}
                                                                       </td>
                                                                       <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                             {product?.name || ''}
+                                                                             {product?.name || '-'}
                                                                       </td>
                                                                       <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 overflow-hidden">
                                                                              <div className="flex justify-center">
@@ -150,16 +131,16 @@ const ProductPage = () => {
                                                                              </div>
                                                                       </td>
                                                                       <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                             {product?.price || ''}
+                                                                             {product?.price || '-'}
                                                                       </td>
                                                                       <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                             {product?.description || ''}
+                                                                             {product?.description || '-'}
                                                                       </td>
                                                                       <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                             {product.category?.name || ''}
+                                                                             {product.category?.name || '-'}
                                                                       </td>
                                                                       <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                             {product.sub_category?.name || ''}
+                                                                             {product.sub_category?.name || '-'}
                                                                       </td>
                                                                       <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
                                                                              <span className='text-mainColor text-xl border-b-2 border-mainColor font-semibold cursor-pointer'
@@ -175,10 +156,10 @@ const ProductPage = () => {
                                                                              </span>
                                                                       </td>
                                                                       <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                             {product.discount?.name || ''}
+                                                                             {product.discount?.name || '-'}
                                                                       </td>
                                                                       <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                             {product.tax?.name || ''}
+                                                                             {product.tax?.name || '-'}
                                                                       </td>
                                                                       <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
                                                                              <span className='text-mainColor text-xl border-b-2 border-mainColor font-semibold cursor-pointer'
@@ -193,22 +174,22 @@ const ProductPage = () => {
                                                                              </span>
                                                                       </td>
                                                                       <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                             {product?.item_type || ''}
+                                                                             {product?.item_type || '-'}
                                                                       </td>
                                                                       <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                             {product?.number || ''}
+                                                                             {product?.number || '-'}
                                                                       </td>
                                                                       <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                             {product?.points || ''}
+                                                                             {product?.points || '-'}
                                                                       </td>
                                                                       <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                             {product?.stock_type || ''}
+                                                                             {product?.stock_type || '-'}
                                                                       </td>
                                                                       <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                             {product?.from || ''}
+                                                                             {product?.from || '-'}
                                                                       </td>
                                                                       <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                             {product?.to || ''}
+                                                                             {product?.to || '-'}
                                                                       </td>
                                                                       <td className="px-4 py-3 text-center">
                                                                              <div className="flex items-center justify-center gap-2">
@@ -298,6 +279,9 @@ const ProductPage = () => {
                                                                                                                                                                         </div>
                                                                                                                                                                         <div className="">
                                                                                                                                                                                <span>option Price: {option.price}</span>
+                                                                                                                                                                        </div>
+                                                                                                                                                                        <div className="">
+                                                                                                                                                                               <span>option points: {option.points}</span>
                                                                                                                                                                         </div>
                                                                                                                                                                  </div>)
                                                                                                                                                           })}

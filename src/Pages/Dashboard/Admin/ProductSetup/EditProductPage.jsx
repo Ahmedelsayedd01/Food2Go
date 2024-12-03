@@ -177,7 +177,7 @@ const EditProductPage = () => {
                      setProductVariations(productEdit?.variation || [])
 
                      setSelectedAddonsId(productEdit?.addons || [])
-                     setProductPrice(productEdit?.price || '')
+                     setProductPrice(productEdit?.price || '-')
 
                      // setDescriptionNames(productEdit?.product_descriptions || [])
                      console.log('productId', productId)
@@ -774,9 +774,9 @@ const EditProductPage = () => {
                      productExclude.forEach((exclude, index) => {
                             if (Array.isArray(exclude.names)) {
                                    exclude.names.forEach((exName, exInd) => {
-                                          formData.append(`excludes[${index}][names][${exInd}][exclude_name]`, exName.exclude_name || '');
-                                          formData.append(`excludes[${index}][names][${exInd}][tranlation_id]`, exName.tranlation_id || '');
-                                          formData.append(`excludes[${index}][names][${exInd}][tranlation_name]`, exName.tranlation_name || '');
+                                          formData.append(`excludes[${index}][names][${exInd}][exclude_name]`, exName.exclude_name || '-');
+                                          formData.append(`excludes[${index}][names][${exInd}][tranlation_id]`, exName.tranlation_id || '-');
+                                          formData.append(`excludes[${index}][names][${exInd}][tranlation_name]`, exName.tranlation_name || '-');
                                    });
                             }
 
@@ -789,13 +789,13 @@ const EditProductPage = () => {
                      productExtra.forEach((extra, index) => {
                             if (Array.isArray(extra.names)) {
                                    extra.names.forEach((exName, exInd) => {
-                                          formData.append(`extra[${index}][names][${exInd}][extra_name]`, exName.extra_name || '');
-                                          formData.append(`extra[${index}][names][${exInd}][tranlation_id]`, exName.tranlation_id || '');
-                                          formData.append(`extra[${index}][names][${exInd}][tranlation_name]`, exName.tranlation_name || '');
+                                          formData.append(`extra[${index}][names][${exInd}][extra_name]`, exName.extra_name || '-');
+                                          formData.append(`extra[${index}][names][${exInd}][tranlation_id]`, exName.tranlation_id || '-');
+                                          formData.append(`extra[${index}][names][${exInd}][tranlation_name]`, exName.tranlation_name || '-');
                                    });
                             }
 
-                            formData.append(`extra[${index}][extra_price]`, extra.extra_price || '');
+                            formData.append(`extra[${index}][extra_price]`, extra.extra_price || '-');
                      });
               } else {
                      console.error("productExtra is not a valid array.");
@@ -813,7 +813,7 @@ const EditProductPage = () => {
                                           console.log(`Processing name at index ${index}:`, name);
 
                                           // Append formData fields for names
-                                          formData.append(`variations[${indexVar}][names][${index}][name]`, name.name || '');
+                                          formData.append(`variations[${indexVar}][names][${index}][name]`, name.name || '-');
                                           formData.append(`variations[${indexVar}][names][${index}][tranlation_name]`,
                                                  typeof name.tranlation_name === 'string' ? name.tranlation_name : '');
                                           formData.append(`variations[${indexVar}][names][${index}][tranlation_id]`,
@@ -836,7 +836,7 @@ const EditProductPage = () => {
                                                         if (Array.isArray(extraOption.extra_names)) {
                                                                extraOption.extra_names.forEach((extraName, indexNextra) => {
                                                                       formData.append(`variations[${indexVar}][options][${indexOption}][extra][${indexExtra}][extra_names][${indexNextra}][extra_name]`,
-                                                                             extraName.extra_name || '');
+                                                                             extraName.extra_name || '-');
                                                                       formData.append(`variations[${indexVar}][options][${indexOption}][extra][${indexExtra}][extra_names][${indexNextra}][tranlation_name]`,
                                                                              typeof extraName.tranlation_name === 'string' ? extraName.tranlation_name : '');
                                                                       formData.append(`variations[${indexVar}][options][${indexOption}][extra][${indexExtra}][extra_names][${indexNextra}][tranlation_id]`,
@@ -846,7 +846,7 @@ const EditProductPage = () => {
                                                                console.warn(`extraOption.extra_names is not a valid array at index ${indexExtra}`);
                                                         }
 
-                                                        formData.append(`variations[${indexVar}][options][${indexOption}][extra][${indexExtra}][extra_price]`, extraOption.extra_price || '');
+                                                        formData.append(`variations[${indexVar}][options][${indexOption}][extra][${indexExtra}][extra_price]`, extraOption.extra_price || '-');
                                                  });
                                           }
 
@@ -855,7 +855,7 @@ const EditProductPage = () => {
                                                  option.names.forEach((optionNa, indexOpNa) => {
                                                         console.log(`Processing option name at index ${indexOpNa}:`, optionNa);
 
-                                                        formData.append(`variations[${indexVar}][options][${indexOption}][names][${indexOpNa}][name]`, optionNa.name || '');
+                                                        formData.append(`variations[${indexVar}][options][${indexOption}][names][${indexOpNa}][name]`, optionNa.name || '-');
                                                         formData.append(`variations[${indexVar}][options][${indexOption}][names][${indexOpNa}][tranlation_id]`,
                                                                optionNa.tranlation_id !== undefined ? String(optionNa.tranlation_id) : '');
                                                         formData.append(`variations[${indexVar}][options][${indexOption}][names][${indexOpNa}][tranlation_name]`,
@@ -864,18 +864,18 @@ const EditProductPage = () => {
                                           }
 
                                           // Append other option-specific data
-                                          formData.append(`variations[${indexVar}][options][${indexOption}][price]`, option.price || '');
-                                          formData.append(`variations[${indexVar}][options][${indexOption}][status]`, option.status || '');
+                                          formData.append(`variations[${indexVar}][options][${indexOption}][price]`, option.price || '-');
+                                          formData.append(`variations[${indexVar}][options][${indexOption}][status]`, option.status || '-');
                                    });
                             } else {
                                    console.warn(`variation.options is not a valid array for variation index ${indexVar}`);
                             }
 
                             // Append general variation data
-                            formData.append(`variations[${indexVar}][type]`, variation.type || '');
-                            formData.append(`variations[${indexVar}][min]`, variation.min || '');
-                            formData.append(`variations[${indexVar}][max]`, variation.max || '');
-                            formData.append(`variations[${indexVar}][points]`, variation.points || '');
+                            formData.append(`variations[${indexVar}][type]`, variation.type || '-');
+                            formData.append(`variations[${indexVar}][min]`, variation.min || '-');
+                            formData.append(`variations[${indexVar}][max]`, variation.max || '-');
+                            formData.append(`variations[${indexVar}][points]`, variation.points || '-');
                             formData.append(`variations[${indexVar}][required]`, variation.required ? 1 : 0); // Convert boolean to 1/0
                      });
               } else {
@@ -943,7 +943,7 @@ const EditProductPage = () => {
                                                                                     <TextInput
                                                                                            value={
                                                                                                   Array.isArray(productNames) && productNames[index]
-                                                                                                         ? productNames[index].product_name || ''
+                                                                                                         ? productNames[index].product_name || '-'
                                                                                                          : ''
                                                                                            }
                                                                                            onChange={(e) => {
@@ -984,7 +984,7 @@ const EditProductPage = () => {
                                                                                     <TextInput
                                                                                            value={
                                                                                                   Array.isArray(descriptionNames) && descriptionNames[index]
-                                                                                                         ? descriptionNames[index].product_description || ''
+                                                                                                         ? descriptionNames[index].product_description || '-'
                                                                                                          : ''
                                                                                            }
 
@@ -1059,10 +1059,10 @@ const EditProductPage = () => {
                                                                                                          Exclude Name {tap.name}:
                                                                                                   </span>
                                                                                                   <TextInput
-                                                                                                         // value={ele.names.exclude_name || ''}
+                                                                                                         // value={ele.names.exclude_name || '-'}
                                                                                                          value={
                                                                                                                 Array.isArray(ele.names)
-                                                                                                                       ? ele.names.find(name => name.tranlation_name === tap.name)?.exclude_name || ''
+                                                                                                                       ? ele.names.find(name => name.tranlation_name === tap.name)?.exclude_name || '-'
                                                                                                                        : ''
                                                                                                          }
                                                                                                          onChange={(e) => {
@@ -1147,10 +1147,10 @@ const EditProductPage = () => {
                                                                                                          Extra Name {tap.name}:
                                                                                                   </span>
                                                                                                   <TextInput
-                                                                                                         // value={ele.find(name => name.tranlation_name === tap.name)?.extra_name || ''}
+                                                                                                         // value={ele.find(name => name.tranlation_name === tap.name)?.extra_name || '-'}
                                                                                                          value={
                                                                                                                 Array.isArray(ele.names) // Ensure ele.names is an array
-                                                                                                                       ? ele.names.find(name => name.tranlation_name === tap.name)?.extra_name || ''
+                                                                                                                       ? ele.names.find(name => name.tranlation_name === tap.name)?.extra_name || '-'
                                                                                                                        : ''
                                                                                                          }
                                                                                                          onChange={(e) => {
@@ -1259,7 +1259,7 @@ const EditProductPage = () => {
                                                                                                                 Variation Name {tap.name}:
                                                                                                          </span>
                                                                                                          <TextInput
-                                                                                                                value={ele.names.find(name => name.tranlation_name === tap.name)?.name || ''}
+                                                                                                                value={ele.names.find(name => name.tranlation_name === tap.name)?.name || '-'}
                                                                                                                 onChange={(e) => updateVariationState(setProductVariations, indexVariation, 'names', tap.name, e.target.value)}
                                                                                                                 placeholder="Variation Name"
                                                                                                          />
@@ -1285,7 +1285,7 @@ const EditProductPage = () => {
                                                                                                                        <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
                                                                                                                               <span className="text-xl font-TextFontRegular text-thirdColor">Min:</span>
                                                                                                                               <NumberInput
-                                                                                                                                     value={ele.min || ''}  // Ensure `ele.points` has a default if undefined
+                                                                                                                                     value={ele.min || '-'}  // Ensure `ele.points` has a default if undefined
                                                                                                                                      onChange={(e) => {
                                                                                                                                             const updatedValue = e.target.value;
                                                                                                                                             setProductVariations((prevProductVariations) =>
@@ -1306,7 +1306,7 @@ const EditProductPage = () => {
                                                                                                                        <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
                                                                                                                               <span className="text-xl font-TextFontRegular text-thirdColor">Max:</span>
                                                                                                                               <NumberInput
-                                                                                                                                     value={ele.max || ''}  // Ensure `ele.points` has a default if undefined
+                                                                                                                                     value={ele.max || '-'}  // Ensure `ele.points` has a default if undefined
                                                                                                                                      onChange={(e) => {
                                                                                                                                             const updatedValue = e.target.value;
                                                                                                                                             setProductVariations((prevProductVariations) =>
@@ -1329,7 +1329,7 @@ const EditProductPage = () => {
                                                                                                          <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
                                                                                                                 <span className="text-xl font-TextFontRegular text-thirdColor">Point:</span>
                                                                                                                 <NumberInput
-                                                                                                                       value={ele.points || ''}  // Ensure `ele.points` has a default if undefined
+                                                                                                                       value={ele.points || '-'}  // Ensure `ele.points` has a default if undefined
                                                                                                                        onChange={(e) => {
                                                                                                                               const updatedValue = e.target.value;
                                                                                                                               setProductVariations((prevProductVariations) =>
@@ -1404,7 +1404,7 @@ const EditProductPage = () => {
                                                                                                                                                                  Option Name {tapOption.name}:
                                                                                                                                                           </span>
                                                                                                                                                           <TextInput
-                                                                                                                                                                 value={option.names.find(nameObj => nameObj.tranlation_name === tapOption.name)?.name || ''}
+                                                                                                                                                                 value={option.names.find(nameObj => nameObj.tranlation_name === tapOption.name)?.name || '-'}
                                                                                                                                                                  onChange={(e) => {
                                                                                                                                                                         const updatedValue = e.target.value;
 
@@ -1447,7 +1447,7 @@ const EditProductPage = () => {
                                                                                                                                                                  <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
                                                                                                                                                                         <span className="text-xl font-TextFontRegular text-thirdColor">Price:</span>
                                                                                                                                                                         <NumberInput
-                                                                                                                                                                               value={option.price || ''}
+                                                                                                                                                                               value={option.price || '-'}
                                                                                                                                                                                onChange={(e) => {
                                                                                                                                                                                       const updatedValue = e.target.value;
                                                                                                                                                                                       setProductVariations((prevProductVariations) =>
@@ -1509,7 +1509,7 @@ const EditProductPage = () => {
                                                                                                                                                                                value={
                                                                                                                                                                                       extra.extra_names.find(
                                                                                                                                                                                              (extraNameObj) => extraNameObj.tranlation_name === tapOption.name
-                                                                                                                                                                                      )?.extra_name || ''
+                                                                                                                                                                                      )?.extra_name || '-'
                                                                                                                                                                                }
                                                                                                                                                                                onChange={(e) => {
                                                                                                                                                                                       const updatedValue = e.target.value;
@@ -1552,7 +1552,7 @@ const EditProductPage = () => {
                                                                                                                                                                                <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
                                                                                                                                                                                       <span className="text-xl font-TextFontRegular text-thirdColor">Extra Price:</span>
                                                                                                                                                                                       <NumberInput
-                                                                                                                                                                                             value={extra.extra_price || ''}
+                                                                                                                                                                                             value={extra.extra_price || '-'}
                                                                                                                                                                                              onChange={(e) => {
                                                                                                                                                                                                     const updatedValue = e.target.value;
                                                                                                                                                                                                     setProductVariations((prevVariations) =>

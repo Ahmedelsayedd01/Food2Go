@@ -6,7 +6,7 @@ import { useDelete } from '../../../../../Hooks/useDelete';
 import { StaticLoader, Switch } from '../../../../../Components/Components';
 import { DeleteIcon, EditIcon } from '../../../../../Assets/Icons/AllIcons';
 
-const PaymentMethodPage = () => {
+const PaymentMethodPage = ({ refetch }) => {
   const { refetch: refetchPaymentMethods, loading: loadingPaymentMethods, data: dataPaymentMethods } = useGet({ url: 'https://Bcknd.food2go.online/admin/settings/payment_methods' });
   const { changeState, loadingChange, responseChange } = useChangeState();
   const { deleteData, loadingDelete, responseDelete } = useDelete();
@@ -14,11 +14,11 @@ const PaymentMethodPage = () => {
   // Fetch categories when the component mounts or when refetch is called
   useEffect(() => {
     refetchPaymentMethods();
-  }, [refetchPaymentMethods]); // Empty dependency array to only call refetch once on mount
+  }, [refetchPaymentMethods, refetch]); // Empty dependency array to only call refetch once on mount
 
 
   // Change paymentMethod status 
-  const hangleChangeStaus = async (id, name, status) => {
+  const handleChangeStaus = async (id, name, status) => {
     const response = await changeState(
       `https://Bcknd.food2go.online/admin/settings/payment_methods/status/${id}`,
       `${name} Changed Status.`,
@@ -119,7 +119,7 @@ const PaymentMethodPage = () => {
                     <Switch
                       checked={paymentMethod.status === 1}
                       handleClick={() => {
-                        hangleChangeStaus(paymentMethod.id, paymentMethod.name, paymentMethod.status === 1 ? 0 : 1);
+                        handleChangeStaus(paymentMethod.id, paymentMethod.name, paymentMethod.status === 1 ? 0 : 1);
                       }}
                     />
                   </td>
