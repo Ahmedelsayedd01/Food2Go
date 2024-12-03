@@ -3,22 +3,35 @@ import {
   AddonsLayout,
   AddProductLayout,
   AllOrdersLayout,
+  CanceledOrdersLayout,
   CategoryLayout,
+  ConfirmedOrdersLayout,
   DashboardLayout,
+  DeliveredOrdersLayout,
+  DeliveryManLayout,
   DetailsOrderLayout,
   EditAddonsLayout,
   EditCategoryLayout,
+  EditDeliveryManLayout,
   EditPaymentMethodLayout,
   EditProductLayout,
+  FailedOrdersLayout,
   ForgetPassLayout,
   InvoiceOrderLayout,
   LoginLayout,
+  OrdersPaymentLayout,
+  OutForDeliveryOrdersLayout,
   PaymentMethodLayout,
-  ProductLayout
+  PendingOrdersLayout,
+  ProcessingOrdersLayout,
+  ProductLayout,
+  ReturnedOrdersLayout,
+  ScheduleOrdersLayout
 } from "./layouts/Layouts";
 import ProtectedLogin from "./ProtectedData/ProtectedLogin";
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
 import App from "./App";
+import { OrdersPaymentHistoryPage, OrdersPaymentPendingPage } from "./Pages/Pages";
 
 const ProductSetupLayout = () => {
   return <Outlet />;
@@ -27,12 +40,15 @@ const SettingLayout = () => {
   return <Outlet />;
 }
 const OrderLayout = () => {
-  return <Outlet />;
-}
+  return (
+    <Outlet />
+  );
+};
+
 export const router = createBrowserRouter([
   /* Login Admin */
   {
-    path: "/login",
+    path: "/",
     element: <ProtectedLogin />,
     children: [
       {
@@ -120,25 +136,95 @@ export const router = createBrowserRouter([
                 children: [
                   {
                     path: '',
-                    element: <PaymentMethodLayout />
+                    children: [
+                      {
+                        index: true,
+                        element: <PaymentMethodLayout />,
+                      },
+                      {
+                        path: 'edit/:paymentMethodId',
+                        element: <EditPaymentMethodLayout />
+                      }
+                    ]
                   },
-                  {
-                    path: 'edit/:paymentMethodId',
-                    element: <EditPaymentMethodLayout />
-                  }
                 ]
               },
+            ]
+          },
+          {
+            path: 'orders_payment',
+            element: <OrdersPaymentLayout />,
+
+            children: [
+              {
+                path: 'payment_pending',
+                element: <OrdersPaymentPendingPage />,
+              },
+              {
+                path: 'payment_history',
+                element: <OrdersPaymentHistoryPage />,
+              },
+            ]
+          },
+          {
+            path: 'delivery_man',
+            children: [
+              {
+                path: '',
+                element: <DeliveryManLayout />,
+              },
+              {
+                path: 'edit/:deliveryManId',
+                element: <EditDeliveryManLayout />,
+              }
             ]
           },
           {
             path: 'orders',
             element: <OrderLayout />,
             children: [
+              /* All orders */
               {
                 path: 'all',
                 element: <AllOrdersLayout />
               },
-              
+              {
+                path: 'pending',
+                element: <PendingOrdersLayout />
+              },
+              {
+                path: 'confirmed',
+                element: <ConfirmedOrdersLayout />
+              },
+              {
+                path: 'processing',
+                element: <ProcessingOrdersLayout />
+              },
+              {
+                path: 'out_for_delivery',
+                element: <OutForDeliveryOrdersLayout />
+              },
+              {
+                path: 'delivered',
+                element: <DeliveredOrdersLayout />
+              },
+              {
+                path: 'returned',
+                element: <ReturnedOrdersLayout />
+              },
+              {
+                path: 'failed',
+                element: <FailedOrdersLayout />
+              },
+              {
+                path: 'canceled',
+                element: <CanceledOrdersLayout />
+              },
+              {
+                path: 'schedule',
+                element: <ScheduleOrdersLayout />
+              },
+
               /* Details Order */
               {
                 path: 'details/:orderId',
