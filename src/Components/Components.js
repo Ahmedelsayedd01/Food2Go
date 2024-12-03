@@ -24,3 +24,5 @@ export { default as TitlePage } from "./AnotherComponents/TitlePage";
 export { default as TitleSection } from "./AnotherComponents/TitleSection";
 export { default as Switch } from "./AnotherComponents/Switch";
 export { default as DropDown } from "./AnotherComponents/DropDown";
+export { default as Cart } from "./AnotherComponents/Cart";
+export { default as NewOrdersComponent } from "./AnotherComponents/NewOrdersComponent";
