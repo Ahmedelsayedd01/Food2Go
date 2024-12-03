@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { DropDown, StaticButton, StaticLoader, SubmitButton, Switch, TextInput, UploadInput } from '../../../../Components/Components';
+import { DropDown, NumberInput, StaticButton, StaticLoader, SubmitButton, Switch, TextInput, UploadInput } from '../../../../Components/Components';
 import { useGet } from '../../../../Hooks/useGet';
 import { usePost } from '../../../../Hooks/usePostJson';
 import { useAuth } from '../../../../Context/Auth';
@@ -7,7 +7,7 @@ import { useAuth } from '../../../../Context/Auth';
 import { MultiSelect } from 'primereact/multiselect';
 
 
-const AddCategorySection = () => {
+const AddCategorySection = ({ update, setUpdate }) => {
        const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://Bcknd.food2go.online/admin/translation' });
        const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: 'https://Bcknd.food2go.online/admin/category' });
        const { postData, loadingPost, response } = usePost({ url: 'https://Bcknd.food2go.online/admin/category/add' });
@@ -68,7 +68,7 @@ const AddCategorySection = () => {
                      setCategoriesPriority(() => {
                             const priorities = [];
 
-                            for (let index = 0; index < dataCategory.categories.length; index++) {
+                            for (let index = 0; index <= dataCategory.categories.length; index++) {
                                    const element = index + 1;
 
                                    const priorityObj = {
@@ -84,6 +84,7 @@ const AddCategorySection = () => {
                      });
 
               }
+              console.log('setCategoriesPriority', categoriesPriority)
               console.log('dataCategory', dataCategory)
        }, [dataCategory]);
 
@@ -161,6 +162,7 @@ const AddCategorySection = () => {
        useEffect(() => {
               console.log('response', response)
               if (!loadingPost) {
+                     setCurrentTap(0)
                      setCategoryName([])
                      setImage('')
                      setImageFile(null)
@@ -168,13 +170,16 @@ const AddCategorySection = () => {
                      setBannerFile(null)
                      setStateCategoriesParent('Select Category Parent')
                      setCategoriesParentId('')
-                     setStateCategoriesPriority('Select Category Priority')
-                     setCategoriesPriorityId('')
+                     // setStateCategoriesPriority('Select Category Priority')
+                     setPriority('')
+                     // setCategoriesPriorityId('')
                      setStatecategoriesAddonse('Select Category Addons')
                      setSelectedCategoriesAddons([])
                      setStatusCategory(0)
                      setActiveCategory(0)
               }
+              refetchCategory()
+              setUpdate(!update)
        }, [response])
 
        const handleReset = () => {
@@ -184,9 +189,9 @@ const AddCategorySection = () => {
               setBanner('')
               setBannerFile(null)
               setStateCategoriesParent('Select Category Parent')
-              setCategoriesParentId('')
-              setStateCategoriesPriority('Select Category Priority')
-              setCategoriesPriorityId('')
+              setParent('')
+              // setStateCategoriesPriority('Select Category Priority')
+              setPriority('')
               setStatecategoriesAddonse('Select Category Addons')
               setSelectedCategoriesAddons([])
               setStatusCategory(0)
@@ -199,11 +204,13 @@ const AddCategorySection = () => {
               const handleClickOutside = (event) => {
                      // Close dropdown if clicked outside
                      if (
-                            dropDownCategoriesParent.current && !dropDownCategoriesParent.current.contains(event.target) &&
-                            dropDownCategoriesPriority.current && !dropDownCategoriesPriority.current.contains(event.target)
+                            dropDownCategoriesParent.current && !dropDownCategoriesParent.current.contains(event.target)
+                            // dropDownCategoriesPriority.current && !dropDownCategoriesPriority.current.contains(event.target
+
+                            // )
                      ) {
                             setIsOpenCategoriesParent(null);
-                            setIsOpenCategoriesPriority(null);
+                            // setIsOpenCategoriesPriority(null);
                      }
               };
 
@@ -231,8 +238,8 @@ const AddCategorySection = () => {
               //        return;
               // }
 
-              if (!categoriesPriorityId) {
-                     auth.toastError('please Select Category Priority')
+              if (!priority) {
+                     auth.toastError('please Enter Category Priority')
                      return;
               }
               if (selectedCategoriesAddons.length === 0) {
@@ -261,7 +268,7 @@ const AddCategorySection = () => {
                      formData.append('category_id', categoriesParentId);
               }
 
-              formData.append('priority', categoriesPriorityId);
+              formData.append('priority', priority);
               // Assuming selectedCategoriesAddons is an array of selected objects with `id` properties
               selectedCategoriesAddons.forEach((addon, index) => {
                      formData.append(`addons[${index}]`, addon.id); // Append each ID as an array element in FormData
@@ -313,7 +320,7 @@ const AddCategorySection = () => {
                                                                       <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                                                                              <span className="text-xl font-TextFontRegular text-thirdColor">Name {tap.name}:</span>
                                                                              <TextInput
-                                                                                    value={categoryName[index]?.category_name || ''} // Access category_name property
+                                                                                    value={categoryName[index]?.category_name || '-'} // Access category_name property
                                                                                     onChange={(e) => {
                                                                                            const inputValue = e.target.value; // Ensure this is a string
                                                                                            setCategoryName(prev => {
@@ -356,7 +363,7 @@ const AddCategorySection = () => {
                                                                                            />
                                                                                     </div>
                                                                                     {/* Category Priority */}
-                                                                                    <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                                                                    {/* <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                                                                                            <span className="text-xl font-TextFontRegular text-thirdColor">Category Priority:</span>
                                                                                            <DropDown
                                                                                                   ref={dropDownCategoriesPriority}
@@ -366,6 +373,14 @@ const AddCategorySection = () => {
                                                                                                   handleOpenOption={handleOpenOptionCategoriesPriority}
                                                                                                   options={categoriesPriority}
                                                                                                   onSelectOption={handleSelectCategoriesPriority}
+                                                                                           />
+                                                                                    </div> */}
+                                                                                    <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                                                                           <span className="text-xl font-TextFontRegular text-thirdColor">Priority Num :</span>
+                                                                                           <NumberInput
+                                                                                                  value={priority} // Access addon_name property
+                                                                                                  onChange={(e) => setPriority(e.target.value)}
+                                                                                                  placeholder="Priority Num"
                                                                                            />
                                                                                     </div>
                                                                                     {/* Category Addons */}

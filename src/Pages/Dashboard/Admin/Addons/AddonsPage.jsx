@@ -5,7 +5,7 @@ import { useGet } from '../../../../Hooks/useGet';
 import { useDelete } from '../../../../Hooks/useDelete';
 import { StaticLoader } from '../../../../Components/Components';
 
-const AddonsPage = () => {
+const AddonsPage = ({ refetch }) => {
        const { refetch: refetchAddons, loading: loadingAddons, data: dataAddons } = useGet({ url: 'https://Bcknd.food2go.online/admin/addons' });
        const { deleteData, loadingDelete, responseDelete } = useDelete();
        const [addons, setAddons] = useState([]);
@@ -13,7 +13,7 @@ const AddonsPage = () => {
        // Fetch Addons when the component mounts or when refetch is called
        useEffect(() => {
               refetchAddons();
-       }, [refetchAddons]); // Empty dependency array to only call refetch once on mount
+       }, [refetchAddons, refetch]); // Empty dependency array to only call refetch once on mount
 
        // Delete addon
        const handleDelete = async (id, name) => {

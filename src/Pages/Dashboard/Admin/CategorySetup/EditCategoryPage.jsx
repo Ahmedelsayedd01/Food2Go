@@ -359,7 +359,7 @@ const EditCategoryPage = () => {
                                                                       <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                                                                              <span className="text-xl font-TextFontRegular text-thirdColor">Name {tap.name}:</span>
                                                                              <TextInput
-                                                                                    value={categoryName[index]?.category_name || ''} // Access category_name property
+                                                                                    value={categoryName[index]?.category_name || '-'} // Access category_name property
                                                                                     onChange={(e) => {
                                                                                            const inputValue = e.target.value; // Ensure this is a string
                                                                                            setCategoryName(prev => {

@@ -7,7 +7,7 @@ import { useAuth } from '../../../../Context/Auth';
 import { MultiSelect } from 'primereact/multiselect';
 
 
-const AddAddonsSection = () => {
+const AddAddonsSection = ({ update, setUpdate }) => {
        const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://Bcknd.food2go.online/admin/translation' });
        const { refetch: refetchAddons, loading: loadingAddons, data: dataAddons } = useGet({ url: 'https://Bcknd.food2go.online/admin/addons' });
        const { postData, loadingPost, response } = usePost({ url: 'https://Bcknd.food2go.online/admin/addons/add' });
@@ -89,6 +89,7 @@ const AddAddonsSection = () => {
                      setAddonTaxesName('')
                      setAddonQuantity(0)
               }
+              setUpdate(!update)
        }, [response])
 
        const handleReset = () => {
@@ -190,7 +191,7 @@ const AddAddonsSection = () => {
                                                                       <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                                                                              <span className="text-xl font-TextFontRegular text-thirdColor">Name {tap.name}:</span>
                                                                              <TextInput
-                                                                                    value={addonsName[index]?.addon_name || ''} // Access addon_name property
+                                                                                    value={addonsName[index]?.addon_name || '-'} // Access addon_name property
                                                                                     onChange={(e) => {
                                                                                            const inputValue = e.target.value; // Ensure this is a string
                                                                                            setAddonsName(prev => {

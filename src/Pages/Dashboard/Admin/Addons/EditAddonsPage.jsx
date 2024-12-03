@@ -55,9 +55,9 @@ const EditAddonsPage = () => {
                      if (dataAddonsEdit.addons_names) {
                             dataAddonsEdit.addons_names.forEach((addonName) => {
                                    let obj = {
-                                          tranlation_id: addonName.id || '',  // Use '' if id is missing
+                                          tranlation_id: addonName.id || '-',  // Use '' if id is missing
                                           tranlation_name: addonName.lang || 'Default Language',  // Fallback value
-                                          addon_name: addonName.name || '',  // Use '' if name is missing
+                                          addon_name: addonName.name || '-',  // Use '' if name is missing
                                    };
                                    newAddonsNames.push(obj);
                             });
@@ -211,7 +211,7 @@ const EditAddonsPage = () => {
                                                                       <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                                                                              <span className="text-xl font-TextFontRegular text-thirdColor">Name {tap.name}:</span>
                                                                              <TextInput
-                                                                                    value={addonsName[index]?.addon_name || ''} // Access addon_name property safely
+                                                                                    value={addonsName[index]?.addon_name || '-'} // Access addon_name property safely
                                                                                     onChange={(e) => {
                                                                                            const inputValue = e.target.value;
                                                                                            setAddonsName((prev) => {
@@ -225,7 +225,7 @@ const EditAddonsPage = () => {
                                                                                                   // Create or update the object at the current index
                                                                                                   updatedNames[index] = {
                                                                                                          ...updatedNames[index], // Retain existing properties if any
-                                                                                                         tranlation_id: tap?.id || updatedNames[index]?.tranlation_id || '', // Use tap.id if available, or fallback to existing
+                                                                                                         tranlation_id: tap?.id || updatedNames[index]?.tranlation_id || '-', // Use tap.id if available, or fallback to existing
                                                                                                          addon_name: inputValue, // Update addon_name with input value
                                                                                                          tranlation_name: tap?.name || updatedNames[index]?.tranlation_name || 'Default Name', // Use tap.name or existing value
                                                                                                   };
