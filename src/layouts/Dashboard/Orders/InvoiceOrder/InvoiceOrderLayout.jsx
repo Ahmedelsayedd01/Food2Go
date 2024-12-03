@@ -5,7 +5,7 @@ import { InvoiceOrdersPage } from '../../../../Pages/Pages'
 const InvoiceOrderLayout = () => {
        return (
               <>
-                     <TitlePage text={'Invoice Orders'} />
+                     <TitlePage text={'Order Invoice'} />
                      {/* <AddPaymentMethodSection /> */}
                      {/* <TitleSection text={'Payment Methods Table'} /> */}
                      <InvoiceOrdersPage />

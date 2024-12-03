@@ -28,10 +28,36 @@ export { default as AddProductLayout } from "./Dashboard/ProductSetup/AddProduct
 export { default as PaymentMethodLayout } from "./Dashboard/Setting/PaymentMethod/PaymentMethodLayout";
 export { default as EditPaymentMethodLayout } from "./Dashboard/Setting/PaymentMethod/EditPaymentMethodLayout";
 
+/* Orders Payment */
+export { default as OrdersPaymentLayout } from "./Dashboard/OrdersPayment/OrderPaymentLayout";
+
+/* Delivery Man */
+export { default as DeliveryManLayout } from "./Dashboard/DeliveryMan/DeliveryManLayout";
+export { default as EditDeliveryManLayout } from "./Dashboard/DeliveryMan/EditDeliveryManLayout";
+
 /*  Orders */
-// Orders -> All Orders
-export { default as AllOrdersLayout } from "./Dashboard/Orders/AllOrders/AllOrdersLayout";
 // Orders -> Details Order
 export { default as DetailsOrderLayout } from "./Dashboard/Orders/DetailsOrder/DetailsOrderLayout";
 // Orders -> Invoice Order
 export { default as InvoiceOrderLayout } from "./Dashboard/Orders/InvoiceOrder/InvoiceOrderLayout";
+
+// Orders -> All Orders
+export { default as AllOrdersLayout } from "./Dashboard/Orders/AllOrders/AllOrdersLayout";
+// Orders -> Pending Orders
+export { default as PendingOrdersLayout } from "./Dashboard/Orders/PendingOrders/PendingOrdersLayout";
+// Orders -> Confirmed Orders
+export { default as ConfirmedOrdersLayout } from "./Dashboard/Orders/ConfirmedOrders/ConfirmedOrdersLayout";
+// Orders -> Processing Orders
+export { default as ProcessingOrdersLayout } from "./Dashboard/Orders/ProcessingOrders/ProcessingOrdersLayout";
+// Orders -> OutForDelivery Orders
+export { default as OutForDeliveryOrdersLayout } from "./Dashboard/Orders/OutForDeliveryOrders/OutForDeliveryOrdersLayout";
+// Orders -> Delivered Orders
+export { default as DeliveredOrdersLayout } from "./Dashboard/Orders/DeliveredOrders/DeliveredOrdersLayout";
+// Orders -> Returned Orders
+export { default as ReturnedOrdersLayout } from "./Dashboard/Orders/ReturnedOrders/ReturnedOrdersLayout";
+// Orders -> Failed Orders
+export { default as FailedOrdersLayout } from "./Dashboard/Orders/FailedOrders/FailedOrdersLayout";
+// Orders -> Canceled Orders
+export { default as CanceledOrdersLayout } from "./Dashboard/Orders/CanceledOrders/CanceledOrdersLayout";
+// Orders -> Schedule Orders
+export { default as ScheduleOrdersLayout } from "./Dashboard/Orders/ScheduleOrders/ScheduleOrdersLayout";

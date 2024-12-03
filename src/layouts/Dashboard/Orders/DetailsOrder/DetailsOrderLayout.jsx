@@ -5,7 +5,7 @@ import { DetailsOrdersPage } from '../../../../Pages/Pages'
 const DetailsOrderLayout = () => {
        return (
               <>
-                     <TitlePage text={'Details Orders'} />
+                     <TitlePage text={'Details Order'} />
                      {/* <AddPaymentMethodSection /> */}
                      {/* <TitleSection text={'Payment Methods Table'} /> */}
                      <DetailsOrdersPage />
