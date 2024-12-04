@@ -280,7 +280,7 @@ const EditAddonsPage = () => {
                                           {/* Buttons*/}
                                           <div className="w-full flex items-center justify-end gap-x-4">
                                                  <div className="">
-                                                        <StaticButton text={'Cancle'} handleClick={handleCancel} bgColor='bg-transparent' Color='text-mainColor' border={'border-2'} borderColor={'border-mainColor'} rounded='rounded-full' />
+                                                        <StaticButton text={'Cancel'} handleClick={handleCancel} bgColor='bg-transparent' Color='text-mainColor' border={'border-2'} borderColor={'border-mainColor'} rounded='rounded-full' />
                                                  </div>
                                                  <div className="">
                                                         <SubmitButton

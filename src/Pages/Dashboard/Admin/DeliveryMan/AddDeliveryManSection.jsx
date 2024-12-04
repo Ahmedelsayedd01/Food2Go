@@ -27,7 +27,7 @@ const AddDeliveryManSection = ({ data, refetch, setRefetch }) => {
        const [deliveryBranchName, setDeliveryBranchName] = useState('')
        const [deliveryBranchId, setDeliveryBranchId] = useState('')
 
-       const [identityTypes, setIdentityTypes] = useState([{ name: 'Cart' }, { name: 'Passport' }])
+       const [identityTypes, setIdentityTypes] = useState([{ name: 'Card' }, { name: 'Passport' }])
        const [identityTypeState, setIdentityTypeState] = useState('Select Identity Type')
        const [identityTypeName, setIdentityTypeName] = useState('')
 

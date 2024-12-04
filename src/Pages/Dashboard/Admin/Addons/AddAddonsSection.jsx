@@ -191,7 +191,7 @@ const AddAddonsSection = ({ update, setUpdate }) => {
                                                                       <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                                                                              <span className="text-xl font-TextFontRegular text-thirdColor">Name {tap.name}:</span>
                                                                              <TextInput
-                                                                                    value={addonsName[index]?.addon_name || '-'} // Access addon_name property
+                                                                                    value={addonsName[index]?.addon_name} // Access addon_name property
                                                                                     onChange={(e) => {
                                                                                            const inputValue = e.target.value; // Ensure this is a string
                                                                                            setAddonsName(prev => {
