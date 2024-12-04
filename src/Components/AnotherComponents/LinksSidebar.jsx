@@ -7,6 +7,7 @@ import { RiVipDiamondLine } from 'react-icons/ri';
 import { CiSettings } from 'react-icons/ci';
 import { useSelector } from 'react-redux';
 import { MdOutlineDeliveryDining, MdOutlinePayments } from 'react-icons/md';
+import { PiFlagBanner } from 'react-icons/pi';
 
 const LinksSidebar = () => {
        const auth = useAuth();
@@ -50,9 +51,11 @@ const LinksSidebar = () => {
        const [isActiveAddons, setIsActiveAddons] = useState(stateLink.isActiveAddons ?? false);
        const [isActiveAddonsIcon, setIsActiveAddonsIcon] = useState(stateLink.isActiveAddonsIcon ?? false);
        /* Category */
-       const [isOpenCategory, setIsOpenCategory] = useState(stateLink.isOpenCategory ?? false);
        const [isActiveCategory, setIsActiveCategory] = useState(stateLink.isActiveCategory ?? false);
        const [isActiveCategoryIcon, setIsActiveCategoryIcon] = useState(stateLink.isActiveCategoryIcon ?? false);
+       /* Banners */
+       const [isActiveBanners, setIsActiveBanners] = useState(stateLink.isActiveBanners ?? false);
+       const [isActiveBannersIcon, setIsActiveBannersIcon] = useState(stateLink.isActiveBannersIcon ?? false);
        /* Product */
        const [isOpenProductSetup, setIsOpenProductSetup] = useState(stateLink.isOpenProductSetup ?? false);
        const [isActiveProductSetupIcon, setIsActiveProductSetupIcon] = useState(stateLink.isActiveProductSetupIcon ?? false);
@@ -65,6 +68,9 @@ const LinksSidebar = () => {
        const [isActiveSettingIcon, setIsActiveSettingIcon] = useState(stateLink.isActiveSettingIcon ?? false);
        const [isActiveSetting, setIsActiveSetting] = useState(stateLink.isActiveSetting ?? false);
        const [isActivePaymentMethod, setIsActivePaymentMethod] = useState(stateLink.isActivePaymentMethod ?? false);
+       const [isActiveCities, setIsActiveCities] = useState(stateLink.isActiveCities ?? false);
+       const [isActiveBranches, setIsActiveBranches] = useState(stateLink.isActiveBranches ?? false);
+       const [isActiveZones, setIsActiveZone] = useState(stateLink.isActiveZones ?? false);
 
        /* Orders Payment */
        const [isActiveOrdersPayment, setIsActiveOrdersPayment] = useState(stateLink.isActiveOrdersPayment ?? false);
@@ -97,9 +103,10 @@ const LinksSidebar = () => {
                      isActiveHomeIcon,
                      isActiveAddons,
                      isActiveAddonsIcon,
-                     isOpenCategory,
                      isActiveCategory,
                      isActiveCategoryIcon,
+                     isActiveBanners,
+                     isActiveBannersIcon,
                      isOpenProductSetup,
                      isActiveProductSetupIcon,
                      isActiveProduct,
@@ -107,6 +114,10 @@ const LinksSidebar = () => {
 
                      isActiveOrdersPayment,
                      isActiveOrdersPaymentIcon,
+                     isActiveCities,
+                     isActiveBranches,
+                     isActiveZones,
+
 
                      isActiveDeliveryMan,
                      isActiveDeliveryManIcon,
@@ -132,9 +143,10 @@ const LinksSidebar = () => {
               isActiveHomeIcon,
               isActiveAddons,
               isActiveAddonsIcon,
-              isOpenCategory,
               isActiveCategory,
               isActiveCategoryIcon,
+              isActiveBanners,
+              isActiveBannersIcon,
               isOpenProductSetup,
               isActiveProductSetupIcon,
               isActiveProduct,
@@ -142,6 +154,9 @@ const LinksSidebar = () => {
 
               isActiveOrdersPayment,
               isActiveOrdersPaymentIcon,
+              isActiveCities,
+              isActiveBranches,
+              isActiveZones,
 
               isActiveDeliveryMan,
               isActiveDeliveryManIcon,
@@ -170,9 +185,10 @@ const LinksSidebar = () => {
               isActiveHomeIcon,
               isActiveAddons,
               isActiveAddonsIcon,
-              isOpenCategory,
               isActiveCategory,
               isActiveCategoryIcon,
+              isActiveBanners,
+              isActiveBannersIcon,
               isOpenProductSetup,
               isActiveProductSetupIcon,
               isActiveProduct,
@@ -180,6 +196,9 @@ const LinksSidebar = () => {
 
               isActiveOrdersPayment,
               isActiveOrdersPaymentIcon,
+              isActiveCities,
+              isActiveBranches,
+              isActiveZones,
 
               isActiveDeliveryMan,
               isActiveDeliveryManIcon,
@@ -205,9 +224,10 @@ const LinksSidebar = () => {
               setIsActiveHome(false);
               setIsActiveHomeIcon(false);
               setIsActiveAddons(false);
-              setIsOpenCategory(false);
               setIsActiveCategory(false);
               setIsActiveCategoryIcon(false);
+              setIsActiveBanners(false)
+              setIsActiveBannersIcon(false)
               setIsOpenProductSetup(false);
               setIsActiveProductSetup(false);
               setIsActiveProductSetupIcon(false);
@@ -218,6 +238,9 @@ const LinksSidebar = () => {
               setIsActiveSetting(false);
               setIsActiveSettingIcon(false);
               setIsActivePaymentMethod(false);
+              setIsActiveCities(false)
+              setIsActiveBranches(false)
+              setIsActiveZone(false)
 
               setIsActiveOrdersPayment(false)
               setIsActiveOrdersPaymentIcon(false)
@@ -274,7 +297,6 @@ const LinksSidebar = () => {
        /* Category */
        const handleClickCategory = useCallback(() => {
               handleStateLinks();
-              setIsOpenCategory(true);
               setIsActiveCategory(true);
               setIsActiveCategoryIcon(true);
        }, []);
@@ -283,6 +305,20 @@ const LinksSidebar = () => {
               const result = part.slice(0, 3).join('/');
               if (result == "/dashboard/category") {
                      handleClickCategory()
+              }
+       }, [location])
+
+       /* Banners */
+       const handleClickBanners = useCallback(() => {
+              handleStateLinks();
+              setIsActiveBanners(true);
+              setIsActiveBannersIcon(true);
+       }, []);
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard/banners") {
+                     handleClickBanners()
               }
        }, [location])
 
@@ -350,8 +386,11 @@ const LinksSidebar = () => {
               const part = pathName.split('/');
               const result = part.slice(0, 3).join('/');
 
-              // Only navigate if on `/dashboard/setup_product` but not on paths starting with `/dashboard/setup_product/product`
-              if (result === "/dashboard/setting" && !pathName.startsWith("/dashboard/setting/payment_method")) {
+              // Only navigate if on `/dashboard/setting` but not already on any sub-route
+              if (
+                     result === "/dashboard/setting" &&
+                     !["/dashboard/setting/payment_method", "/dashboard/setting/cities", "/dashboard/setting/branches", "/dashboard/setting/zones"].some(path => pathName.startsWith(path))
+              ) {
                      handleClickSetting();
                      navigate('/dashboard/setting/payment_method');
               }
@@ -371,6 +410,49 @@ const LinksSidebar = () => {
               const result = part.slice(0, 4).join('/');
               if (result == "/dashboard/setting/payment_method") {
                      handleClickPaymentMethod()
+              }
+       }, [location])
+       /* Cities */
+       const handleClickCities = useCallback(() => {
+              handleStateLinks()
+              setIsOpenSetting(true);
+              setIsActiveSetting(true);
+              setIsActiveCities(true);
+       }, []);
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 4).join('/');
+              if (result == "/dashboard/setting/cities") {
+                     handleClickCities()
+              }
+       }, [location])
+       /* Branches */
+       const handleClickBranches = useCallback(() => {
+              handleStateLinks()
+              setIsOpenSetting(true);
+              setIsActiveSetting(true);
+              setIsActiveBranches(true);
+       }, []);
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 4).join('/');
+              if (result == "/dashboard/setting/branches") {
+                     handleClickBranches()
+              }
+       }, [location])
+
+       /* Zones */
+       const handleClickZones = useCallback(() => {
+              handleStateLinks()
+              setIsOpenSetting(true);
+              setIsActiveSetting(true);
+              setIsActiveZone(true);
+       }, []);
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 4).join('/');
+              if (result == "/dashboard/setting/zones") {
+                     handleClickZones()
               }
        }, [location])
 
@@ -681,8 +763,34 @@ const LinksSidebar = () => {
                                           Category Setup
                                    </span>
                             </div>
-                            <div className={`${hideSide ? 'block' : 'hidden'}`}>
+                            {/* <div className={`${hideSide ? 'block' : 'hidden'}`}>
                                    <IoIosArrowForward className={`${isActiveCategory ? 'text-mainColor rotate-90' : 'text-white rotate-0'} text-xl transition-all duration-300 group-hover:text-mainColor`} />
+                            </div> */}
+                     </Link>
+                     {/* Banners */}
+                     <Link to="banners"
+                            onMouseMove={() => setIsActiveBannersIcon(true)}
+                            onMouseOut={() => setIsActiveBannersIcon(false)}
+                            onClick={handleClickBanners}
+                            className={`
+                                   ${isActiveBanners ? 'active' : ''}
+                                   ${hideSide ? 'justify-between' : 'justify-center'} 
+                                   hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
+                                   hover:text-mainColor w-full flex items-center 
+                                   transition-all duration-300 group`}
+                     >
+                            <div className="flex items-center gap-x-2">
+                                   <PiFlagBanner
+                                          className={`${isActiveBannersIcon || isActiveBanners ? 'text-[#9E090F]' : 'text-[#fff]'} text-2xl`}
+                                   />
+                                   <span
+                                          className={`${hideSide ? 'block' : 'hidden'}
+                                           ${isActiveBanners ? "text-mainColor" : "text-white"}
+                                          text-lg font-TextFontRegular transition-all duration-300
+                                          group-hover:text-mainColor`}
+                                   >
+                                          Banners
+                                   </span>
                             </div>
                      </Link>
                      {/* Product */}
@@ -769,6 +877,30 @@ const LinksSidebar = () => {
                                           text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
                                                  }>
                                                  Payment Method
+                                          </li>
+                                   </Link>
+                                   <Link to={"setting/cities"} onClick={handleClickCities}>
+                                          <li
+                                                 className={`${isActiveCities ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                 }>
+                                                 Cities
+                                          </li>
+                                   </Link>
+                                   <Link to={"setting/branches"} onClick={handleClickBranches}>
+                                          <li
+                                                 className={`${isActiveBranches ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                 }>
+                                                 Branches
+                                          </li>
+                                   </Link>
+                                   <Link to={"setting/zones"} onClick={handleClickZones}>
+                                          <li
+                                                 className={`${isActiveZones ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                 }>
+                                                 Zones
                                           </li>
                                    </Link>
                             </ul>
