@@ -9,6 +9,7 @@ const DropDown = forwardRef(({
        stateoption,
        openMenu,
        handleOpenOption,
+       border = true,
        options = [], // Options array, defaulting to an empty array
        onSelectOption, // Callback for when an option is selected
 }, ref) => {
@@ -24,7 +25,7 @@ const DropDown = forwardRef(({
                             type="button"
                             aria-expanded={openMenu}
                             aria-haspopup="listbox"
-                            className={`flex ${iconDirection ? 'flex-row-reverse' : 'flex-row'} items-center justify-between w-full py-2 px-3 h-14 shadow border-2 border-gray-400 rounded-xl outline-none font-TextFontRegular text-thirdColor bg-white`}
+                            className={`flex ${iconDirection ? 'flex-row-reverse' : 'flex-row'} items-center justify-between w-full py-2 px-3 h-14 shadow ${border ? "border-2 border-gray-400" : ''} rounded-xl outline-none font-TextFontRegular text-thirdColor bg-white`}
                             onClick={handleOpen}
                      >
                             <div className="text-mainColor text-2xl">{iconMenu}</div>
