@@ -16,6 +16,9 @@ export { default as EditAddonsLayout } from "./Dashboard/Addons/EditAddonsLayout
 // Category Setup -> Category
 export { default as CategoryLayout } from "./Dashboard/CategorySetup/CategoryLayout";
 export { default as EditCategoryLayout } from "./Dashboard/CategorySetup/EditCategoryLayout";
+/* Banners */
+export { default as BannersLayout } from "./Dashboard/Banners/BannersLayout";
+export { default as EditBannerLayout } from "./Dashboard/Banners/EditBannerLayout";
 
 /*  Product Setup */
 // Product Setup -> Product
@@ -27,6 +30,15 @@ export { default as AddProductLayout } from "./Dashboard/ProductSetup/AddProduct
 // Setting -> Payment Method
 export { default as PaymentMethodLayout } from "./Dashboard/Setting/PaymentMethod/PaymentMethodLayout";
 export { default as EditPaymentMethodLayout } from "./Dashboard/Setting/PaymentMethod/EditPaymentMethodLayout";
+// Setting -> Cities
+export { default as CitiesLayout } from "./Dashboard/Setting/Cities/CitiesLayout";
+export { default as EditCityLayout } from "./Dashboard/Setting/Cities/EditCityLayout";
+// Setting -> Branches
+export { default as BranchesLayout } from "./Dashboard/Setting/Branches/BranchesLayout";
+export { default as EditBranchLayout } from "./Dashboard/Setting/Branches/EditBranchLayout";
+// Setting -> Zones
+export { default as ZonesLayout } from "./Dashboard/Setting/Zones/ZonesLayout";
+export { default as EditZoneLayout } from "./Dashboard/Setting/Zones/EditZoneLayout";
 
 /* Orders Payment */
 export { default as OrdersPaymentLayout } from "./Dashboard/OrdersPayment/OrderPaymentLayout";
