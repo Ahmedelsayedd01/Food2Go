@@ -15,14 +15,31 @@ export { default as EditAddonsPage } from "./Dashboard/Admin/Addons/EditAddonsPa
 export { default as CategoryPage } from "./Dashboard/Admin/CategorySetup/CategoryPage";
 export { default as AddCategorySection } from "./Dashboard/Admin/CategorySetup/AddCategorySection";
 export { default as EditCategoryPage } from "./Dashboard/Admin/CategorySetup/EditCategoryPage";
+// Addons
+export { default as BannersPage } from "./Dashboard/Admin/Banners/BannersPage";
+export { default as AddBannerSection } from "./Dashboard/Admin/Banners/addBannerSection";
+export { default as EditBannerPage } from "./Dashboard/Admin/Banners/EditBannerPage";
 // Product Setup
 export { default as ProductPage } from "./Dashboard/Admin/ProductSetup/ProductPage";
 export { default as AddProductPage } from "./Dashboard/Admin/ProductSetup/AddProductPage";
 export { default as EditProductPage } from "./Dashboard/Admin/ProductSetup/EditProductPage";
-// Setting
+/* Setting */
+// Setting -> Payment Method
 export { default as PaymentMethodPage } from "./Dashboard/Admin/Setting/PaymentMethod/PaymentMethodPage";
 export { default as AddPaymentMethodSection } from "./Dashboard/Admin/Setting/PaymentMethod/AddPaymentMethodSection";
 export { default as EditPaymentMethodPage } from "./Dashboard/Admin/Setting/PaymentMethod/EditPaymentMethodPage";
+// Setting -> Cities
+export { default as CitiesPage } from "./Dashboard/Admin/Setting/Cities/CitiesPage";
+export { default as AddCitySection } from "./Dashboard/Admin/Setting/Cities/addCitySection";
+export { default as EditCityPage } from "./Dashboard/Admin/Setting/Cities/EditCityPage";
+// Setting -> Branches
+export { default as BranchesPage } from "./Dashboard/Admin/Setting/Branches/BranchesPage";
+export { default as AddBranchSection } from "./Dashboard/Admin/Setting/Branches/addBranchSection";
+export { default as EditBranchPage } from "./Dashboard/Admin/Setting/Branches/EditBranchPage";
+// Setting -> Zones
+export { default as ZonesPage } from "./Dashboard/Admin/Setting/Zones/ZonesPage";
+export { default as AddZoneSection } from "./Dashboard/Admin/Setting/Zones/addZoneSection";
+export { default as EditZonePage } from "./Dashboard/Admin/Setting/Zones/EditZonePage";
 // Orders Payment
 export { default as OrdersPaymentPendingPage } from "./Dashboard/Admin/OrdersPayment/OrdersPaymentPendingPage";
 export { default as OrdersPaymentHistoryPage } from "./Dashboard/Admin/OrdersPayment/OrdersPaymentHistoryPage";
