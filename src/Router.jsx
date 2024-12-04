@@ -3,18 +3,25 @@ import {
   AddonsLayout,
   AddProductLayout,
   AllOrdersLayout,
+  BannersLayout,
+  BranchesLayout,
   CanceledOrdersLayout,
   CategoryLayout,
+  CitiesLayout,
   ConfirmedOrdersLayout,
   DashboardLayout,
   DeliveredOrdersLayout,
   DeliveryManLayout,
   DetailsOrderLayout,
   EditAddonsLayout,
+  EditBannerLayout,
+  EditBranchLayout,
   EditCategoryLayout,
+  EditCityLayout,
   EditDeliveryManLayout,
   EditPaymentMethodLayout,
   EditProductLayout,
+  EditZoneLayout,
   FailedOrdersLayout,
   ForgetPassLayout,
   InvoiceOrderLayout,
@@ -26,7 +33,8 @@ import {
   ProcessingOrdersLayout,
   ProductLayout,
   ReturnedOrdersLayout,
-  ScheduleOrdersLayout
+  ScheduleOrdersLayout,
+  ZonesLayout
 } from "./layouts/Layouts";
 import ProtectedLogin from "./ProtectedData/ProtectedLogin";
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -84,6 +92,19 @@ export const router = createBrowserRouter([
             element: <DashboardLayout />
           },
           {
+            path: 'addons',
+            children: [
+              {
+                path: '',
+                element: <AddonsLayout />,
+              },
+              {
+                path: 'edit/:addonId',
+                element: <EditAddonsLayout />,
+              }
+            ]
+          },
+          {
             path: 'category',
             children: [
               {
@@ -97,18 +118,19 @@ export const router = createBrowserRouter([
             ]
           },
           {
-            path: 'addons',
+            path: 'banners',
             children: [
               {
                 path: '',
-                element: <AddonsLayout />,
+                element: <BannersLayout />,
               },
               {
-                path: 'edit/:addonId',
-                element: <EditAddonsLayout />,
+                path: 'edit/:bannerId',
+                element: <EditBannerLayout />,
               }
             ]
           },
+
           {
             path: 'setup_product',
             element: <ProductSetupLayout />,
@@ -149,6 +171,47 @@ export const router = createBrowserRouter([
                   },
                 ]
               },
+              {
+                path: 'cities',
+                children: [
+                  {
+                    path: '',
+                    element: <CitiesLayout />,
+                  },
+                  {
+                    path: 'edit/:cityId',
+                    element: <EditCityLayout />,
+                  }
+                ]
+              },
+              {
+                path: 'branches',
+                children: [
+                  {
+                    path: '',
+                    element: <BranchesLayout />,
+                  },
+                  {
+                    path: 'edit/:branchId',
+                    element: <EditBranchLayout />,
+                  }
+                ]
+              },
+              {
+                path: 'zones',
+                children: [
+                  {
+                    path: '',
+                    element: <ZonesLayout />,
+                  },
+                  {
+                    path: 'edit/:zoneId',
+                    element: <EditZoneLayout />,
+                  }
+                ]
+              },
+
+
             ]
           },
           {
