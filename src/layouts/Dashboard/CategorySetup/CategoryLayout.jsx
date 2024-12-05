@@ -9,7 +9,7 @@ const CategoryLayout = () => {
       <TitlePage text={'Add New Category'} />
       <AddCategorySection update={update} setUpdate={setUpdate} />
       <TitleSection text={'Category Table'} />
-      <CategoryPage refetch={update} />
+      <CategoryPage refetch={update} setUpdate={setUpdate} />
     </>
   )
 }

@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { setCategory } from '../../../../Store/CreateSlices';
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 
-const CategoryPage = ({ refetch }) => {
+const CategoryPage = ({ refetch, setUpdate }) => {
        const dispatch = useDispatch()
        const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: 'https://Bcknd.food2go.online/admin/category' });
        const { changeState, loadingChange, responseChange } = useChangeState();
@@ -84,6 +84,7 @@ const CategoryPage = ({ refetch }) => {
                                    category.id === id ? { ...category, active: status } : category
                             )
                      );
+                     setUpdate(!refetch)
               }
 
               // Log the updated categories after the state update
@@ -108,6 +109,7 @@ const CategoryPage = ({ refetch }) => {
                      setPriorityChange('')
                      setOpenPriority(null)
                      refetchCategory()
+                     setUpdate(!refetch)
               }
 
        };
@@ -123,6 +125,7 @@ const CategoryPage = ({ refetch }) => {
                                    category.id !== id
                             )
                      );
+                     setUpdate(!refetch)
               }
               console.log('categories', categories)
        };

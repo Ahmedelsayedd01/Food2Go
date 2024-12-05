@@ -59,7 +59,10 @@ const AddCategorySection = ({ update, setUpdate }) => {
               }
        }, [dataTranslation]);
 
-
+       useEffect(() => {
+              refetchCategory()
+              // setUpdate(!update)
+       }, [refetchCategory, update])
        useEffect(() => {
               if (dataCategory) {
                      setCategories(dataCategory.categories);
@@ -178,7 +181,7 @@ const AddCategorySection = ({ update, setUpdate }) => {
                      setStatusCategory(0)
                      setActiveCategory(0)
               }
-              refetchCategory()
+              // refetchCategory()
               setUpdate(!update)
        }, [response])
 
