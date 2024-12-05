@@ -233,19 +233,15 @@ const AddCategorySection = ({ update, setUpdate }) => {
                      auth.toastError('please Enter All Category Names')
                      return;
               }
-              // if (!categoriesParentId) {
-              //        auth.toastError('please Select Category Parent')
+
+              // if (!priority) {
+              //        auth.toastError('please Enter Category Priority')
               //        return;
               // }
-
-              if (!priority) {
-                     auth.toastError('please Enter Category Priority')
-                     return;
-              }
-              if (selectedCategoriesAddons.length === 0) {
-                     auth.toastError('please Select Category Addonse')
-                     return;
-              }
+              // if (selectedCategoriesAddons.length === 0) {
+              //        auth.toastError('please Select Category Addonse')
+              //        return;
+              // }
               if (!imageFile) {
                      auth.toastError('please Set Category Image')
                      return;

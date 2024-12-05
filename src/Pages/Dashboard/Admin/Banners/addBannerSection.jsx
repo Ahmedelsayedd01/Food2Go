@@ -35,7 +35,7 @@ const AddBannerSection = ({ update, setUpdate }) => {
   const [productId, setProductId] = useState('');
   const [isOpenProduct, setIsOpenProduct] = useState(false);
 
-  const [stateDeals, setStateDeals] = useState('Select Product');
+  const [stateDeals, setStateDeals] = useState('Select Deal');
   const [DealId, setDealId] = useState('');
   const [isOpenDeal, setIsOpenDeal] = useState(false);
 
@@ -113,7 +113,7 @@ const AddBannerSection = ({ update, setUpdate }) => {
 
   const handleSelectDeal = (option) => {
     setDealId(option.id);
-    setStateDeals(option.name);
+    setStateDeals(option.name || option.title);
   };
 
 
@@ -252,9 +252,64 @@ const AddBannerSection = ({ update, setUpdate }) => {
                   </div>
                 )
               ))}
-
-
             </div>
+
+            <div className="w-full flex sm:flex-col lg:flex-row flex-wrap items-center justify-start gap-4 mb-4">
+              {/* Categoriess */}
+              <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                <span className="text-xl font-TextFontRegular text-thirdColor">Category:</span>
+                <DropDown
+                  ref={dropDownCategories}
+                  handleOpen={handleOpenCategory}
+                  stateoption={stateCategories}
+                  openMenu={isOpenCategory}
+                  handleOpenOption={handleOpenOptionCategory}
+                  onSelectOption={handleSelectCategory}
+                  options={categories}
+                  border={false}
+                />
+              </div>
+              {/* Products */}
+              <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                <span className="text-xl font-TextFontRegular text-thirdColor">Product:</span>
+                <DropDown
+                  ref={dropDownProducts}
+                  handleOpen={handleOpenProduct}
+                  stateoption={stateProducts}
+                  openMenu={isOpenProduct}
+                  handleOpenOption={handleOpenOptionProduct}
+                  onSelectOption={handleSelectProduct}
+                  options={products}
+                  border={false}
+                />
+              </div>
+              {/* Deals */}
+              <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                <span className="text-xl font-TextFontRegular text-thirdColor">Deal:</span>
+                <DropDown
+                  ref={dropDownDeals}
+                  handleOpen={handleOpenDeal}
+                  stateoption={stateDeals}
+                  openMenu={isOpenDeal}
+                  handleOpenOption={handleOpenOptionDeal}
+                  onSelectOption={handleSelectDeal}
+                  options={deals}
+                  border={false}
+                />
+              </div>
+
+              {/* Banner Order */}
+              <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                <span className="text-xl font-TextFontRegular text-thirdColor">Banner Order:</span>
+                <NumberInput
+                  value={bannerOrder}
+                  onChange={(e) => setBannerOrder(e.target.value)}
+                  placeholder="Banner Order"
+                />
+              </div>
+            </div>
+
+
 
             {/* Buttons*/}
             <div className="w-full flex items-center justify-end gap-x-4">

@@ -40,7 +40,7 @@ const DropDown = forwardRef(({
                                           className="flex items-center py-1 px-2 gap-2 justify-center text-xl font-medium text-mainColor hover:cursor-pointer hover:bg-mainColor hover:text-white transition-colors duration-300"
                                           onClick={() => handleOptionClick(option)}
                                    >
-                                          {option.name}
+                                          {option.name || option.title}
                                           <input type="hidden" value={option?.id || option.name || option.job} className="inputVal" />
                                    </div>
                             ))}

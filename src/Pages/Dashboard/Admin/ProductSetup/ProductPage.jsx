@@ -216,17 +216,11 @@ const ProductPage = () => {
                                                                                                                        {/* Permissions List */}
                                                                                                                        <div className="w-full flex flex-wrap items-center justify-center gap-4 my-4 px-4 sm:p-6 sm:pb-4">
 
-                                                                                                                              {/* <div
-                                                                                                                                     key={index}
-                                                                                                                                     className="sm:w-full lg:w-5/12 xl:w-3/12 flex items-center justify-center shadow-md hover:shadow-none duration-300 py-3 px-4 rounded-xl bg-gray-50"
-                                                                                                                              > */}
                                                                                                                               <ul className=' p-4 rounded-xl shadow-md'>
                                                                                                                                      <li className="list-disc mx-4 text-mainColor text-lg lg:text-xl font-semibold capitalize">
                                                                                                                                             {product?.description}
                                                                                                                                      </li>
                                                                                                                               </ul>
-                                                                                                                              {/* </div> */}
-
 
                                                                                                                        </div>
 
