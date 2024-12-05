@@ -692,16 +692,16 @@ const AddProductPage = () => {
       console.log('productPrice', productPrice)
       return;
     }
-    if (!selectedDiscountId) {
-      auth.toastError('please Select Product Discount')
-      console.log('selectedDiscountId', selectedDiscountId)
-      return;
-    }
-    if (!selectedTaxId) {
-      auth.toastError('please Select Product Tax')
-      console.log('selectedTaxId', selectedTaxId)
-      return;
-    }
+    // if (!selectedDiscountId) {
+    //   auth.toastError('please Select Product Discount')
+    //   console.log('selectedDiscountId', selectedDiscountId)
+    //   return;
+    // }
+    // if (!selectedTaxId) {
+    //   auth.toastError('please Select Product Tax')
+    //   console.log('selectedTaxId', selectedTaxId)
+    //   return;
+    // }
 
     if (!productPoint) {
       auth.toastError('please Enter Product Point')

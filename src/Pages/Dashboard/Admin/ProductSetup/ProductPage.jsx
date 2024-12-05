@@ -10,11 +10,15 @@ const ProductPage = () => {
        const { refetch: refetchProducts, loading: loadingProducts, data: dataProducts } = useGet({ url: 'https://Bcknd.food2go.online/admin/product' });
        const { deleteData, loadingDelete, responseDelete } = useDelete();
        const [products, setProducts] = useState([])
+       const [openDescriptionView, setOpenDescriptionView] = useState(null);
        const [openAddonsView, setOpenAddonsView] = useState(null);
        const [openVariationsView, setOpenVariationsView] = useState(null);
        const [openExcludesView, setOpenExcludesView] = useState(null);
        const [openExtraView, setOpenExtraView] = useState(null);
 
+       const handleOpenDescriptionView = (productId) => {
+              setOpenDescriptionView(productId);
+       };
        const handleOpenAddonsView = (productId) => {
               setOpenAddonsView(productId);
        };
@@ -28,6 +32,9 @@ const ProductPage = () => {
               setOpenExtraView(productId);
        };
 
+       const handleCloseDescriptionView = () => {
+              setOpenDescriptionView(null);
+       };
        const handleCloseAddonsView = () => {
               setOpenAddonsView(null);
        };
@@ -133,8 +140,12 @@ const ProductPage = () => {
                                                                       <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
                                                                              {product?.price || '-'}
                                                                       </td>
-                                                                      <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                             {product?.description || '-'}
+                                                                      <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12  py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                                                                             {/* <p className='h-4'>{product?.description || '-'}</p> */}
+                                                                             <span className='text-mainColor text-xl border-b-2 border-mainColor font-semibold cursor-pointer'
+                                                                                    onClick={() => handleOpenDescriptionView(product.id)}>
+                                                                                    View
+                                                                             </span>
                                                                       </td>
                                                                       <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
                                                                              {product.category?.name || '-'}
@@ -195,6 +206,47 @@ const ProductPage = () => {
                                                                              <div className="flex items-center justify-center gap-2">
                                                                                     <Link to={`edit/${product.id}`} className="text-blue-500 hover:underline"><EditIcon /></Link>
                                                                                     <button className="text-red-500" onClick={() => handleDelete(product.id, product.name)}><DeleteIcon /></button>
+                                                                                    {openDescriptionView === product.id && (
+                                                                                           <Dialog open={true} onClose={handleCloseDescriptionView} className="relative z-10">
+                                                                                                  <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                                                                                                  <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                                                                                                         <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                                                                                                                <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl">
+
+                                                                                                                       {/* Permissions List */}
+                                                                                                                       <div className="w-full flex flex-wrap items-center justify-center gap-4 my-4 px-4 sm:p-6 sm:pb-4">
+
+                                                                                                                              {/* <div
+                                                                                                                                     key={index}
+                                                                                                                                     className="sm:w-full lg:w-5/12 xl:w-3/12 flex items-center justify-center shadow-md hover:shadow-none duration-300 py-3 px-4 rounded-xl bg-gray-50"
+                                                                                                                              > */}
+                                                                                                                              <ul className=' p-4 rounded-xl shadow-md'>
+                                                                                                                                     <li className="list-disc mx-4 text-mainColor text-lg lg:text-xl font-semibold capitalize">
+                                                                                                                                            {product?.description}
+                                                                                                                                     </li>
+                                                                                                                              </ul>
+                                                                                                                              {/* </div> */}
+
+
+                                                                                                                       </div>
+
+                                                                                                                       {/* Dialog Footer */}
+                                                                                                                       <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                                                                                                              <button
+                                                                                                                                     type="button"
+                                                                                                                                     onClick={handleCloseDescriptionView}
+                                                                                                                                     className="mt-3 inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-medium text-white shadow-sm sm:mt-0 sm:w-auto hover:bg-mainColor-dark focus:outline-none"
+                                                                                                                              >
+                                                                                                                                     Close
+                                                                                                                              </button>
+                                                                                                                       </div>
+
+                                                                                                                </DialogPanel>
+                                                                                                         </div>
+                                                                                                  </div>
+                                                                                           </Dialog>
+                                                                                    )}
+
                                                                                     {openAddonsView === product.id && (
                                                                                            <Dialog open={true} onClose={handleCloseAddonsView} className="relative z-10">
                                                                                                   <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
