@@ -36,7 +36,7 @@ const AddBannerSection = ({ update, setUpdate }) => {
   const [isOpenProduct, setIsOpenProduct] = useState(false);
 
   const [stateDeals, setStateDeals] = useState('Select Deal');
-  const [DealId, setDealId] = useState('');
+  const [dealId, setDealId] = useState('');
   const [isOpenDeal, setIsOpenDeal] = useState(false);
 
 
@@ -65,19 +65,38 @@ const AddBannerSection = ({ update, setUpdate }) => {
 
 
 
-  const handleImageClick = (ref) => {
-    if (ref.current) {
-      ref.current.click();
+  const handleImageClick = (index) => {
+    if (ImageRef.current[index]) {
+      ImageRef.current[index].click(); // Trigger click on the correct input
     }
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImageFile(file);
-      setImage(file.name);
-    }
-  };
+
+  // const handleImageChange = (e) => {
+  //   const file = e.target.files[0];
+  //   if (file) {
+  //     setImageFile(prev => {
+  //       const updatedImages = [...prev];
+
+  //       if (updatedImages.length <= index) {
+  //         updatedImages.length = index + 1; // Resize array
+  //       }
+  //       taps.map((tap, index) => {
+
+  //         updatedImages[index] = {
+  //           ...updatedImages[index],
+  //           'tranlation_id': tap.id,
+  //           'image': file,
+  //           'tranlation_name': tap.name || 'Default Name',
+  //         };
+
+  //         return updatedImages;
+  //       })
+  //     })
+
+  //     setImage(prev => [...prev, file.name]);
+  //   }
+  // };
 
   const handleOpenCategory = () => {
     setIsOpenCategory(!isOpenCategory)
@@ -173,36 +192,59 @@ const AddBannerSection = ({ update, setUpdate }) => {
   const handleBannerAdd = (e) => {
     e.preventDefault();
 
-    const formData = new FormData();
 
-    categoryName.forEach((name, index) => {
-      // Corrected the typo and added translation_id and translation_name
-      formData.append(`category_names[${index}][tranlation_id]`, name.translation_id);
-      formData.append(`category_names[${index}][category_name]`, name.category_name);
-      formData.append(`category_names[${index}][tranlation_name]`, name.translation_name);
-    });
-
-
-    if (categoriesParentId) {
-      formData.append('category_id', categoriesParentId);
+    if (imageFile.length === 0) {
+      auth.toastError('Please Enter Banner Image');
+      return;
     }
 
-    formData.append('priority', priority);
-    // Assuming selectedCategoriesAddons is an array of selected objects with `id` properties
-    selectedCategoriesAddons.forEach((addon, index) => {
-      formData.append(`addons[${index}]`, addon.id); // Append each ID as an array element in FormData
-    });
-
-    formData.append('image', imageFile);
-    formData.append('banner_image', bannerFile);
+    if (imageFile.length !== taps.length) {
+      auth.toastError('Please Enter All Banner Image');
+      return;
+    }
 
 
-    formData.append('status', statusCategory);
-    formData.append('active', activeCategory);
+    if (!categoryId) {
+      auth.toastError('please Select Category')
+      return;
+    }
+    if (!productId) {
+      auth.toastError('please Select Product')
+      return;
+    }
+    if (!dealId) {
+      auth.toastError('please Select Deal')
+      return;
+    }
 
-    postData(formData, 'Category Added Success');
+    if (!bannerOrder) {
+      auth.toastError('please Enter the Order')
+      return;
+    }
 
+    const formData = new FormData();
+
+    imageFile.forEach((img, index) => {
+      formData.append(`images[${index}][image]`, img.image);
+      formData.append(`images[${index}][translation_id]`, img.tranlation_id);
+      formData.append(`images[${index}][tranlation_name]`, img.tranlation_name);
+    })
+
+    formData.append("order", bannerOrder);
+    formData.append("category_id", categoryId);
+    formData.append("product_id", productId);
+    formData.append("deal_id", dealId);
+
+
+    console.log(...formData.entries());
+    postData(formData, "Banner Added Success")
   };
+
+  useEffect(() => {
+    console.log('image', image)
+    console.log('imageFile', imageFile)
+  }, [image, imageFile])
+
   return (
     <>
       {loadingData || loadingPost ? (
@@ -229,29 +271,59 @@ const AddBannerSection = ({ update, setUpdate }) => {
             </div>
             {/* Content*/}
             <div className="sm:py-3 lg:py-6">
-              {taps.map((tap, index) => (
-                currentTap === index && (
-                  <div
-                    className="w-full flex sm:flex-col lg:flex-row flex-wrap items-center justify-start gap-4"
-                    key={tap.id}
-                  >
 
-                    {/* Banner Image */}
-                    <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                      <span className="text-xl font-TextFontRegular text-thirdColor">Banner Image {tap.name}:</span>
-                      <UploadInput
-                        value={image}
-                        uploadFileRef={ImageRef}
-                        placeholder="Banner Image"
-                        handleFileChange={handleImageChange}
-                        onChange={(e) => setImage(e.target.value)}
-                        onClick={() => handleImageClick(ImageRef)}
-                      />
+              {taps.map((tap, index) => {
+                // Ensure the ref array contains a valid ref for each input
+                if (!ImageRef.current[index]) {
+                  ImageRef.current[index] = null; // Initialize as null
+                }
+
+                return (
+                  currentTap === index && (
+                    <div
+                      className="w-full flex sm:flex-col lg:flex-row flex-wrap items-center justify-start gap-4"
+                      key={tap.id}
+                    >
+                      {/* Banner Image */}
+                      <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                        <span className="text-xl font-TextFontRegular text-thirdColor">
+                          Banner Image {tap.name}:
+                        </span>
+                        <UploadInput
+                          value={image[index]?.image || ''} // Show the selected image name or default to empty
+                          uploadFileRef={(el) => (ImageRef.current[index] = el)} // Dynamically assign ref
+                          placeholder="Banner Image"
+                          handleFileChange={(e) => {
+                            const file = e.target.files[0];
+                            if (file) {
+                              // Update imageFile state with the file and related data
+                              setImageFile((prev) => {
+                                const updatedImages = [...prev];
+                                updatedImages[index] = {
+                                  tranlation_id: tap.id,
+                                  image: file,
+                                  tranlation_name: tap.name || 'Default Name',
+                                };
+                                return updatedImages;
+                              });
+
+                              // Update image state with the file name
+                              setImage((prev) => {
+                                const updatedNames = [...prev];
+                                updatedNames[index] = { image: file.name }; // Set the file name at the correct index
+                                return updatedNames;
+                              });
+                            }
+                          }}
+                          onClick={() => handleImageClick(index)} // Trigger file input click
+                        />
+
+                      </div>
                     </div>
+                  )
+                );
+              })}
 
-                  </div>
-                )
-              ))}
             </div>
 
             <div className="w-full flex sm:flex-col lg:flex-row flex-wrap items-center justify-start gap-4 mb-4">
