@@ -237,14 +237,6 @@ const AddCategorySection = ({ update, setUpdate }) => {
                      return;
               }
 
-              // if (!priority) {
-              //        auth.toastError('please Enter Category Priority')
-              //        return;
-              // }
-              // if (selectedCategoriesAddons.length === 0) {
-              //        auth.toastError('please Select Category Addonse')
-              //        return;
-              // }
               if (!imageFile) {
                      auth.toastError('please Set Category Image')
                      return;
