@@ -177,7 +177,9 @@ const CategoryPage = ({ refetch, setUpdate }) => {
        return (
               <div className="w-full pb-28 flex items-start justify-start overflow-x-scroll scrollSection">
                      {loadingCategory || loadingChange || loadingDelete ? (
-                            <><StaticLoader /></>
+                            <div className="w-full h-56 flex justify-center items-center">
+                                   <StaticLoader />
+                            </div>
                      ) : (
                             <table className="w-full sm:min-w-0">
                                    <thead className="w-full">
@@ -205,7 +207,7 @@ const CategoryPage = ({ refetch, setUpdate }) => {
                                                                <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 overflow-hidden">
                                                                       <div className="flex justify-center">
                                                                              <img src={category.image_link}
-                                                                                    className="bg-mainColor rounded-full min-w-14 min-h-14 max-w-14 max-h-14"
+                                                                                    className="bg-mainColor border-2 border-mainColor rounded-full min-w-14 min-h-14 max-w-14 max-h-14"
                                                                                     alt="Photo"
                                                                              />
                                                                       </div>
