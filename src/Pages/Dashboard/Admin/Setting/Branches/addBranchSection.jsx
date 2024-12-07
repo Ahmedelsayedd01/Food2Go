@@ -320,7 +320,7 @@ const AddBannerSection = ({ update, setUpdate }) => {
                 {/* Branch Latitude */}
                 <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                   <span className="text-xl font-TextFontRegular text-thirdColor">Branch Latitude:</span>
-                  <NumberInput
+                  <TextInput
                     value={branchLatitude}
                     onChange={(e) => setBranchLatitude(e.target.value)}
                     placeholder="Branch Latitude"
@@ -329,7 +329,7 @@ const AddBannerSection = ({ update, setUpdate }) => {
                 {/* Branch Longitude */}
                 <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                   <span className="text-xl font-TextFontRegular text-thirdColor">Branch Longitude:</span>
-                  <NumberInput
+                  <TextInput
                     value={branchLongitude}
                     onChange={(e) => setBranchLongitude(e.target.value)}
                     placeholder="Branch Longitude"
@@ -421,7 +421,9 @@ const CustomTimeInput = ({ value, onChange }) => {
 
   return (
     <div className="flex gap-2">
-      hours:<select
+      <span className="text-xl font-TextFontRegular text-thirdColor">
+        Hours:
+      </span><select
         value={value.split(':')[0]}  // Get hours part from the value
         onChange={(e) => handleTimeChange('hours', e.target.value)}
         className="border rounded px-2 py-1"
@@ -430,7 +432,10 @@ const CustomTimeInput = ({ value, onChange }) => {
           <option key={hour} value={hour}>{hour}</option>
         ))}
       </select>
-      minutes: <select
+      <span className="text-xl font-TextFontRegular text-thirdColor">
+        Minutes:
+      </span>
+      <select
         value={value.split(':')[1]}  // Get minutes part from the value
         onChange={(e) => handleTimeChange('minutes', e.target.value)}
         className="border rounded px-2 py-1"

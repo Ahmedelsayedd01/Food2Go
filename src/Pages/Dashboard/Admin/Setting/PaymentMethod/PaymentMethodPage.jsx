@@ -5,12 +5,16 @@ import { useChangeState } from '../../../../../Hooks/useChangeState';
 import { useDelete } from '../../../../../Hooks/useDelete';
 import { StaticLoader, Switch } from '../../../../../Components/Components';
 import { DeleteIcon, EditIcon } from '../../../../../Assets/Icons/AllIcons';
+import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
+import Warning from '../../../../../Assets/Icons/AnotherIcons/WarningIcon';
 
 const PaymentMethodPage = ({ refetch }) => {
   const { refetch: refetchPaymentMethods, loading: loadingPaymentMethods, data: dataPaymentMethods } = useGet({ url: 'https://Bcknd.food2go.online/admin/settings/payment_methods' });
   const { changeState, loadingChange, responseChange } = useChangeState();
   const { deleteData, loadingDelete, responseDelete } = useDelete();
   const [paymentMethods, setPaymentMethods] = useState([]);
+
+  const [openDelete, setOpenDelete] = useState(null);
   // Fetch categories when the component mounts or when refetch is called
   useEffect(() => {
     refetchPaymentMethods();
@@ -43,6 +47,14 @@ const PaymentMethodPage = ({ refetch }) => {
       return updatedPaymentMethod;
     });
   };
+
+  const handleOpenDelete = (item) => {
+    setOpenDelete(item);
+  };
+  const handleCloseDelete = () => {
+    setOpenDelete(null);
+  };
+
 
   // Delete payment Method
   const handleDelete = async (id, name) => {
@@ -126,7 +138,53 @@ const PaymentMethodPage = ({ refetch }) => {
                   <td className="px-4 py-3 text-center">
                     <div className="flex items-center justify-center gap-2">
                       <Link to={`edit/${paymentMethod.id}`} className="text-blue-500 hover:underline"><EditIcon /></Link>
-                      <button className="text-red-500" onClick={() => handleDelete(paymentMethod.id, paymentMethod.name)}><DeleteIcon /></button>
+                      <button
+                        type="button"
+                        onClick={() => handleOpenDelete(paymentMethod.id)}
+                      >
+                        <DeleteIcon />
+                      </button>
+                      {openDelete === paymentMethod.id && (
+                        <Dialog
+                          open={true}
+                          onClose={handleCloseDelete}
+                          className="relative z-10"
+                        >
+                          <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                          <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                              <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                                <div className="flex  flex-col items-center justify-center bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                                  <Warning
+                                    width="28"
+                                    height="28"
+                                    aria-hidden="true"
+                                  />
+                                  <div className="flex items-center">
+                                    <div className="mt-2 text-center">
+                                      You will delete Payment Method {paymentMethod?.name || "-"}
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                  <button className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto" onClick={() => handleDelete(paymentMethod.id, paymentMethod.name)}>
+                                    Delete
+                                  </button>
+
+                                  <button
+                                    type="button"
+                                    data-autofocus
+                                    onClick={handleCloseDelete}
+                                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-6 py-3 text-sm font-medium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:mt-0 sm:w-auto"
+                                  >
+                                    Cancel
+                                  </button>
+                                </div>
+                              </DialogPanel>
+                            </div>
+                          </div>
+                        </Dialog>
+                      )}
                     </div>
                   </td>
                 </tr>
