@@ -23,7 +23,7 @@ const OrdersPaymentHistory = () => {
   }, [dataOrdersPaymentHistory]); // Only run this effect when `data` changes
 
 
-  const headers = ['SL', 'Name', "Price", 'Tax (%)', 'Action'];
+  const headers = ['SL', 'Name', "Price", 'Tax (%)'];
 
   return (
     <div className="w-full pb-28 flex items-start justify-start overflow-x-scroll scrollSection">
@@ -69,12 +69,12 @@ const OrdersPaymentHistory = () => {
                       ' %'
                     )}
                   </td>
-                  <td className="px-4 py-3 text-center">
+                  {/* <td className="px-4 py-3 text-center">
                     <div className="flex items-center justify-center gap-2">
                       <Link to={`edit/${paymentHistory.id}`} className="text-blue-500 hover:underline"><EditIcon /></Link>
                       <button className="text-red-500" onClick={() => handleDelete(paymentHistory.id, paymentHistory.name)}><DeleteIcon /></button>
                     </div>
-                  </td>
+                  </td> */}
                 </tr>
               ))
 
