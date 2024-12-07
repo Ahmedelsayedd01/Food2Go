@@ -4,10 +4,13 @@ import { useDelete } from '../../../../Hooks/useDelete';
 import { LoaderLogin, StaticLoader, Switch } from '../../../../Components/Components';
 import { Link } from 'react-router-dom';
 import { DeleteIcon, EditIcon } from '../../../../Assets/Icons/AllIcons';
+import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
+import Warning from '../../../../Assets/Icons/AnotherIcons/WarningIcon';
 
 const DeliveryManPage = ({ data, setDeliveries, loading }) => {
   const { changeState, loadingChange, responseChange } = useChangeState();
   const { deleteData, loadingDelete, responseDelete } = useDelete();
+  const [openDelete, setOpenDelete] = useState(null);
   // const [deliveries, setDeliveries] = useState([data])
 
   // Change Deliveries status 
@@ -37,6 +40,12 @@ const DeliveryManPage = ({ data, setDeliveries, loading }) => {
     });
   };
 
+  const handleOpenDelete = (item) => {
+    setOpenDelete(item);
+  };
+  const handleCloseDelete = () => {
+    setOpenDelete(null);
+  };
 
   // Delete Delivery
   const handleDelete = async (id, name) => {
@@ -60,8 +69,11 @@ const DeliveryManPage = ({ data, setDeliveries, loading }) => {
   return (
     <div className="w-full pb-28 flex items-start justify-start overflow-x-scroll scrollSection">
       {loading || loadingChange || loadingDelete ? (
-        <div className="mx-auto">
-          <LoaderLogin mt={4} />
+        // <div className="mx-auto">
+        //   <LoaderLogin mt={4} />
+        // </div>
+        <div className="w-full h-56 flex justify-center items-center">
+          <StaticLoader />
         </div>
       ) : (
         <table className="w-full sm:min-w-0">
@@ -124,7 +136,53 @@ const DeliveryManPage = ({ data, setDeliveries, loading }) => {
                   <td className="px-4 py-3 text-center">
                     <div className="flex items-center justify-center gap-2">
                       <Link to={`edit/${delivery.id}`} className="text-blue-500 hover:underline"><EditIcon /></Link>
-                      <button className="text-red-500" onClick={() => handleDelete(delivery.id, delivery?.f_name + ' ' + delivery?.l_name)}><DeleteIcon /></button>
+                      <button
+                        type="button"
+                        onClick={() => handleOpenDelete(delivery.id)}
+                      >
+                        <DeleteIcon />
+                      </button>
+                      {openDelete === delivery.id && (
+                        <Dialog
+                          open={true}
+                          onClose={handleCloseDelete}
+                          className="relative z-10"
+                        >
+                          <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                          <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                              <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                                <div className="flex  flex-col items-center justify-center bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                                  <Warning
+                                    width="28"
+                                    height="28"
+                                    aria-hidden="true"
+                                  />
+                                  <div className="flex items-center">
+                                    <div className="mt-2 text-center">
+                                      You will delete delivery {delivery?.f_name + ' ' + delivery?.l_name || "-"}
+                                    </div>
+                                  </div>
+                                </div>
+                                <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                  <button className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto" onClick={() => handleDelete(delivery.id, delivery?.f_name + ' ' + delivery?.l_name)}>
+                                    Delete
+                                  </button>
+
+                                  <button
+                                    type="button"
+                                    data-autofocus
+                                    onClick={handleCloseDelete}
+                                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-6 py-3 text-sm font-medium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:mt-0 sm:w-auto"
+                                  >
+                                    Cancel
+                                  </button>
+                                </div>
+                              </DialogPanel>
+                            </div>
+                          </div>
+                        </Dialog>
+                      )}
                     </div>
                   </td>
                 </tr>
