@@ -40,13 +40,34 @@ export { default as EditBranchPage } from "./Dashboard/Admin/Setting/Branches/Ed
 export { default as ZonesPage } from "./Dashboard/Admin/Setting/Zones/ZonesPage";
 export { default as AddZoneSection } from "./Dashboard/Admin/Setting/Zones/addZoneSection";
 export { default as EditZonePage } from "./Dashboard/Admin/Setting/Zones/EditZonePage";
+// Setting -> Resturant Time
+export { default as ResturantTimePage } from "./Dashboard/Admin/Setting/ResturantTime/ResturantTimePage";
+// Setting -> Cancel Time
+export { default as CancelTimePage } from "./Dashboard/Admin/Setting/CancelTime/CancelPage";
+// Setting -> Delivery Time
+export { default as DeliveryTimePage } from "./Dashboard/Admin/Setting/DeliveryTime/DeliveryTimePage";
+/* Texes */
+// Texes -> Taxes
+export { default as TaxesPage } from "./Dashboard/Admin/Taxes/TaxesPage";
+export { default as AddTaxSection } from "./Dashboard/Admin/Taxes/AddTaxSection";
+export { default as EditTaxPage } from "./Dashboard/Admin/Taxes/EditTaxPage";
+// Taxes -> Taxes Type
+export { default as TaxTypePage } from "./Dashboard/Admin/Taxes/TaxTypePage";
 // Orders Payment
 export { default as OrdersPaymentPendingPage } from "./Dashboard/Admin/OrdersPayment/OrdersPaymentPendingPage";
 export { default as OrdersPaymentHistoryPage } from "./Dashboard/Admin/OrdersPayment/OrdersPaymentHistoryPage";
-// Addons
+// Delivery Man
 export { default as AddDeliveryManSection } from "./Dashboard/Admin/DeliveryMan/AddDeliveryManSection";
 export { default as EditDeliveryManPage } from "./Dashboard/Admin/DeliveryMan/EditDeliveryManPage";
 export { default as DeliveryManPage } from "./Dashboard/Admin/DeliveryMan/DeliveryManPage";
+// Languages
+export { default as LanguagesPage } from "./Dashboard/Admin/Languages/LanguagesPage";
+export { default as AddLanguagesSection } from "./Dashboard/Admin/Languages/AddLanguageSection";
+
+// Discount
+export { default as DiscountPage } from "./Dashboard/Admin/Discount/DiscountPage";
+export { default as EditDiscountPage } from "./Dashboard/Admin/Discount/EditDiscountPage";
+export { default as AddDiscountSection } from "./Dashboard/Admin/Discount/AddDiscountSection";
 
 // Orders
 export { default as DetailsOrdersPage } from "./Dashboard/Admin/Orders/DetailsOrder/DetailsOrderPage";
