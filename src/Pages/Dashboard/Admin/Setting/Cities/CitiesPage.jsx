@@ -113,7 +113,7 @@ const CitiesPage = ({ refetch }) => {
                                                                </td>
                                                                <td className="px-4 py-3 text-center">
                                                                       <div className="flex items-center justify-center gap-2">
-                                                                             <Link to={`edit/${city.id}`} className="text-blue-500 hover:underline"><EditIcon /></Link>
+                                                                             <Link to={`edit/${city.id}`}  ><EditIcon /></Link>
                                                                              <button
                                                                                     type="button"
                                                                                     onClick={() => handleOpenDelete(city.id)}
