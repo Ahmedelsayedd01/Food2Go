@@ -277,8 +277,8 @@ const AddBannerSection = ({ update, setUpdate }) => {
                 {/* Branch Email */}
                 <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                   <span className="text-xl font-TextFontRegular text-thirdColor">Branch Email:</span>
-                  <EmailInput
-                    backgound='white'
+                  <TextInput
+                    // backgound='white'
                     value={branchEmail}
                     onChange={(e) => setBranchEmail(e.target.value)}
                     placeholder="Branch Email"

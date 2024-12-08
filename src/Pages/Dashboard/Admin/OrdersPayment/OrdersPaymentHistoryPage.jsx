@@ -71,7 +71,7 @@ const OrdersPaymentHistory = () => {
                   </td>
                   {/* <td className="px-4 py-3 text-center">
                     <div className="flex items-center justify-center gap-2">
-                      <Link to={`edit/${paymentHistory.id}`} className="text-blue-500 hover:underline"><EditIcon /></Link>
+                      <Link to={`edit/${paymentHistory.id}`}  ><EditIcon /></Link>
                       <button className="text-red-500" onClick={() => handleDelete(paymentHistory.id, paymentHistory.name)}><DeleteIcon /></button>
                     </div>
                   </td> */}
