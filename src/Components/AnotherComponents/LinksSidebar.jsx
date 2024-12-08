@@ -8,6 +8,9 @@ import { CiSettings } from 'react-icons/ci';
 import { useSelector } from 'react-redux';
 import { MdOutlineDeliveryDining, MdOutlinePayments } from 'react-icons/md';
 import { PiFlagBanner } from 'react-icons/pi';
+import { IoLanguage } from 'react-icons/io5';
+import { BiSolidDiscount } from 'react-icons/bi';
+import { HiReceiptTax } from 'react-icons/hi';
 
 const LinksSidebar = () => {
        const auth = useAuth();
@@ -72,6 +75,13 @@ const LinksSidebar = () => {
        const [isActiveBranches, setIsActiveBranches] = useState(stateLink.isActiveBranches ?? false);
        const [isActiveZones, setIsActiveZone] = useState(stateLink.isActiveZones ?? false);
 
+       /* Taxes */
+       const [isOpenTaxes, setIsOpenTaxes] = useState(stateLink.isOpenTaxes ?? false);
+       const [isActiveTaxesIcon, setIsActiveTaxesIcon] = useState(stateLink.isActiveTaxesIcon ?? false);
+       const [isActiveTaxes, setIsActiveTaxes] = useState(stateLink.isActiveTaxes ?? false);
+       const [isActiveTax, setIsActiveTax] = useState(stateLink.isActiveTax ?? false);
+       const [isActiveTaxType, setIsActiveTaxType] = useState(stateLink.isActiveTaxType ?? false);
+
        /* Orders Payment */
        const [isActiveOrdersPayment, setIsActiveOrdersPayment] = useState(stateLink.isActiveOrdersPayment ?? false);
        const [isActiveOrdersPaymentIcon, setIsActiveOrdersPaymentIcon] = useState(stateLink.isActiveOrdersPaymentIcon ?? false);
@@ -79,6 +89,12 @@ const LinksSidebar = () => {
        /* Delivery Man */
        const [isActiveDeliveryMan, setIsActiveDeliveryMan] = useState(stateLink.isActiveDeliveryMan ?? false);
        const [isActiveDeliveryManIcon, setIsActiveDeliveryManIcon] = useState(stateLink.isActiveDeliveryManIcon ?? false);
+       /* Languages */
+       const [isActiveLanguages, setIsActiveLanguages] = useState(stateLink.isActiveLanguages ?? false);
+       const [isActiveLanguagesIcon, setIsActiveLanguagesIcon] = useState(stateLink.isActiveLanguagesIcon ?? false);
+       /* Discount */
+       const [isActiveDiscount, setIsActiveDiscount] = useState(stateLink.isActiveDiscount ?? false);
+       const [isActiveDiscountIcon, setIsActiveDiscountIcon] = useState(stateLink.isActiveDiscountIcon ?? false);
 
        /* Order */
        const [isOpenOrders, setIsOpenOrders] = useState(stateLink.isOpenOrders ?? false);
@@ -112,6 +128,12 @@ const LinksSidebar = () => {
                      isActiveProduct,
                      isActiveAddProduct,
 
+                     isOpenTaxes,
+                     isActiveTaxesIcon,
+                     isActiveTaxes,
+                     isActiveTax,
+                     isActiveTaxType,
+
                      isActiveOrdersPayment,
                      isActiveOrdersPaymentIcon,
                      isActiveCities,
@@ -121,6 +143,12 @@ const LinksSidebar = () => {
 
                      isActiveDeliveryMan,
                      isActiveDeliveryManIcon,
+
+                     isActiveLanguages,
+                     isActiveLanguagesIcon,
+
+                     isActiveDiscount,
+                     isActiveDiscountIcon,
 
                      isOpenOrders,
                      isActiveOrdersIcon,
@@ -147,10 +175,17 @@ const LinksSidebar = () => {
               isActiveCategoryIcon,
               isActiveBanners,
               isActiveBannersIcon,
+
               isOpenProductSetup,
               isActiveProductSetupIcon,
               isActiveProduct,
               isActiveAddProduct,
+
+              isOpenTaxes,
+              isActiveTaxesIcon,
+              isActiveTaxes,
+              isActiveTax,
+              isActiveTaxType,
 
               isActiveOrdersPayment,
               isActiveOrdersPaymentIcon,
@@ -160,6 +195,12 @@ const LinksSidebar = () => {
 
               isActiveDeliveryMan,
               isActiveDeliveryManIcon,
+
+              isActiveLanguages,
+              isActiveLanguagesIcon,
+
+              isActiveDiscount,
+              isActiveDiscountIcon,
 
               isOpenOrders,
               isActiveOrdersIcon,
@@ -194,6 +235,12 @@ const LinksSidebar = () => {
               isActiveProduct,
               isActiveAddProduct,
 
+              isOpenTaxes,
+              isActiveTaxesIcon,
+              isActiveTaxes,
+              isActiveTax,
+              isActiveTaxType,
+
               isActiveOrdersPayment,
               isActiveOrdersPaymentIcon,
               isActiveCities,
@@ -202,6 +249,12 @@ const LinksSidebar = () => {
 
               isActiveDeliveryMan,
               isActiveDeliveryManIcon,
+
+              isActiveLanguages,
+              isActiveLanguagesIcon,
+
+              isActiveDiscount,
+              isActiveDiscountIcon,
 
               isOpenOrders,
               isActiveOrdersIcon,
@@ -234,6 +287,12 @@ const LinksSidebar = () => {
               setIsActiveProduct(false);
               setIsActiveAddProduct(false);
 
+              setIsOpenTaxes(false)
+              setIsActiveTaxesIcon(false)
+              setIsActiveTaxes(false)
+              setIsActiveTax(false)
+              setIsActiveTaxType(false)
+
               setIsOpenSetting(false);
               setIsActiveSetting(false);
               setIsActiveSettingIcon(false);
@@ -247,6 +306,12 @@ const LinksSidebar = () => {
 
               setIsActiveDeliveryMan(false)
               setIsActiveDeliveryManIcon(false)
+
+              setIsActiveLanguages(false)
+              setIsActiveLanguagesIcon(false)
+
+              setIsActiveDiscount(false)
+              setIsActiveDiscountIcon(false)
 
               setIsOpenOrders(false);
               setIsActiveOrders(false);
@@ -482,6 +547,88 @@ const LinksSidebar = () => {
               const result = part.slice(0, 3).join('/');
               if (result == "/dashboard/delivery_man") {
                      handleClickDeliveryMan()
+              }
+       }, [location])
+
+
+       /* Taxes */
+       const handleClickTaxes = useCallback(() => {
+              handleStateLinks()
+
+              setIsOpenTaxes(true);
+              setIsActiveTaxes(true);
+              setIsActiveTaxesIcon(true);
+              setIsActiveTax(true);
+       }, []);
+       useEffect(() => {
+              if (
+                     pathName === "/dashboard/taxes" &&
+                     !["/dashboard/taxes/all_taxes", "/dashboard/taxes/tax_type"].some(path => pathName.startsWith(path))
+              ) {
+                     handleClickTaxes();
+                     navigate("/dashboard/taxes/all_taxes");
+              }
+       }, [pathName, handleClickTaxes]);
+
+
+       const handleClickTax = useCallback(() => {
+              handleStateLinks()
+
+              setIsOpenTaxes(true);
+              setIsActiveTaxes(true);
+              setIsActiveTaxesIcon(true);
+              setIsActiveTax(true);
+       }, []);
+       
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 4).join('/');
+              if (result == "/dashboard/taxes/all_taxes") {
+                     handleClickTaxes()
+              }
+       }, [location])
+       const handleClickTaxType = useCallback(() => {
+              handleStateLinks()
+
+              setIsOpenTaxes(true);
+              setIsActiveTaxes(true);
+              setIsActiveTaxesIcon(true);
+              setIsActiveTaxType(true);
+       }, []);
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 4).join('/');
+              if (result == "/dashboard/taxes/tax_type") {
+                     handleClickTaxType()
+              }
+       }, [location])
+
+
+       /* Languages */
+       const handleClickLanguages = useCallback(() => {
+              handleStateLinks();
+              setIsActiveLanguages(true);
+              setIsActiveLanguagesIcon(true);
+       }, []);
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard/languages") {
+                     handleClickLanguages()
+              }
+       }, [location])
+
+       /* Discount */
+       const handleClickDiscount = useCallback(() => {
+              handleStateLinks();
+              setIsActiveDiscount(true);
+              setIsActiveDiscountIcon(true);
+       }, []);
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard/Discount") {
+                     handleClickDiscount()
               }
        }, [location])
 
@@ -906,6 +1053,56 @@ const LinksSidebar = () => {
                             </ul>
 
                      </div>
+                     {/* Taxes */}
+                     <Link to="taxes"
+                            onMouseMove={() => setIsActiveTaxesIcon(true)}
+                            onMouseOut={() => setIsActiveTaxesIcon(false)}
+                            onClick={handleClickTaxes}
+                            className={`
+                            ${isActiveTaxes ? 'active' : ''}
+                            ${hideSide ? 'justify-between' : 'justify-center'} 
+                            hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
+                            hover:text-mainColor w-full flex items-center 
+                            transition-all duration-300 group`}
+                     >
+                            <div className="flex items-center gap-x-2">
+                                   <HiReceiptTax className={`${isActiveTaxesIcon || isActiveTaxes ? 'text-[#9E090F]' : 'text-[#fff]'} text-2xl`} />
+                                   <span className={`
+                                   ${hideSide ? 'block' : 'hidden'}
+                                    ${isActiveTaxes ? "text-mainColor" : "text-white"}
+                                   text-lg font-TextFontRegular transition-all duration-300
+                                   group-hover:text-mainColor`}
+                                   >
+                                          Taxes
+                                   </span>
+                            </div>
+                            <div className={`${hideSide ? 'block' : 'hidden'}`}>
+                                   <IoIosArrowForward className={`${isActiveTaxes ? 'text-mainColor rotate-90' : 'text-white rotate-0'} text-xl transition-all duration-300 group-hover:text-mainColor`} />
+                            </div>
+                     </Link>
+                     <div className={`${isOpenTaxes && hideSide ? "h-20" : "h-0 "} overflow-hidden flex items-start justify-end  w-full transition-all duration-700`}>
+                            <ul className='list-disc w-full pl-10 transition-all duration-700 flex flex-col gap-y-2'>
+                                   <Link to={"taxes/all_taxes"} onClick={handleClickTax}>
+                                          <li
+                                                 className={`${isActiveTax ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                 }>
+                                                 All Taxes
+                                          </li>
+                                   </Link>
+                                   <Link to={"taxes/tax_type"} onClick={handleClickTaxType}>
+                                          <li
+                                                 className={`
+                                                 ${isActiveTaxType ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                 text-xl font-TextFontLight rounded-xl px-4 py-1 
+                                                 hover:bg-white transition-all duration-300 hover:text-mainColor
+                                             `}>
+                                                 Tax Type
+                                          </li>
+                                   </Link>
+                            </ul>
+
+                     </div>
                      {/* Orders Payment */}
                      <Link to="orders_payment"
                             onMouseMove={() => setIsActiveOrdersPaymentIcon(true)}
@@ -955,6 +1152,58 @@ const LinksSidebar = () => {
                                           group-hover:text-mainColor`}
                                    >
                                           Delivery Man
+                                   </span>
+                            </div>
+                     </Link>
+                     {/* Languages */}
+                     <Link to="languages"
+                            onMouseMove={() => setIsActiveLanguagesIcon(true)}
+                            onMouseOut={() => setIsActiveLanguagesIcon(false)}
+                            onClick={handleClickLanguages}
+                            className={`
+                                   ${isActiveLanguages ? 'active' : ''}
+                                   ${hideSide ? 'justify-between' : 'justify-center'} 
+                                   hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
+                                   hover:text-mainColor w-full flex items-center 
+                                   transition-all duration-300 group`}
+                     >
+                            <div className="flex items-center gap-x-2">
+                                   <IoLanguage
+                                          className={`${isActiveLanguagesIcon || isActiveLanguages ? 'text-[#9E090F]' : 'text-[#fff]'} text-2xl`}
+                                   />
+                                   <span
+                                          className={`${hideSide ? 'block' : 'hidden'}
+                                           ${isActiveLanguages ? "text-mainColor" : "text-white"}
+                                          text-lg font-TextFontRegular transition-all duration-300
+                                          group-hover:text-mainColor`}
+                                   >
+                                          Languages
+                                   </span>
+                            </div>
+                     </Link>
+                     {/* Discount */}
+                     <Link to="discount"
+                            onMouseMove={() => setIsActiveDiscountIcon(true)}
+                            onMouseOut={() => setIsActiveDiscountIcon(false)}
+                            onClick={handleClickDiscount}
+                            className={`
+                                   ${isActiveDiscount ? 'active' : ''}
+                                   ${hideSide ? 'justify-between' : 'justify-center'} 
+                                   hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
+                                   hover:text-mainColor w-full flex items-center 
+                                   transition-all duration-300 group`}
+                     >
+                            <div className="flex items-center gap-x-2">
+                                   <BiSolidDiscount
+                                          className={`${isActiveDiscountIcon || isActiveDiscount ? 'text-[#9E090F]' : 'text-[#fff]'} text-2xl`}
+                                   />
+                                   <span
+                                          className={`${hideSide ? 'block' : 'hidden'}
+                                           ${isActiveDiscount ? "text-mainColor" : "text-white"}
+                                          text-lg font-TextFontRegular transition-all duration-300
+                                          group-hover:text-mainColor`}
+                                   >
+                                          Discount
                                    </span>
                             </div>
                      </Link>
@@ -1091,7 +1340,7 @@ const LinksSidebar = () => {
                             </ul>
 
                      </div>
-              </div>
+              </div >
        );
 };
 

@@ -6,25 +6,31 @@ import {
   BannersLayout,
   BranchesLayout,
   CanceledOrdersLayout,
+  CancelTimeLayout,
   CategoryLayout,
   CitiesLayout,
   ConfirmedOrdersLayout,
   DashboardLayout,
   DeliveredOrdersLayout,
   DeliveryManLayout,
+  DeliveryTimeLayout,
   DetailsOrderLayout,
+  DiscountLayout,
   EditAddonsLayout,
   EditBannerLayout,
   EditBranchLayout,
   EditCategoryLayout,
   EditCityLayout,
   EditDeliveryManLayout,
+  EditDiscountLayout,
   EditPaymentMethodLayout,
   EditProductLayout,
+  EditTaxLayout,
   EditZoneLayout,
   FailedOrdersLayout,
   ForgetPassLayout,
   InvoiceOrderLayout,
+  LanguagesLayout,
   LoginLayout,
   OrdersPaymentLayout,
   OutForDeliveryOrdersLayout,
@@ -32,8 +38,11 @@ import {
   PendingOrdersLayout,
   ProcessingOrdersLayout,
   ProductLayout,
+  ResturantTimeLayout,
   ReturnedOrdersLayout,
   ScheduleOrdersLayout,
+  TaxesLayout,
+  TaxTypeLayout,
   ZonesLayout
 } from "./layouts/Layouts";
 import ProtectedLogin from "./ProtectedData/ProtectedLogin";
@@ -210,8 +219,41 @@ export const router = createBrowserRouter([
                   }
                 ]
               },
-
-
+              {
+                path: 'resturant_time',
+                element: <ResturantTimeLayout />,
+              },
+              {
+                path: 'cancel_time',
+                element: <CancelTimeLayout />,
+              },
+              {
+                path: 'delivery_time',
+                element: <DeliveryTimeLayout />,
+              },
+            ]
+          },
+          {
+            path: 'taxes',
+            // element: <TaxesLayout />,
+            children: [
+              {
+                path: 'all_taxes',
+                children: [
+                  {
+                    path: '',
+                    element: <TaxesLayout />,
+                  },
+                  {
+                    path: 'edit/:taxId',
+                    element: <EditTaxLayout />,
+                  }
+                ]
+              },
+              {
+                path: 'tax_type',
+                element: <TaxTypeLayout />,
+              },
             ]
           },
           {
@@ -242,6 +284,29 @@ export const router = createBrowserRouter([
               }
             ]
           },
+          {
+            path: 'languages',
+            children: [
+              {
+                path: '',
+                element: <LanguagesLayout />,
+              },
+            ]
+          },
+          {
+            path: 'discount',
+            children: [
+              {
+                path: '',
+                element: <DiscountLayout />,
+              },
+              {
+                path: 'edit/:discountId',
+                element: <EditDiscountLayout />,
+              }
+            ]
+          },
+
           {
             path: 'orders',
             element: <OrderLayout />,
@@ -300,7 +365,6 @@ export const router = createBrowserRouter([
               },
             ]
           }
-
 
         ]
       },

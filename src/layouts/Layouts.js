@@ -39,6 +39,19 @@ export { default as EditBranchLayout } from "./Dashboard/Setting/Branches/EditBr
 // Setting -> Zones
 export { default as ZonesLayout } from "./Dashboard/Setting/Zones/ZonesLayout";
 export { default as EditZoneLayout } from "./Dashboard/Setting/Zones/EditZoneLayout";
+// Setting -> Resturant Time
+export { default as ResturantTimeLayout } from "./Dashboard/Setting/ResturantTime/ResturantTimeLayout";
+// Setting -> Cancel Time
+export { default as CancelTimeLayout } from "./Dashboard/Setting/CancelTime/CancelTimeLayout";
+// Setting -> Delivery Time
+export { default as DeliveryTimeLayout } from "./Dashboard/Setting/DeliveryTime/DeliveryTimeLayout";
+
+/*  Taxes */
+// Taxes -> Taxes
+export { default as TaxesLayout } from "./Dashboard/Taxes/TaxesLayout";
+export { default as EditTaxLayout } from "./Dashboard/Taxes/EditTaxLayout";
+// Taxes -> Tax Type
+export { default as TaxTypeLayout } from "./Dashboard/Taxes/TaxTypeLayout";
 
 /* Orders Payment */
 export { default as OrdersPaymentLayout } from "./Dashboard/OrdersPayment/OrderPaymentLayout";
@@ -46,6 +59,13 @@ export { default as OrdersPaymentLayout } from "./Dashboard/OrdersPayment/OrderP
 /* Delivery Man */
 export { default as DeliveryManLayout } from "./Dashboard/DeliveryMan/DeliveryManLayout";
 export { default as EditDeliveryManLayout } from "./Dashboard/DeliveryMan/EditDeliveryManLayout";
+
+/* Languages */
+export { default as LanguagesLayout } from "./Dashboard/Languages/LanguagesLayout";
+
+/* Discount */
+export { default as DiscountLayout } from "./Dashboard/Discount/DiscountLayout";
+export { default as EditDiscountLayout } from "./Dashboard/Discount/EditDiscountLayout";
 
 /*  Orders */
 // Orders -> Details Order
