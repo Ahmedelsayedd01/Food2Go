@@ -122,7 +122,7 @@ const ZonePage = ({ refetch }) => {
                                                                </td>
                                                                <td className="px-4 py-3 text-center">
                                                                       <div className="flex items-center justify-center gap-2">
-                                                                             <Link to={`edit/${zone.id}`} className="text-blue-500 hover:underline"><EditIcon /></Link>
+                                                                             <Link to={`edit/${zone.id}`}  ><EditIcon /></Link>
 
                                                                              <button
                                                                                     type="button"
