@@ -106,7 +106,7 @@ const BannersPage = ({ refetch, setUpdate }) => {
                                                                </td>
                                                                <td className="px-4 py-3 text-center">
                                                                       <div className="flex items-center justify-center gap-2">
-                                                                             <Link to={`edit/${banner.id}`} className="text-blue-500 hover:underline"><EditIcon /></Link>
+                                                                             <Link to={`edit/${banner.id}`}  ><EditIcon /></Link>
                                                                              <button
                                                                                     type="button"
                                                                                     onClick={() => handleOpenDelete(banner.id)}

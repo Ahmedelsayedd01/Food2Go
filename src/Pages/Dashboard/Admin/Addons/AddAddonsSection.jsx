@@ -243,6 +243,7 @@ const AddAddonsSection = ({ update, setUpdate }) => {
                                                                                                   handleOpenOption={handleOpenOptionAddonTaxes}
                                                                                                   options={addonTaxes}
                                                                                                   onSelectOption={handleSelectAddonTaxes}
+                                                                                                  border={false}
                                                                                            />
                                                                                     </div>
                                                                                     <div className='w-2/4 flex items-center justify-start gap-x-1'>
