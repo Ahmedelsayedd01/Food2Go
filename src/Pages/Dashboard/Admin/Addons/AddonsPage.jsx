@@ -95,7 +95,7 @@ const AddonsPage = ({ refetch }) => {
                                                                </td>
                                                                <td className="px-4 py-3 text-center">
                                                                       <div className="flex items-center justify-center gap-2">
-                                                                             <Link to={`edit/${addon.id}`} className="text-blue-500 hover:underline"><EditIcon /></Link>
+                                                                             <Link to={`edit/${addon.id}`}  ><EditIcon /></Link>
                                                                              {/* <button className="text-red-500" onClick={() => handleDelete(addon.id, addon.name)}><DeleteIcon /></button> */}
 
                                                                              <button

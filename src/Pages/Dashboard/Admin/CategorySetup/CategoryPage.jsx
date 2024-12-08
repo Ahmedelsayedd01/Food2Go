@@ -70,13 +70,13 @@ const CategoryPage = ({ refetch, setUpdate }) => {
               }
 
               // Log the updated categories after the state update
-              setCategories((prevCategories) => {
-                     const updatedCategories = prevCategories.map((category) =>
-                            category.id === id ? { ...category, status: status } : category
-                     );
-                     console.log('Updated categories:', updatedCategories);
-                     return updatedCategories;
-              });
+              // setCategories((prevCategories) => {
+              //        const updatedCategories = prevCategories.map((category) =>
+              //               category.id === id ? { ...category, status: status } : category
+              //        );
+              //        console.log('Updated categories:', updatedCategories);
+              //        return updatedCategories;
+              // });
        };
        const handleChangeActive = async (id, name, status) => {
               const response = await changeState(
@@ -346,7 +346,7 @@ const CategoryPage = ({ refetch, setUpdate }) => {
                                                                </td>
                                                                <td className="px-4 py-3 text-center">
                                                                       <div className="flex items-center justify-center gap-2">
-                                                                             <Link to={`edit/${category.id}`} className="text-blue-500 hover:underline"><EditIcon /></Link>
+                                                                             <Link to={`edit/${category.id}`}  ><EditIcon /></Link>
                                                                              <button
                                                                                     type="button"
                                                                                     onClick={() => handleOpenDelete(category.id)}
