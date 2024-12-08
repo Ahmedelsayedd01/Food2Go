@@ -253,6 +253,7 @@ const AddDeliveryManSection = ({ data, refetch, setRefetch }) => {
                                                         handleOpenOption={handleOpenOptionBranch}
                                                         options={data}
                                                         onSelectOption={handleSelectBranch}
+                                                        border={false}
                                                  />
                                           </div>
                                           {/* Delivery Image */}
@@ -278,6 +279,7 @@ const AddDeliveryManSection = ({ data, refetch, setRefetch }) => {
                                                         handleOpenOption={handleOpenOptionIdentityType}
                                                         options={identityTypes}
                                                         onSelectOption={handleSelectIdentityType}
+                                                        border={false}
                                                  />
                                           </div>
                                           {/* Identity Image */}

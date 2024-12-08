@@ -351,21 +351,9 @@ const AddCategorySection = ({ update, setUpdate }) => {
                                                                                                   handleOpenOption={handleOpenOptionCategoriesParent}
                                                                                                   options={categoriesParent}
                                                                                                   onSelectOption={handleSelectCategoriesParent}
+                                                                                                  border={false}
                                                                                            />
                                                                                     </div>
-                                                                                    {/* Category Priority */}
-                                                                                    {/* <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                                                                           <span className="text-xl font-TextFontRegular text-thirdColor">Category Priority:</span>
-                                                                                           <DropDown
-                                                                                                  ref={dropDownCategoriesPriority}
-                                                                                                  handleOpen={() => handleOpenDropdown('priority')}
-                                                                                                  stateoption={stateCategoriesPriority}
-                                                                                                  openMenu={isOpenCategoriesPriority}
-                                                                                                  handleOpenOption={handleOpenOptionCategoriesPriority}
-                                                                                                  options={categoriesPriority}
-                                                                                                  onSelectOption={handleSelectCategoriesPriority}
-                                                                                           />
-                                                                                    </div> */}
                                                                                     <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                                                                                            <span className="text-xl font-TextFontRegular text-thirdColor">Priority Num :</span>
                                                                                            <NumberInput
