@@ -25,6 +25,7 @@ const CategoryPage = ({ refetch, setUpdate }) => {
 
        const [openSupCategory, setOpenSupCategory] = useState(null);
        const [openPriority, setOpenPriority] = useState(null);
+       const [openSupDelete, setOpenSupDelete] = useState(null);
        const [openDelete, setOpenDelete] = useState(null);
        // Fetch categories when the component mounts or when refetch is called
        useEffect(() => {
@@ -45,6 +46,12 @@ const CategoryPage = ({ refetch, setUpdate }) => {
        };
        const handleClosePriority = () => {
               setOpenPriority(null);
+       };
+       const handleOpenSupDelete = (item) => {
+              setOpenSupDelete(item);
+       };
+       const handleCloseSupDelete = () => {
+              setOpenSupDelete(null);
        };
        const handleOpenDelete = (item) => {
               setOpenDelete(item);
@@ -69,14 +76,6 @@ const CategoryPage = ({ refetch, setUpdate }) => {
                      );
               }
 
-              // Log the updated categories after the state update
-              // setCategories((prevCategories) => {
-              //        const updatedCategories = prevCategories.map((category) =>
-              //               category.id === id ? { ...category, status: status } : category
-              //        );
-              //        console.log('Updated categories:', updatedCategories);
-              //        return updatedCategories;
-              // });
        };
        const handleChangeActive = async (id, name, status) => {
               const response = await changeState(
@@ -123,6 +122,30 @@ const CategoryPage = ({ refetch, setUpdate }) => {
        };
 
        // Delete Category
+       const handleSupDelete = async (id, name) => {
+              const success = await deleteData(`https://Bcknd.food2go.online/admin/category/delete/${id}`, `${name} Deleted Success.`);
+
+              if (success) {
+                     // Update categories only if changeState succeeded
+                     setCategories(
+                            categories.map((category) => {
+                                   if (category.id === id) {
+                                          // Filter out the deleted subcategory
+                                          return {
+                                                 ...category,
+                                                 sub_categories: category.sub_categories.filter(
+                                                        (sub) => sub.id !== subcategoryId
+                                                 ),
+                                          };
+                                   }
+                                   return category;
+                            })
+                     );
+                     setOpenSupCategory(null)
+                     setUpdate(!refetch)
+              }
+              console.log('categories', categories)
+       };
        const handleDelete = async (id, name) => {
               const success = await deleteData(`https://Bcknd.food2go.online/admin/category/delete/${id}`, `${name} Deleted Success.`);
 
@@ -250,11 +273,58 @@ const CategoryPage = ({ refetch, setUpdate }) => {
                                                                                                                               return (
                                                                                                                                      <div
                                                                                                                                             key={index}
-                                                                                                                                            className="sm:w-full lg:w-5/12 xl:w-3/12 flex items-center justify-center shadow-md hover:shadow-none duration-300 py-3 px-4 rounded-xl bg-gray-50"
+                                                                                                                                            className=" flex items-center justify-between shadow-md hover:shadow-none duration-300 py-3 px-3 rounded-xl bg-gray-50 gap-x-2"
                                                                                                                                      >
                                                                                                                                             <span className="text-mainColor text-lg lg:text-xl font-semibold capitalize">
                                                                                                                                                    {displayIndex}. {supcategory.name}
                                                                                                                                             </span>
+                                                                                                                                            <button
+                                                                                                                                                   type="button"
+                                                                                                                                                   onClick={() => handleOpenSupDelete(supcategory.id)}
+                                                                                                                                            >
+                                                                                                                                                   <DeleteIcon />
+                                                                                                                                            </button>
+                                                                                                                                            {openSupDelete === supcategory.id && (
+                                                                                                                                                   <Dialog
+                                                                                                                                                          open={true}
+                                                                                                                                                          onClose={handleCloseSupDelete}
+                                                                                                                                                          className="relative z-10"
+                                                                                                                                                   >
+                                                                                                                                                          <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                                                                                                                                                          <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                                                                                                                                                                 <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                                                                                                                                                                        <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                                                                                                                                                                               <div className="flex  flex-col items-center justify-center bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                                                                                                                                                                                      <Warning
+                                                                                                                                                                                             width="28"
+                                                                                                                                                                                             height="28"
+                                                                                                                                                                                             aria-hidden="true"
+                                                                                                                                                                                      />
+                                                                                                                                                                                      <div className="flex items-center">
+                                                                                                                                                                                             <div className="mt-2 text-center">
+                                                                                                                                                                                                    You will delete supcategory {supcategory?.name || "-"}
+                                                                                                                                                                                             </div>
+                                                                                                                                                                                      </div>
+                                                                                                                                                                               </div>
+                                                                                                                                                                               <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                                                                                                                                                                                      <button className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto" onClick={() => handleSupDelete(supcategory.id, supcategory.name)}>
+                                                                                                                                                                                             Delete
+                                                                                                                                                                                      </button>
+
+                                                                                                                                                                                      <button
+                                                                                                                                                                                             type="button"
+                                                                                                                                                                                             data-autofocus
+                                                                                                                                                                                             onClick={handleCloseSupDelete}
+                                                                                                                                                                                             className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-6 py-3 text-sm font-medium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:mt-0 sm:w-auto"
+                                                                                                                                                                                      >
+                                                                                                                                                                                             Cancel
+                                                                                                                                                                                      </button>
+                                                                                                                                                                               </div>
+                                                                                                                                                                        </DialogPanel>
+                                                                                                                                                                 </div>
+                                                                                                                                                          </div>
+                                                                                                                                                   </Dialog>
+                                                                                                                                            )}
                                                                                                                                      </div>
                                                                                                                               );
                                                                                                                        })
