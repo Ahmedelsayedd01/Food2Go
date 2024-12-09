@@ -68,7 +68,7 @@ const OrdersPaymentPending = () => {
     }
   };
 
-  const headers = ['SL', 'Name', "Price", 'Tax (%)', 'Action'];
+  const headers = ['SL', 'Name', 'Phone', 'Total Order', 'Resipt', 'Order Num', 'Order Date', 'Price', 'Tax (%)', 'Action'];
 
   return (
     <div className="w-full pb-28 flex items-start justify-start overflow-x-scroll scrollSection">
@@ -102,10 +102,39 @@ const OrdersPaymentPending = () => {
                     {index + 1}
                   </td>
                   <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                    {paymentPending?.name || '-'}
+                    {paymentPending?.user?.name || '-'}
                   </td>
                   <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                    {paymentPending?.price || '0'}
+                    {paymentPending?.user?.phone || '-'}
+                  </td>
+                  <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                    {paymentPending?.user?.order_amount || '-'}
+                  </td>
+                  <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                    <div className="flex justify-center">
+                      <img src={paymentPending?.receipt_link}
+                        className="bg-mainColor border-2 border-mainColor rounded-full min-w-14 min-h-14 max-w-14 max-h-14"
+                        alt="Photo"
+                      />
+                    </div>
+                  </td>
+                  <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                    {paymentPending?.order_number || '-'}
+                  </td>
+                  <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                    {paymentPending?.order_date ? (
+                      <>
+                        {paymentPending.order_date}
+                        <br />
+                        {paymentPending.date}
+                      </>
+                    ) : (
+                      '-'
+                    )}
+                  </td>
+
+                  <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                    {paymentPending?.amount || '0'}
                   </td>
                   <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
                     {paymentPending.tax?.amount || '0'}

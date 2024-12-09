@@ -22,9 +22,7 @@ const OrdersPaymentHistory = () => {
     console.log('OrdersPaymentHistory', ordersPaymentHistory)
   }, [dataOrdersPaymentHistory]); // Only run this effect when `data` changes
 
-
-  const headers = ['SL', 'Name', "Price", 'Tax (%)'];
-
+  const headers = ['SL', 'Name', 'Phone', 'Total Order', 'Resipt', 'Order Num', 'Order Date', 'Price', 'Tax (%)'];
   return (
     <div className="w-full pb-28 flex items-start justify-start overflow-x-scroll scrollSection">
       {loadingOrdersPaymentHistory ? (
@@ -47,21 +45,49 @@ const OrdersPaymentHistory = () => {
           <tbody className="w-full">
             {ordersPaymentHistory.length === 0 ? (
               <tr>
-                <td colSpan={12} className='text-center text-xl text-mainColor font-TextFontMedium  '>Not find orders Payment history</td>
+                <td colSpan={12} className='text-center text-xl text-mainColor font-TextFontMedium'>Not Find Orders Payment history</td>
               </tr>
             ) : (
 
-
-              ordersPaymentHistory.map((paymentHistory, index) => (
+              ordersPaymentHistory.map((paymentHistory, index) => ( // Example with two rows
                 <tr className="w-full border-b-2" key={index}>
                   <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
                     {index + 1}
                   </td>
                   <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                    {paymentHistory?.name || '-'}
+                    {paymentHistory?.user?.name || '-'}
                   </td>
                   <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                    {paymentHistory?.price || '0'}
+                    {paymentHistory?.user?.phone || '-'}
+                  </td>
+                  <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                    {paymentHistory?.user?.order_amount || '-'}
+                  </td>
+                  <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                    <div className="flex justify-center">
+                      <img src={paymentHistory?.receipt_link}
+                        className="bg-mainColor border-2 border-mainColor rounded-full min-w-14 min-h-14 max-w-14 max-h-14"
+                        alt="Photo"
+                      />
+                    </div>
+                  </td>
+                  <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                    {paymentHistory?.order_number || '-'}
+                  </td>
+                  <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                    {paymentHistory?.order_date ? (
+                      <>
+                        {paymentHistory.order_date}
+                        <br />
+                        {paymentHistory.date}
+                      </>
+                    ) : (
+                      '-'
+                    )}
+                  </td>
+
+                  <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                    {paymentHistory?.amount || '0'}
                   </td>
                   <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
                     {paymentHistory.tax?.amount || '0'}
@@ -69,12 +95,6 @@ const OrdersPaymentHistory = () => {
                       ' %'
                     )}
                   </td>
-                  {/* <td className="px-4 py-3 text-center">
-                    <div className="flex items-center justify-center gap-2">
-                      <Link to={`edit/${paymentHistory.id}`}  ><EditIcon /></Link>
-                      <button className="text-red-500" onClick={() => handleDelete(paymentHistory.id, paymentHistory.name)}><DeleteIcon /></button>
-                    </div>
-                  </td> */}
                 </tr>
               ))
 
