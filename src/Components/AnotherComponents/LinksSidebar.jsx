@@ -73,7 +73,11 @@ const LinksSidebar = () => {
        const [isActivePaymentMethod, setIsActivePaymentMethod] = useState(stateLink.isActivePaymentMethod ?? false);
        const [isActiveCities, setIsActiveCities] = useState(stateLink.isActiveCities ?? false);
        const [isActiveBranches, setIsActiveBranches] = useState(stateLink.isActiveBranches ?? false);
-       const [isActiveZones, setIsActiveZone] = useState(stateLink.isActiveZones ?? false);
+       const [isActiveZones, setIsActiveZones] = useState(stateLink.isActiveZones ?? false);
+
+       const [isActiveResturantTime, setIsActiveResturantTime] = useState(stateLink.isActiveResturantTime ?? false);
+       const [isActiveCancelTime, setIsActiveCancelTime] = useState(stateLink.isActiveCancelTime ?? false);
+       const [isActiveDeliveryTime, setIsActiveDeliveryTime] = useState(stateLink.isActiveDeliveryTime ?? false);
 
        /* Taxes */
        const [isOpenTaxes, setIsOpenTaxes] = useState(stateLink.isOpenTaxes ?? false);
@@ -139,6 +143,9 @@ const LinksSidebar = () => {
                      isActiveCities,
                      isActiveBranches,
                      isActiveZones,
+                     isActiveResturantTime,
+                     isActiveCancelTime,
+                     isActiveDeliveryTime,
 
 
                      isActiveDeliveryMan,
@@ -192,6 +199,9 @@ const LinksSidebar = () => {
               isActiveCities,
               isActiveBranches,
               isActiveZones,
+              isActiveResturantTime,
+              isActiveCancelTime,
+              isActiveDeliveryTime,
 
               isActiveDeliveryMan,
               isActiveDeliveryManIcon,
@@ -246,6 +256,9 @@ const LinksSidebar = () => {
               isActiveCities,
               isActiveBranches,
               isActiveZones,
+              isActiveResturantTime,
+              isActiveCancelTime,
+              isActiveDeliveryTime,
 
               isActiveDeliveryMan,
               isActiveDeliveryManIcon,
@@ -299,7 +312,10 @@ const LinksSidebar = () => {
               setIsActivePaymentMethod(false);
               setIsActiveCities(false)
               setIsActiveBranches(false)
-              setIsActiveZone(false)
+              setIsActiveZones(false)
+              setIsActiveResturantTime(false)
+              setIsActiveCancelTime(false)
+              setIsActiveDeliveryTime(false)
 
               setIsActiveOrdersPayment(false)
               setIsActiveOrdersPaymentIcon(false)
@@ -454,7 +470,14 @@ const LinksSidebar = () => {
               // Only navigate if on `/dashboard/setting` but not already on any sub-route
               if (
                      result === "/dashboard/setting" &&
-                     !["/dashboard/setting/payment_method", "/dashboard/setting/cities", "/dashboard/setting/branches", "/dashboard/setting/zones"].some(path => pathName.startsWith(path))
+                     !["/dashboard/setting/payment_method",
+                            "/dashboard/setting/cities",
+                            "/dashboard/setting/branches",
+                            "/dashboard/setting/zones",
+                            "/dashboard/setting/resturant_time",
+                            "/dashboard/setting/cancel_time",
+                            "/dashboard/setting/delivery_time"
+                     ].some(path => pathName.startsWith(path))
               ) {
                      handleClickSetting();
                      navigate('/dashboard/setting/payment_method');
@@ -511,13 +534,57 @@ const LinksSidebar = () => {
               handleStateLinks()
               setIsOpenSetting(true);
               setIsActiveSetting(true);
-              setIsActiveZone(true);
+              setIsActiveZones(true);
        }, []);
        useEffect(() => {
               const part = pathName.split('/');
               const result = part.slice(0, 4).join('/');
               if (result == "/dashboard/setting/zones") {
                      handleClickZones()
+              }
+       }, [location])
+
+       /* Resturant Time */
+       const handleClickResturantTime = useCallback(() => {
+              handleStateLinks()
+              setIsOpenSetting(true);
+              setIsActiveSetting(true);
+              setIsActiveResturantTime(true);
+       }, []);
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 4).join('/');
+              if (result == "/dashboard/setting/resturant_time") {
+                     handleClickResturantTime()
+              }
+       }, [location])
+
+       /* Cancel Time */
+       const handleClickCancelTime = useCallback(() => {
+              handleStateLinks()
+              setIsOpenSetting(true);
+              setIsActiveSetting(true);
+              setIsActiveCancelTime(true);
+       }, []);
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 4).join('/');
+              if (result == "/dashboard/setting/cancel_time") {
+                     handleClickCancelTime()
+              }
+       }, [location])
+       /* Zones */
+       const handleClickDeliveryTime = useCallback(() => {
+              handleStateLinks()
+              setIsOpenSetting(true);
+              setIsActiveSetting(true);
+              setIsActiveDeliveryTime(true);
+       }, []);
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 4).join('/');
+              if (result == "/dashboard/setting/delivery_time") {
+                     handleClickDeliveryTime()
               }
        }, [location])
 
@@ -579,7 +646,7 @@ const LinksSidebar = () => {
               setIsActiveTaxesIcon(true);
               setIsActiveTax(true);
        }, []);
-       
+
        useEffect(() => {
               const part = pathName.split('/');
               const result = part.slice(0, 4).join('/');
@@ -1048,6 +1115,30 @@ const LinksSidebar = () => {
                                           text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
                                                  }>
                                                  Zones
+                                          </li>
+                                   </Link>
+                                   <Link to={"setting/resturant_time"} onClick={handleClickResturantTime}>
+                                          <li
+                                                 className={`${isActiveResturantTime ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                 }>
+                                                 Resturant Time
+                                          </li>
+                                   </Link>
+                                   <Link to={"setting/cancel_time"} onClick={handleClickCancelTime}>
+                                          <li
+                                                 className={`${isActiveCancelTime ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                 }>
+                                                 Cancel Time
+                                          </li>
+                                   </Link>
+                                   <Link to={"setting/delivery_time"} onClick={handleClickDeliveryTime}>
+                                          <li
+                                                 className={`${isActiveDeliveryTime ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                 }>
+                                                 Delivery Time
                                           </li>
                                    </Link>
                             </ul>
