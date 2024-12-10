@@ -6,7 +6,7 @@ import { CategoryIcon, HomeIcon, OrderIcon, ProductIcon } from '../../Assets/Ico
 import { RiVipDiamondLine } from 'react-icons/ri';
 import { CiSettings } from 'react-icons/ci';
 import { useSelector } from 'react-redux';
-import { MdOutlineDeliveryDining, MdOutlinePayments } from 'react-icons/md';
+import { MdOutlineDeliveryDining, MdOutlineLocalOffer, MdOutlinePayments } from 'react-icons/md';
 import { PiFlagBanner } from 'react-icons/pi';
 import { IoLanguage } from 'react-icons/io5';
 import { BiSolidDiscount } from 'react-icons/bi';
@@ -93,6 +93,9 @@ const LinksSidebar = () => {
        /* Delivery Man */
        const [isActiveDeliveryMan, setIsActiveDeliveryMan] = useState(stateLink.isActiveDeliveryMan ?? false);
        const [isActiveDeliveryManIcon, setIsActiveDeliveryManIcon] = useState(stateLink.isActiveDeliveryManIcon ?? false);
+       /* Offers */
+       const [isActiveOffers, setIsActiveOffers] = useState(stateLink.isActiveOffers ?? false);
+       const [isActiveOffersIcon, setIsActiveOffersIcon] = useState(stateLink.isActiveOffersIcon ?? false);
        /* Languages */
        const [isActiveLanguages, setIsActiveLanguages] = useState(stateLink.isActiveLanguages ?? false);
        const [isActiveLanguagesIcon, setIsActiveLanguagesIcon] = useState(stateLink.isActiveLanguagesIcon ?? false);
@@ -150,6 +153,8 @@ const LinksSidebar = () => {
 
                      isActiveDeliveryMan,
                      isActiveDeliveryManIcon,
+                     isActiveOffers,
+                     isActiveOffersIcon,
 
                      isActiveLanguages,
                      isActiveLanguagesIcon,
@@ -205,6 +210,9 @@ const LinksSidebar = () => {
 
               isActiveDeliveryMan,
               isActiveDeliveryManIcon,
+
+              isActiveOffers,
+              isActiveOffersIcon,
 
               isActiveLanguages,
               isActiveLanguagesIcon,
@@ -262,6 +270,9 @@ const LinksSidebar = () => {
 
               isActiveDeliveryMan,
               isActiveDeliveryManIcon,
+
+              isActiveOffers,
+              isActiveOffersIcon,
 
               isActiveLanguages,
               isActiveLanguagesIcon,
@@ -322,6 +333,9 @@ const LinksSidebar = () => {
 
               setIsActiveDeliveryMan(false)
               setIsActiveDeliveryManIcon(false)
+
+              setIsActiveOffers(false)
+              setIsActiveOffersIcon(false)
 
               setIsActiveLanguages(false)
               setIsActiveLanguagesIcon(false)
@@ -614,6 +628,20 @@ const LinksSidebar = () => {
               const result = part.slice(0, 3).join('/');
               if (result == "/dashboard/delivery_man") {
                      handleClickDeliveryMan()
+              }
+       }, [location])
+       
+       /* Offers */
+       const handleClickOffers = useCallback(() => {
+              handleStateLinks();
+              setIsActiveOffers(true);
+              setIsActiveOffersIcon(true);
+       }, []);
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard/offers") {
+                     handleClickOffers()
               }
        }, [location])
 
@@ -1243,6 +1271,32 @@ const LinksSidebar = () => {
                                           group-hover:text-mainColor`}
                                    >
                                           Delivery Man
+                                   </span>
+                            </div>
+                     </Link>
+                     {/* Offers */}
+                     <Link to="offers"
+                            onMouseMove={() => setIsActiveOffersIcon(true)}
+                            onMouseOut={() => setIsActiveOffersIcon(false)}
+                            onClick={handleClickOffers}
+                            className={`
+                                   ${isActiveOffers ? 'active' : ''}
+                                   ${hideSide ? 'justify-between' : 'justify-center'} 
+                                   hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
+                                   hover:text-mainColor w-full flex items-center 
+                                   transition-all duration-300 group`}
+                     >
+                            <div className="flex items-center gap-x-2">
+                                   <MdOutlineLocalOffer
+                                          className={`${isActiveOffersIcon || isActiveOffers ? 'text-[#9E090F]' : 'text-[#fff]'} text-3xl`}
+                                   />
+                                   <span
+                                          className={`${hideSide ? 'block' : 'hidden'}
+                                           ${isActiveOffers ? "text-mainColor" : "text-white"}
+                                          text-lg font-TextFontRegular transition-all duration-300
+                                          group-hover:text-mainColor`}
+                                   >
+                                          Offers
                                    </span>
                             </div>
                      </Link>

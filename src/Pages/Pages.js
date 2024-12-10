@@ -60,6 +60,10 @@ export { default as OrdersPaymentHistoryPage } from "./Dashboard/Admin/OrdersPay
 export { default as AddDeliveryManSection } from "./Dashboard/Admin/DeliveryMan/AddDeliveryManSection";
 export { default as EditDeliveryManPage } from "./Dashboard/Admin/DeliveryMan/EditDeliveryManPage";
 export { default as DeliveryManPage } from "./Dashboard/Admin/DeliveryMan/DeliveryManPage";
+// Offers
+export { default as AddOfferSection } from "./Dashboard/Admin/Offers/AddOfferSection";
+export { default as EditOfferPage } from "./Dashboard/Admin/Offers/EditOfferPage";
+export { default as OffersPage } from "./Dashboard/Admin/Offers/OffersPage";
 // Languages
 export { default as LanguagesPage } from "./Dashboard/Admin/Languages/LanguagesPage";
 export { default as AddLanguagesSection } from "./Dashboard/Admin/Languages/AddLanguageSection";

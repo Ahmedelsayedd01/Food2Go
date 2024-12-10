@@ -59,6 +59,9 @@ export { default as OrdersPaymentLayout } from "./Dashboard/OrdersPayment/OrderP
 /* Delivery Man */
 export { default as DeliveryManLayout } from "./Dashboard/DeliveryMan/DeliveryManLayout";
 export { default as EditDeliveryManLayout } from "./Dashboard/DeliveryMan/EditDeliveryManLayout";
+/* Offers */
+export { default as OffersLayout } from "./Dashboard/Offers/OffersLayout";
+export { default as EditOfferLayout } from "./Dashboard/Offers/EditOfferLayout";
 
 /* Languages */
 export { default as LanguagesLayout } from "./Dashboard/Languages/LanguagesLayout";

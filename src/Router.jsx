@@ -23,6 +23,7 @@ import {
   EditCityLayout,
   EditDeliveryManLayout,
   EditDiscountLayout,
+  EditOfferLayout,
   EditPaymentMethodLayout,
   EditProductLayout,
   EditTaxLayout,
@@ -32,6 +33,7 @@ import {
   InvoiceOrderLayout,
   LanguagesLayout,
   LoginLayout,
+  OffersLayout,
   OrdersPaymentLayout,
   OutForDeliveryOrdersLayout,
   PaymentMethodLayout,
@@ -281,6 +283,19 @@ export const router = createBrowserRouter([
               {
                 path: 'edit/:deliveryManId',
                 element: <EditDeliveryManLayout />,
+              }
+            ]
+          },
+          {
+            path: 'offers',
+            children: [
+              {
+                path: '',
+                element: <OffersLayout />,
+              },
+              {
+                path: 'edit/:offerId',
+                element: <EditOfferLayout />,
               }
             ]
           },
