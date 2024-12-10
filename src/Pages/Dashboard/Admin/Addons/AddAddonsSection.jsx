@@ -144,8 +144,8 @@ const AddAddonsSection = ({ update, setUpdate }) => {
               addonsName.forEach((name, index) => {
                      // Corrected the typo and added translation_id and translation_name
                      formData.append(`addon_names[${index}][addon_name]`, name.addon_name);
-                     formData.append(`addon_names[${index}][tranlation_id]`, name.translation_id);
-                     formData.append(`addon_names[${index}][tranlation_name]`, name.translation_name);
+                     formData.append(`addon_names[${index}][tranlation_id]`, name.tranlation_id);
+                     formData.append(`addon_names[${index}][tranlation_name]`, name.tranlation_name);
               });
 
               formData.append('price', addonPrice)

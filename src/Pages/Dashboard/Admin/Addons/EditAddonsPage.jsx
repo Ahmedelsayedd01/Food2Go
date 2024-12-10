@@ -55,9 +55,9 @@ const EditAddonsPage = () => {
                      if (dataAddonsEdit.addons_names) {
                             dataAddonsEdit.addons_names.forEach((addonName) => {
                                    let obj = {
-                                          tranlation_id: addonName.id || '-',  // Use '' if id is missing
-                                          tranlation_name: addonName.lang || 'Default Language',  // Fallback value
-                                          addon_name: addonName.name || '-',  // Use '' if name is missing
+                                          tranlation_id: addonName.tranlation_id || '-',  // Use '' if id is missing
+                                          tranlation_name: addonName.tranlation_name || 'Default Language',  // Fallback value
+                                          addon_name: addonName.addon_name || '-',  // Use '' if name is missing
                                    };
                                    newAddonsNames.push(obj);
                             });
@@ -164,8 +164,8 @@ const EditAddonsPage = () => {
               addonsName.forEach((name, index) => {
                      // Corrected the typo and added translation_id and translation_name
                      formData.append(`addon_names[${index}][addon_name]`, name.addon_name);
-                     formData.append(`addon_names[${index}][tranlation_id]`, name.translation_id);
-                     formData.append(`addon_names[${index}][tranlation_name]`, name.translation_name);
+                     formData.append(`addon_names[${index}][tranlation_id]`, name.tranlation_id);
+                     formData.append(`addon_names[${index}][tranlation_name]`, name.tranlation_name);
               });
 
               formData.append('price', addonPrice)
@@ -261,6 +261,7 @@ const EditAddonsPage = () => {
                                                                                                   handleOpenOption={handleOpenOptionAddonTaxes}
                                                                                                   options={addonTaxes}
                                                                                                   onSelectOption={handleSelectAddonTaxes}
+                                                                                                  border={false}
                                                                                            />
                                                                                     </div>
                                                                                     <div className='w-2/4 flex items-center justify-start gap-x-1'>
