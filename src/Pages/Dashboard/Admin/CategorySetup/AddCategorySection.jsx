@@ -186,13 +186,34 @@ const AddCategorySection = ({ update, setUpdate }) => {
        }, [response])
 
        const handleReset = () => {
-              setCategoryName([])
+              categoryName.map((name, index) => {
+
+                     setCategoryName(prev => {
+                            const updatedNames = [...prev];
+
+                            // Ensure the array is long enough
+                            if (updatedNames.length <= index) {
+                                   updatedNames.length = index + 1; // Resize array
+                            }
+
+                            // Create or update the object at the current index
+                            updatedNames[index] = {
+                                   ...updatedNames[index], // Retain existing properties if any
+                                   'tranlation_id': '', // Use the ID from tap
+                                   'category_name': '', // Use the captured string value
+                                   'tranlation_name': '', // Use tap.name for tranlation_name
+                            };
+
+                            return updatedNames;
+                     });
+              })
+              // setCategoryName([])
               setImage('')
               setImageFile(null)
               setBanner('')
               setBannerFile(null)
               setStateCategoriesParent('Select Category Parent')
-              setParent('')
+              // setParent('')
               // setStateCategoriesPriority('Select Category Priority')
               setPriority('')
               setStatecategoriesAddonse('Select Category Addons')
@@ -249,9 +270,9 @@ const AddCategorySection = ({ update, setUpdate }) => {
 
               categoryName.forEach((name, index) => {
                      // Corrected the typo and added translation_id and translation_name
-                     formData.append(`category_names[${index}][tranlation_id]`, name.translation_id);
+                     formData.append(`category_names[${index}][tranlation_id]`, name.tranlation_id);
                      formData.append(`category_names[${index}][category_name]`, name.category_name);
-                     formData.append(`category_names[${index}][tranlation_name]`, name.translation_name);
+                     formData.append(`category_names[${index}][tranlation_name]`, name.tranlation_name);
               });
 
 
@@ -262,7 +283,7 @@ const AddCategorySection = ({ update, setUpdate }) => {
               formData.append('priority', priority);
               // Assuming selectedCategoriesAddons is an array of selected objects with `id` properties
               selectedCategoriesAddons.forEach((addon, index) => {
-                     formData.append(`addons[${index}]`, addon.id); // Append each ID as an array element in FormData
+                     formData.append(`addons_id[${index}]`, addon.id); // Append each ID as an array element in FormData
               });
 
               formData.append('image', imageFile);

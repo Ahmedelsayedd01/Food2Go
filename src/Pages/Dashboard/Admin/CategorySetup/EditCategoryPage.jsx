@@ -1,54 +1,41 @@
-// import React from 'react'
-// import { useParams } from 'react-router-dom'
-// import { useGet } from '../../../../Hooks/useGet';
-
-// const EditCategoryPage = () => {
-//        const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://Bcknd.food2go.online/admin/translation' });
-//        const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: 'https://Bcknd.food2go.online/admin/category' });
-//        const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: `https://Bcknd.food2go.online/admin/category/${categoryId}` })
-//        return (
-//               <div>EditCategoryPage</div>
-//        )
-// }
-
-// export default EditCategoryPage
-
 import React, { useEffect, useRef, useState } from 'react'
-import { replace, useNavigate, useParams } from 'react-router-dom';
-import { DropDown, LoaderLogin, StaticButton, StaticLoader, SubmitButton, Switch, TextInput, UploadInput } from '../../../../Components/Components';
+import { DropDown, LoaderLogin, NumberInput, StaticButton, StaticLoader, SubmitButton, Switch, TextInput, UploadInput } from '../../../../Components/Components';
+
+import { MultiSelect } from 'primereact/multiselect';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useGet } from '../../../../Hooks/useGet';
 import { usePost } from '../../../../Hooks/usePostJson';
 import { useAuth } from '../../../../Context/Auth';
 
-import { MultiSelect } from 'primereact/multiselect';
-
 
 const EditCategoryPage = () => {
        const { categoryId } = useParams();
-       const navigate = useNavigate();
        const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://Bcknd.food2go.online/admin/translation' });
-       const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: 'https://Bcknd.food2go.online/admin/category' });
+       const { refetch: refetchCategories, loading: loadingCategories, data: dataCategories } = useGet({ url: 'https://Bcknd.food2go.online/admin/category' });
 
+       const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: `https://Bcknd.food2go.online/admin/category/item/${categoryId}` });
        const { postData, loadingPost, response } = usePost({ url: `https://Bcknd.food2go.online/admin/category/update/${categoryId}` });
 
        const dropDownCategoriesParent = useRef();
-       const dropDownCategoriesPriority = useRef();
        const ImageRef = useRef();
        const BannerRef = useRef();
        const auth = useAuth();
+       const navigate = useNavigate();
 
        // const [taps, setTaps] = useState([{ id: 1, name: 'English(EN)' }, { id: 2, name: 'Arabic(Ar)' }, { id: 3, name: 'garman' }])
        const [taps, setTaps] = useState([])
        const [categories, setCategories] = useState([])
        const [categoriesParent, setCategoriesParent] = useState([])
-       const [categoriesPriority, setCategoriesPriority] = useState([])
 
        const [selectedCategoriesAddons, setSelectedCategoriesAddons] = useState([])
        const [statecategoriesAddonse, setStatecategoriesAddonse] = useState('Select Category Addons')
        const [categoriesAddonse, setCategoriesAddonse] = useState([])
+
        const [currentTap, setCurrentTap] = useState(0);
+
        const [categoryName, setCategoryName] = useState([]);
        const [priority, setPriority] = useState('');
+
        const [statusCategory, setStatusCategory] = useState(0);
        const [activeCategory, setActiveCategory] = useState(0);
 
@@ -69,89 +56,52 @@ const EditCategoryPage = () => {
 
        useEffect(() => {
               refetchTranslation(); // Refetch data when the component mounts
+              refetchCategories(); // Refetch data when the component mounts
               refetchCategory(); // Refetch data when the component mounts
-       }, [refetchTranslation, refetchCategory]);
+       }, [refetchTranslation, refetchCategory, refetchCategories]);
 
        useEffect(() => {
-              if (dataTranslation) {
+              if (dataTranslation && dataCategories) {
                      setTaps(dataTranslation.translation);
+                     setCategories(dataCategories.categories);
+                     setCategoriesParent(dataCategories.parent_categories);
+                     setCategoriesAddonse(dataCategories.addons);
               }
-              console.log('dataTranslation', dataTranslation)
-       }, [dataTranslation]);
-
+       }, [dataTranslation, dataCategories]);
 
        useEffect(() => {
-              if (dataCategory) {
-                     setCategories(dataCategory.categories);
-                     setCategoriesParent(dataCategory.parent_categories);
-                     setCategoriesAddonse(dataCategory.addons);
-                     setCategoriesPriority(() => {
-                            const priorities = [];
-
-                            for (let index = 0; index < dataCategory.categories.length; index++) {
-                                   const element = index + 1;
-
-                                   const priorityObj = {
-                                          id: element,
-                                          name: element,
+              if (dataCategory && dataCategory.category_names && dataCategory.category) {
+                     const newCategoryNames = [];
+                     if (dataCategory.category_names) {
+                            dataCategory.category_names.forEach((category) => {
+                                   let obj = {
+                                          tranlation_id: category.tranlation_id || '-',  // Use '' if id is missing
+                                          tranlation_name: category.tranlation_name || 'Default Language',  // Fallback value
+                                          category_name: category.category_name || '-',  // Use '' if name is missing
                                    };
+                                   newCategoryNames.push(obj);
+                            });
+                     }
 
-                                   priorities.push(priorityObj);
-                            }
+                     setCategoryName(newCategoryNames.length > 0 ? newCategoryNames : []);
 
-                            console.log('priorities', priorities);
-                            return priorities;
-                     });
+                     console.log('categoryName edite', categoryName)
 
+
+                     setCategories(dataCategory.category.categories);
+                     setPriority(dataCategory.category.priority);
+                     setImage(dataCategory.category.image_link);
+                     setImageFile(dataCategory.category.image_link);
+                     setBanner(dataCategory.category.banner_link);
+                     setBannerFile(dataCategory.category.banner_link);
+                     setStateCategoriesParent(dataCategory?.category?.category_id || stateCategoriesParent);
+                     setCategoriesParentId(dataCategory?.category?.category_id || '');
+                     setSelectedCategoriesAddons(dataCategory.category.addons);
+                     setStatusCategory(dataCategory.category.status)
+                     setActiveCategory(dataCategory.category.active)
               }
               console.log('dataCategory', dataCategory)
        }, [dataCategory]);
-
-
-       // useEffect(() => {
-       //        const dataCategoryEdit = categories.find((category) => category.id === categoryId) || null;
-
-
-       //        if (dataCategoryEdit) {
-       //               // setCategoryName([])
-       //               //               setImage('')
-       //               //               setImageFile(null)
-       //               //               setBanner('')
-       //               //               setBannerFile(null)
-       //               //               setStateCategoriesParent('Select Category Parent')
-       //               //               setCategoriesParentId('')
-       //               //               setStateCategoriesPriority('Select Category Priority')
-       //               //               setCategoriesPriorityId('')
-       //               //               setStatecategoriesAddonse('Select Category Addons')
-       //               //               setSelectedCategoriesAddons([])
-       //               //               setStatusCategory(0)
-       //               //               setActiveCategory(0)
-       //        }
-       //        console.log('dateCategoryEdit', dataCategoryEdit)
-       // }, [categories]);
-
-       useEffect(() => {
-              const dataCategoryEdit = categories.find((category) => category.id === Number(categoryId)) || null;
-
-              if (dataCategoryEdit) {
-                     setCategoryName([])
-                     setImage('')
-                     setImageFile(null)
-                     setBanner('')
-                     setBannerFile(null)
-                     setStateCategoriesParent('Select Category Parent')
-                     setCategoriesParentId('')
-                     setStateCategoriesPriority('Select Category Priority')
-                     setCategoriesPriorityId('')
-                     setStatecategoriesAddonse('Select Category Addons')
-                     setSelectedCategoriesAddons([])
-                     setStatusCategory(0)
-                     setActiveCategory(0)
-              }
-
-              console.log('dataCategoryEdit', dataCategoryEdit);
-       }, [categories, categoryId]);
-
 
 
 
@@ -222,14 +172,6 @@ const EditCategoryPage = () => {
        }
 
        useEffect(() => {
-              console.log('CategoryName', categoryName)
-       }, [categoryName])
-
-       const handleCancel = () => {
-              navigate(-1, { replace: true });
-       };
-
-       useEffect(() => {
               console.log('response', response);
               if (!loadingPost && response) {
                      handleCancel();
@@ -237,16 +179,23 @@ const EditCategoryPage = () => {
        }, [loadingPost, response]);
 
 
+       const handleCancel = () => {
+              navigate(-1, { replace: true });
+       };
+
+
 
        useEffect(() => {
               const handleClickOutside = (event) => {
                      // Close dropdown if clicked outside
                      if (
-                            dropDownCategoriesParent.current && !dropDownCategoriesParent.current.contains(event.target) &&
-                            dropDownCategoriesPriority.current && !dropDownCategoriesPriority.current.contains(event.target)
+                            dropDownCategoriesParent.current && !dropDownCategoriesParent.current.contains(event.target)
+                            // dropDownCategoriesPriority.current && !dropDownCategoriesPriority.current.contains(event.target
+
+                            // )
                      ) {
                             setIsOpenCategoriesParent(null);
-                            setIsOpenCategoriesPriority(null);
+                            // setIsOpenCategoriesPriority(null);
                      }
               };
 
@@ -257,7 +206,8 @@ const EditCategoryPage = () => {
        }, []);
 
 
-       const handleCategoryAdd = (e) => {
+
+       const handleCategoryEdit = (e) => {
               e.preventDefault();
 
               if (categoryName.length === 0) {
@@ -268,19 +218,7 @@ const EditCategoryPage = () => {
                      auth.toastError('please Enter All Category Names')
                      return;
               }
-              // if (!categoriesParentId) {
-              //        auth.toastError('please Select Category Parent')
-              //        return;
-              // }
 
-              if (!categoriesPriorityId) {
-                     auth.toastError('please Select Category Priority')
-                     return;
-              }
-              if (selectedCategoriesAddons.length === 0) {
-                     auth.toastError('please Select Category Addonse')
-                     return;
-              }
               if (!imageFile) {
                      auth.toastError('please Set Category Image')
                      return;
@@ -291,26 +229,22 @@ const EditCategoryPage = () => {
               }
               const formData = new FormData();
 
-              // categoryName.forEach((name, index) => {
-              //        formData.append(`category_names${[index]}`, JSON.stringify(name));
-              // });
-
-              formData.append('category_names', JSON.stringify(categoryName));
               categoryName.forEach((name, index) => {
                      // Corrected the typo and added translation_id and translation_name
-                     formData.append(`category_names[${index}][tranlation_id]`, name.translation_id);
+                     formData.append(`category_names[${index}][tranlation_id]`, name.tranlation_id);
                      formData.append(`category_names[${index}][category_name]`, name.category_name);
-                     formData.append(`category_names[${index}][tranlation_name]`, name.translation_name);
+                     formData.append(`category_names[${index}][tranlation_name]`, name.tranlation_name);
               });
+
 
               if (categoriesParentId) {
                      formData.append('category_id', categoriesParentId);
               }
 
-              formData.append('priority', categoriesPriorityId);
+              formData.append('priority', priority);
               // Assuming selectedCategoriesAddons is an array of selected objects with `id` properties
               selectedCategoriesAddons.forEach((addon, index) => {
-                     formData.append(`addons[${index}]`, addon.id); // Append each ID as an array element in FormData
+                     formData.append(`addons_id[${index}]`, addon.id); // Append each ID as an array element in FormData
               });
 
               formData.append('image', imageFile);
@@ -320,20 +254,20 @@ const EditCategoryPage = () => {
               formData.append('status', statusCategory);
               formData.append('active', activeCategory);
 
-              postData(formData, 'Category Edited Success');
+              postData(formData, 'Category Added Success');
 
        };
        return (
               <>
-                     {loadingTranslation || loadingCategory || loadingPost ? (
+                     {loadingTranslation || loadingCategories || loadingPost ? (
                             <>
-                                   <div className="w-full  flex justify-center items-center">
+                                   <div className="w-full flex justify-center items-center">
                                           <LoaderLogin />
                                    </div>
                             </>
                      ) : (
                             <section>
-                                   <form onSubmit={handleCategoryAdd}>
+                                   <form onSubmit={handleCategoryEdit}>
                                           {/* Taps */}
                                           <div className="w-full flex items-center justify-start py-2 gap-x-6">
                                                  {taps.map((tap, index) => (
@@ -359,7 +293,7 @@ const EditCategoryPage = () => {
                                                                       <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                                                                              <span className="text-xl font-TextFontRegular text-thirdColor">Name {tap.name}:</span>
                                                                              <TextInput
-                                                                                    value={categoryName[index]?.category_name || '-'} // Access category_name property
+                                                                                    value={categoryName[index]?.category_name} // Access category_name property
                                                                                     onChange={(e) => {
                                                                                            const inputValue = e.target.value; // Ensure this is a string
                                                                                            setCategoryName(prev => {
@@ -399,19 +333,15 @@ const EditCategoryPage = () => {
                                                                                                   handleOpenOption={handleOpenOptionCategoriesParent}
                                                                                                   options={categoriesParent}
                                                                                                   onSelectOption={handleSelectCategoriesParent}
+                                                                                                  border={false}
                                                                                            />
                                                                                     </div>
-                                                                                    {/* Category Priority */}
                                                                                     <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                                                                           <span className="text-xl font-TextFontRegular text-thirdColor">Category Priority:</span>
-                                                                                           <DropDown
-                                                                                                  ref={dropDownCategoriesPriority}
-                                                                                                  handleOpen={() => handleOpenDropdown('priority')}
-                                                                                                  stateoption={stateCategoriesPriority}
-                                                                                                  openMenu={isOpenCategoriesPriority}
-                                                                                                  handleOpenOption={handleOpenOptionCategoriesPriority}
-                                                                                                  options={categoriesPriority}
-                                                                                                  onSelectOption={handleSelectCategoriesPriority}
+                                                                                           <span className="text-xl font-TextFontRegular text-thirdColor">Priority Num :</span>
+                                                                                           <NumberInput
+                                                                                                  value={priority} // Access addon_name property
+                                                                                                  onChange={(e) => setPriority(e.target.value)}
+                                                                                                  placeholder="Priority Num"
                                                                                            />
                                                                                     </div>
                                                                                     {/* Category Addons */}
@@ -476,13 +406,13 @@ const EditCategoryPage = () => {
                                           {/* Buttons*/}
                                           <div className="w-full flex items-center justify-end gap-x-4">
                                                  <div className="">
-                                                        <StaticButton text={'Edit'} handleClick={handleCancel} bgColor='bg-transparent' Color='text-mainColor' border={'border-2'} borderColor={'border-mainColor'} rounded='rounded-full' />
+                                                        <StaticButton text={'Cancel'} handleClick={handleCancel} bgColor='bg-transparent' Color='text-mainColor' border={'border-2'} borderColor={'border-mainColor'} rounded='rounded-full' />
                                                  </div>
                                                  <div className="">
                                                         <SubmitButton
-                                                               text={'Submit'}
+                                                               text={'Edit'}
                                                                rounded='rounded-full'
-                                                               handleClick={handleCategoryAdd}
+                                                               handleClick={handleCategoryEdit}
                                                         />
                                                  </div>
 
