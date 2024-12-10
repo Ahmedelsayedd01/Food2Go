@@ -22,6 +22,8 @@ const AddDeliveryManSection = ({ data, refetch, setRefetch }) => {
        const [deliveryEmail, setDeliveryEmail] = useState('')
        const [deliveryPassword, setDeliveryPassword] = useState('')
        const [deliveryStatus, setDeliveryStatus] = useState(0)
+       const [chatStatus, setChatStatus] = useState(0)
+       const [phoneStatus, setPhoneStatus] = useState(0)
 
        const [deliveryBranchState, setDeliveryBranchState] = useState('Select Branche')
        const [deliveryBranchName, setDeliveryBranchName] = useState('')
@@ -94,6 +96,14 @@ const AddDeliveryManSection = ({ data, refetch, setRefetch }) => {
               const currentActive = deliveryStatus;
               { currentActive === 0 ? setDeliveryStatus(1) : setDeliveryStatus(0) }
        }
+       const handleChatStatus = () => {
+              const currentActive = chatStatus;
+              { currentActive === 0 ? setChatStatus(1) : setChatStatus(0) }
+       }
+       const handlePhoneStatus = () => {
+              const currentActive = phoneStatus;
+              { currentActive === 0 ? setPhoneStatus(1) : setPhoneStatus(0) }
+       }
 
        useEffect(() => {
               const handleClickOutside = (event) => {
@@ -120,6 +130,8 @@ const AddDeliveryManSection = ({ data, refetch, setRefetch }) => {
               setDeliveryEmail('')
               setDeliveryPassword('')
               setDeliveryStatus(0)
+              setChatStatus(0)
+              setPhoneStatus(0)
               setDeliveryBranchState('Select Branche')
               setDeliveryBranchName('')
               setDeliveryBranchId('')
@@ -197,6 +209,8 @@ const AddDeliveryManSection = ({ data, refetch, setRefetch }) => {
               formData.append('identity_type', identityTypeName)
               formData.append('identity_number', identityNumber)
               formData.append('identity_image', identityImageFile)
+              formData.append('chat_status', chatStatus)
+              formData.append('phone_status', phoneStatus)
               formData.append('status', deliveryStatus)
 
               postData(formData, 'Delivery Added Success');
@@ -212,7 +226,7 @@ const AddDeliveryManSection = ({ data, refetch, setRefetch }) => {
                      ) : (
                             <>
                                    <form
-                                          className="w-full flex sm:flex-col lg:flex-row flex-wrap items-center justify-start gap-4"
+                                          className="w-full flex sm:flex-col lg:flex-row flex-wrap items-start justify-start gap-4"
                                           onSubmit={handleDeliveryAdd}
                                    >
                                           {/* First Name */}
@@ -323,8 +337,18 @@ const AddDeliveryManSection = ({ data, refetch, setRefetch }) => {
                                                         placeholder="Password"
                                                  />
                                           </div>
+                                          {/* Chat Status */}
+                                          <div className="xl:w-[30%] flex items-center justify-start gap-x-4 lg:pt-10">
+                                                 <span className="text-xl font-TextFontRegular text-thirdColor">Chat Status:</span>
+                                                 <Switch handleClick={handleChatStatus} checked={chatStatus} />
+                                          </div>
+                                          {/* Phone Status */}
+                                          <div className="xl:w-[30%] flex items-center justify-start gap-x-4 lg:pt-10">
+                                                 <span className="text-xl font-TextFontRegular text-thirdColor">Phone Status:</span>
+                                                 <Switch handleClick={handlePhoneStatus} checked={phoneStatus} />
+                                          </div>
                                           {/* delivery Status */}
-                                          <div className="sm:w-full xl:w-[30%] flex items-center justify-start gap-x-4 pt-8">
+                                          <div className="xl:w-[30%] flex items-center justify-start gap-x-4 ">
                                                  <span className="text-xl font-TextFontRegular text-thirdColor">Delivery Status:</span>
                                                  <Switch handleClick={handleDeliveryStatus} checked={deliveryStatus} />
                                           </div>
