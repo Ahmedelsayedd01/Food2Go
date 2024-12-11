@@ -135,6 +135,7 @@ const SelectDateRangeSection = ({ typPage, branchsData }) => {
                                                  handleOpenOption={handleOpenOptionBranch}
                                                  options={branchs}
                                                  onSelectOption={handleSelectBranch}
+                                                 border={false}
                                           />
                                    </div>
                                    <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
