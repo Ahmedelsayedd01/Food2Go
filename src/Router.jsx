@@ -35,6 +35,7 @@ import {
   LoginLayout,
   OffersLayout,
   OrdersPaymentLayout,
+  OrderTypeLayout,
   OutForDeliveryOrdersLayout,
   PaymentMethodLayout,
   PendingOrdersLayout,
@@ -43,6 +44,7 @@ import {
   ResturantTimeLayout,
   ReturnedOrdersLayout,
   ScheduleOrdersLayout,
+  SongLayout,
   TaxesLayout,
   TaxTypeLayout,
   ZonesLayout
@@ -222,6 +224,10 @@ export const router = createBrowserRouter([
                 ]
               },
               {
+                path: 'order_type',
+                element: <OrderTypeLayout />,
+              },
+              {
                 path: 'resturant_time',
                 element: <ResturantTimeLayout />,
               },
@@ -320,6 +326,10 @@ export const router = createBrowserRouter([
                 element: <EditDiscountLayout />,
               }
             ]
+          },
+          {
+            path: 'song',
+            element: <SongLayout />,
           },
 
           {

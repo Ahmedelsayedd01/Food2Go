@@ -39,6 +39,8 @@ export { default as EditBranchLayout } from "./Dashboard/Setting/Branches/EditBr
 // Setting -> Zones
 export { default as ZonesLayout } from "./Dashboard/Setting/Zones/ZonesLayout";
 export { default as EditZoneLayout } from "./Dashboard/Setting/Zones/EditZoneLayout";
+// Setting -> Order Type
+export { default as OrderTypeLayout } from "./Dashboard/Setting/OrderType/OrderTypeLayout";
 // Setting -> Resturant Time
 export { default as ResturantTimeLayout } from "./Dashboard/Setting/ResturantTime/ResturantTimeLayout";
 // Setting -> Cancel Time
@@ -69,6 +71,9 @@ export { default as LanguagesLayout } from "./Dashboard/Languages/LanguagesLayou
 /* Discount */
 export { default as DiscountLayout } from "./Dashboard/Discount/DiscountLayout";
 export { default as EditDiscountLayout } from "./Dashboard/Discount/EditDiscountLayout";
+
+/* Song */
+export { default as SongLayout } from "./Dashboard/Song/SongLayout";
 
 /*  Orders */
 // Orders -> Details Order

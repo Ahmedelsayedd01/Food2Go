@@ -40,6 +40,8 @@ export { default as EditBranchPage } from "./Dashboard/Admin/Setting/Branches/Ed
 export { default as ZonesPage } from "./Dashboard/Admin/Setting/Zones/ZonesPage";
 export { default as AddZoneSection } from "./Dashboard/Admin/Setting/Zones/addZoneSection";
 export { default as EditZonePage } from "./Dashboard/Admin/Setting/Zones/EditZonePage";
+// Setting -> Order Type
+export { default as OrderTypePage } from "./Dashboard/Admin/Setting/OrderType/OrderTypePage";
 // Setting -> Resturant Time
 export { default as ResturantTimePage } from "./Dashboard/Admin/Setting/ResturantTime/ResturantTimePage";
 // Setting -> Cancel Time
@@ -67,6 +69,9 @@ export { default as OffersPage } from "./Dashboard/Admin/Offers/OffersPage";
 // Languages
 export { default as LanguagesPage } from "./Dashboard/Admin/Languages/LanguagesPage";
 export { default as AddLanguagesSection } from "./Dashboard/Admin/Languages/AddLanguageSection";
+
+// Languages
+export { default as SongPage } from "./Dashboard/Admin/Song/SongPage";
 
 // Discount
 export { default as DiscountPage } from "./Dashboard/Admin/Discount/DiscountPage";
