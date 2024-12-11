@@ -6,7 +6,7 @@ import { CategoryIcon, HomeIcon, OrderIcon, ProductIcon } from '../../Assets/Ico
 import { RiVipDiamondLine } from 'react-icons/ri';
 import { CiSettings } from 'react-icons/ci';
 import { useSelector } from 'react-redux';
-import { MdOutlineDeliveryDining, MdOutlineLocalOffer, MdOutlinePayments } from 'react-icons/md';
+import { MdNotificationsActive, MdOutlineDeliveryDining, MdOutlineLocalOffer, MdOutlinePayments } from 'react-icons/md';
 import { PiFlagBanner } from 'react-icons/pi';
 import { IoLanguage } from 'react-icons/io5';
 import { BiSolidDiscount } from 'react-icons/bi';
@@ -99,6 +99,9 @@ const LinksSidebar = () => {
        /* Languages */
        const [isActiveLanguages, setIsActiveLanguages] = useState(stateLink.isActiveLanguages ?? false);
        const [isActiveLanguagesIcon, setIsActiveLanguagesIcon] = useState(stateLink.isActiveLanguagesIcon ?? false);
+       /* Song */
+       const [isActiveSongIcon, setIsActiveSongIcon] = useState(stateLink.isActiveSongIcon ?? false);
+       const [isActiveSong, setIsActiveSong] = useState(stateLink.isActiveSong ?? false);
        /* Discount */
        const [isActiveDiscount, setIsActiveDiscount] = useState(stateLink.isActiveDiscount ?? false);
        const [isActiveDiscountIcon, setIsActiveDiscountIcon] = useState(stateLink.isActiveDiscountIcon ?? false);
@@ -159,6 +162,9 @@ const LinksSidebar = () => {
                      isActiveLanguages,
                      isActiveLanguagesIcon,
 
+                     isActiveSongIcon,
+                     isActiveSong,
+
                      isActiveDiscount,
                      isActiveDiscountIcon,
 
@@ -216,6 +222,9 @@ const LinksSidebar = () => {
 
               isActiveLanguages,
               isActiveLanguagesIcon,
+
+              isActiveSongIcon,
+              isActiveSong,
 
               isActiveDiscount,
               isActiveDiscountIcon,
@@ -276,6 +285,9 @@ const LinksSidebar = () => {
 
               isActiveLanguages,
               isActiveLanguagesIcon,
+
+              isActiveSongIcon,
+              isActiveSong,
 
               isActiveDiscount,
               isActiveDiscountIcon,
@@ -339,6 +351,9 @@ const LinksSidebar = () => {
 
               setIsActiveLanguages(false)
               setIsActiveLanguagesIcon(false)
+
+              setIsActiveSongIcon(false)
+              setIsActiveSong(false)
 
               setIsActiveDiscount(false)
               setIsActiveDiscountIcon(false)
@@ -630,7 +645,7 @@ const LinksSidebar = () => {
                      handleClickDeliveryMan()
               }
        }, [location])
-       
+
        /* Offers */
        const handleClickOffers = useCallback(() => {
               handleStateLinks();
@@ -710,6 +725,20 @@ const LinksSidebar = () => {
               const result = part.slice(0, 3).join('/');
               if (result == "/dashboard/languages") {
                      handleClickLanguages()
+              }
+       }, [location])
+
+       /* Song */
+       const handleClickSong = useCallback(() => {
+              handleStateLinks();
+              setIsActiveSong(true);
+              setIsActiveSongIcon(true);
+       }, []);
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard/song") {
+                     handleClickSong()
               }
        }, [location])
 
@@ -1323,6 +1352,32 @@ const LinksSidebar = () => {
                                           group-hover:text-mainColor`}
                                    >
                                           Languages
+                                   </span>
+                            </div>
+                     </Link>
+                     {/* Song */}
+                     <Link to="song"
+                            onMouseMove={() => setIsActiveSongIcon(true)}
+                            onMouseOut={() => setIsActiveSongIcon(false)}
+                            onClick={handleClickSong}
+                            className={`
+                                   ${isActiveSong ? 'active' : ''}
+                                   ${hideSide ? 'justify-between' : 'justify-center'} 
+                                   hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
+                                   hover:text-mainColor w-full flex items-center 
+                                   transition-all duration-300 group`}
+                     >
+                            <div className="flex items-center gap-x-2">
+                                   <MdNotificationsActive
+                                          className={`${isActiveSongIcon || isActiveSong ? 'text-[#9E090F]' : 'text-[#fff]'} text-2xl`}
+                                   />
+                                   <span
+                                          className={`${hideSide ? 'block' : 'hidden'}
+                                           ${isActiveSong ? "text-mainColor" : "text-white"}
+                                          text-lg font-TextFontRegular transition-all duration-300
+                                          group-hover:text-mainColor`}
+                                   >
+                                          Sound
                                    </span>
                             </div>
                      </Link>
