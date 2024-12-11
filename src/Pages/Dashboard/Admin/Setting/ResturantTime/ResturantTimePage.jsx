@@ -10,13 +10,6 @@ const ResturantTimePage = () => {
   const [resturantTimeFrom, setResturantTimeFrom] = useState('');
   const [resturantTimeTo, setResturantTimeTo] = useState('');
 
-  // useEffect(() => {
-  //   console.log('response', response)
-  //   if (!loadingPost) {
-  //     setTaxType(stateType)
-  //   }
-  // }, [response])
-
   useEffect(() => {
     refetchResturantTime();
   }, [refetchResturantTime]);
