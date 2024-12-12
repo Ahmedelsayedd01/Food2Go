@@ -66,6 +66,10 @@ export { default as DeliveryManPage } from "./Dashboard/Admin/DeliveryMan/Delive
 export { default as AddOfferSection } from "./Dashboard/Admin/Offers/AddOfferSection";
 export { default as EditOfferPage } from "./Dashboard/Admin/Offers/EditOfferPage";
 export { default as OffersPage } from "./Dashboard/Admin/Offers/OffersPage";
+// Coupon Setup
+export { default as CouponPage } from "./Dashboard/Admin/Coupon/CouponPage";
+export { default as AddCouponSection } from "./Dashboard/Admin/Coupon/AddCouponSection";
+export { default as EditCouponPage } from "./Dashboard/Admin/Coupon/EditCouponPage";
 // Languages
 export { default as LanguagesPage } from "./Dashboard/Admin/Languages/LanguagesPage";
 export { default as AddLanguagesSection } from "./Dashboard/Admin/Languages/AddLanguageSection";
@@ -96,8 +100,3 @@ export { default as ReturnedOrdersPage } from "./Dashboard/Admin/Orders/Returned
 export { default as FailedOrdersPage } from "./Dashboard/Admin/Orders/FailedOrders/FailedOrdersPage";
 export { default as CanceledOrdersPage } from "./Dashboard/Admin/Orders/CanceledOrders/CanceledOrdersPage";
 export { default as ScheduleOrdersPage } from "./Dashboard/Admin/Orders/ScheduleOrders/ScheduleOrdersPage";
-
-// Coupon Setup
-export { default as CouponPage } from "./Dashboard/Admin/Coupon/CouponPage";
-export { default as AddCouponSection } from "./Dashboard/Admin/Coupon/AddCouponSection";
-export { default as EditCouponPage } from "./Dashboard/Admin/Coupon/EditCouponPage";

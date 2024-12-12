@@ -65,6 +65,10 @@ export { default as EditDeliveryManLayout } from "./Dashboard/DeliveryMan/EditDe
 export { default as OffersLayout } from "./Dashboard/Offers/OffersLayout";
 export { default as EditOfferLayout } from "./Dashboard/Offers/EditOfferLayout";
 
+/* Coupon */
+export { default as CouponLayout } from "./Dashboard/Coupon/CouponLayout";
+export { default as EditCouponLayout } from "./Dashboard/Coupon/EditCouponLayout";
+
 /* Languages */
 export { default as LanguagesLayout } from "./Dashboard/Languages/LanguagesLayout";
 
@@ -103,8 +107,3 @@ export { default as FailedOrdersLayout } from "./Dashboard/Orders/FailedOrders/F
 export { default as CanceledOrdersLayout } from "./Dashboard/Orders/CanceledOrders/CanceledOrdersLayout";
 // Orders -> Schedule Orders
 export { default as ScheduleOrdersLayout } from "./Dashboard/Orders/ScheduleOrders/ScheduleOrdersLayout";
-
-
-/* Coupon */
-export { default as CouponLayout } from "./Dashboard/Coupon/CouponLayout";
-export { default as EditCouponLayout } from "./Dashboard/Coupon/EditCouponLayout";
