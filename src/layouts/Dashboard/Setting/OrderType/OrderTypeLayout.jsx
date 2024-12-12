@@ -5,7 +5,7 @@ import { OrderTypePage } from '../../../../Pages/Pages'
 const OrderTypeLayout = () => {
        return (
               <>
-                     <TitlePage text={'OrderType '} />
+                     <TitlePage text={'Order Type '} />
                      <OrderTypePage />
               </>
        )

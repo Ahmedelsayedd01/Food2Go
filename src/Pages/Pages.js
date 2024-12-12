@@ -70,8 +70,10 @@ export { default as OffersPage } from "./Dashboard/Admin/Offers/OffersPage";
 export { default as LanguagesPage } from "./Dashboard/Admin/Languages/LanguagesPage";
 export { default as AddLanguagesSection } from "./Dashboard/Admin/Languages/AddLanguageSection";
 
-// Languages
+// Song
 export { default as SongPage } from "./Dashboard/Admin/Song/SongPage";
+// Deal Order
+export { default as DealOrderPage } from "./Dashboard/Admin/DealOrder/DealOrderPage";
 
 // Discount
 export { default as DiscountPage } from "./Dashboard/Admin/Discount/DiscountPage";

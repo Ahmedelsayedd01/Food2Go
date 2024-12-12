@@ -74,6 +74,8 @@ export { default as EditDiscountLayout } from "./Dashboard/Discount/EditDiscount
 
 /* Song */
 export { default as SongLayout } from "./Dashboard/Song/SongLayout";
+/* Deal Order */
+export { default as DealOrderLayout } from "./Dashboard/DealOrder/DealOrderLayout";
 
 /*  Orders */
 // Orders -> Details Order
