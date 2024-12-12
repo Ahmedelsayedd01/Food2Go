@@ -246,7 +246,6 @@ export const router = createBrowserRouter([
           },
           {
             path: 'taxes',
-            // element: <TaxesLayout />,
             children: [
               {
                 path: 'all_taxes',
@@ -305,6 +304,19 @@ export const router = createBrowserRouter([
               {
                 path: 'edit/:offerId',
                 element: <EditOfferLayout />,
+              }
+            ]
+          },
+          {
+            path: 'coupon',
+            children: [
+              {
+                path: '',
+                element: <CouponLayout />,
+              },
+              {
+                path: 'edit/:couponId',
+                element: <EditCouponLayout />,
               }
             ]
           },
@@ -397,20 +409,6 @@ export const router = createBrowserRouter([
               },
             ]
           },
-          {
-            path: 'coupon',
-            children: [
-              {
-                path: '',
-                element: <CouponLayout />,
-              },
-              {
-                path: 'edit/:couponId',
-                element: <EditCouponLayout />,
-              }
-            ]
-          },
-
         ]
       },
     ],

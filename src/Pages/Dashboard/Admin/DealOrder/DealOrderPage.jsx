@@ -59,7 +59,7 @@ const DealOrderPage = () => {
               formData.append('user_id', userId);
 
               console.log('FormData:', ...formData.entries());
-              postDealOrderAdd(formData,'Deal Approved Success');
+              postDealOrderAdd(formData, 'Deal Approved Success');
        };
 
        const headers = ['Deal Image', 'Deal Name', 'Description', 'Start Date', 'End Date', 'Price', 'Action'];
