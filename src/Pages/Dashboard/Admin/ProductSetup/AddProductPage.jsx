@@ -450,7 +450,12 @@ const AddProductPage = () => {
     setSelectedStockTypeName(option.name);
     setSelectedStockTypeState(option.name);
     setProductStockNumber('');
+
+    console.log('SelectedStockTypeState', selectedStockTypeState)
+    console.log('SelectedStockTypeName', selectedStockTypeName)
+    console.log('option', option)
   };
+
   const handleSelectProductDiscount = (option) => {
     setSelectedDiscountId(option.name);
     setSelectedDiscountState(option.name);
@@ -672,11 +677,12 @@ const AddProductPage = () => {
       return;
     }
 
-    if (!selectedSubCategoryId) {
-      auth.toastError('please Select SubCategory Name')
-      console.log('selectedSubCategoryId', selectedSubCategoryId)
-      return;
-    }
+    // if (!selectedSubCategoryId) {
+    //   auth.toastError('please Select SubCategory Name')
+    //   console.log('selectedSubCategoryId', selectedSubCategoryId)
+    //   return;
+    // }
+    
     if (selectedAddonsId.length === 0) {
       auth.toastError('please Select Addons')
       console.log('selectedAddonsId', selectedAddonsId)
@@ -1715,7 +1721,7 @@ const AddProductPage = () => {
                 />
               </div>
 
-              {selectedStockTypeState === 'daily' || selectedStockTypeState === 'fixed' && (
+              {selectedStockTypeName === 'daily' || selectedStockTypeName === 'fixed' ? (
                 <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
                   <span className="text-xl font-TextFontRegular text-thirdColor">Number:</span>
                   <NumberInput
@@ -1724,7 +1730,7 @@ const AddProductPage = () => {
                     placeholder={'Number'}
                   />
                 </div>
-              )}
+              ) : ('')}
 
               {/* Product Price */}
               <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
