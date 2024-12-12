@@ -453,6 +453,7 @@ const AddProductPage = () => {
 
     console.log('SelectedStockTypeState', selectedStockTypeState)
     console.log('SelectedStockTypeName', selectedStockTypeName)
+    console.log('productStockNumber', productStockNumber)
     console.log('option', option)
   };
 
@@ -682,7 +683,7 @@ const AddProductPage = () => {
     //   console.log('selectedSubCategoryId', selectedSubCategoryId)
     //   return;
     // }
-    
+
     if (selectedAddonsId.length === 0) {
       auth.toastError('please Select Addons')
       console.log('selectedAddonsId', selectedAddonsId)
@@ -729,6 +730,7 @@ const AddProductPage = () => {
     formData.append('sub_category_id', selectedSubCategoryId)
     formData.append('item_type', selectedItemTypeName)
     formData.append('stock_type', selectedStockTypeName)
+    formData.append('number', productStockNumber)
     formData.append('price', productPrice)
     formData.append('points', productPoint)
     formData.append('from', productStatusFrom)
