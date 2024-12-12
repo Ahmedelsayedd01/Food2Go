@@ -11,6 +11,7 @@ import {
   CitiesLayout,
   ConfirmedOrdersLayout,
   DashboardLayout,
+  DealOrderLayout,
   DeliveredOrdersLayout,
   DeliveryManLayout,
   DeliveryTimeLayout,
@@ -23,6 +24,7 @@ import {
   EditCityLayout,
   EditDeliveryManLayout,
   EditDiscountLayout,
+  EditOfferLayout,
   EditPaymentMethodLayout,
   EditProductLayout,
   EditTaxLayout,
@@ -32,7 +34,9 @@ import {
   InvoiceOrderLayout,
   LanguagesLayout,
   LoginLayout,
+  OffersLayout,
   OrdersPaymentLayout,
+  OrderTypeLayout,
   OutForDeliveryOrdersLayout,
   PaymentMethodLayout,
   PendingOrdersLayout,
@@ -41,6 +45,7 @@ import {
   ResturantTimeLayout,
   ReturnedOrdersLayout,
   ScheduleOrdersLayout,
+  SongLayout,
   TaxesLayout,
   TaxTypeLayout,
   ZonesLayout,
@@ -222,6 +227,10 @@ export const router = createBrowserRouter([
                 ]
               },
               {
+                path: 'order_type',
+                element: <OrderTypeLayout />,
+              },
+              {
                 path: 'resturant_time',
                 element: <ResturantTimeLayout />,
               },
@@ -287,6 +296,19 @@ export const router = createBrowserRouter([
             ]
           },
           {
+            path: 'offers',
+            children: [
+              {
+                path: '',
+                element: <OffersLayout />,
+              },
+              {
+                path: 'edit/:offerId',
+                element: <EditOfferLayout />,
+              }
+            ]
+          },
+          {
             path: 'languages',
             children: [
               {
@@ -307,6 +329,14 @@ export const router = createBrowserRouter([
                 element: <EditDiscountLayout />,
               }
             ]
+          },
+          {
+            path: 'song',
+            element: <SongLayout />,
+          },
+          {
+            path: 'deal_order',
+            element: <DealOrderLayout />,
           },
 
           {

@@ -3,9 +3,6 @@ import { TitlePage, TitleSection } from '../../../Components/Components'
 import { AddDeliveryManSection, DeliveryManPage } from '../../../Pages/Pages'
 import { useGet } from '../../../Hooks/useGet';
 
-/* admin/delivery/add */
-/* f name, l name, identity_type{card, passpoart}, identity_number, email,phone,password,branch_id,status
-image,identity_image */
 
 const DeliveryManLayout = () => {
        const { refetch: refetchDeliveries, loading: loadingDeliveries, data: dataDeliveries } = useGet({ url: 'https://Bcknd.food2go.online/admin/delivery' });

@@ -8,7 +8,7 @@ const SearchBar = ({ type = "text", bgColor = 'bg-mainBgColor', textColor = 'mai
                             name="search"
                             onChange={handleChange}
                             value={value}
-                            className={`w-full h-full pl-12 py-3 rounded-3xl outline-none font-TextFontRegular 
+                            className={`w-full h-full shadow pl-12 py-3 rounded-3xl outline-none font-TextFontRegular 
                             placeholder-${textColor}
                             ${bgColor}
                             text-${textColor}

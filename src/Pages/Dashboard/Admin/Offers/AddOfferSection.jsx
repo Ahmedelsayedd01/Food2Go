@@ -1,41 +1,29 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { DropDown, NumberInput, StaticButton, StaticLoader, SubmitButton, Switch, TextInput, UploadInput } from '../../../../Components/Components';
+import { useAuth } from '../../../../Context/Auth';
+import { NumberInput, StaticButton, StaticLoader, SubmitButton, TextInput, UploadInput } from '../../../../Components/Components';
 import { useGet } from '../../../../Hooks/useGet';
 import { usePost } from '../../../../Hooks/usePostJson';
-import { useAuth } from '../../../../Context/Auth';
-
-import { MultiSelect } from 'primereact/multiselect';
 
 
-const AddAddonsSection = ({ update, setUpdate }) => {
+const AddOfferSection = ({ refetch, setRefetch }) => {
        const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://Bcknd.food2go.online/admin/translation' });
-       const { refetch: refetchAddons, loading: loadingAddons, data: dataAddons } = useGet({ url: 'https://Bcknd.food2go.online/admin/addons' });
-       const { postData, loadingPost, response } = usePost({ url: 'https://Bcknd.food2go.online/admin/addons/add' });
+       const { postData, loadingPost, response } = usePost({ url: 'https://Bcknd.food2go.online/admin/offer/add' });
 
-       const dropDownTax = useRef();
+       const ImageRef = useRef();
        const auth = useAuth();
 
-       // const [taps, setTaps] = useState([{ id: 1, name: 'English(EN)' }, { id: 2, name: 'Arabic(Ar)' }, { id: 3, name: 'garman' }])
        const [taps, setTaps] = useState([])
-
        const [currentTap, setCurrentTap] = useState(0);
 
-       const [addonsName, setAddonsName] = useState([]);
-       const [addonPrice, setAddonPrice] = useState('');
+       const [offerNames, setOfferNames] = useState([]);
+       const [points, setPoints] = useState('');
 
-       const [stateAddonTaxes, setStateAddonTaxes] = useState('Select Tax');
-       const [addonTaxes, setAddonTaxes] = useState([])
-       const [addonTaxesId, setAddonTaxesId] = useState('');
-       const [addonTaxesName, setAddonTaxesName] = useState('');
-
-       const [addonQuantity, setAddonQuantity] = useState(0);
-
-       const [isOpenAddonTaxes, setIsOpenAddonTaxes] = useState(false);
+       const [image, setImage] = useState('');
+       const [imageFile, setImageFile] = useState(null);
 
        useEffect(() => {
               refetchTranslation(); // Refetch data when the component mounts
-              refetchAddons(); // Refetch data when the component mounts
-       }, [refetchTranslation, refetchAddons]);
+       }, [refetchTranslation]);
 
        useEffect(() => {
               if (dataTranslation) {
@@ -43,121 +31,102 @@ const AddAddonsSection = ({ update, setUpdate }) => {
               }
        }, [dataTranslation]);
 
-
-       useEffect(() => {
-              if (dataAddons) {
-                     setAddonTaxes(dataAddons.taxes);
+       const handleImageChange = (e) => {
+              const file = e.target.files[0];
+              if (file) {
+                     setImageFile(file);
+                     setImage(file.name);
               }
-              console.log('dataAddons', dataAddons)
-       }, [dataAddons]);
-
-
-
-       const handleQuantityAddon = () => {
-              const Active = addonQuantity;
-              { Active === 0 ? setAddonQuantity(1) : setAddonQuantity(0) }
-       }
-
-
-       const handleOpenAddonTaxes = () => {
-              setIsOpenAddonTaxes(!isOpenAddonTaxes);
+       };
+       const handleImageClick = (ref) => {
+              if (ref.current) {
+                     ref.current.click();
+              }
        };
 
-       const handleOpenOptionAddonTaxes = () => setIsOpenAddonTaxes(false);
-
-       const handleSelectAddonTaxes = (option) => {
-              setAddonTaxesId(option.id);
-              setStateAddonTaxes(option.name);
-              setAddonTaxesName(option.name);
-       };
 
        const handleTap = (index) => {
               setCurrentTap(index)
        }
 
        useEffect(() => {
-              console.log('addonName', addonsName)
-       }, [addonsName])
+              console.log('offerNames', offerNames)
+       }, [offerNames])
 
        useEffect(() => {
               console.log('response', response)
               if (!loadingPost) {
-                     setAddonsName([])
-                     setAddonPrice('')
-                     setStateAddonTaxes('Select Tax')
-                     setAddonTaxesId('')
-                     setAddonTaxesName('')
-                     setAddonQuantity(0)
+                     handleReset()
               }
-              setUpdate(!update)
+
+              setRefetch(!refetch)
        }, [response])
 
        const handleReset = () => {
-              setAddonsName([])
-              setAddonPrice('')
-              setStateAddonTaxes('Select Tax')
-              setAddonTaxesId('')
-              setAddonTaxesName('')
-              setAddonQuantity(0)
+              setCurrentTap(0)
+              offerNames.map((name, index) => {
+
+                     setOfferNames(prev => {
+                            const updatedNames = [...prev];
+
+                            // Ensure the array is long enough
+                            if (updatedNames.length <= index) {
+                                   updatedNames.length = index + 1; // Resize array
+                            }
+
+                            // Create or update the object at the current index
+                            updatedNames[index] = {
+                                   ...updatedNames[index], // Retain existing properties if any
+                                   'tranlation_id': '', // Use the ID from tap
+                                   'offer_product': '', // Use the captured string value
+                                   'tranlation_name': '', // Use tap.name for tranlation_name
+                            };
+
+                            return updatedNames;
+                     });
+              })
+              setPoints('')
+              setImage('')
+              setImageFile(null)
        }
 
 
-       useEffect(() => {
-              const handleClickOutside = (event) => {
-                     // Close dropdown if clicked outside
-                     if (
-                            dropDownTax.current && !dropDownTax.current.contains(event.target)
-                     ) {
-                            setIsOpenAddonTaxes(null);
-                     }
-              };
 
-              document.addEventListener('mousedown', handleClickOutside);
-              return () => {
-                     document.removeEventListener('mousedown', handleClickOutside);
-              };
-       }, []);
-
-
-
-       const handleAddonAdd = (e) => {
+       const handleOfferAdd = (e) => {
               e.preventDefault();
 
-              if (addonsName.length === 0) {
-                     auth.toastError('please Enter Addon Names')
+              if (offerNames.length === 0) {
+                     auth.toastError('please Enter Offer Names')
                      return;
               }
-              if (addonsName.length !== taps.length) {
-                     auth.toastError('please Enter All Addon Names')
+              if (offerNames.length !== taps.length) {
+                     auth.toastError('please Enter All Offer Names')
                      return;
               }
 
-              if (!addonTaxesId) {
-                     auth.toastError('please Select Addon Tax')
-                     return;
-              }
-              if (!addonPrice) {
-                     auth.toastError('please Enter Addon Price')
+              if (!imageFile) {
+                     auth.toastError('please Set Offer Image')
                      return;
               }
               const formData = new FormData();
-              addonsName.forEach((name, index) => {
+
+              offerNames.forEach((name, index) => {
                      // Corrected the typo and added translation_id and translation_name
-                     formData.append(`addon_names[${index}][addon_name]`, name.addon_name);
-                     formData.append(`addon_names[${index}][tranlation_id]`, name.tranlation_id);
-                     formData.append(`addon_names[${index}][tranlation_name]`, name.tranlation_name);
+                     formData.append(`offer_names[${index}][offer_product]`, name.offer_product);
+                     formData.append(`offer_names[${index}][tranlation_id]`, name.tranlation_id);
+                     formData.append(`offer_names[${index}][tranlation_name]`, name.tranlation_name);
               });
 
-              formData.append('price', addonPrice)
-              formData.append('tax_id', addonTaxesId)
-              formData.append('quantity_add', addonQuantity)
+              formData.append('points', points);
+              formData.append('image', imageFile);
 
-              postData(formData, 'Addon Added Success');
+
+              postData(formData, 'Offer Added Success');
 
        };
        return (
               <>
-                     {loadingTranslation || loadingAddons || loadingPost ? (
+                     {loadingTranslation || loadingPost ? (
                             <>
                                    <div className="w-full h-56 flex justify-center items-center">
                                           <StaticLoader />
@@ -165,7 +134,7 @@ const AddAddonsSection = ({ update, setUpdate }) => {
                             </>
                      ) : (
                             <section>
-                                   <form onSubmit={handleAddonAdd}>
+                                   <form onSubmit={handleOfferAdd}>
                                           {/* Taps */}
                                           <div className="w-full flex items-center justify-start py-2 gap-x-6">
                                                  {taps.map((tap, index) => (
@@ -191,10 +160,10 @@ const AddAddonsSection = ({ update, setUpdate }) => {
                                                                       <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                                                                              <span className="text-xl font-TextFontRegular text-thirdColor">Name {tap.name}:</span>
                                                                              <TextInput
-                                                                                    value={addonsName[index]?.addon_name} // Access addon_name property
+                                                                                    value={offerNames[index]?.offer_product} // Access offer_product property
                                                                                     onChange={(e) => {
                                                                                            const inputValue = e.target.value; // Ensure this is a string
-                                                                                           setAddonsName(prev => {
+                                                                                           setOfferNames(prev => {
                                                                                                   const updatedNames = [...prev];
 
                                                                                                   // Ensure the array is long enough
@@ -206,50 +175,41 @@ const AddAddonsSection = ({ update, setUpdate }) => {
                                                                                                   updatedNames[index] = {
                                                                                                          ...updatedNames[index], // Retain existing properties if any
                                                                                                          'tranlation_id': tap.id, // Use the ID from tap
-                                                                                                         'addon_name': inputValue, // Use the captured string value
+                                                                                                         'offer_product': inputValue, // Use the captured string value
                                                                                                          'tranlation_name': tap.name || 'Default Name', // Use tap.name for tranlation_name
                                                                                                   };
 
                                                                                                   return updatedNames;
                                                                                            });
-
-                                                                                           console.log('addonsName', addonsName)
                                                                                     }}
-                                                                                    placeholder="Addon Name"
+                                                                                    placeholder="Offer Name"
                                                                              />
                                                                       </div>
 
                                                                       {/* Conditional Rendering for First Tab Only */}
                                                                       {currentTap === 0 && (
                                                                              <>
-                                                                                    {/* Category Parent */}
                                                                                     <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                                                                           <span className="text-xl font-TextFontRegular text-thirdColor">Price:</span>
+                                                                                           <span className="text-xl font-TextFontRegular text-thirdColor">Points :</span>
                                                                                            <NumberInput
-                                                                                                  value={addonPrice}
-                                                                                                  onChange={(e) => setAddonPrice(e.target.value)}
-                                                                                                  placeholder={'price'}
-
+                                                                                                  value={points} // Access addon_name property
+                                                                                                  onChange={(e) => setPoints(e.target.value)}
+                                                                                                  placeholder="Points"
                                                                                            />
                                                                                     </div>
-                                                                                    {/* Category Priority */}
+                                                                                    {/* Category Image */}
                                                                                     <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                                                                           <span className="text-xl font-TextFontRegular text-thirdColor">Tax:</span>
-                                                                                           <DropDown
-                                                                                                  ref={dropDownTax}
-                                                                                                  handleOpen={handleOpenAddonTaxes}
-                                                                                                  stateoption={stateAddonTaxes}
-                                                                                                  openMenu={isOpenAddonTaxes}
-                                                                                                  handleOpenOption={handleOpenOptionAddonTaxes}
-                                                                                                  options={addonTaxes}
-                                                                                                  onSelectOption={handleSelectAddonTaxes}
-                                                                                                  border={false}
+                                                                                           <span className="text-xl font-TextFontRegular text-thirdColor">Offer Image:</span>
+                                                                                           <UploadInput
+                                                                                                  value={image}
+                                                                                                  uploadFileRef={ImageRef}
+                                                                                                  placeholder="Offer Image"
+                                                                                                  handleFileChange={handleImageChange}
+                                                                                                  onChange={(e) => setImage(e.target.value)}
+                                                                                                  onClick={() => handleImageClick(ImageRef)}
                                                                                            />
                                                                                     </div>
-                                                                                    <div className='w-2/4 flex items-center justify-start gap-x-1'>
-                                                                                           <span className="text-xl font-TextFontRegular text-thirdColor">Quantity:</span>
-                                                                                           <Switch handleClick={handleQuantityAddon} checked={addonQuantity} />
-                                                                                    </div>
+
                                                                              </>
                                                                       )}
                                                                </div>
@@ -268,7 +228,7 @@ const AddAddonsSection = ({ update, setUpdate }) => {
                                                         <SubmitButton
                                                                text={'Submit'}
                                                                rounded='rounded-full'
-                                                               handleClick={handleAddonAdd}
+                                                               handleClick={handleOfferAdd}
                                                         />
                                                  </div>
 
@@ -280,4 +240,4 @@ const AddAddonsSection = ({ update, setUpdate }) => {
        )
 }
 
-export default AddAddonsSection
+export default AddOfferSection

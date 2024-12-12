@@ -1,8 +1,13 @@
 import React from 'react'
+import { TitlePage } from '../../../Components/Components'
+import { EditDeliveryManPage } from '../../../Pages/Pages'
 
 const EditDeliveryManLayout = () => {
   return (
-    <div>EditDeliveryManLayout</div>
+    <>
+      <TitlePage text={'Edit Delivery Man'} />
+      <EditDeliveryManPage />
+    </>
   )
 }
 

@@ -30,9 +30,9 @@ const LanguagesPage = ({ refetch, setUpdate }) => {
 
   const handleChangeActive = async (id, name, status) => {
     const response = await changeState(
-      `https://Bcknd.food2go.online/admin/translation/active/${id}`,
-      `${name} Changed Active.`,
-      { active: status } // Pass status as an object if changeState expects an object
+      `https://Bcknd.food2go.online/admin/translation/status/${id}`,
+      `${name} Changed Status.`,
+      { status } // Pass status as an object if changeState expects an object
     );
 
     if (response) {
@@ -74,8 +74,8 @@ const LanguagesPage = ({ refetch, setUpdate }) => {
 
   // Update Languages when `data` changes
   useEffect(() => {
-    if (dataLanguages && dataLanguages.translation) {
-      setLanguages(dataLanguages.translation);
+    if (dataLanguages && dataLanguages.translation_list) {
+      setLanguages(dataLanguages.translation_list);
     }
   }, [dataLanguages]); // Only run this effect when `data` changes
 
