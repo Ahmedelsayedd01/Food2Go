@@ -1,17 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { DropDown,DateInput, NumberInput, StaticButton, StaticLoader, SubmitButton, Switch, TextInput, UploadInput } from '../../../../Components/Components';
+import { DropDown, DateInput, NumberInput, StaticButton, StaticLoader, SubmitButton, Switch, TextInput, UploadInput, LoaderLogin } from '../../../../Components/Components';
 import { useGet } from '../../../../Hooks/useGet';
 import { usePost } from '../../../../Hooks/usePostJson';
 import { useAuth } from '../../../../Context/Auth';
 import { MultiSelect } from 'primereact/multiselect';
 import { useNavigate, useParams } from 'react-router-dom';
 
-const EditCouponPage =()=>{
-    const { couponId } = useParams()
-    const { refetch: refetchAllCoupon, loading: loadingAllCoupon, data: dataAllCoupon } = useGet({ url: `https://bcknd.food2go.online/admin/coupon` });
-    const { refetch: refetchCoupon, loading: loadingCoupon, data: dataCoupon } = useGet({ url: `https://bcknd.food2go.online/admin/coupon/item/${couponId}` });
-    const { postData, loadingPost, response } = usePost({ url: `https://bcknd.food2go.online/admin/coupon/update/${couponId}` });
-    const [coupons, setCoupons] = useState([]);
+const EditCouponPage = () => {
+        const { couponId } = useParams()
+        const { refetch: refetchAllCoupon, loading: loadingAllCoupon, data: dataAllCoupon } = useGet({ url: `https://bcknd.food2go.online/admin/coupon` });
+        const { refetch: refetchCoupon, loading: loadingCoupon, data: dataCoupon } = useGet({ url: `https://bcknd.food2go.online/admin/coupon/item/${couponId}` });
+        const { postData, loadingPost, response } = usePost({ url: `https://bcknd.food2go.online/admin/coupon/update/${couponId}` });
+        const [coupons, setCoupons] = useState([]);
 
         const auth = useAuth();
         const navigate = useNavigate();
@@ -75,12 +75,12 @@ const EditCouponPage =()=>{
 
         const handleBack = () => {
                 navigate(-1, { replace: true });
-         }
+        }
 
         useEffect(() => {
                 refetchCoupon();
                 refetchAllCoupon()
-        }, [refetchCoupon,refetchAllCoupon]);
+        }, [refetchCoupon, refetchAllCoupon]);
 
         useEffect(() => {
                 if (dataCoupon && dataAllCoupon) {
@@ -88,78 +88,78 @@ const EditCouponPage =()=>{
                         setCoupons(dataCoupon.coupons);
                 }
                 console.log('dataCoupon', coupons)
-         }, [dataCoupon]);
+        }, [dataCoupon]);
 
         useEffect(() => {
-            if (coupons) {
-                    setTitle(coupons.title)
-                    setCode(coupons.code)
-                    setStartDate(coupons.start_date)
-                    setExpireDate(coupons.expire_date)
-                    setDiscountAmount(coupons.discount)
-                    setMinPurchase(coupons.min_purchase)
-                    setActiveCoupon(coupons.status)
-                    setMaxDiscountStatus(coupons.max_discount_status)
-                    setMaxDiscount(coupons.max_discount)
+                if (coupons) {
+                        setTitle(coupons.title)
+                        setCode(coupons.code)
+                        setStartDate(coupons.start_date)
+                        setExpireDate(coupons.expire_date)
+                        setDiscountAmount(coupons.discount)
+                        setMinPurchase(coupons.min_purchase)
+                        setActiveCoupon(coupons.status)
+                        setMaxDiscountStatus(coupons.max_discount_status)
+                        setMaxDiscount(coupons.max_discount)
 
-                    setSelectedProduct(coupons.products)
+                        setSelectedProduct(coupons.products)
 
-                    if(coupons.discount_type === "percentage"){
-                        setValueTypeName("Percentage")
-                        setSelectedValueType("Percentage");
-                    }else{
-                        setValueTypeName("Value")
-                        setSelectedValueType("Value");
-                    }
+                        if (coupons.discount_type === "percentage") {
+                                setValueTypeName("Percentage")
+                                setSelectedValueType("Percentage");
+                        } else {
+                                setValueTypeName("Value")
+                                setSelectedValueType("Value");
+                        }
 
-                    if (coupons.type === "normal"){
-                        setCouponTypeName("Normal")
-                        setSelectedCouponType("Normal")
-                    }else{
-                        setCouponTypeName("First Order")
-                        setSelectedCouponType("First Order")
-                    }
+                        if (coupons.type === "normal") {
+                                setCouponTypeName("Normal")
+                                setSelectedCouponType("Normal")
+                        } else {
+                                setCouponTypeName("First Order")
+                                setSelectedCouponType("First Order")
+                        }
 
-                    if (coupons.number_usage_status === "fixed"){
-                        setSelectedUsageType("Fixed")
-                        setUsageTypeName("Fixed")
-                        setUsageNumber(coupons.number_usage)
-                    }else{
-                        setSelectedUsageType("UnLimited")
-                        setUsageTypeName("UnLimited")
-                    }
+                        if (coupons.number_usage_status === "fixed") {
+                                setSelectedUsageType("Fixed")
+                                setUsageTypeName("Fixed")
+                                setUsageNumber(coupons.number_usage)
+                        } else {
+                                setSelectedUsageType("UnLimited")
+                                setUsageTypeName("UnLimited")
+                        }
 
-                    if (coupons.number_usage_user_status === "fixed"){
-                        setSelectedUserUsageType("Fixed")
-                        setUserUsageTypeName("Fixed")
-                        setUserUsageNumber(coupons.number_usage_user)
-                    }else{
-                        setSelectedUserUsageType("UnLimited")
-                        setUserUsageTypeName("UnLimited")
-                    }
-                    if (coupons.product === "all"){
-                        setSelectedProductOptions("All")
-                        setProductOptionsName("All")
-                    }else{
-                        setSelectedProductOptions("Selected")
-                        setProductOptionsName("Selected")
-                    }
-                    
+                        if (coupons.number_usage_user_status === "fixed") {
+                                setSelectedUserUsageType("Fixed")
+                                setUserUsageTypeName("Fixed")
+                                setUserUsageNumber(coupons.number_usage_user)
+                        } else {
+                                setSelectedUserUsageType("UnLimited")
+                                setUserUsageTypeName("UnLimited")
+                        }
+                        if (coupons.product === "all") {
+                                setSelectedProductOptions("All")
+                                setProductOptionsName("All")
+                        } else {
+                                setSelectedProductOptions("Selected")
+                                setProductOptionsName("Selected")
+                        }
 
-                    // setSelectedProductOptions('Select Products Options')
-                    // setProducts('')
-                    // setMinPurchase('')
-                    // setActiveCoupon(0)
-                    // setMaxDiscountStatus(0)
-                    // setMaxDiscount('')
-                    // setSelectedCouponType('Select Coupon Type')
-                    // setSelectedUserUsageType('Select User Usage Type');
-                    // setSelectedUsageType('Select Usage Type');
-                    // setUsageNumber('')
-                    // setUserUsageNumber('')
-                    // setStateProduct('Select Product')
-                    // setSelectedProduct([]);
-            }
+
+                        // setSelectedProductOptions('Select Products Options')
+                        // setProducts('')
+                        // setMinPurchase('')
+                        // setActiveCoupon(0)
+                        // setMaxDiscountStatus(0)
+                        // setMaxDiscount('')
+                        // setSelectedCouponType('Select Coupon Type')
+                        // setSelectedUserUsageType('Select User Usage Type');
+                        // setSelectedUsageType('Select Usage Type');
+                        // setUsageNumber('')
+                        // setUserUsageNumber('')
+                        // setStateProduct('Select Product')
+                        // setSelectedProduct([]);
+                }
         }, [coupons])
 
 
@@ -243,12 +243,12 @@ const EditCouponPage =()=>{
 
         const handleOpenOptionUsageType = () => setIsOpenUsageType(false);
 
-        const handleSelectUsageType= (option) => {
-        setSelectedUsageType(option.name);
-        setUsageTypeName(option.name);
+        const handleSelectUsageType = (option) => {
+                setSelectedUsageType(option.name);
+                setUsageTypeName(option.name);
         };
 
-         /* Coupon User Usage Type */
+        /* Coupon User Usage Type */
         const handleOpenUserUsageType = () => {
                 setIsOpenCouponType(false)
                 setIsOpenValueType(false)
@@ -260,397 +260,397 @@ const EditCouponPage =()=>{
 
         const handleOpenOptionUserUsageType = () => setIsOpenUserUsageType(false);
 
-        const handleSelectUserUsageType= (option) => {
+        const handleSelectUserUsageType = (option) => {
                 setSelectedUserUsageType(option.name);
                 setUserUsageTypeName(option.name);
         };
-        
+
         /* Coupon Active Min Discount */
         const HandleActiveMinDiscount = () => {
                 const currentState = maxDiscountStatus;
                 { currentState === 0 ? setMaxDiscountStatus(1) : setMaxDiscountStatus(0) }
         }
 
-         /* Coupon Active Min Discount */
+        /* Coupon Active Min Discount */
         const HandleActiveCoupon = () => {
                 const currentState = activeCoupon;
                 { currentState === 0 ? setActiveCoupon(1) : setActiveCoupon(0) }
         }
-  
+
 
         const handleCouponEdit = (e) => {
-        e.preventDefault();
+                e.preventDefault();
 
-        if (!title) {
-                auth.toastError('please Enter Title')
-                return;
-        }
-        if (!code) {
-                auth.toastError('please Enter Code')
-                return;
-        }
-        if (!startDate) {
-                auth.toastError('please Enter Start Date')
-                return;
-        }
-        if (!expireDate) {
-                auth.toastError('please Enter Expire Date')
-                return;
-        }
-        if (!valueTypeName) {
-                auth.toastError('please Select value Type')
-                return;
-        }
-        if (!discountAmount) {
-                auth.toastError('please Enter Discount Amount')
-                return;
-        }
-        if (!productOptionsName) {
-                auth.toastError('please Select Product Option')
-                return;
-        }
-        if (productOptionsName === "selected" && selectedProduct.length === 0){
-                auth.toastError('please Select Product')
-                return;
-        }
-        if (!couponTypeName){
-                auth.toastError('please Select Coupon Type')
-                return;
-        }
-        if (!minPurchase){
-                auth.toastError('please Select Min Purchase')
-                return;
-        }
+                if (!title) {
+                        auth.toastError('please Enter Title')
+                        return;
+                }
+                if (!code) {
+                        auth.toastError('please Enter Code')
+                        return;
+                }
+                if (!startDate) {
+                        auth.toastError('please Enter Start Date')
+                        return;
+                }
+                if (!expireDate) {
+                        auth.toastError('please Enter Expire Date')
+                        return;
+                }
+                if (!valueTypeName) {
+                        auth.toastError('please Select value Type')
+                        return;
+                }
+                if (!discountAmount) {
+                        auth.toastError('please Enter Discount Amount')
+                        return;
+                }
+                if (!productOptionsName) {
+                        auth.toastError('please Select Product Option')
+                        return;
+                }
+                if (productOptionsName === "selected" && selectedProduct.length === 0) {
+                        auth.toastError('please Select Product')
+                        return;
+                }
+                if (!couponTypeName) {
+                        auth.toastError('please Select Coupon Type')
+                        return;
+                }
+                if (!minPurchase) {
+                        auth.toastError('please Select Min Purchase')
+                        return;
+                }
 
-        if (!usageTypeName) {
-                auth.toastError('please Select Usage Type')
-                return;
-        }
-        if (!userUsageTypeName) {
-                auth.toastError('please Select User Usage Type')
-                return;
-        }
-        if (usageTypeName === "Fixed" && !usageNumber){
-                auth.toastError('please Enter Usage Number')
-                return;
-        }
-        if (userUsageTypeName === "Fixed" && !userUsageNumber){
-                auth.toastError('please Enter User Usage Number')
-                return;
-        }
-        if ( maxDiscountStatus=== 1 && !maxDiscount){
-                auth.toastError('please Enter Max Discount')
-                return;
-        }
+                if (!usageTypeName) {
+                        auth.toastError('please Select Usage Type')
+                        return;
+                }
+                if (!userUsageTypeName) {
+                        auth.toastError('please Select User Usage Type')
+                        return;
+                }
+                if (usageTypeName === "Fixed" && !usageNumber) {
+                        auth.toastError('please Enter Usage Number')
+                        return;
+                }
+                if (userUsageTypeName === "Fixed" && !userUsageNumber) {
+                        auth.toastError('please Enter User Usage Number')
+                        return;
+                }
+                if (maxDiscountStatus === 1 && !maxDiscount) {
+                        auth.toastError('please Enter Max Discount')
+                        return;
+                }
 
-        const formData = new FormData();
+                const formData = new FormData();
 
-        formData.append('title', title);
-        formData.append('code', code);
-        formData.append('start_date', startDate);
-        formData.append('expire_date', expireDate);
+                formData.append('title', title);
+                formData.append('code', code);
+                formData.append('start_date', startDate);
+                formData.append('expire_date', expireDate);
 
-        if(valueTypeName === "Percentage"){
-                formData.append('discount_type', "percentage");
-        }
-        else{
-                formData.append('discount_type', "value");
-        }
+                if (valueTypeName === "Percentage") {
+                        formData.append('discount_type', "percentage");
+                }
+                else {
+                        formData.append('discount_type', "value");
+                }
 
-        formData.append('discount', discountAmount);
+                formData.append('discount', discountAmount);
 
-        if(productOptionsName === "All"){
-                formData.append('product', "all");
-        }
-        else{
-                formData.append('product', "selected");
-        }
+                if (productOptionsName === "All") {
+                        formData.append('product', "all");
+                }
+                else {
+                        formData.append('product', "selected");
+                }
 
-        selectedProduct.forEach((product, index) => {
-                formData.append(`products_id[${index}]`, product.id);
-        });
+                selectedProduct.forEach((product, index) => {
+                        formData.append(`products_id[${index}]`, product.id);
+                });
 
-        if(couponTypeName === "Normal"){
-                formData.append('type', "normal");
-        }
-        else{
-                formData.append('type', "first_order");
-        }
+                if (couponTypeName === "Normal") {
+                        formData.append('type', "normal");
+                }
+                else {
+                        formData.append('type', "first_order");
+                }
 
-        formData.append('min_purchase', minPurchase);
-        formData.append('status', activeCoupon);
+                formData.append('min_purchase', minPurchase);
+                formData.append('status', activeCoupon);
 
-        if(usageTypeName === "Fixed"){
-                formData.append('number_usage_status', "fixed");
-                formData.append('number_usage', usageNumber);
-        }
-        else{
-                formData.append('number_usage_status', "unlimited");
-        }
+                if (usageTypeName === "Fixed") {
+                        formData.append('number_usage_status', "fixed");
+                        formData.append('number_usage', usageNumber);
+                }
+                else {
+                        formData.append('number_usage_status', "unlimited");
+                }
 
-        if(userUsageTypeName === "Fixed"){
-                formData.append('number_usage_user_status', "fixed");
-                formData.append('number_usage_user', userUsageNumber);
-        }
-        else{
-                formData.append('number_usage_user_status', "unlimited");
-        }
+                if (userUsageTypeName === "Fixed") {
+                        formData.append('number_usage_user_status', "fixed");
+                        formData.append('number_usage_user', userUsageNumber);
+                }
+                else {
+                        formData.append('number_usage_user_status', "unlimited");
+                }
 
-        formData.append('max_discount_status', maxDiscountStatus);
-        formData.append('max_discount', maxDiscount);
+                formData.append('max_discount_status', maxDiscountStatus);
+                formData.append('max_discount', maxDiscount);
 
-        for (let pair of formData.entries()) {
-                console.log(pair[0] + ', ' + pair[1]);
-         }   
+                for (let pair of formData.entries()) {
+                        console.log(pair[0] + ', ' + pair[1]);
+                }
 
 
-        postData(formData, 'Coupon Edited Success');
-        
+                postData(formData, 'Coupon Edited Success');
+
         };
 
 
 
-    return(
-        <>
-        {loadingPost || loadingAllCoupon || loadingCoupon ? (
-               <>
-                      <div className="w-full h-56 flex justify-center items-center">
-                             <StaticLoader />
-                      </div>
-               </>
-        ) : (
-               <section>
-                      <form onSubmit={handleCouponEdit}>
-                            <div className="w-full flex sm:flex-col lg:flex-row flex-wrap items-center justify-start gap-4 mb-4">
-                                {/* Coupon Title */}
-                                <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                        <span className="text-xl font-TextFontRegular text-thirdColor">Coupon Name:</span>
-                                        <TextInput
-                                                value={title}
-                                                onChange={(e) => setTitle(e.target.value)}
-                                                placeholder="Coupon Name"
-                                        />
-                                </div>
-                                {/* Coupon Code */}
-                                <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                        <span className="text-xl font-TextFontRegular text-thirdColor">Coupon Code:</span>
-                                        <TextInput
-                                                value={code}
-                                                onChange={(e) => setCode(e.target.value)}
-                                                placeholder="Coupon Code"
-                                        />
-                                </div>
-                                {/* Coupon Start Date */}
-                                <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                        <span className="text-xl font-TextFontRegular text-thirdColor">Coupon Start Date:</span>
-                                        <DateInput
-                                                value={startDate}
-                                                onChange={(e) => setStartDate(e.target.value)}
-                                                placeholder="Coupon Start Date"
-                                                maxDate={false}
-                                        />
-                                </div>
-                                {/* Coupon Expire Date */}
-                                <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                    <span className="text-xl font-TextFontRegular text-thirdColor">Coupon Expire Date:</span>
-                                    <DateInput
-                                            value={expireDate}
-                                            onChange={(e) => setExpireDate(e.target.value)}
-                                            placeholder="Coupon Expire Date"
-                                            maxDate={false}
-                                    />
-                                </div>
-                                {/* Value Types */}
-                                <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                    <span className="text-xl font-TextFontRegular text-thirdColor">Select Coupon Value Type:</span>
-                                    <DropDown
-                                            ref={dropDownValueType}
-                                            handleOpen={handleOpenValueType}
-                                            stateoption={selectedValueType}
-                                            openMenu={isOpenValueType}
-                                            handleOpenOption={handleOpenOptionValueType}
-                                            onSelectOption={handleSelectValueType}
-                                            options={valueType}
-                                            border={false}
-                                    />
-                                </div>
-                                 {/* Coupon Discount Amount */}
-                                 <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                        <span className="text-xl font-TextFontRegular text-thirdColor">Coupon Discount Amount:</span>
-                                        <NumberInput
-                                                value={discountAmount}
-                                                onChange={(e) => setDiscountAmount(e.target.value)}
-                                                placeholder="Coupon Discount Amount"
-                                                maxDate={false}
-                                        />
-                                </div>
-                                {/* Product Options */}
-                                <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                    <span className="text-xl font-TextFontRegular text-thirdColor">Select Product Options:</span>
-                                    <DropDown
-                                            ref={dropDownProductOptionsRef}
-                                            handleOpen={handleOpenProductOptions}
-                                            stateoption={selectedProductOptions}
-                                            openMenu={isOpenProductOptions}
-                                            handleOpenOption={handleOpenOptionProductOptions}
-                                            onSelectOption={handleSelectProductOptions}
-                                            options={productOptions}
-                                            border={false}
-                                    />
-                                </div>
-                                {/* Products */}
-                                {
-                                    productOptionsName === "Selected" && (
-                                        <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                        <span className="text-xl font-TextFontRegular text-thirdColor">Select Product:</span>
-                                        <MultiSelect
-                                                value={selectedProduct}
-                                                onChange={(e) => setSelectedProduct(e.value)}
-                                                options={products}
-                                                optionLabel="name"
-                                                display="chip"
-                                                placeholder={stateProduct}
-                                                maxSelectedLabels={3}
-                                                className="w-full md:w-20rem text-mainColor p-1"
-                                                filter
-                                        />
-                                </div>
-                                    )
-                                }
-                                {/* Discount Types */}
-                                <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                    <span className="text-xl font-TextFontRegular text-thirdColor">Select Coupon Type:</span>
-                                    <DropDown
-                                            ref={dropDownCouponType}
-                                            handleOpen={handleOpenCouponType}
-                                            stateoption={selectedCouponType}
-                                            openMenu={isOpenCouponType}
-                                            handleOpenOption={handleOpenOptionCouponType}
-                                            onSelectOption={handleSelectCouponType}
-                                            options={couponType}
-                                            border={false}
-                                    />
-                                </div>
-                                {/* Coupon Min Purchase */}
-                                <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                        <span className="text-xl font-TextFontRegular text-thirdColor">Coupon Min Purchase:</span>
-                                        <NumberInput
-                                                value={minPurchase}
-                                                onChange={(e) => setMinPurchase(e.target.value)}
-                                                placeholder="Coupon Min Purchase"
-                                                maxDate={false}
-                                        />
-                                </div>
-                                {/* Coupon Usage Type */}
-                                <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                <span className="text-xl font-TextFontRegular text-thirdColor">Select Usage Type:</span>
-                                <DropDown
-                                        ref={dropDownUsageType}
-                                        handleOpen={handleOpenUsageType}
-                                        stateoption={selectedUsageType}
-                                        openMenu={isOpenUsageType}
-                                        handleOpenOption={handleOpenOptionUsageType}
-                                        onSelectOption={handleSelectUsageType}
-                                        options={usageType}
-                                        border={false}
-                                    />
-                                </div>
-                                {/* Coupon Usage Number */}
-                                {
-                                    usageTypeName === "Fixed" && (
-                                            <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                                    <span className="text-xl font-TextFontRegular text-thirdColor">Coupon Usage Number:</span>
-                                                    <NumberInput
-                                                            value={usageNumber}
-                                                            onChange={(e) => setUsageNumber(e.target.value)}
-                                                            placeholder="Coupon Usage Number"
-                                                            maxDate={false}
-                                                    />
-                                            </div>
-                                    )
-                                }
+        return (
+                <>
+                        {loadingPost || loadingAllCoupon || loadingCoupon ? (
+                                <>
+                                        <div className="w-full h-56 mt-10 flex justify-center items-center">
+                                                <LoaderLogin />
+                                        </div>
+                                </>
+                        ) : (
+                                <section>
+                                        <form onSubmit={handleCouponEdit}>
+                                                <div className="w-full flex sm:flex-col lg:flex-row flex-wrap items-center justify-start gap-4 mb-4">
+                                                        {/* Coupon Title */}
+                                                        <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                                                <span className="text-xl font-TextFontRegular text-thirdColor">Coupon Name:</span>
+                                                                <TextInput
+                                                                        value={title}
+                                                                        onChange={(e) => setTitle(e.target.value)}
+                                                                        placeholder="Coupon Name"
+                                                                />
+                                                        </div>
+                                                        {/* Coupon Code */}
+                                                        <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                                                <span className="text-xl font-TextFontRegular text-thirdColor">Coupon Code:</span>
+                                                                <TextInput
+                                                                        value={code}
+                                                                        onChange={(e) => setCode(e.target.value)}
+                                                                        placeholder="Coupon Code"
+                                                                />
+                                                        </div>
+                                                        {/* Coupon Start Date */}
+                                                        <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                                                <span className="text-xl font-TextFontRegular text-thirdColor">Coupon Start Date:</span>
+                                                                <DateInput
+                                                                        value={startDate}
+                                                                        onChange={(e) => setStartDate(e.target.value)}
+                                                                        placeholder="Coupon Start Date"
+                                                                        maxDate={false}
+                                                                />
+                                                        </div>
+                                                        {/* Coupon Expire Date */}
+                                                        <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                                                <span className="text-xl font-TextFontRegular text-thirdColor">Coupon Expire Date:</span>
+                                                                <DateInput
+                                                                        value={expireDate}
+                                                                        onChange={(e) => setExpireDate(e.target.value)}
+                                                                        placeholder="Coupon Expire Date"
+                                                                        maxDate={false}
+                                                                />
+                                                        </div>
+                                                        {/* Value Types */}
+                                                        <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                                                <span className="text-xl font-TextFontRegular text-thirdColor">Select Coupon Value Type:</span>
+                                                                <DropDown
+                                                                        ref={dropDownValueType}
+                                                                        handleOpen={handleOpenValueType}
+                                                                        stateoption={selectedValueType}
+                                                                        openMenu={isOpenValueType}
+                                                                        handleOpenOption={handleOpenOptionValueType}
+                                                                        onSelectOption={handleSelectValueType}
+                                                                        options={valueType}
+                                                                        border={false}
+                                                                />
+                                                        </div>
+                                                        {/* Coupon Discount Amount */}
+                                                        <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                                                <span className="text-xl font-TextFontRegular text-thirdColor">Coupon Discount Amount:</span>
+                                                                <NumberInput
+                                                                        value={discountAmount}
+                                                                        onChange={(e) => setDiscountAmount(e.target.value)}
+                                                                        placeholder="Coupon Discount Amount"
+                                                                        maxDate={false}
+                                                                />
+                                                        </div>
+                                                        {/* Product Options */}
+                                                        <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                                                <span className="text-xl font-TextFontRegular text-thirdColor">Select Product Options:</span>
+                                                                <DropDown
+                                                                        ref={dropDownProductOptionsRef}
+                                                                        handleOpen={handleOpenProductOptions}
+                                                                        stateoption={selectedProductOptions}
+                                                                        openMenu={isOpenProductOptions}
+                                                                        handleOpenOption={handleOpenOptionProductOptions}
+                                                                        onSelectOption={handleSelectProductOptions}
+                                                                        options={productOptions}
+                                                                        border={false}
+                                                                />
+                                                        </div>
+                                                        {/* Products */}
+                                                        {
+                                                                productOptionsName === "Selected" && (
+                                                                        <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                                                                <span className="text-xl font-TextFontRegular text-thirdColor">Select Product:</span>
+                                                                                <MultiSelect
+                                                                                        value={selectedProduct}
+                                                                                        onChange={(e) => setSelectedProduct(e.value)}
+                                                                                        options={products}
+                                                                                        optionLabel="name"
+                                                                                        display="chip"
+                                                                                        placeholder={stateProduct}
+                                                                                        maxSelectedLabels={3}
+                                                                                        className="w-full md:w-20rem text-mainColor p-1"
+                                                                                        filter
+                                                                                />
+                                                                        </div>
+                                                                )
+                                                        }
+                                                        {/* Discount Types */}
+                                                        <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                                                <span className="text-xl font-TextFontRegular text-thirdColor">Select Coupon Type:</span>
+                                                                <DropDown
+                                                                        ref={dropDownCouponType}
+                                                                        handleOpen={handleOpenCouponType}
+                                                                        stateoption={selectedCouponType}
+                                                                        openMenu={isOpenCouponType}
+                                                                        handleOpenOption={handleOpenOptionCouponType}
+                                                                        onSelectOption={handleSelectCouponType}
+                                                                        options={couponType}
+                                                                        border={false}
+                                                                />
+                                                        </div>
+                                                        {/* Coupon Min Purchase */}
+                                                        <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                                                <span className="text-xl font-TextFontRegular text-thirdColor">Coupon Min Purchase:</span>
+                                                                <NumberInput
+                                                                        value={minPurchase}
+                                                                        onChange={(e) => setMinPurchase(e.target.value)}
+                                                                        placeholder="Coupon Min Purchase"
+                                                                        maxDate={false}
+                                                                />
+                                                        </div>
+                                                        {/* Coupon Usage Type */}
+                                                        <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                                                <span className="text-xl font-TextFontRegular text-thirdColor">Select Usage Type:</span>
+                                                                <DropDown
+                                                                        ref={dropDownUsageType}
+                                                                        handleOpen={handleOpenUsageType}
+                                                                        stateoption={selectedUsageType}
+                                                                        openMenu={isOpenUsageType}
+                                                                        handleOpenOption={handleOpenOptionUsageType}
+                                                                        onSelectOption={handleSelectUsageType}
+                                                                        options={usageType}
+                                                                        border={false}
+                                                                />
+                                                        </div>
+                                                        {/* Coupon Usage Number */}
+                                                        {
+                                                                usageTypeName === "Fixed" && (
+                                                                        <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                                                                <span className="text-xl font-TextFontRegular text-thirdColor">Coupon Usage Number:</span>
+                                                                                <NumberInput
+                                                                                        value={usageNumber}
+                                                                                        onChange={(e) => setUsageNumber(e.target.value)}
+                                                                                        placeholder="Coupon Usage Number"
+                                                                                        maxDate={false}
+                                                                                />
+                                                                        </div>
+                                                                )
+                                                        }
 
-                                 {/* Coupon User Usage Type */}
-                                 <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                <span className="text-xl font-TextFontRegular text-thirdColor">Select User Usage Type:</span>
-                                <DropDown
-                                        ref={dropDownUserUsageType}
-                                        handleOpen={handleOpenUserUsageType}
-                                        stateoption={selectedUserUsageType}
-                                        openMenu={isOpenUserUsageType}
-                                        handleOpenOption={handleOpenOptionUserUsageType}
-                                        onSelectOption={handleSelectUserUsageType}
-                                        options={userUsageType}
-                                        border={false}
-                                    />
-                                </div>
-                                {/* Coupon User Usage Number */}
-                                {
-                                        userUsageTypeName === "Fixed" && (
-                                                <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                                        <span className="text-xl font-TextFontRegular text-thirdColor">Coupon User Usage Number:</span>
-                                                        <NumberInput
-                                                                value={userUsageNumber}
-                                                                onChange={(e) => setUserUsageNumber(e.target.value)}
-                                                                placeholder="Coupon User Usage Number"
-                                                                maxDate={false}
-                                                        />
+                                                        {/* Coupon User Usage Type */}
+                                                        <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                                                <span className="text-xl font-TextFontRegular text-thirdColor">Select User Usage Type:</span>
+                                                                <DropDown
+                                                                        ref={dropDownUserUsageType}
+                                                                        handleOpen={handleOpenUserUsageType}
+                                                                        stateoption={selectedUserUsageType}
+                                                                        openMenu={isOpenUserUsageType}
+                                                                        handleOpenOption={handleOpenOptionUserUsageType}
+                                                                        onSelectOption={handleSelectUserUsageType}
+                                                                        options={userUsageType}
+                                                                        border={false}
+                                                                />
+                                                        </div>
+                                                        {/* Coupon User Usage Number */}
+                                                        {
+                                                                userUsageTypeName === "Fixed" && (
+                                                                        <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                                                                <span className="text-xl font-TextFontRegular text-thirdColor">Coupon User Usage Number:</span>
+                                                                                <NumberInput
+                                                                                        value={userUsageNumber}
+                                                                                        onChange={(e) => setUserUsageNumber(e.target.value)}
+                                                                                        placeholder="Coupon User Usage Number"
+                                                                                        maxDate={false}
+                                                                                />
+                                                                        </div>
+                                                                )
+                                                        }
+
+                                                        {/* Coupon Active Max Discount */}
+                                                        <div className="sm:w-full xl:w-[30%] flex items-start justify-start gap-x-1 pt-8">
+                                                                <div className='flex items-center justify-start gap-x-3'>
+                                                                        <span className="text-xl font-TextFontRegular text-thirdColor">Active Max Discount:</span>
+                                                                        <Switch handleClick={HandleActiveMinDiscount} checked={maxDiscountStatus} />
+                                                                </div>
+                                                        </div>
+
+                                                        {/* Coupon Max Discount */}
+                                                        {
+                                                                maxDiscountStatus === 1 && (
+                                                                        <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                                                                <span className="text-xl font-TextFontRegular text-thirdColor">Coupon Max Discount:</span>
+                                                                                <NumberInput
+                                                                                        value={maxDiscount}
+                                                                                        onChange={(e) => setMaxDiscount(e.target.value)}
+                                                                                        placeholder="Coupon Max Discount"
+                                                                                        maxDate={false}
+                                                                                />
+                                                                        </div>
+                                                                )
+
+                                                        }
+                                                        {/* Coupon Active  */}
+                                                        <div className="sm:w-full xl:w-[30%] flex items-start justify-start gap-x-1 pt-8">
+                                                                <div className='flex items-center justify-start gap-x-3'>
+                                                                        <span className="text-xl font-TextFontRegular text-thirdColor">Active Coupon:</span>
+                                                                        <Switch handleClick={HandleActiveCoupon} checked={activeCoupon} />
+                                                                </div>
+                                                        </div>
+
                                                 </div>
-                                        )
-                                }
 
-                                {/* Coupon Active Max Discount */}
-                                 <div className="sm:w-full xl:w-[30%] flex items-start justify-start gap-x-1 pt-8">
-                                        <div className='flex items-center justify-start gap-x-3'>
-                                        <span className="text-xl font-TextFontRegular text-thirdColor">Active Max Discount:</span>
-                                        <Switch handleClick={HandleActiveMinDiscount} checked={maxDiscountStatus} />
-                                        </div>
-                                </div>
+                                                {/* Buttons*/}
+                                                <div className="w-full flex items-center justify-end gap-x-4">
+                                                        <div className="">
+                                                                <StaticButton text={'Cancel'} handleClick={handleBack} bgColor='bg-transparent' Color='text-mainColor' border={'border-2'} borderColor={'border-mainColor'} rounded='rounded-full' />
+                                                        </div>
+                                                        <div className="">
+                                                                <SubmitButton
+                                                                        text={'Edit'}
+                                                                        rounded='rounded-full'
+                                                                        handleClick={handleCouponEdit}
+                                                                />
+                                                        </div>
 
-                                {/* Coupon Max Discount */}
-                                {
-                                    maxDiscountStatus === 1 && (
-                                        <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                                <span className="text-xl font-TextFontRegular text-thirdColor">Coupon Max Discount:</span>
-                                                <NumberInput
-                                                        value={maxDiscount}
-                                                        onChange={(e) => setMaxDiscount(e.target.value)}
-                                                        placeholder="Coupon Max Discount"
-                                                        maxDate={false}
-                                                />
-                                        </div>
-                                    )
-
-                                }
-                                 {/* Coupon Active  */}
-                                 <div className="sm:w-full xl:w-[30%] flex items-start justify-start gap-x-1 pt-8">
-                                        <div className='flex items-center justify-start gap-x-3'>
-                                        <span className="text-xl font-TextFontRegular text-thirdColor">Active Coupon:</span>
-                                        <Switch handleClick={HandleActiveCoupon} checked={activeCoupon} />
-                                        </div>
-                                </div>
-
-                            </div>
-
-                            {/* Buttons*/}
-                            <div className="w-full flex items-center justify-end gap-x-4">
-                                <div className="">
-                                    <StaticButton text={'Cancel'} handleClick={handleBack} bgColor='bg-transparent' Color='text-mainColor' border={'border-2'} borderColor={'border-mainColor'} rounded='rounded-full' />
-                                </div>
-                                <div className="">
-                                    <SubmitButton
-                                            text={'Edit'}
-                                            rounded='rounded-full'
-                                            handleClick={handleCouponEdit}
-                                    />
-                                </div>
-
-                            </div>
-                      </form>
-               </section>
-        )}
- </>
-    )
+                                                </div>
+                                        </form>
+                                </section>
+                        )}
+                </>
+        )
 }
 
 export default EditCouponPage;
