@@ -11,6 +11,7 @@ import {
   CitiesLayout,
   ConfirmedOrdersLayout,
   DashboardLayout,
+  DealOrderLayout,
   DeliveredOrdersLayout,
   DeliveryManLayout,
   DeliveryTimeLayout,
@@ -330,6 +331,10 @@ export const router = createBrowserRouter([
           {
             path: 'song',
             element: <SongLayout />,
+          },
+          {
+            path: 'deal_order',
+            element: <DealOrderLayout />,
           },
 
           {
