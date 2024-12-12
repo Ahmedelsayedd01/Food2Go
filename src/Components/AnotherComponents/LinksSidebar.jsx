@@ -12,6 +12,7 @@ import { IoLanguage } from 'react-icons/io5';
 import { BiSolidDiscount } from 'react-icons/bi';
 import { HiReceiptTax } from 'react-icons/hi';
 import { TbReportSearch } from 'react-icons/tb';
+import { BiSolidCoupon } from "react-icons/bi";
 
 const LinksSidebar = () => {
        const auth = useAuth();
@@ -95,9 +96,6 @@ const LinksSidebar = () => {
        /* Delivery Man */
        const [isActiveDeliveryMan, setIsActiveDeliveryMan] = useState(stateLink.isActiveDeliveryMan ?? false);
        const [isActiveDeliveryManIcon, setIsActiveDeliveryManIcon] = useState(stateLink.isActiveDeliveryManIcon ?? false);
-       /* Offers */
-       const [isActiveOffers, setIsActiveOffers] = useState(stateLink.isActiveOffers ?? false);
-       const [isActiveOffersIcon, setIsActiveOffersIcon] = useState(stateLink.isActiveOffersIcon ?? false);
        /* Languages */
        const [isActiveLanguages, setIsActiveLanguages] = useState(stateLink.isActiveLanguages ?? false);
        const [isActiveLanguagesIcon, setIsActiveLanguagesIcon] = useState(stateLink.isActiveLanguagesIcon ?? false);
@@ -190,6 +188,9 @@ const LinksSidebar = () => {
                      isActiveOrdersFailed,
                      isActiveOrdersCanceled,
                      isActiveOrdersSchedule,
+
+                     isActiveCoupon,
+                     isActiveCouponIcon
               };
               auth.sidebar = JSON.stringify(activeLinks);
        }, [
@@ -255,6 +256,9 @@ const LinksSidebar = () => {
               isActiveOrdersFailed,
               isActiveOrdersCanceled,
               isActiveOrdersSchedule,
+
+              isActiveCoupon,
+              isActiveCouponIcon
        ]);
 
        // Save state to sidebar at auth when any link state changes
@@ -323,6 +327,9 @@ const LinksSidebar = () => {
               isActiveOrdersFailed,
               isActiveOrdersCanceled,
               isActiveOrdersSchedule,
+
+              isActiveCoupon,
+              isActiveCouponIcon
        ]);
 
        // Handler functions to manage all state
@@ -393,6 +400,9 @@ const LinksSidebar = () => {
               setIsActiveOrdersFailed(false)
               setIsActiveOrdersCanceled(false)
               setIsActiveOrdersSchedule(false)
+
+              setIsActiveCoupon(false)
+              setIsActiveCouponIcon(false)
        }
 
 
@@ -1005,7 +1015,19 @@ const LinksSidebar = () => {
 
        }, [location])
 
-
+       /* Coupon */
+       const handleClickCoupon = useCallback(() => {
+              handleStateLinks();
+              setIsActiveCoupon(true);
+              setIsActiveCouponIcon(true);
+       }, []);
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard/coupon") {
+                     handleClickCoupon()
+              }
+       }, [location])
 
 
 
@@ -1359,32 +1381,6 @@ const LinksSidebar = () => {
                                           group-hover:text-mainColor`}
                                    >
                                           Delivery Man
-                                   </span>
-                            </div>
-                     </Link>
-                     {/* Offers */}
-                     <Link to="offers"
-                            onMouseMove={() => setIsActiveOffersIcon(true)}
-                            onMouseOut={() => setIsActiveOffersIcon(false)}
-                            onClick={handleClickOffers}
-                            className={`
-                                   ${isActiveOffers ? 'active' : ''}
-                                   ${hideSide ? 'justify-between' : 'justify-center'} 
-                                   hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
-                                   hover:text-mainColor w-full flex items-center 
-                                   transition-all duration-300 group`}
-                     >
-                            <div className="flex items-center gap-x-2">
-                                   <MdOutlineLocalOffer
-                                          className={`${isActiveOffersIcon || isActiveOffers ? 'text-[#9E090F]' : 'text-[#fff]'} text-3xl`}
-                                   />
-                                   <span
-                                          className={`${hideSide ? 'block' : 'hidden'}
-                                           ${isActiveOffers ? "text-mainColor" : "text-white"}
-                                          text-lg font-TextFontRegular transition-all duration-300
-                                          group-hover:text-mainColor`}
-                                   >
-                                          Offers
                                    </span>
                             </div>
                      </Link>

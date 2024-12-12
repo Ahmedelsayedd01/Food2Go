@@ -96,3 +96,8 @@ export { default as ReturnedOrdersPage } from "./Dashboard/Admin/Orders/Returned
 export { default as FailedOrdersPage } from "./Dashboard/Admin/Orders/FailedOrders/FailedOrdersPage";
 export { default as CanceledOrdersPage } from "./Dashboard/Admin/Orders/CanceledOrders/CanceledOrdersPage";
 export { default as ScheduleOrdersPage } from "./Dashboard/Admin/Orders/ScheduleOrders/ScheduleOrdersPage";
+
+// Coupon Setup
+export { default as CouponPage } from "./Dashboard/Admin/Coupon/CouponPage";
+export { default as AddCouponSection } from "./Dashboard/Admin/Coupon/AddCouponSection";
+export { default as EditCouponPage } from "./Dashboard/Admin/Coupon/EditCouponPage";
