@@ -35,6 +35,7 @@ const AddProductPage = () => {
 
   const [categories, setCategories] = useState([])
   const [subCategories, setSubCategories] = useState([])
+  const [filterSubCategories, setFilterSubCategories] = useState([])
   const [addons, setAddons] = useState([])
   const [discounts, setDiscounts] = useState([])
   const [taxes, setTaxes] = useState([])
@@ -135,6 +136,7 @@ const AddProductPage = () => {
     if (dataCategory) {
       setCategories(dataCategory?.parent_categories || [])
       setSubCategories(dataCategory?.sub_categories || [])
+      // setFilterSubCategories(dataCategory?.sub_categories || [])
       setAddons(dataCategory?.addons || [])
     }
     /* Set data to Discounts && Taxes */
@@ -428,10 +430,13 @@ const AddProductPage = () => {
 
 
 
-
   const handleSelectProductCategory = (option) => {
     setSelectedCategoryId(option.id);
     setSelectedCategoryState(option.name);
+    const filterSup = subCategories.filter(sup => sup.category_id === option.id)
+
+    setFilterSubCategories(filterSup)
+    console.log('filterSup', filterSup)
   };
   const handleSelectProductSubCategory = (option) => {
     setSelectedSubCategoryId(option.id);
@@ -703,11 +708,11 @@ const AddProductPage = () => {
     //   return;
     // }
 
-    if (!productPoint) {
-      auth.toastError('please Enter Product Point')
-      console.log('productPoint', productPoint)
-      return;
-    }
+    // if (!productPoint) {
+    //   auth.toastError('please Enter Product Point')
+    //   console.log('productPoint', productPoint)
+    //   return;
+    // }
     if (!productImage) {
       auth.toastError('please Set Product Image')
       console.log('productImage', productImage)
@@ -1662,7 +1667,7 @@ const AddProductPage = () => {
                   stateoption={selectedSubCategoryState}
                   openMenu={isOPenProductSubCategory}
                   handleOpenOption={handleOpenOptionProductSubCategory}
-                  options={subCategories}
+                  options={filterSubCategories}
                   onSelectOption={handleSelectProductSubCategory}
                 />
               </div>
