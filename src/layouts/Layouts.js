@@ -93,3 +93,8 @@ export { default as FailedOrdersLayout } from "./Dashboard/Orders/FailedOrders/F
 export { default as CanceledOrdersLayout } from "./Dashboard/Orders/CanceledOrders/CanceledOrdersLayout";
 // Orders -> Schedule Orders
 export { default as ScheduleOrdersLayout } from "./Dashboard/Orders/ScheduleOrders/ScheduleOrdersLayout";
+
+
+/* Coupon */
+export { default as CouponLayout } from "./Dashboard/Coupon/CouponLayout";
+export { default as EditCouponLayout } from "./Dashboard/Coupon/EditCouponLayout";

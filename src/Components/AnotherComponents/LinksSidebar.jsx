@@ -11,6 +11,7 @@ import { PiFlagBanner } from 'react-icons/pi';
 import { IoLanguage } from 'react-icons/io5';
 import { BiSolidDiscount } from 'react-icons/bi';
 import { HiReceiptTax } from 'react-icons/hi';
+import { BiSolidCoupon } from "react-icons/bi";
 
 const LinksSidebar = () => {
        const auth = useAuth();
@@ -93,6 +94,11 @@ const LinksSidebar = () => {
        /* Delivery Man */
        const [isActiveDeliveryMan, setIsActiveDeliveryMan] = useState(stateLink.isActiveDeliveryMan ?? false);
        const [isActiveDeliveryManIcon, setIsActiveDeliveryManIcon] = useState(stateLink.isActiveDeliveryManIcon ?? false);
+
+       /* Coupon */
+       const [isActiveCoupon, setIsActiveCoupon] = useState(stateLink.isActiveCoupon ?? false);
+       const [isActiveCouponIcon, setIsActiveCouponIcon] = useState(stateLink.isActiveCouponIcon ?? false);
+
        /* Languages */
        const [isActiveLanguages, setIsActiveLanguages] = useState(stateLink.isActiveLanguages ?? false);
        const [isActiveLanguagesIcon, setIsActiveLanguagesIcon] = useState(stateLink.isActiveLanguagesIcon ?? false);
@@ -171,6 +177,9 @@ const LinksSidebar = () => {
                      isActiveOrdersFailed,
                      isActiveOrdersCanceled,
                      isActiveOrdersSchedule,
+
+                     isActiveCoupon,
+                     isActiveCouponIcon
               };
               auth.sidebar = JSON.stringify(activeLinks);
        }, [
@@ -226,6 +235,9 @@ const LinksSidebar = () => {
               isActiveOrdersFailed,
               isActiveOrdersCanceled,
               isActiveOrdersSchedule,
+
+              isActiveCoupon,
+              isActiveCouponIcon
        ]);
 
        // Save state to sidebar at auth when any link state changes
@@ -283,6 +295,9 @@ const LinksSidebar = () => {
               isActiveOrdersFailed,
               isActiveOrdersCanceled,
               isActiveOrdersSchedule,
+
+              isActiveCoupon,
+              isActiveCouponIcon
        ]);
 
        // Handler functions to manage all state
@@ -343,6 +358,9 @@ const LinksSidebar = () => {
               setIsActiveOrdersFailed(false)
               setIsActiveOrdersCanceled(false)
               setIsActiveOrdersSchedule(false)
+
+              setIsActiveCoupon(false)
+              setIsActiveCouponIcon(false)
        }
 
 
@@ -897,7 +915,19 @@ const LinksSidebar = () => {
 
        }, [location])
 
-
+       /* Coupon */
+       const handleClickCoupon = useCallback(() => {
+              handleStateLinks();
+              setIsActiveCoupon(true);
+              setIsActiveCouponIcon(true);
+       }, []);
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard/coupon") {
+                     handleClickCoupon()
+              }
+       }, [location])
 
 
 
@@ -1246,6 +1276,34 @@ const LinksSidebar = () => {
                                    </span>
                             </div>
                      </Link>
+
+                      {/* Coupon*/}
+                      <Link to="coupon"
+                            onMouseMove={() => setIsActiveCouponIcon(true)}
+                            onMouseOut={() => setIsActiveCouponIcon(false)}
+                            onClick={handleClickCoupon}
+                            className={`
+                                   ${isActiveCoupon ? 'active' : ''}
+                                   ${hideSide ? 'justify-between' : 'justify-center'} 
+                                   hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
+                                   hover:text-mainColor w-full flex items-center 
+                                   transition-all duration-300 group`}
+                     >
+                            <div className="flex items-center gap-x-2">
+                                   <BiSolidCoupon 
+                                          className={`${isActiveCouponIcon || isActiveCoupon ? 'text-[#9E090F]' : 'text-[#fff]'} text-3xl`}
+                                   />
+                                   <span
+                                          className={`${hideSide ? 'block' : 'hidden'}
+                                           ${isActiveCoupon ? "text-mainColor" : "text-white"}
+                                          text-lg font-TextFontRegular transition-all duration-300
+                                          group-hover:text-mainColor`}
+                                   >
+                                          Coupon
+                                   </span>
+                            </div>
+                     </Link>
+
                      {/* Languages */}
                      <Link to="languages"
                             onMouseMove={() => setIsActiveLanguagesIcon(true)}

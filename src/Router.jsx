@@ -43,7 +43,9 @@ import {
   ScheduleOrdersLayout,
   TaxesLayout,
   TaxTypeLayout,
-  ZonesLayout
+  ZonesLayout,
+  CouponLayout,
+  EditCouponLayout
 } from "./layouts/Layouts";
 import ProtectedLogin from "./ProtectedData/ProtectedLogin";
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -364,7 +366,20 @@ export const router = createBrowserRouter([
                 element: <InvoiceOrderLayout />
               },
             ]
-          }
+          },
+          {
+            path: 'coupon',
+            children: [
+              {
+                path: '',
+                element: <CouponLayout />,
+              },
+              {
+                path: 'edit/:couponId',
+                element: <EditCouponLayout />,
+              }
+            ]
+          },
 
         ]
       },
