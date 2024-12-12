@@ -699,6 +699,13 @@ const AddProductPage = () => {
       console.log('selectedStockTypeName', selectedStockTypeName)
       return;
     }
+    if (selectedStockTypeName === 'daily' || selectedStockTypeName === 'fixed') {
+      if (!productStockNumber) {
+        auth.toastError('please Enter Stock Number')
+        console.log('productStockNumber', productStockNumber)
+        return;
+      }
+    }
     if (!productPrice) {
       auth.toastError('please Enter Product Price')
       console.log('productPrice', productPrice)
