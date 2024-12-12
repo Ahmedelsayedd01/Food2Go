@@ -11,6 +11,7 @@ import { PiFlagBanner } from 'react-icons/pi';
 import { IoLanguage } from 'react-icons/io5';
 import { BiSolidDiscount } from 'react-icons/bi';
 import { HiReceiptTax } from 'react-icons/hi';
+import { TbReportSearch } from 'react-icons/tb';
 
 const LinksSidebar = () => {
        const auth = useAuth();
@@ -75,6 +76,7 @@ const LinksSidebar = () => {
        const [isActiveBranches, setIsActiveBranches] = useState(stateLink.isActiveBranches ?? false);
        const [isActiveZones, setIsActiveZones] = useState(stateLink.isActiveZones ?? false);
 
+       const [isActiveOrderType, setIsActiveOrderType] = useState(stateLink.isActiveOrderType ?? false);
        const [isActiveResturantTime, setIsActiveResturantTime] = useState(stateLink.isActiveResturantTime ?? false);
        const [isActiveCancelTime, setIsActiveCancelTime] = useState(stateLink.isActiveCancelTime ?? false);
        const [isActiveDeliveryTime, setIsActiveDeliveryTime] = useState(stateLink.isActiveDeliveryTime ?? false);
@@ -102,6 +104,9 @@ const LinksSidebar = () => {
        /* Song */
        const [isActiveSongIcon, setIsActiveSongIcon] = useState(stateLink.isActiveSongIcon ?? false);
        const [isActiveSong, setIsActiveSong] = useState(stateLink.isActiveSong ?? false);
+       /* DealOrder */
+       const [isActiveDealOrderIcon, setIsActiveDealOrderIcon] = useState(stateLink.isActiveDealOrderIcon ?? false);
+       const [isActiveDealOrder, setIsActiveDealOrder] = useState(stateLink.isActiveDealOrder ?? false);
        /* Discount */
        const [isActiveDiscount, setIsActiveDiscount] = useState(stateLink.isActiveDiscount ?? false);
        const [isActiveDiscountIcon, setIsActiveDiscountIcon] = useState(stateLink.isActiveDiscountIcon ?? false);
@@ -149,6 +154,7 @@ const LinksSidebar = () => {
                      isActiveCities,
                      isActiveBranches,
                      isActiveZones,
+                     isActiveOrderType,
                      isActiveResturantTime,
                      isActiveCancelTime,
                      isActiveDeliveryTime,
@@ -164,6 +170,8 @@ const LinksSidebar = () => {
 
                      isActiveSongIcon,
                      isActiveSong,
+                     isActiveDealOrderIcon,
+                     isActiveDealOrder,
 
                      isActiveDiscount,
                      isActiveDiscountIcon,
@@ -210,6 +218,7 @@ const LinksSidebar = () => {
               isActiveCities,
               isActiveBranches,
               isActiveZones,
+              isActiveOrderType,
               isActiveResturantTime,
               isActiveCancelTime,
               isActiveDeliveryTime,
@@ -225,6 +234,9 @@ const LinksSidebar = () => {
 
               isActiveSongIcon,
               isActiveSong,
+
+              isActiveDealOrderIcon,
+              isActiveDealOrder,
 
               isActiveDiscount,
               isActiveDiscountIcon,
@@ -273,6 +285,7 @@ const LinksSidebar = () => {
               isActiveCities,
               isActiveBranches,
               isActiveZones,
+              isActiveOrderType,
               isActiveResturantTime,
               isActiveCancelTime,
               isActiveDeliveryTime,
@@ -288,6 +301,10 @@ const LinksSidebar = () => {
 
               isActiveSongIcon,
               isActiveSong,
+
+              isActiveDealOrderIcon,
+              isActiveDealOrder,
+
 
               isActiveDiscount,
               isActiveDiscountIcon,
@@ -336,6 +353,7 @@ const LinksSidebar = () => {
               setIsActiveCities(false)
               setIsActiveBranches(false)
               setIsActiveZones(false)
+              setIsActiveOrderType(false)
               setIsActiveResturantTime(false)
               setIsActiveCancelTime(false)
               setIsActiveDeliveryTime(false)
@@ -354,6 +372,9 @@ const LinksSidebar = () => {
 
               setIsActiveSongIcon(false)
               setIsActiveSong(false)
+
+              setIsActiveDealOrderIcon(false)
+              setIsActiveDealOrder(false)
 
               setIsActiveDiscount(false)
               setIsActiveDiscountIcon(false)
@@ -503,6 +524,7 @@ const LinksSidebar = () => {
                             "/dashboard/setting/cities",
                             "/dashboard/setting/branches",
                             "/dashboard/setting/zones",
+                            "/dashboard/setting/order_type",
                             "/dashboard/setting/resturant_time",
                             "/dashboard/setting/cancel_time",
                             "/dashboard/setting/delivery_time"
@@ -570,6 +592,21 @@ const LinksSidebar = () => {
               const result = part.slice(0, 4).join('/');
               if (result == "/dashboard/setting/zones") {
                      handleClickZones()
+              }
+       }, [location])
+
+       /* Order Type */
+       const handleClickOrderType = useCallback(() => {
+              handleStateLinks()
+              setIsOpenSetting(true);
+              setIsActiveSetting(true);
+              setIsActiveOrderType(true);
+       }, []);
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 4).join('/');
+              if (result == "/dashboard/setting/order_type") {
+                     handleClickOrderType()
               }
        }, [location])
 
@@ -739,6 +776,20 @@ const LinksSidebar = () => {
               const result = part.slice(0, 3).join('/');
               if (result == "/dashboard/song") {
                      handleClickSong()
+              }
+       }, [location])
+
+       /* Deal Order */
+       const handleClickDealOrder = useCallback(() => {
+              handleStateLinks();
+              setIsActiveDealOrder(true);
+              setIsActiveDealOrderIcon(true);
+       }, []);
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard/deal_order") {
+                     handleClickDealOrder()
               }
        }, [location])
 
@@ -1174,6 +1225,14 @@ const LinksSidebar = () => {
                                                  Zones
                                           </li>
                                    </Link>
+                                   <Link to={"setting/order_type"} onClick={handleClickOrderType}>
+                                          <li
+                                                 className={`${isActiveOrderType ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                 }>
+                                                 Order Type
+                                          </li>
+                                   </Link>
                                    <Link to={"setting/resturant_time"} onClick={handleClickResturantTime}>
                                           <li
                                                  className={`${isActiveResturantTime ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
@@ -1378,6 +1437,32 @@ const LinksSidebar = () => {
                                           group-hover:text-mainColor`}
                                    >
                                           Sound
+                                   </span>
+                            </div>
+                     </Link>
+                     {/* Deal Order */}
+                     <Link to="deal_order"
+                            onMouseMove={() => setIsActiveDealOrderIcon(true)}
+                            onMouseOut={() => setIsActiveDealOrderIcon(false)}
+                            onClick={handleClickDealOrder}
+                            className={`
+                                   ${isActiveDealOrder ? 'active' : ''}
+                                   ${hideSide ? 'justify-between' : 'justify-center'} 
+                                   hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
+                                   hover:text-mainColor w-full flex items-center 
+                                   transition-all duration-300 group`}
+                     >
+                            <div className="flex items-center gap-x-2">
+                                   <TbReportSearch
+                                          className={`${isActiveDealOrderIcon || isActiveDealOrder ? 'text-[#9E090F]' : 'text-[#fff]'} text-2xl`}
+                                   />
+                                   <span
+                                          className={`${hideSide ? 'block' : 'hidden'}
+                                           ${isActiveDealOrder ? "text-mainColor" : "text-white"}
+                                          text-lg font-TextFontRegular transition-all duration-300
+                                          group-hover:text-mainColor`}
+                                   >
+                                          Deal Order
                                    </span>
                             </div>
                      </Link>
