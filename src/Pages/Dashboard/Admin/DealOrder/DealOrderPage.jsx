@@ -6,12 +6,6 @@ import { Dialog } from '@headlessui/react';
 
 const DealOrderPage = () => {
        const auth = useAuth();
-       // const { postData, loadingPost, response } = usePost({
-       //        url: 'https://Bcknd.food2go.online/admin/dealOrder',
-       // });
-       // const { postData, loadingPost, response } = usePost({
-       //        url: 'https://Bcknd.food2go.online/admin/dealOrder/add',
-       // });
        const { postData: postDealOrder, loadingPost: loadingDealOrder, response: responseDealOrder } = usePost({
               url: 'https://Bcknd.food2go.online/admin/dealOrder',
        });
@@ -73,7 +67,7 @@ const DealOrderPage = () => {
                                                  <SearchBar
                                                         value={code}
                                                         handleChange={(e) => setCode(e.target.value)}
-                                                        placeholder="Search Order Code"
+                                                        placeholder="Enter the code"
                                                  />
                                           </div>
                                           <div>

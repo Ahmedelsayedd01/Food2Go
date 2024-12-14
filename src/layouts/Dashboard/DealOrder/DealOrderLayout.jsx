@@ -2,7 +2,7 @@ import React from 'react'
 import { DealOrderPage } from '../../../Pages/Pages'
 import { TitlePage } from '../../../Components/Components'
 
-const SongLayout = () => {
+const DealOrderLayout = () => {
        return (
               <>
                      <TitlePage text={'Deal Order'} />
@@ -11,4 +11,4 @@ const SongLayout = () => {
        )
 }
 
-export default SongLayout
+export default DealOrderLayout
