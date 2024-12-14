@@ -1,5 +1,5 @@
 import React from 'react'
-import { DealOrderPage, SongPage } from '../../../Pages/Pages'
+import { DealOrderPage } from '../../../Pages/Pages'
 import { TitlePage } from '../../../Components/Components'
 
 const SongLayout = () => {
