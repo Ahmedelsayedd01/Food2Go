@@ -50,7 +50,10 @@ import {
   TaxTypeLayout,
   ZonesLayout,
   CouponLayout,
-  EditCouponLayout
+  EditCouponLayout,
+  BuyOfferLayout,
+  DealsLayout,
+  EditDealLayout
 } from "./layouts/Layouts";
 import ProtectedLogin from "./ProtectedData/ProtectedLogin";
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -295,6 +298,19 @@ export const router = createBrowserRouter([
             ]
           },
           {
+            path: 'deals',
+            children: [
+              {
+                path: '',
+                element: <DealsLayout />,
+              },
+              {
+                path: 'edit/:dealId',
+                element: <EditDealLayout />,
+              }
+            ]
+          },
+          {
             path: 'offers',
             children: [
               {
@@ -349,6 +365,10 @@ export const router = createBrowserRouter([
           {
             path: 'deal_order',
             element: <DealOrderLayout />,
+          },
+          {
+            path: 'buy_offer',
+            element: <BuyOfferLayout />,
           },
 
           {
