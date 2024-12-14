@@ -10,7 +10,7 @@ import { Dropdown } from 'primereact/dropdown';
 
 const AddDealSection = ({ refetch, setRefetch }) => {
        const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://Bcknd.food2go.online/admin/translation' });
-       const { postData, loadingPost, response } = usePost({ url: 'https://Bcknd.food2go.online/admin/deal/add' });
+       const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/deal/add' });
 
        const auth = useAuth();
 
@@ -23,9 +23,7 @@ const AddDealSection = ({ refetch, setRefetch }) => {
        const [dealTitle, setDealTitle] = useState([]);
        const [dealDescription, setDealDescription] = useState([]);
 
-       const [days, setDays] = useState(['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']);
-
-       const [isOpenDays, setIsOpenDays] = useState([]);
+       const [days] = useState(['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']);
 
        const [times, setTimes] = useState([]);
 
@@ -261,15 +259,15 @@ const AddDealSection = ({ refetch, setRefetch }) => {
               });
 
               dealDescription.forEach((name, index) => {
-                     formData.append(`deal_description[${index}][deal_description]`, name.deal_description);
-                     formData.append(`deal_description[${index}][tranlation_id]`, name.tranlation_id);
-                     formData.append(`deal_description[${index}][tranlation_name]`, name.tranlation_name);
+                     formData.append(`deal_descriptions[${index}][deal_description]`, name.deal_description);
+                     formData.append(`deal_descriptions[${index}][tranlation_id]`, name.tranlation_id);
+                     formData.append(`deal_descriptions[${index}][tranlation_name]`, name.tranlation_name);
               });
 
               times.forEach((time, index) => {
-                     formData.append(`time[${index}][day]`, time.day);
-                     formData.append(`time[${index}][from]`, time.from);
-                     formData.append(`time[${index}][to]`, time.to);
+                     formData.append(`times[${index}][day]`, time.day);
+                     formData.append(`times[${index}][from]`, time.from);
+                     formData.append(`times[${index}][to]`, time.to);
               });
 
               formData.append('start_date', startDate);

@@ -169,7 +169,7 @@ const DealsPage = ({ data, setDeals, loading }) => {
                                                                       {deal?.start_date || '-'}
                                                                </td>
                                                                <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                      {deal?.start_end || '-'}
+                                                                      {deal?.end_date || '-'}
                                                                </td>
                                                                <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
                                                                       {deal.daily === 1 ? (
