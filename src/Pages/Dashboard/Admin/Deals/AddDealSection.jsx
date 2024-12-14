@@ -278,7 +278,7 @@ const AddDealSection = ({ refetch, setRefetch }) => {
               formData.append('status', activeDeal);
 
 
-              postData(formData, 'Offer Added Success');
+              postData(formData, 'Deal Added Success');
 
        };
        return (
