@@ -13,6 +13,7 @@ import { BiSolidDiscount, BiSolidOffer } from 'react-icons/bi';
 import { HiReceiptTax } from 'react-icons/hi';
 import { TbBorderAll, TbReportSearch } from 'react-icons/tb';
 import { BiSolidCoupon } from "react-icons/bi";
+import { FaUsers } from "react-icons/fa6";
 
 const LinksSidebar = () => {
        const auth = useAuth();
@@ -143,6 +144,12 @@ const LinksSidebar = () => {
        const [isActiveOrdersCanceled, setIsActiveOrdersCanceled] = useState(stateLink.isActiveOrdersCanceled ?? false);
        const [isActiveOrdersSchedule, setIsActiveOrdersSchedule] = useState(stateLink.isActiveOrdersSchedule ?? false);
 
+       /* Customers */
+       const [isOpenCustomers, setIsOpenCustomers] = useState(stateLink.isOpenCustomers ?? false);
+       const [isActiveCustomersIcon, setIsActiveCustomersIcon] = useState(stateLink.isActiveCustomersIcon ?? false);
+       const [isActiveCustomers, setIsActiveCustomers] = useState(stateLink.isActiveCustomers ?? false);
+       const [isActiveCustomersList, setIsActiveCustomersList] = useState(stateLink.isActiveCustomersList ?? false);
+
        // Helper function to save the current active links state
        const saveActiveLinksState = useCallback(() => {
               const activeLinks = {
@@ -223,6 +230,10 @@ const LinksSidebar = () => {
 
                      isActiveAutomaticPayment,
 
+                     isOpenCustomers,
+                     isActiveCustomersIcon,
+                     isActiveCustomers,
+                     isActiveCustomersList
 
               };
               auth.sidebar = JSON.stringify(activeLinks);
@@ -303,6 +314,11 @@ const LinksSidebar = () => {
               isActiveCouponIcon,
 
               isActiveAutomaticPayment,
+
+              isOpenCustomers,
+              isActiveCustomersIcon,
+              isActiveCustomers,
+              isActiveCustomersList
 
        ]);
 
@@ -385,6 +401,11 @@ const LinksSidebar = () => {
               isActiveCouponIcon,
 
               isActiveAutomaticPayment,
+
+              isOpenCustomers,
+              isActiveCustomersIcon,
+              isActiveCustomers,
+              isActiveCustomersList
 
        ]);
 
@@ -470,6 +491,11 @@ const LinksSidebar = () => {
               setIsActiveCouponIcon(false)
 
               setIsActiveAutomaticPayment(false)
+
+              setIsOpenCustomers(false)
+              setIsActiveCustomersIcon(false)
+              setIsActiveCustomers(false)
+              setIsActiveCustomersList(false)
        }
 
 
@@ -1141,6 +1167,42 @@ const LinksSidebar = () => {
 
        }, [location])
 
+        /* Customers */
+        const handleClickCustomers = useCallback(() => {
+              handleStateLinks()
+
+              setIsOpenCustomers(true);
+              setIsActiveCustomersIcon(true);
+              setIsActiveCustomers(true);
+              setIsActiveCustomersList(true);
+       }, []);
+       useEffect(() => {
+              if (
+                     pathName === "/dashboard/customers" &&
+                     !["/dashboard/customers/customers_list"].some(path => pathName.startsWith(path))
+              ) {
+                     handleClickCustomers();
+                     navigate("/dashboard/customers/customers_list");
+              }
+       }, [pathName, handleClickCustomers]);
+
+
+       const handleClickCustomersList = useCallback(() => {
+              handleStateLinks()
+
+              setIsOpenCustomers(true);
+              setIsActiveCustomersIcon(true);
+              setIsActiveCustomers(true);
+              setIsActiveCustomersList(true);
+       }, []);
+
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 4).join('/');
+              if (result == "/dashboard/customers/customers_list") {
+                     handleClickCustomersList()
+              }
+       }, [location])
 
        return (
               <div className="LinksSidebar w-full flex flex-col items-center justify-start gap-y-3">
@@ -1501,6 +1563,46 @@ const LinksSidebar = () => {
                                    </span>
                             </div>
                      </Link>
+                     {/* Customers */}
+                     <Link to="customers"
+                            onMouseMove={() => setIsActiveCustomersIcon(true)}
+                            onMouseOut={() => setIsActiveCustomersIcon(false)}
+                            onClick={handleClickCustomers}
+                            className={`
+                            ${isActiveCustomers ? 'active' : ''}
+                            ${hideSide ? 'justify-between' : 'justify-center'} 
+                            hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
+                            hover:text-mainColor w-full flex items-center 
+                            transition-all duration-300 group`}
+                     >
+                            <div className="flex items-center gap-x-2">
+                                   <FaUsers  className={`${isActiveCustomersIcon || isActiveCustomers ? 'text-[#9E090F]' : 'text-[#fff]'} text-2xl`} />
+                                   <span className={`
+                                   ${hideSide ? 'block' : 'hidden'}
+                                   ${isActiveCustomers ? "text-mainColor" : "text-white"}
+                                   text-lg font-TextFontRegular transition-all duration-300
+                                   group-hover:text-mainColor`}
+                                   >
+                                          Customers
+                                   </span>
+                            </div>
+                            <div className={`${hideSide ? 'block' : 'hidden'}`}>
+                                   <IoIosArrowForward className={`${isActiveCustomers ? 'text-mainColor rotate-90' : 'text-white rotate-0'} text-xl transition-all duration-300 group-hover:text-mainColor`} />
+                            </div>
+                     </Link>
+                     <div className={`${isOpenCustomers && hideSide ? "h-10" : "h-0 "} overflow-hidden flex items-start justify-end  w-full transition-all duration-700`}>
+                            <ul className='list-disc w-full pl-10 transition-all duration-700 flex flex-col gap-y-2'>
+                                   <Link to={"customers/customers_list"} onClick={handleClickCustomersList}>
+                                          <li
+                                                 className={`${isActiveCustomersList ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                 }>
+                                                 List
+                                          </li>
+                                   </Link>
+                            </ul>
+
+                     </div>
                      {/* Deals */}
                      <Link to="deals"
                             onMouseMove={() => setIsActiveDealsIcon(true)}

@@ -170,12 +170,12 @@ const AutomaticPaymentPage = ({ refetch }) => {
               ))}
             </div>
             {/* Content */}
-            <div className="sm:py-3 lg:py-6">
+            <div className="w-full">
               {automaticPayments[currentTap]?.name === 'paymob' && (
                 <div className="w-full flex flex-wrap items-center justify-start gap-4">
-                  <div className="w-full flex items-center gap-x-6">
+                  <div className="w-full flex items-center gap-x-4">
                     <div className="flex items-center">
-                      <span className="text-2xl font-TextFontSemiBold text-mainColor p-4">
+                      <span className="text-2xl font-TextFontSemiBold text-mainColor p-2">
                         {automaticPayments[currentTap]?.name}:
                       </span>
                       <Switch
@@ -185,7 +185,7 @@ const AutomaticPaymentPage = ({ refetch }) => {
                             }}
                       />
                     </div>
-                    <div className="flex justify-center p-4">
+                    <div className="flex justify-center">
                       <img
                         src={automaticPayments[currentTap]?.logo_link}
                         className="bg-mainColor border-2 rounded-full min-w-24 min-h-24 max-w-24 max-h-24"
