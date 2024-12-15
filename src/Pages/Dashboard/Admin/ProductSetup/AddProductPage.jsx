@@ -684,11 +684,12 @@ const AddProductPage = () => {
     //   return;
     // }
 
-    if (selectedAddonsId.length === 0) {
-      auth.toastError('please Select Addons')
-      console.log('selectedAddonsId', selectedAddonsId)
-      return;
-    }
+    // if (selectedAddonsId.length === 0) {
+    //   auth.toastError('please Select Addons')
+    //   console.log('selectedAddonsId', selectedAddonsId)
+    //   return;
+    // }
+    
     if (!selectedItemTypeName) {
       auth.toastError('please Enter Item Type')
       console.log('selectedItemTypeName', selectedItemTypeName)

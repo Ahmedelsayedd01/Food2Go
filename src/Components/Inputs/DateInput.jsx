@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 
-const DateInput = ({ required = true, minDate = true, maxDate=true, borderColor = "none", value, onChange, placeholder }) => {
+const DateInput = ({ required = true, minDate = true, maxDate = true, borderColor = "none", value, onChange, placeholder }) => {
        const currentDay = new Date(); // Define currentDay
        const formattedDate = currentDay.toISOString().split('T')[0]; // Format as YYYY-MM-DD
 
@@ -19,7 +19,7 @@ const DateInput = ({ required = true, minDate = true, maxDate=true, borderColor 
                             value={value}
                             onChange={onChange}
                             min={minDate ? formattedDate : ''} // Use the correctly formatted date
-                            max={maxDate? formattedDate : true}
+                            max={maxDate ? formattedDate : ''}
                             required={required}
                      />
               </>

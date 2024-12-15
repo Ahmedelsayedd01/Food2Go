@@ -64,6 +64,10 @@ export { default as OrdersPaymentHistoryPage } from "./Dashboard/Admin/OrdersPay
 export { default as AddDeliveryManSection } from "./Dashboard/Admin/DeliveryMan/AddDeliveryManSection";
 export { default as EditDeliveryManPage } from "./Dashboard/Admin/DeliveryMan/EditDeliveryManPage";
 export { default as DeliveryManPage } from "./Dashboard/Admin/DeliveryMan/DeliveryManPage";
+// Deals
+export { default as AddDealSection } from "./Dashboard/Admin/Deals/AddDealSection";
+export { default as EditDealPage } from "./Dashboard/Admin/Deals/EditDealPage";
+export { default as DealsPage } from "./Dashboard/Admin/Deals/DealsPage";
 // Offers
 export { default as AddOfferSection } from "./Dashboard/Admin/Offers/AddOfferSection";
 export { default as EditOfferPage } from "./Dashboard/Admin/Offers/EditOfferPage";
@@ -80,6 +84,8 @@ export { default as AddLanguagesSection } from "./Dashboard/Admin/Languages/AddL
 export { default as SongPage } from "./Dashboard/Admin/Song/SongPage";
 // Deal Order
 export { default as DealOrderPage } from "./Dashboard/Admin/DealOrder/DealOrderPage";
+// Deal Order
+export { default as BuyOfferPage } from "./Dashboard/Admin/BuyOffer/BuyOfferPage";
 
 // Discount
 export { default as DiscountPage } from "./Dashboard/Admin/Discount/DiscountPage";

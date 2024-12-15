@@ -6,12 +6,12 @@ import { CategoryIcon, HomeIcon, OrderIcon, ProductIcon } from '../../Assets/Ico
 import { RiVipDiamondLine } from 'react-icons/ri';
 import { CiSettings } from 'react-icons/ci';
 import { useSelector } from 'react-redux';
-import { MdNotificationsActive, MdOutlineDeliveryDining, MdOutlineLocalOffer, MdOutlinePayments } from 'react-icons/md';
+import { MdNotificationsActive, MdOutlineDeliveryDining, MdDiscount, MdOutlinePayments } from 'react-icons/md';
 import { PiFlagBanner } from 'react-icons/pi';
 import { IoLanguage } from 'react-icons/io5';
-import { BiSolidDiscount } from 'react-icons/bi';
+import { BiSolidDiscount, BiSolidOffer } from 'react-icons/bi';
 import { HiReceiptTax } from 'react-icons/hi';
-import { TbReportSearch } from 'react-icons/tb';
+import { TbBorderAll, TbReportSearch } from 'react-icons/tb';
 import { BiSolidCoupon } from "react-icons/bi";
 
 const LinksSidebar = () => {
@@ -99,6 +99,10 @@ const LinksSidebar = () => {
        const [isActiveDeliveryMan, setIsActiveDeliveryMan] = useState(stateLink.isActiveDeliveryMan ?? false);
        const [isActiveDeliveryManIcon, setIsActiveDeliveryManIcon] = useState(stateLink.isActiveDeliveryManIcon ?? false);
 
+       /* Deals */
+       const [isActiveDeals, setIsActiveDeals] = useState(stateLink.isActiveDeals ?? false);
+       const [isActiveDealsIcon, setIsActiveDealsIcon] = useState(stateLink.isActiveDealsIcon ?? false);
+
        /* Offers */
        const [isActiveOffers, setIsActiveOffers] = useState(stateLink.isActiveOffers ?? false);
        const [isActiveOffersIcon, setIsActiveOffersIcon] = useState(stateLink.isActiveOffersIcon ?? false);
@@ -113,9 +117,12 @@ const LinksSidebar = () => {
        /* Song */
        const [isActiveSongIcon, setIsActiveSongIcon] = useState(stateLink.isActiveSongIcon ?? false);
        const [isActiveSong, setIsActiveSong] = useState(stateLink.isActiveSong ?? false);
-       /* DealOrder */
+       /* Deal Order */
        const [isActiveDealOrderIcon, setIsActiveDealOrderIcon] = useState(stateLink.isActiveDealOrderIcon ?? false);
        const [isActiveDealOrder, setIsActiveDealOrder] = useState(stateLink.isActiveDealOrder ?? false);
+       /* Buy Offer */
+       const [isActiveBuyOfferIcon, setIsActiveBuyOfferIcon] = useState(stateLink.isActiveBuyOfferIcon ?? false);
+       const [isActiveBuyOffer, setIsActiveBuyOffer] = useState(stateLink.isActiveBuyOffer ?? false);
        /* Discount */
        const [isActiveDiscount, setIsActiveDiscount] = useState(stateLink.isActiveDiscount ?? false);
        const [isActiveDiscountIcon, setIsActiveDiscountIcon] = useState(stateLink.isActiveDiscountIcon ?? false);
@@ -175,6 +182,9 @@ const LinksSidebar = () => {
                      isActiveOffers,
                      isActiveOffersIcon,
 
+                     isActiveDeals,
+                     isActiveDealsIcon,
+
                      isActiveCoupon,
                      isActiveCouponIcon,
 
@@ -183,8 +193,12 @@ const LinksSidebar = () => {
 
                      isActiveSongIcon,
                      isActiveSong,
+
                      isActiveDealOrderIcon,
                      isActiveDealOrder,
+
+                     isActiveBuyOfferIcon,
+                     isActiveBuyOffer,
 
                      isActiveDiscount,
                      isActiveDiscountIcon,
@@ -249,6 +263,9 @@ const LinksSidebar = () => {
               isActiveOffers,
               isActiveOffersIcon,
 
+              isActiveDeals,
+              isActiveDealsIcon,
+
               isActiveCoupon,
               isActiveCouponIcon,
 
@@ -260,6 +277,9 @@ const LinksSidebar = () => {
 
               isActiveDealOrderIcon,
               isActiveDealOrder,
+
+              isActiveBuyOfferIcon,
+              isActiveBuyOffer,
 
               isActiveDiscount,
               isActiveDiscountIcon,
@@ -325,6 +345,9 @@ const LinksSidebar = () => {
               isActiveOffers,
               isActiveOffersIcon,
 
+              isActiveDeals,
+              isActiveDealsIcon,
+
               isActiveCoupon,
               isActiveCouponIcon,
 
@@ -337,6 +360,8 @@ const LinksSidebar = () => {
               isActiveDealOrderIcon,
               isActiveDealOrder,
 
+              isActiveBuyOfferIcon,
+              isActiveBuyOffer,
 
               isActiveDiscount,
               isActiveDiscountIcon,
@@ -405,6 +430,9 @@ const LinksSidebar = () => {
               setIsActiveOffers(false)
               setIsActiveOffersIcon(false)
 
+              setIsActiveDeals(false)
+              setIsActiveDealsIcon(false)
+
               setIsActiveCoupon(false)
               setIsActiveCouponIcon(false)
 
@@ -416,6 +444,9 @@ const LinksSidebar = () => {
 
               setIsActiveDealOrderIcon(false)
               setIsActiveDealOrder(false)
+
+              setIsActiveBuyOfferIcon(false)
+              setIsActiveBuyOffer(false)
 
               setIsActiveDiscount(false)
               setIsActiveDiscountIcon(false)
@@ -746,6 +777,20 @@ const LinksSidebar = () => {
               }
        }, [location])
 
+       /* Deals */
+       const handleClickDeals = useCallback(() => {
+              handleStateLinks();
+              setIsActiveDeals(true);
+              setIsActiveDealsIcon(true);
+       }, []);
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard/deals") {
+                     handleClickDeals()
+              }
+       }, [location])
+
        /* Offers */
        const handleClickOffers = useCallback(() => {
               handleStateLinks();
@@ -867,6 +912,20 @@ const LinksSidebar = () => {
               const result = part.slice(0, 3).join('/');
               if (result == "/dashboard/deal_order") {
                      handleClickDealOrder()
+              }
+       }, [location])
+
+       /* Buy Offer */
+       const handleClickBuyOffer = useCallback(() => {
+              handleStateLinks();
+              setIsActiveBuyOffer(true);
+              setIsActiveBuyOfferIcon(true);
+       }, []);
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard/buy_offer") {
+                     handleClickBuyOffer()
               }
        }, [location])
 
@@ -1442,6 +1501,32 @@ const LinksSidebar = () => {
                                    </span>
                             </div>
                      </Link>
+                     {/* Deals */}
+                     <Link to="deals"
+                            onMouseMove={() => setIsActiveDealsIcon(true)}
+                            onMouseOut={() => setIsActiveDealsIcon(false)}
+                            onClick={handleClickDeals}
+                            className={`
+                                   ${isActiveDeals ? 'active' : ''}
+                                   ${hideSide ? 'justify-between' : 'justify-center'} 
+                                   hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
+                                   hover:text-mainColor w-full flex items-center 
+                                   transition-all duration-300 group`}
+                     >
+                            <div className="flex items-center gap-x-2">
+                                   <TbBorderAll
+                                          className={`${isActiveDealsIcon || isActiveDeals ? 'text-[#9E090F]' : 'text-[#fff]'} text-3xl`}
+                                   />
+                                   <span
+                                          className={`${hideSide ? 'block' : 'hidden'}
+                                           ${isActiveDeals ? "text-mainColor" : "text-white"}
+                                          text-lg font-TextFontRegular transition-all duration-300
+                                          group-hover:text-mainColor`}
+                                   >
+                                          Deals
+                                   </span>
+                            </div>
+                     </Link>
                      {/* Offers */}
                      <Link to="offers"
                             onMouseMove={() => setIsActiveOffersIcon(true)}
@@ -1455,7 +1540,7 @@ const LinksSidebar = () => {
                                    transition-all duration-300 group`}
                      >
                             <div className="flex items-center gap-x-2">
-                                   <MdOutlineLocalOffer
+                                   <MdDiscount
                                           className={`${isActiveOffersIcon || isActiveOffers ? 'text-[#9E090F]' : 'text-[#fff]'} text-3xl`}
                                    />
                                    <span
@@ -1570,6 +1655,32 @@ const LinksSidebar = () => {
                                           group-hover:text-mainColor`}
                                    >
                                           Deal Order
+                                   </span>
+                            </div>
+                     </Link>
+                     {/* Buy Offer */}
+                     <Link to="buy_offer"
+                            onMouseMove={() => setIsActiveBuyOfferIcon(true)}
+                            onMouseOut={() => setIsActiveBuyOfferIcon(false)}
+                            onClick={handleClickBuyOffer}
+                            className={`
+                                   ${isActiveBuyOffer ? 'active' : ''}
+                                   ${hideSide ? 'justify-between' : 'justify-center'} 
+                                   hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
+                                   hover:text-mainColor w-full flex items-center 
+                                   transition-all duration-300 group`}
+                     >
+                            <div className="flex items-center gap-x-2">
+                                   <BiSolidOffer
+                                          className={`${isActiveBuyOfferIcon || isActiveBuyOffer ? 'text-[#9E090F]' : 'text-[#fff]'} text-2xl`}
+                                   />
+                                   <span
+                                          className={`${hideSide ? 'block' : 'hidden'}
+                                           ${isActiveBuyOffer ? "text-mainColor" : "text-white"}
+                                          text-lg font-TextFontRegular transition-all duration-300
+                                          group-hover:text-mainColor`}
+                                   >
+                                          Buy Offer
                                    </span>
                             </div>
                      </Link>

@@ -63,6 +63,9 @@ export { default as OrdersPaymentLayout } from "./Dashboard/OrdersPayment/OrderP
 /* Delivery Man */
 export { default as DeliveryManLayout } from "./Dashboard/DeliveryMan/DeliveryManLayout";
 export { default as EditDeliveryManLayout } from "./Dashboard/DeliveryMan/EditDeliveryManLayout";
+/* Deals */
+export { default as DealsLayout } from "./Dashboard/Deals/DealsLayout";
+export { default as EditDealLayout } from "./Dashboard/Deals/EditDealLayout";
 /* Offers */
 export { default as OffersLayout } from "./Dashboard/Offers/OffersLayout";
 export { default as EditOfferLayout } from "./Dashboard/Offers/EditOfferLayout";
@@ -82,6 +85,8 @@ export { default as EditDiscountLayout } from "./Dashboard/Discount/EditDiscount
 export { default as SongLayout } from "./Dashboard/Song/SongLayout";
 /* Deal Order */
 export { default as DealOrderLayout } from "./Dashboard/DealOrder/DealOrderLayout";
+/* Buy Offer */
+export { default as BuyOfferLayout } from "./Dashboard/BuyOffer/BuyOfferLayout";
 
 /*  Orders */
 // Orders -> Details Order

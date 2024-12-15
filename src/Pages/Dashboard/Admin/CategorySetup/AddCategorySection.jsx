@@ -13,7 +13,6 @@ const AddCategorySection = ({ update, setUpdate }) => {
        const { postData, loadingPost, response } = usePost({ url: 'https://Bcknd.food2go.online/admin/category/add' });
 
        const dropDownCategoriesParent = useRef();
-       const dropDownCategoriesPriority = useRef();
        const ImageRef = useRef();
        const BannerRef = useRef();
        const auth = useAuth();
