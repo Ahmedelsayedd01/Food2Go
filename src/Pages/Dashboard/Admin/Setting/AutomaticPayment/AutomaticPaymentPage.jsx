@@ -178,7 +178,6 @@ const AutomaticPaymentPage = ({ refetch }) => {
                       <span className="text-2xl font-TextFontSemiBold text-mainColor p-4">
                         {automaticPayments[currentTap]?.name}:
                       </span>
-                      {/* <Switch checked={automaticPayments[currentTap]?.status === 1} /> */}
                       <Switch
                             checked={automaticPayments[currentTap]?.status === 1}
                             handleClick={() => {
