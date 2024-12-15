@@ -283,7 +283,7 @@ const AutomaticPaymentPage = ({ refetch }) => {
                 </div> */}
                 <div className="">
                 <SubmitButton
-                        text={'Update'}
+                        text={'Edit'}
                         rounded='rounded-full'
                         handleClick={handleAutomaticPaymentEdit}
                 />
