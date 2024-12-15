@@ -50,7 +50,8 @@ import {
   TaxTypeLayout,
   ZonesLayout,
   CouponLayout,
-  EditCouponLayout
+  EditCouponLayout,
+  AutomaticPaymentLayout
 } from "./layouts/Layouts";
 import ProtectedLogin from "./ProtectedData/ProtectedLogin";
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -185,6 +186,19 @@ export const router = createBrowserRouter([
                       }
                     ]
                   },
+                ]
+              },
+              {
+                path: 'automatic_payment',
+                children: [
+                  {
+                    path: '',
+                    element: <AutomaticPaymentLayout />,
+                  },
+                  // {
+                  //   path: 'edit/:cityId',
+                  //   element: <EditCityLayout />,
+                  // }
                 ]
               },
               {

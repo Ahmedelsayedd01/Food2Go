@@ -82,6 +82,8 @@ const LinksSidebar = () => {
        const [isActiveCancelTime, setIsActiveCancelTime] = useState(stateLink.isActiveCancelTime ?? false);
        const [isActiveDeliveryTime, setIsActiveDeliveryTime] = useState(stateLink.isActiveDeliveryTime ?? false);
 
+       const [isActiveAutomaticPayment, setIsActiveAutomaticPayment] = useState(stateLink.isActiveAutomaticPayment ?? false);
+
        /* Taxes */
        const [isOpenTaxes, setIsOpenTaxes] = useState(stateLink.isOpenTaxes ?? false);
        const [isActiveTaxesIcon, setIsActiveTaxesIcon] = useState(stateLink.isActiveTaxesIcon ?? false);
@@ -203,7 +205,11 @@ const LinksSidebar = () => {
                      isActiveOrdersSchedule,
 
                      isActiveCoupon,
-                     isActiveCouponIcon
+                     isActiveCouponIcon,
+
+                     isActiveAutomaticPayment,
+
+
               };
               auth.sidebar = JSON.stringify(activeLinks);
        }, [
@@ -274,7 +280,10 @@ const LinksSidebar = () => {
               isActiveOrdersSchedule,
 
               isActiveCoupon,
-              isActiveCouponIcon
+              isActiveCouponIcon,
+
+              isActiveAutomaticPayment,
+
        ]);
 
        // Save state to sidebar at auth when any link state changes
@@ -348,7 +357,10 @@ const LinksSidebar = () => {
               isActiveOrdersSchedule,
 
               isActiveCoupon,
-              isActiveCouponIcon
+              isActiveCouponIcon,
+
+              isActiveAutomaticPayment,
+
        ]);
 
        // Handler functions to manage all state
@@ -425,6 +437,8 @@ const LinksSidebar = () => {
 
               setIsActiveCoupon(false)
               setIsActiveCouponIcon(false)
+
+              setIsActiveAutomaticPayment(false)
        }
 
 
@@ -559,7 +573,8 @@ const LinksSidebar = () => {
                             "/dashboard/setting/order_type",
                             "/dashboard/setting/resturant_time",
                             "/dashboard/setting/cancel_time",
-                            "/dashboard/setting/delivery_time"
+                            "/dashboard/setting/delivery_time",
+                            "/dashboard/setting/automatic_payment"
                      ].some(path => pathName.startsWith(path))
               ) {
                      handleClickSetting();
@@ -583,6 +598,22 @@ const LinksSidebar = () => {
                      handleClickPaymentMethod()
               }
        }, [location])
+
+       /* Automatic Payment */
+       const handleClickAutomaticPayment = useCallback(() => {
+              handleStateLinks()
+              setIsOpenSetting(true);
+              setIsActiveSetting(true);
+              setIsActiveAutomaticPayment(true);
+       }, []);
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 4).join('/');
+              if (result == "/dashboard/setting/automatic_payment") {
+                     handleClickAutomaticPayment()
+              }
+       }, [location])
+       
        /* Cities */
        const handleClickCities = useCallback(() => {
               handleStateLinks()
@@ -1240,6 +1271,14 @@ const LinksSidebar = () => {
                                           text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
                                                  }>
                                                  Payment Method
+                                          </li>
+                                   </Link>
+                                   <Link to={"setting/automatic_payment"} onClick={handleClickAutomaticPayment}>
+                                          <li
+                                                 className={`${isActiveAutomaticPayment ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                 }>
+                                                 Automatic Payment
                                           </li>
                                    </Link>
                                    <Link to={"setting/cities"} onClick={handleClickCities}>

@@ -28,6 +28,8 @@ export { default as EditProductPage } from "./Dashboard/Admin/ProductSetup/EditP
 export { default as PaymentMethodPage } from "./Dashboard/Admin/Setting/PaymentMethod/PaymentMethodPage";
 export { default as AddPaymentMethodSection } from "./Dashboard/Admin/Setting/PaymentMethod/AddPaymentMethodSection";
 export { default as EditPaymentMethodPage } from "./Dashboard/Admin/Setting/PaymentMethod/EditPaymentMethodPage";
+// Setting -> Automatic Payment
+export { default as AutomaticPaymentPage } from "./Dashboard/Admin/Setting/AutomaticPayment/AutomaticPaymentPage";
 // Setting -> Cities
 export { default as CitiesPage } from "./Dashboard/Admin/Setting/Cities/CitiesPage";
 export { default as AddCitySection } from "./Dashboard/Admin/Setting/Cities/addCitySection";

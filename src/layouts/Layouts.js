@@ -30,6 +30,8 @@ export { default as AddProductLayout } from "./Dashboard/ProductSetup/AddProduct
 // Setting -> Payment Method
 export { default as PaymentMethodLayout } from "./Dashboard/Setting/PaymentMethod/PaymentMethodLayout";
 export { default as EditPaymentMethodLayout } from "./Dashboard/Setting/PaymentMethod/EditPaymentMethodLayout";
+// Setting -> Automatic Payment
+export { default as AutomaticPaymentLayout } from "./Dashboard/Setting/AutomaticPayment/AutomaticPaymentLayout";
 // Setting -> Cities
 export { default as CitiesLayout } from "./Dashboard/Setting/Cities/CitiesLayout";
 export { default as EditCityLayout } from "./Dashboard/Setting/Cities/EditCityLayout";
