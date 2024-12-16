@@ -5,10 +5,11 @@ import { usePost } from '../../../../Hooks/usePostJson';
 import { MultiSelect } from 'primereact/multiselect';
 import ButtonAdd from '../../../../Components/Buttons/AddButton';
 import { useAuth } from '../../../../Context/Auth';
-import { useParams } from 'react-router-dom';
+import { replace, useNavigate, useParams } from 'react-router-dom';
 
 const EditProductPage = () => {
        const { productId } = useParams()
+       const navigate = useNavigate();
        const auth = useAuth();
        /* Get Data */
 
@@ -40,6 +41,7 @@ const EditProductPage = () => {
 
        const [categories, setCategories] = useState([])
        const [subCategories, setSubCategories] = useState([])
+       const [filterSubCategories, setFilterSubCategories] = useState([])
        const [addons, setAddons] = useState([])
        const [discounts, setDiscounts] = useState([])
        const [taxes, setTaxes] = useState([])
@@ -177,7 +179,38 @@ const EditProductPage = () => {
                      setProductVariations(productEdit?.variation || [])
 
                      setSelectedAddonsId(productEdit?.addons || [])
-                     setProductPrice(productEdit?.price || '-')
+
+                     setSelectedCategoryId(productEdit?.category?.id || '')
+                     setSelectedCategoryState(productEdit?.category?.name || '')
+
+                     setSelectedSubCategoryId(productEdit?.sub_category?.id || '')
+                     setSelectedSubCategoryState(productEdit?.sub_category?.name || '')
+
+                     setSelectedItemTypeName(productEdit?.item_type || '')
+                     setSelectedItemTypeState(productEdit?.item_type || '')
+
+                     setProductPrice(productEdit?.price || '')
+                     setSelectedStockTypeState(productEdit?.stock_type || '')
+                     setSelectedStockTypeName(productEdit?.stock_type || '')
+                     setProductStockNumber(productEdit?.number || '')
+
+                     setProductImage(productEdit?.image_link || '')
+                     setProductImageName(productEdit?.image_link || '')
+
+                     setSelectedDiscountId(productEdit?.discount?.id || '')
+                     setSelectedDiscountState(productEdit?.discount?.name || '')
+                     setSelectedTaxId(productEdit?.tax?.id || '')
+                     setSelectedTaxState(productEdit?.tax?.name || '')
+
+                     setProductPoint(productEdit?.points || '')
+
+                     setProductStatusFrom(productEdit?.from || '')
+                     setProductStatusTo(productEdit?.to || '')
+
+
+                     setProductStatus(productEdit?.status || 0)
+                     setProductTimeStatus(productEdit?.product_time_status || 0)
+                     setProductRecommended(productEdit?.recommended || 0)
 
                      // setDescriptionNames(productEdit?.product_descriptions || [])
                      console.log('productId', productId)
@@ -458,6 +491,10 @@ const EditProductPage = () => {
        const handleSelectProductCategory = (option) => {
               setSelectedCategoryId(option.id);
               setSelectedCategoryState(option.name);
+              const filterSup = subCategories.filter(sup => sup.category_id === option.id)
+
+              setFilterSubCategories(filterSup)
+              console.log('filterSup', filterSup)
        };
        const handleSelectProductSubCategory = (option) => {
               setSelectedSubCategoryId(option.id);
@@ -494,8 +531,8 @@ const EditProductPage = () => {
        const handleProductTimeStatus = () => {
               const currentState = productTimeStatus;
               { currentState === 0 ? setProductTimeStatus(1) : setProductTimeStatus(0) }
-              setProductStatusFrom(null)
-              setProductStatusTo(null)
+              setProductStatusFrom('')
+              setProductStatusTo('')
        }
 
        // Image
@@ -579,48 +616,12 @@ const EditProductPage = () => {
        }
        useEffect(() => { console.log('descriptionNames', descriptionNames) }, [descriptionNames])
        /* Reset Details Product */
-       const handleReset = () => {
-              setCurrentProductNamesTap(0)
-              setCurrentExcludeNamesTap(0)
-              setCurrentExtraNamesTap(0)
-              setCurrentVariationTap(0)
-              setCurrentVariationOptionTap(0)
-              setProductNames([])
-              setDescriptionNames([])
-              setProductExclude([])
-              setProductExtra([])
-              setProductVariations([])
-              setSelectedCategoryState('Selected Category')
-              setSelectedCategoryId('')
-              setSelectedSubCategoryState('Selected SubCategory')
-              setSelectedSubCategoryId('')
-              setSelectedDiscountState('Selected Discount')
-              setSelectedDiscountId('')
-              setSelectedTaxState('Selected Tax')
-              setSelectedTaxId('')
-              setSelectedAddonsState('Selected Addons')
-              setSelectedAddonsId('')
-              setSelectedItemTypeState('Selected Item Type')
-              setSelectedItemTypeName('')
-              setSelectedStockTypeState('Selected Stock Type')
-              setSelectedStockTypeName('')
-              setProductStockNumber('')
-              setProductPrice('')
-              setProductPoint('')
-              setProductStatusFrom('')
-              setProductStatusTo('')
-              setProductStatus(0)
-              setProductRecommended(0)
-              setProductTimeStatus(0)
-              setProductImage(null)
-              setProductImageName('Choose Photo')
-
-              console.log('productExtra', productExtra)
-
+       const handleBack = () => {
+              navigate(-1, { replace: true })
        };
 
-       /* Add Product */
-       const handleproductAdd = (e) => {
+       /* Edit Product */
+       const handleproductEdit = (e) => {
               e.preventDefault();
 
               // if (productNames.length === 0) {
@@ -654,7 +655,7 @@ const EditProductPage = () => {
 
               // Filter out any invalid or empty entries description Names
               const validDescriptionNames = descriptionNames.filter(
-                     (desc) => desc && desc.tranlation_id && desc.description_name && desc.tranlation_name
+                     (desc) => desc && desc.tranlation_id && desc.product_description && desc.tranlation_name
               );
 
               if (validDescriptionNames.length === 0) {
@@ -692,16 +693,18 @@ const EditProductPage = () => {
                      return;
               }
 
-              if (!selectedSubCategoryId) {
-                     auth.toastError('please Select SubCategory Name')
-                     console.log('selectedSubCategoryId', selectedSubCategoryId)
-                     return;
-              }
-              if (selectedAddonsId.length === 0) {
-                     auth.toastError('please Select Addons')
-                     console.log('selectedAddonsId', selectedAddonsId)
-                     return;
-              }
+              // if (!selectedSubCategoryId) {
+              //   auth.toastError('please Select SubCategory Name')
+              //   console.log('selectedSubCategoryId', selectedSubCategoryId)
+              //   return;
+              // }
+
+              // if (selectedAddonsId.length === 0) {
+              //   auth.toastError('please Select Addons')
+              //   console.log('selectedAddonsId', selectedAddonsId)
+              //   return;
+              // }
+
               if (!selectedItemTypeName) {
                      auth.toastError('please Enter Item Type')
                      console.log('selectedItemTypeName', selectedItemTypeName)
@@ -711,6 +714,13 @@ const EditProductPage = () => {
                      auth.toastError('please Select Stock Type')
                      console.log('selectedStockTypeName', selectedStockTypeName)
                      return;
+              }
+              if (selectedStockTypeName === 'daily' || selectedStockTypeName === 'fixed') {
+                     if (!productStockNumber) {
+                            auth.toastError('please Enter Stock Number')
+                            console.log('productStockNumber', productStockNumber)
+                            return;
+                     }
               }
               if (!productPrice) {
                      auth.toastError('please Enter Product Price')
@@ -728,11 +738,11 @@ const EditProductPage = () => {
               //   return;
               // }
 
-              if (!productPoint) {
-                     auth.toastError('please Enter Product Point')
-                     console.log('productPoint', productPoint)
-                     return;
-              }
+              // if (!productPoint) {
+              //   auth.toastError('please Enter Product Point')
+              //   console.log('productPoint', productPoint)
+              //   return;
+              // }
               if (!productImage) {
                      auth.toastError('please Set Product Image')
                      console.log('productImage', productImage)
@@ -743,7 +753,10 @@ const EditProductPage = () => {
               formData.append('sub_category_id', selectedSubCategoryId)
               formData.append('item_type', selectedItemTypeName)
               formData.append('stock_type', selectedStockTypeName)
+              formData.append('number', productStockNumber)
               formData.append('price', productPrice)
+              formData.append('discount_id', selectedDiscountId)
+              formData.append('tax_id', selectedTaxId)
               formData.append('points', productPoint)
               formData.append('from', productStatusFrom)
               formData.append('to', productStatusTo)
@@ -773,7 +786,7 @@ const EditProductPage = () => {
               {
                      descriptionNames.forEach((name, index) => {
 
-                            formData.append(`product_descriptions[${index}][product_description]`, name.description_name)
+                            formData.append(`product_descriptions[${index}][product_description]`, name.product_description)
                             formData.append(`product_descriptions[${index}][tranlation_name]`, name.tranlation_name)
                             formData.append(`product_descriptions[${index}][tranlation_id]`, name.tranlation_id)
                      })
@@ -904,7 +917,7 @@ const EditProductPage = () => {
 
        useEffect(() => {
               if (response && response.status === 200) {
-                     handleReset();
+                     handleBack();
               }
               console.log('response', response)
        }, [response]);
@@ -920,7 +933,7 @@ const EditProductPage = () => {
                             </>
                      ) : (
 
-                            <form onSubmit={handleproductAdd} className='w-full flex flex-col items-center justify-center pb-24 gap-5'>
+                            <form onSubmit={handleproductEdit} className='w-full flex flex-col items-center justify-center pb-24 gap-5'>
                                    <div className="w-full flex flex-col items-start justify-start gap-5">
 
                                           {/* Product Names && Description */}
@@ -952,7 +965,7 @@ const EditProductPage = () => {
                                                                                     <TextInput
                                                                                            value={
                                                                                                   Array.isArray(productNames) && productNames[index]
-                                                                                                         ? productNames[index].product_name || '-'
+                                                                                                         ? productNames[index].product_name || ''
                                                                                                          : ''
                                                                                            }
                                                                                            onChange={(e) => {
@@ -993,7 +1006,7 @@ const EditProductPage = () => {
                                                                                     <TextInput
                                                                                            value={
                                                                                                   Array.isArray(descriptionNames) && descriptionNames[index]
-                                                                                                         ? descriptionNames[index].product_description || '-'
+                                                                                                         ? descriptionNames[index].product_description || ''
                                                                                                          : ''
                                                                                            }
 
@@ -1068,10 +1081,10 @@ const EditProductPage = () => {
                                                                                                          Exclude Name {tap.name}:
                                                                                                   </span>
                                                                                                   <TextInput
-                                                                                                         // value={ele.names.exclude_name || '-'}
+                                                                                                         // value={ele.names.exclude_name || ''}
                                                                                                          value={
                                                                                                                 Array.isArray(ele.names)
-                                                                                                                       ? ele.names.find(name => name.tranlation_name === tap.name)?.exclude_name || '-'
+                                                                                                                       ? ele.names.find(name => name.tranlation_name === tap.name)?.exclude_name || ''
                                                                                                                        : ''
                                                                                                          }
                                                                                                          onChange={(e) => {
@@ -1156,10 +1169,10 @@ const EditProductPage = () => {
                                                                                                          Extra Name {tap.name}:
                                                                                                   </span>
                                                                                                   <TextInput
-                                                                                                         // value={ele.find(name => name.tranlation_name === tap.name)?.extra_name || '-'}
+                                                                                                         // value={ele.find(name => name.tranlation_name === tap.name)?.extra_name || ''}
                                                                                                          value={
                                                                                                                 Array.isArray(ele.names) // Ensure ele.names is an array
-                                                                                                                       ? ele.names.find(name => name.tranlation_name === tap.name)?.extra_name || '-'
+                                                                                                                       ? ele.names.find(name => name.tranlation_name === tap.name)?.extra_name || ''
                                                                                                                        : ''
                                                                                                          }
                                                                                                          onChange={(e) => {
@@ -1268,7 +1281,7 @@ const EditProductPage = () => {
                                                                                                                 Variation Name {tap.name}:
                                                                                                          </span>
                                                                                                          <TextInput
-                                                                                                                value={ele.names.find(name => name.tranlation_name === tap.name)?.name || '-'}
+                                                                                                                value={ele.names.find(name => name.tranlation_name === tap.name)?.name || ''}
                                                                                                                 onChange={(e) => updateVariationState(setProductVariations, indexVariation, 'names', tap.name, e.target.value)}
                                                                                                                 placeholder="Variation Name"
                                                                                                          />
@@ -1337,7 +1350,7 @@ const EditProductPage = () => {
 
 
 
-                                                                                                         <div className='w-[32%] flex items-center justify-start gap-x-3'>
+                                                                                                         <div className='w-[32%] flex items-center justify-start gap-x-3 mt-9'>
                                                                                                                 <span className="text-xl font-TextFontRegular text-thirdColor">Required:</span>
                                                                                                                 <Switch
                                                                                                                        handleClick={() => {
@@ -1394,7 +1407,7 @@ const EditProductPage = () => {
                                                                                                                                                                  Option Name {tapOption.name}:
                                                                                                                                                           </span>
                                                                                                                                                           <TextInput
-                                                                                                                                                                 value={option.names.find(nameObj => nameObj.tranlation_name === tapOption.name)?.name || '-'}
+                                                                                                                                                                 value={option.names.find(nameObj => nameObj.tranlation_name === tapOption.name)?.name || ''}
                                                                                                                                                                  onChange={(e) => {
                                                                                                                                                                         const updatedValue = e.target.value;
 
@@ -1437,7 +1450,7 @@ const EditProductPage = () => {
                                                                                                                                                                  <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
                                                                                                                                                                         <span className="text-xl font-TextFontRegular text-thirdColor">Price:</span>
                                                                                                                                                                         <NumberInput
-                                                                                                                                                                               value={option.price || '-'}
+                                                                                                                                                                               value={option.price || ''}
                                                                                                                                                                                onChange={(e) => {
                                                                                                                                                                                       const updatedValue = e.target.value;
                                                                                                                                                                                       setProductVariations((prevProductVariations) =>
@@ -1458,10 +1471,12 @@ const EditProductPage = () => {
                                                                                                                                                                                placeholder="Price"
                                                                                                                                                                         />
                                                                                                                                                                  </div>
+
+                                                                                                                                                                 {/* Option Points */}
                                                                                                                                                                  <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
                                                                                                                                                                         <span className="text-xl font-TextFontRegular text-thirdColor">Points:</span>
                                                                                                                                                                         <NumberInput
-                                                                                                                                                                               value={option.points || '-'}
+                                                                                                                                                                               value={option.points || ''}
                                                                                                                                                                                onChange={(e) => {
                                                                                                                                                                                       const updatedValue = e.target.value;
                                                                                                                                                                                       setProductVariations((prevProductVariations) =>
@@ -1523,7 +1538,7 @@ const EditProductPage = () => {
                                                                                                                                                                                value={
                                                                                                                                                                                       extra.extra_names.find(
                                                                                                                                                                                              (extraNameObj) => extraNameObj.tranlation_name === tapOption.name
-                                                                                                                                                                                      )?.extra_name || '-'
+                                                                                                                                                                                      )?.extra_name || ''
                                                                                                                                                                                }
                                                                                                                                                                                onChange={(e) => {
                                                                                                                                                                                       const updatedValue = e.target.value;
@@ -1566,7 +1581,7 @@ const EditProductPage = () => {
                                                                                                                                                                                <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
                                                                                                                                                                                       <span className="text-xl font-TextFontRegular text-thirdColor">Extra Price:</span>
                                                                                                                                                                                       <NumberInput
-                                                                                                                                                                                             value={extra.extra_price || '-'}
+                                                                                                                                                                                             value={extra.extra_price || ''}
                                                                                                                                                                                              onChange={(e) => {
                                                                                                                                                                                                     const updatedValue = e.target.value;
                                                                                                                                                                                                     setProductVariations((prevVariations) =>
@@ -1693,7 +1708,7 @@ const EditProductPage = () => {
                                                                stateoption={selectedSubCategoryState}
                                                                openMenu={isOPenProductSubCategory}
                                                                handleOpenOption={handleOpenOptionProductSubCategory}
-                                                               options={subCategories}
+                                                               options={filterSubCategories}
                                                                onSelectOption={handleSelectProductSubCategory}
                                                         />
                                                  </div>
@@ -1867,13 +1882,13 @@ const EditProductPage = () => {
                                    {/* Buttons*/}
                                    <div className="w-full flex items-center justify-end gap-x-4">
                                           <div>
-                                                 <StaticButton text={'Reset'} handleClick={handleReset} bgColor='bg-transparent' Color='text-mainColor' border={'border-2'} borderColor={'border-mainColor'} rounded='rounded-full' />
+                                                 <StaticButton text={'Cancel'} handleClick={handleBack} bgColor='bg-transparent' Color='text-mainColor' border={'border-2'} borderColor={'border-mainColor'} rounded='rounded-full' />
                                           </div>
                                           <div>
                                                  <SubmitButton
-                                                        text={'Add Product'}
+                                                        text={'Edit Product'}
                                                         rounded='rounded-full'
-                                                        handleClick={handleproductAdd}
+                                                        handleClick={handleproductEdit}
                                                  />
                                           </div>
 
