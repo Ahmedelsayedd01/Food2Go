@@ -458,10 +458,12 @@ const AddProductPage = () => {
   };
 
   const handleSelectProductDiscount = (option) => {
-    setSelectedDiscountId(option.name);
+    console.log('option', option)
+    setSelectedDiscountId(option.id);
     setSelectedDiscountState(option.name);
   };
   const handleSelectProductTax = (option) => {
+    console.log('option', option)
     setSelectedTaxId(option.id);
     setSelectedTaxState(option.name);
   };
@@ -740,6 +742,8 @@ const AddProductPage = () => {
     formData.append('stock_type', selectedStockTypeName)
     formData.append('number', productStockNumber)
     formData.append('price', productPrice)
+    formData.append('discount_id', selectedDiscountId)
+    formData.append('tax_id', selectedTaxId)
     formData.append('points', productPoint)
     formData.append('from', productStatusFrom)
     formData.append('to', productStatusTo)
