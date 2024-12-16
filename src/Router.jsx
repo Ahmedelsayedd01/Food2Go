@@ -54,7 +54,9 @@ import {
   BuyOfferLayout,
   DealsLayout,
   EditDealLayout,
-  AutomaticPaymentLayout
+  AutomaticPaymentLayout,
+  CustomersLayout,
+  EditCustomersLayout
 } from "./layouts/Layouts";
 import ProtectedLogin from "./ProtectedData/ProtectedLogin";
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -440,6 +442,24 @@ export const router = createBrowserRouter([
               {
                 path: 'invoice/:orderId',
                 element: <InvoiceOrderLayout />
+              },
+            ]
+          },
+          {
+            path: 'customers',
+            children: [
+              {
+                path: 'customers_list',
+                children: [
+                  {
+                    path: '',
+                    element: <CustomersLayout />,
+                  },
+                  {
+                    path: 'edit/:customerId',
+                    element: <EditCustomersLayout />,
+                  }
+                ]
               },
             ]
           },

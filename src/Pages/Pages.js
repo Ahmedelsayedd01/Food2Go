@@ -108,3 +108,8 @@ export { default as ReturnedOrdersPage } from "./Dashboard/Admin/Orders/Returned
 export { default as FailedOrdersPage } from "./Dashboard/Admin/Orders/FailedOrders/FailedOrdersPage";
 export { default as CanceledOrdersPage } from "./Dashboard/Admin/Orders/CanceledOrders/CanceledOrdersPage";
 export { default as ScheduleOrdersPage } from "./Dashboard/Admin/Orders/ScheduleOrders/ScheduleOrdersPage";
+
+// Customers
+export { default as CustomersPage } from "./Dashboard/Admin/Customers/CustomersPage";
+export { default as AddCustomersSection } from "./Dashboard/Admin/Customers/AddCustomersSection";
+export { default as EditCustomersPage } from "./Dashboard/Admin/Customers/EditCustomersPage";
