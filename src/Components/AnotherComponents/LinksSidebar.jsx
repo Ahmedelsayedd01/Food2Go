@@ -218,9 +218,6 @@ const LinksSidebar = () => {
                      isActiveOrdersCanceled,
                      isActiveOrdersSchedule,
 
-                     isActiveCoupon,
-                     isActiveCouponIcon,
-
                      isActiveAutomaticPayment,
 
 
