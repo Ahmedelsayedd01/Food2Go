@@ -4,11 +4,10 @@ import { useGet } from '../../../../Hooks/useGet';
 import { usePost } from '../../../../Hooks/usePostJson';
 import { useAuth } from '../../../../Context/Auth';
 
-import { MultiSelect } from 'primereact/multiselect';
-
 
 const AddBannerSection = ({ update, setUpdate }) => {
   const { refetch: refetchData, loading: loadingData, data: allData } = useGet({ url: 'https://bcknd.food2go.online/admin/banner' });
+  const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: 'https://Bcknd.food2go.online/admin/category' });
   const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/banner/add' });
 
   const dropDownCategories = useRef();
@@ -21,6 +20,7 @@ const AddBannerSection = ({ update, setUpdate }) => {
   const [taps, setTaps] = useState([])
   const [categories, setCategories] = useState([])
   const [products, setProducts] = useState([])
+  const [filterProducts, setFilterProducts] = useState([])
   const [deals, setDeals] = useState([])
 
   const [currentTap, setCurrentTap] = useState(0);
@@ -45,23 +45,25 @@ const AddBannerSection = ({ update, setUpdate }) => {
 
   useEffect(() => {
     refetchData(); // Refetch data when the component mounts
-  }, [refetchData]);
+    refetchCategory(); // Refetch data when the component mounts
+  }, [refetchData, refetchCategory]);
 
   useEffect(() => {
-    if (allData && allData?.translations &&
+    if (allData && dataCategory && allData?.translations &&
       allData?.categories &&
       allData?.products &&
       allData?.deals) {
       setTaps(allData?.translations || []);
-      setCategories(allData?.categories || []);
+      setCategories(dataCategory?.parent_categories || []);
       setProducts(allData?.products || []);
+      setFilterProducts(allData?.products || []);
       setDeals(allData?.deals || []);
     }
     console.log('taps', taps)
     console.log('categories', categories)
     console.log('products', products)
     console.log('deals', deals)
-  }, [allData]);
+  }, [allData, dataCategory]);
 
 
 
@@ -70,33 +72,6 @@ const AddBannerSection = ({ update, setUpdate }) => {
       ImageRef.current[index].click(); // Trigger click on the correct input
     }
   };
-
-
-  // const handleImageChange = (e) => {
-  //   const file = e.target.files[0];
-  //   if (file) {
-  //     setImageFile(prev => {
-  //       const updatedImages = [...prev];
-
-  //       if (updatedImages.length <= index) {
-  //         updatedImages.length = index + 1; // Resize array
-  //       }
-  //       taps.map((tap, index) => {
-
-  //         updatedImages[index] = {
-  //           ...updatedImages[index],
-  //           'tranlation_id': tap.id,
-  //           'image': file,
-  //           'tranlation_name': tap.name || 'Default Name',
-  //         };
-
-  //         return updatedImages;
-  //       })
-  //     })
-
-  //     setImage(prev => [...prev, file.name]);
-  //   }
-  // };
 
   const handleOpenCategory = () => {
     setIsOpenCategory(!isOpenCategory)
@@ -109,6 +84,13 @@ const AddBannerSection = ({ update, setUpdate }) => {
   const handleSelectCategory = (option) => {
     setCategoryId(option.id);
     setStateCategories(option.name);
+
+    const filterProducts = products.filter((product) => {
+      return product.category_id === option.id
+    });
+
+    console.log('filterProducts', filterProducts)
+    setFilterProducts(filterProducts)
   };
 
   const handleOpenProduct = () => {
@@ -157,7 +139,7 @@ const AddBannerSection = ({ update, setUpdate }) => {
     setCategoryId('');
     setStateProducts('Select Product');
     setProductId('');
-    setStateDeals('Select Product');
+    setStateDeals('Select Deal');
     setDealId('');
     setImage([]);
     setImageFile([]);
@@ -247,7 +229,7 @@ const AddBannerSection = ({ update, setUpdate }) => {
 
   return (
     <>
-      {loadingData || loadingPost ? (
+      {loadingData || loadingCategory || loadingPost ? (
         <>
           <div className="w-full h-56 flex justify-center items-center">
             <StaticLoader />
@@ -351,7 +333,7 @@ const AddBannerSection = ({ update, setUpdate }) => {
                   openMenu={isOpenProduct}
                   handleOpenOption={handleOpenOptionProduct}
                   onSelectOption={handleSelectProduct}
-                  options={products}
+                  options={filterProducts}
                   border={false}
                 />
               </div>
