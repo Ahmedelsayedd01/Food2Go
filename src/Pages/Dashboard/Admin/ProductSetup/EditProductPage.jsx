@@ -1758,7 +1758,7 @@ const EditProductPage = () => {
                                                         />
                                                  </div>
 
-                                                 {selectedStockTypeState === 'daily' || selectedStockTypeState === 'fixed' && (
+                                                 {selectedStockTypeName === 'daily' || selectedStockTypeName === 'fixed' ? (
                                                         <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
                                                                <span className="text-xl font-TextFontRegular text-thirdColor">Number:</span>
                                                                <NumberInput
@@ -1767,7 +1767,7 @@ const EditProductPage = () => {
                                                                       placeholder={'Number'}
                                                                />
                                                         </div>
-                                                 )}
+                                                 ) : ('')}
 
                                                  {/* Product Price */}
                                                  <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
