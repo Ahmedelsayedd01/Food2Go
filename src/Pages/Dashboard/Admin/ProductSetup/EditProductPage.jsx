@@ -911,7 +911,7 @@ const EditProductPage = () => {
 
 
 
-              postData(formData, 'Product Added Success')
+              postData(formData, 'Product Edited Success')
 
        };
 
