@@ -226,12 +226,12 @@ const DetailsOrderPage = () => {
                                                                                            {/* Header */}
                                                                                            <div className="flex flex-wrap justify-between items-start border-b border-gray-300 pb-4 mb-4">
                                                                                                   <div className="w-full md:w-auto">
-                                                                                                         <h1 className="text-xl font-bold text-gray-800">Order #{detailsData.order_number}</h1>
+                                                                                                         <h1 className="text-xl font-bold text-gray-800">Order #{detailsData?.order_number || ''}</h1>
                                                                                                          <p className="text-sm text-gray-700 mt-1">
-                                                                                                                <span className="font-semibold">Branch:</span> {detailsData.branch.address}
+                                                                                                                <span className="font-semibold">Branch:</span> {detailsData?.branch?.address || ''}
                                                                                                          </p>
                                                                                                          <p className="text-sm text-gray-700 mt-1">
-                                                                                                                <span className="font-semibold">Order Date & Time:</span> {detailsData.order_date} / {detailsData.date}
+                                                                                                                <span className="font-semibold">Order Date & Time:</span> {detailsData?.order_date || ''} / {detailsData?.date || ''}
                                                                                                          </p>
                                                                                                   </div>
                                                                                            </div>
@@ -240,22 +240,22 @@ const DetailsOrderPage = () => {
                                                                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                                                                                   <div className="bg-white p-4 shadow-md rounded-md">
                                                                                                          <p className="text-sm text-gray-800">
-                                                                                                                <span className="font-semibold text-mainColor">Status:</span> {detailsData.order_status}
+                                                                                                                <span className="font-semibold text-mainColor">Status:</span> {detailsData?.order_status || ''}
                                                                                                          </p>
                                                                                                          <p className="text-sm text-gray-800 mt-2">
-                                                                                                                <span className="font-semibold text-mainColor">Payment Method:</span> {detailsData.pament_method.name}
+                                                                                                                <span className="font-semibold text-mainColor">Payment Method:</span> {detailsData?.pament_method?.name || ''}
                                                                                                          </p>
                                                                                                          <p className="text-sm text-gray-800 mt-2">
                                                                                                                 <span className="font-semibold text-mainColor">Payment Status:</span>
-                                                                                                                <span className="text-green-600 font-semibold ml-1">{detailsData.payment_status}</span>
+                                                                                                                <span className="text-green-600 font-semibold ml-1">{detailsData?.payment_status || ''}</span>
                                                                                                          </p>
                                                                                                   </div>
                                                                                                   <div className="bg-white p-4 shadow-md rounded-md">
                                                                                                          <p className="text-sm text-gray-800">
-                                                                                                                <span className="font-semibold text-mainColor">Order Type:</span> {detailsData.order_type}
+                                                                                                                <span className="font-semibold text-mainColor">Order Type:</span> {detailsData?.order_type || ''}
                                                                                                          </p>
                                                                                                          <p className="text-sm text-gray-800 mt-2">
-                                                                                                                <span className="font-semibold text-mainColor">Order Note:</span> {detailsData.notes || "No Notes"}
+                                                                                                                <span className="font-semibold text-mainColor">Order Note:</span> {detailsData?.notes || "No Notes"}
                                                                                                          </p>
                                                                                                   </div>
                                                                                            </div>
@@ -551,7 +551,7 @@ const DetailsOrderPage = () => {
                                                                                                                                      key={delivery.id}
                                                                                                                               >
                                                                                                                                      <span className="font-TextFontRegular text-xl">
-                                                                                                                                            {delivery.f_name || '-'} {delivery.l_name || '-'}
+                                                                                                                                            {delivery?.f_name || '-'} {delivery?.l_name || '-'}
                                                                                                                                      </span>
                                                                                                                                      <button
                                                                                                                                             type="button"
@@ -590,16 +590,16 @@ const DetailsOrderPage = () => {
                                                                              {preparationTime ? (
                                                                                     <span
                                                                                            className={
-                                                                                                  preparationTime.days === 0 &&
-                                                                                                         preparationTime.hours === 0 &&
-                                                                                                         preparationTime.minutes === 0 &&
-                                                                                                         preparationTime.seconds === 0
+                                                                                                  preparationTime?.days === 0 &&
+                                                                                                         preparationTime?.hours === 0 &&
+                                                                                                         preparationTime?.minutes === 0 &&
+                                                                                                         preparationTime?.seconds === 0
                                                                                                          ? "text-red-500"
                                                                                                          : "text-cyan-400"
                                                                                            }
                                                                                     >
-                                                                                           {preparationTime.days}d {preparationTime.hours}h{" "}
-                                                                                           {preparationTime.minutes}m {preparationTime.seconds}s Left
+                                                                                           {preparationTime?.days}d {preparationTime?.hours}h{" "}
+                                                                                           {preparationTime?.minutes}m {preparationTime?.seconds}s Left
                                                                                     </span>
                                                                              ) : (
                                                                                     <span className="text-gray-400">Preparing time not available</span>
@@ -613,10 +613,10 @@ const DetailsOrderPage = () => {
 
                                                                       <div className="w-full bg-white rounded-xl shadow-md p-4 mt-4">
                                                                              <div className="flex items-center gap-x-2 text-lg font-semibold"><span><FaUser className='text-mainColor' /></span>Delivery Man</div>
-                                                                             <p className="text-sm">Name: {detailsData.delivery.f_name || '-'} {detailsData.delivery.l_name || '-'}</p>
-                                                                             <p className="text-sm">Orders: {detailsData.delivery.count_orders || '-'}</p>
-                                                                             <p className="text-sm">Contact: {detailsData.delivery.phone || '-'}</p>
-                                                                             <p className="text-sm">Email: {detailsData.delivery.email || '-'}</p>
+                                                                             <p className="text-sm">Name: {detailsData?.delivery?.f_name || '-'} {detailsData?.delivery?.l_name || '-'}</p>
+                                                                             <p className="text-sm">Orders: {detailsData?.delivery?.count_orders || '-'}</p>
+                                                                             <p className="text-sm">Contact: {detailsData?.delivery?.phone || '-'}</p>
+                                                                             <p className="text-sm">Email: {detailsData?.delivery?.email || '-'}</p>
                                                                       </div>
                                                                )}
 
@@ -625,36 +625,37 @@ const DetailsOrderPage = () => {
                                                                {/* Delivery Information */}
                                                                <div className="w-full bg-white rounded-xl shadow-md p-4 mt-4">
                                                                       <div className="flex items-center gap-x-2 text-lg font-semibold"><span><FaUser className='text-mainColor' /></span>Delivery Information</div>
-                                                                      <p className="text-sm">Name: {detailsData.user.f_name || '-'} {detailsData.user.l_name || '-'}</p>
-                                                                      <p className="text-sm">Contact: {detailsData.user.phone || '-'}</p>
-                                                                      <p className="text-sm">Floor: {detailsData.address.floor_num}</p>
-                                                                      <p className="text-sm">House: {detailsData.address.building_num}</p>
-                                                                      <p className="text-sm">Road: {detailsData.address.street}</p>
+                                                                      <p className="text-sm">Name: {detailsData?.user?.f_name || '-'} {detailsData?.user?.l_name || '-'}</p>
+                                                                      <p className="text-sm">Contact: {detailsData?.user?.phone || '-'}</p>
+                                                                      <p className="text-sm">Floor: {detailsData?.address?.floor_num || '-'}</p>
+                                                                      <p className="text-sm">House: {detailsData?.address?.building_num || '-'}</p>
+                                                                      <p className="text-sm">Road: {detailsData?.address?.street || '-'}</p>
                                                                       <p className="text-sm pb-2 text-center">
-                                                                             {detailsData.address.address}
+                                                                             {detailsData?.address?.address || '-'}
                                                                       </p>
-                                                                      {detailsData.address.additional_data && (
+                                                                      {detailsData?.address?.additional_data || '' && (
                                                                              <p className="text-sm border-t-2 text-center pt-2">
-                                                                                    {detailsData.address.additional_data}
+                                                                                    {detailsData?.address?.additional_data || '-'}
                                                                              </p>
                                                                       )}
+
                                                                </div>
 
                                                                <div className="w-full bg-white rounded-xl shadow-md p-4 mt-4">
                                                                       <div className="flex items-center gap-x-2 text-lg font-semibold"><span><FaUser className='text-mainColor' /></span>Customer Information</div>
-                                                                      <p className="text-sm">Name: {detailsData.user.f_name || '-'} {detailsData.user.l_name || '-'}</p>
-                                                                      <p className="text-sm">Orders: {detailsData.user.count_orders || '-'}</p>
-                                                                      <p className="text-sm">Contact: {detailsData.user.phone || '-'}</p>
-                                                                      <p className="text-sm">Email: {detailsData.user.email || '-'}</p>
+                                                                      <p className="text-sm">Name: {detailsData?.user?.f_name || '-'} {detailsData?.user?.l_name || '-'}</p>
+                                                                      <p className="text-sm">Orders: {detailsData?.user?.count_orders || '-'}</p>
+                                                                      <p className="text-sm">Contact: {detailsData?.user?.phone || '-'}</p>
+                                                                      <p className="text-sm">Email: {detailsData?.user?.email || '-'}</p>
                                                                </div>
 
                                                                {/* Branch Information */}
                                                                <div className="w-full bg-white rounded-xl shadow-md p-4 mt-4">
                                                                       <h3 className="text-lg font-semibold">Branch Information</h3>
-                                                                      <p className="text-sm">Branch: {detailsData.branch.address || '-'}</p>
-                                                                      <p className="text-sm">Orders Served: {detailsData.branch.count_orders || '-'}</p>
-                                                                      <p className="text-sm">Contact: {detailsData.branch.phone || '-'}</p>
-                                                                      <p className="text-sm">Email: {detailsData.branch.email || '-'}</p>
+                                                                      <p className="text-sm">Branch: {detailsData?.branch?.address || '-'}</p>
+                                                                      <p className="text-sm">Orders Served: {detailsData?.branch?.count_orders || '-'}</p>
+                                                                      <p className="text-sm">Contact: {detailsData?.branch?.phone || '-'}</p>
+                                                                      <p className="text-sm">Email: {detailsData?.branch?.email || '-'}</p>
                                                                       {/* <p className="text-sm">Location: Miami 45</p> */}
                                                                </div>
                                                         </div >
