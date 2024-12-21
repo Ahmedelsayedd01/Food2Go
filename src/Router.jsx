@@ -56,12 +56,13 @@ import {
   EditDealLayout,
   AutomaticPaymentLayout,
   CustomersLayout,
-  EditCustomersLayout
+  EditCustomersLayout,
+  BusinessSetupLayout
 } from "./layouts/Layouts";
 import ProtectedLogin from "./ProtectedData/ProtectedLogin";
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
 import App from "./App";
-import { OrdersPaymentHistoryPage, OrdersPaymentPendingPage } from "./Pages/Pages";
+import { BusinessSettingsPage, CustomerLoginPage, MainBranchSetupPage, OrdersPage, OrdersPaymentHistoryPage, OrdersPaymentPendingPage, RestaurantTimeSlotPage } from "./Pages/Pages";
 
 const ProductSetupLayout = () => {
   return <Outlet />;
@@ -314,6 +315,51 @@ export const router = createBrowserRouter([
             ]
           },
           {
+            path: 'customers',
+            children: [
+              {
+                path: 'customers_list',
+                children: [
+                  {
+                    path: '',
+                    element: <CustomersLayout />,
+                  },
+                  {
+                    path: 'edit/:customerId',
+                    element: <EditCustomersLayout />,
+                  }
+                ]
+              },
+            ]
+          },
+          {
+            path: 'business_setup',
+            element: <BusinessSetupLayout />,
+
+            children: [
+              {
+                path: 'business_settings',
+                element: <BusinessSettingsPage />,
+              },
+              {
+                path: 'main_branch_setup',
+                element: <MainBranchSetupPage />,
+              },
+              {
+                path: 'restaurant_time_slot',
+                element: <RestaurantTimeSlotPage />,
+              },
+              {
+                path: 'customer_login',
+                element: <CustomerLoginPage />,
+              },
+              {
+                path: 'orders',
+                element: <OrdersPage />,
+              },
+            ]
+          },
+          {
             path: 'deals',
             children: [
               {
@@ -442,24 +488,6 @@ export const router = createBrowserRouter([
               {
                 path: 'invoice/:orderId',
                 element: <InvoiceOrderLayout />
-              },
-            ]
-          },
-          {
-            path: 'customers',
-            children: [
-              {
-                path: 'customers_list',
-                children: [
-                  {
-                    path: '',
-                    element: <CustomersLayout />,
-                  },
-                  {
-                    path: 'edit/:customerId',
-                    element: <EditCustomersLayout />,
-                  }
-                ]
               },
             ]
           },
