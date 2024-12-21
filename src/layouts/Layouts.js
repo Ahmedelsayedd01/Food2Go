@@ -63,6 +63,11 @@ export { default as OrdersPaymentLayout } from "./Dashboard/OrdersPayment/OrderP
 /* Delivery Man */
 export { default as DeliveryManLayout } from "./Dashboard/DeliveryMan/DeliveryManLayout";
 export { default as EditDeliveryManLayout } from "./Dashboard/DeliveryMan/EditDeliveryManLayout";
+// Customers
+export { default as CustomersLayout } from "./Dashboard/Customers/CustomersLayout";
+export { default as EditCustomersLayout } from "./Dashboard/Customers/EditCustomersLayout";
+/* Business Setup */
+export { default as BusinessSetupLayout } from "./Dashboard/BusinessSetup/BusinessSetupLayout";
 /* Deals */
 export { default as DealsLayout } from "./Dashboard/Deals/DealsLayout";
 export { default as EditDealLayout } from "./Dashboard/Deals/EditDealLayout";
@@ -114,7 +119,3 @@ export { default as FailedOrdersLayout } from "./Dashboard/Orders/FailedOrders/F
 export { default as CanceledOrdersLayout } from "./Dashboard/Orders/CanceledOrders/CanceledOrdersLayout";
 // Orders -> Schedule Orders
 export { default as ScheduleOrdersLayout } from "./Dashboard/Orders/ScheduleOrders/ScheduleOrdersLayout";
-
-// Customers
-export { default as CustomersLayout } from "./Dashboard/Customers/CustomersLayout";
-export { default as EditCustomersLayout } from "./Dashboard/Customers/EditCustomersLayout";
