@@ -64,6 +64,18 @@ export { default as OrdersPaymentHistoryPage } from "./Dashboard/Admin/OrdersPay
 export { default as AddDeliveryManSection } from "./Dashboard/Admin/DeliveryMan/AddDeliveryManSection";
 export { default as EditDeliveryManPage } from "./Dashboard/Admin/DeliveryMan/EditDeliveryManPage";
 export { default as DeliveryManPage } from "./Dashboard/Admin/DeliveryMan/DeliveryManPage";
+// Customers
+export { default as CustomersPage } from "./Dashboard/Admin/Customers/CustomersPage";
+export { default as AddCustomersSection } from "./Dashboard/Admin/Customers/AddCustomersSection";
+export { default as EditCustomersPage } from "./Dashboard/Admin/Customers/EditCustomersPage";
+
+// Business Setup
+export { default as BusinessSettingsPage } from "./Dashboard/Admin/BusinessSetup/BusinessSettingsPage";
+export { default as MainBranchSetupPage } from "./Dashboard/Admin/BusinessSetup/MainBranchSetupPage";
+export { default as RestaurantTimeSlotPage } from "./Dashboard/Admin/BusinessSetup/RestaurantTimeSlotPage";
+export { default as CustomerLoginPage } from "./Dashboard/Admin/BusinessSetup/CustomerLoginPage";
+export { default as OrdersPage } from "./Dashboard/Admin/BusinessSetup/OrdersPage";
+
 // Deals
 export { default as AddDealSection } from "./Dashboard/Admin/Deals/AddDealSection";
 export { default as EditDealPage } from "./Dashboard/Admin/Deals/EditDealPage";
@@ -108,8 +120,3 @@ export { default as ReturnedOrdersPage } from "./Dashboard/Admin/Orders/Returned
 export { default as FailedOrdersPage } from "./Dashboard/Admin/Orders/FailedOrders/FailedOrdersPage";
 export { default as CanceledOrdersPage } from "./Dashboard/Admin/Orders/CanceledOrders/CanceledOrdersPage";
 export { default as ScheduleOrdersPage } from "./Dashboard/Admin/Orders/ScheduleOrders/ScheduleOrdersPage";
-
-// Customers
-export { default as CustomersPage } from "./Dashboard/Admin/Customers/CustomersPage";
-export { default as AddCustomersSection } from "./Dashboard/Admin/Customers/AddCustomersSection";
-export { default as EditCustomersPage } from "./Dashboard/Admin/Customers/EditCustomersPage";
