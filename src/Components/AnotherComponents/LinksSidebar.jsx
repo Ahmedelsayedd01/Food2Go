@@ -6,7 +6,7 @@ import { CategoryIcon, HomeIcon, OrderIcon, ProductIcon } from '../../Assets/Ico
 import { RiVipDiamondLine } from 'react-icons/ri';
 import { CiSettings } from 'react-icons/ci';
 import { useSelector } from 'react-redux';
-import { MdNotificationsActive, MdOutlineDeliveryDining, MdDiscount, MdOutlinePayments } from 'react-icons/md';
+import { MdNotificationsActive, MdOutlineDeliveryDining, MdDiscount, MdOutlinePayments, MdOutlineSettingsInputComposite } from 'react-icons/md';
 import { PiFlagBanner } from 'react-icons/pi';
 import { IoLanguage } from 'react-icons/io5';
 import { BiSolidDiscount, BiSolidOffer } from 'react-icons/bi';
@@ -100,6 +100,16 @@ const LinksSidebar = () => {
        const [isActiveDeliveryMan, setIsActiveDeliveryMan] = useState(stateLink.isActiveDeliveryMan ?? false);
        const [isActiveDeliveryManIcon, setIsActiveDeliveryManIcon] = useState(stateLink.isActiveDeliveryManIcon ?? false);
 
+       /* Customers */
+       const [isOpenCustomers, setIsOpenCustomers] = useState(stateLink.isOpenCustomers ?? false);
+       const [isActiveCustomersIcon, setIsActiveCustomersIcon] = useState(stateLink.isActiveCustomersIcon ?? false);
+       const [isActiveCustomers, setIsActiveCustomers] = useState(stateLink.isActiveCustomers ?? false);
+       const [isActiveCustomersList, setIsActiveCustomersList] = useState(stateLink.isActiveCustomersList ?? false);
+
+       /* Business Setup */
+       const [isActiveBusinessSetup, setIsActiveBusinessSetup] = useState(stateLink.isActiveBusinessSetup ?? false);
+       const [isActiveBusinessSetupIcon, setIsActiveBusinessSetupIcon] = useState(stateLink.isActiveBusinessSetupIcon ?? false);
+
        /* Deals */
        const [isActiveDeals, setIsActiveDeals] = useState(stateLink.isActiveDeals ?? false);
        const [isActiveDealsIcon, setIsActiveDealsIcon] = useState(stateLink.isActiveDealsIcon ?? false);
@@ -144,12 +154,6 @@ const LinksSidebar = () => {
        const [isActiveOrdersCanceled, setIsActiveOrdersCanceled] = useState(stateLink.isActiveOrdersCanceled ?? false);
        const [isActiveOrdersSchedule, setIsActiveOrdersSchedule] = useState(stateLink.isActiveOrdersSchedule ?? false);
 
-       /* Customers */
-       const [isOpenCustomers, setIsOpenCustomers] = useState(stateLink.isOpenCustomers ?? false);
-       const [isActiveCustomersIcon, setIsActiveCustomersIcon] = useState(stateLink.isActiveCustomersIcon ?? false);
-       const [isActiveCustomers, setIsActiveCustomers] = useState(stateLink.isActiveCustomers ?? false);
-       const [isActiveCustomersList, setIsActiveCustomersList] = useState(stateLink.isActiveCustomersList ?? false);
-
        // Helper function to save the current active links state
        const saveActiveLinksState = useCallback(() => {
               const activeLinks = {
@@ -189,6 +193,14 @@ const LinksSidebar = () => {
                      isActiveOffers,
                      isActiveOffersIcon,
 
+                     isOpenCustomers,
+                     isActiveCustomersIcon,
+                     isActiveCustomers,
+                     isActiveCustomersList,
+
+                     isActiveBusinessSetup,
+                     isActiveBusinessSetupIcon,
+
                      isActiveDeals,
                      isActiveDealsIcon,
 
@@ -227,10 +239,6 @@ const LinksSidebar = () => {
 
                      isActiveAutomaticPayment,
 
-                     isOpenCustomers,
-                     isActiveCustomersIcon,
-                     isActiveCustomers,
-                     isActiveCustomersList
 
               };
               auth.sidebar = JSON.stringify(activeLinks);
@@ -270,6 +278,14 @@ const LinksSidebar = () => {
 
               isActiveOffers,
               isActiveOffersIcon,
+
+              isOpenCustomers,
+              isActiveCustomersIcon,
+              isActiveCustomers,
+              isActiveCustomersList,
+
+              isActiveBusinessSetup,
+              isActiveBusinessSetupIcon,
 
               isActiveDeals,
               isActiveDealsIcon,
@@ -312,10 +328,6 @@ const LinksSidebar = () => {
 
               isActiveAutomaticPayment,
 
-              isOpenCustomers,
-              isActiveCustomersIcon,
-              isActiveCustomers,
-              isActiveCustomersList
 
        ]);
 
@@ -358,6 +370,14 @@ const LinksSidebar = () => {
               isActiveOffers,
               isActiveOffersIcon,
 
+              isOpenCustomers,
+              isActiveCustomersIcon,
+              isActiveCustomers,
+              isActiveCustomersList,
+
+              isActiveBusinessSetup,
+              isActiveBusinessSetupIcon,
+
               isActiveDeals,
               isActiveDealsIcon,
 
@@ -399,10 +419,6 @@ const LinksSidebar = () => {
 
               isActiveAutomaticPayment,
 
-              isOpenCustomers,
-              isActiveCustomersIcon,
-              isActiveCustomers,
-              isActiveCustomersList
 
        ]);
 
@@ -448,6 +464,14 @@ const LinksSidebar = () => {
               setIsActiveOffers(false)
               setIsActiveOffersIcon(false)
 
+              setIsOpenCustomers(false)
+              setIsActiveCustomersIcon(false)
+              setIsActiveCustomers(false)
+              setIsActiveCustomersList(false)
+
+              setIsActiveBusinessSetup(false)
+              setIsActiveBusinessSetupIcon(false)
+
               setIsActiveDeals(false)
               setIsActiveDealsIcon(false)
 
@@ -489,10 +513,6 @@ const LinksSidebar = () => {
 
               setIsActiveAutomaticPayment(false)
 
-              setIsOpenCustomers(false)
-              setIsActiveCustomersIcon(false)
-              setIsActiveCustomers(false)
-              setIsActiveCustomersList(false)
        }
 
 
@@ -667,7 +687,7 @@ const LinksSidebar = () => {
                      handleClickAutomaticPayment()
               }
        }, [location])
-       
+
        /* Cities */
        const handleClickCities = useCallback(() => {
               handleStateLinks()
@@ -797,6 +817,20 @@ const LinksSidebar = () => {
               const result = part.slice(0, 3).join('/');
               if (result == "/dashboard/delivery_man") {
                      handleClickDeliveryMan()
+              }
+       }, [location])
+
+       /* Orders Payment */
+       const handleClickBusinessSetup = useCallback(() => {
+              handleStateLinks();
+              setIsActiveBusinessSetupIcon(true);
+              setIsActiveBusinessSetup(true);
+       }, []);
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 3).join('/');
+              if (result == "/dashboard/business_setup") {
+                     handleClickBusinessSetup()
               }
        }, [location])
 
@@ -1164,8 +1198,8 @@ const LinksSidebar = () => {
 
        }, [location])
 
-        /* Customers */
-        const handleClickCustomers = useCallback(() => {
+       /* Customers */
+       const handleClickCustomers = useCallback(() => {
               handleStateLinks()
 
               setIsOpenCustomers(true);
@@ -1573,7 +1607,7 @@ const LinksSidebar = () => {
                             transition-all duration-300 group`}
                      >
                             <div className="flex items-center gap-x-2">
-                                   <FaUsers  className={`${isActiveCustomersIcon || isActiveCustomers ? 'text-[#9E090F]' : 'text-[#fff]'} text-2xl`} />
+                                   <FaUsers className={`${isActiveCustomersIcon || isActiveCustomers ? 'text-[#9E090F]' : 'text-[#fff]'} text-2xl`} />
                                    <span className={`
                                    ${hideSide ? 'block' : 'hidden'}
                                    ${isActiveCustomers ? "text-mainColor" : "text-white"}
@@ -1600,6 +1634,32 @@ const LinksSidebar = () => {
                             </ul>
 
                      </div>
+                     {/* Business Setup */}
+                     <Link to="business_setup"
+                            onMouseMove={() => setIsActiveBusinessSetupIcon(true)}
+                            onMouseOut={() => setIsActiveBusinessSetupIcon(false)}
+                            onClick={handleClickBusinessSetup}
+                            className={`
+                                   ${isActiveBusinessSetup ? 'active' : ''}
+                                   ${hideSide ? 'justify-between' : 'justify-center'} 
+                                   hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
+                                   hover:text-mainColor w-full flex items-center 
+                                   transition-all duration-300 group`}
+                     >
+                            <div className="flex items-center gap-x-2">
+                                   <MdOutlineSettingsInputComposite
+                                          className={`${isActiveBusinessSetupIcon || isActiveBusinessSetup ? 'text-[#9E090F]' : 'text-[#fff]'} text-2xl`}
+                                   />
+                                   <span
+                                          className={`${hideSide ? 'block' : 'hidden'}
+                                           ${isActiveBusinessSetup ? "text-mainColor" : "text-white"}
+                                          text-lg font-TextFontRegular transition-all duration-300
+                                          group-hover:text-mainColor`}
+                                   >
+                                          Business Setup
+                                   </span>
+                            </div>
+                     </Link>
                      {/* Deals */}
                      <Link to="deals"
                             onMouseMove={() => setIsActiveDealsIcon(true)}
