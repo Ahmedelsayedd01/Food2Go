@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { useGet } from '../../../../../Hooks/useGet';
 import { DropDown, LoaderLogin, SearchBar } from '../../../../../Components/Components';
-import { FaClock, FaEdit, FaUser } from 'react-icons/fa';
+import { FaClock, FaUser } from 'react-icons/fa';
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import { usePost } from '../../../../../Hooks/usePostJson';
 import { useChangeState } from '../../../../../Hooks/useChangeState';
@@ -105,7 +105,7 @@ const DetailsOrderPage = () => {
               try {
                      const responseStatus = await changeState(
                             `https://Bcknd.food2go.online/admin/order/status/${orderId}`,
-                            ` Changed Status.`,
+                            `${orderName} Changed Status.`,
                             {
                                    order_status: orderStatus,
                                    order_id: orderId
