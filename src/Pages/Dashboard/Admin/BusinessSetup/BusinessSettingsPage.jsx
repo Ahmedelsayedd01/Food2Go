@@ -1,9 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { DateInput, DropDown, EmailInput, NumberInput, StaticButton, SubmitButton, Switch, TextInput, TitleSection, UploadInput } from '../../../../Components/Components';
+import { Dropdown } from 'primereact/dropdown';
+
+import moment from 'moment-timezone';
+
+
+
 
 const BusinessSettingsPage = () => {
        const LogoRef = useRef();
        const IconRef = useRef();
+
+       console.log('moment', moment.tz.names())
 
        const CountriesRef = useRef();
        const TimeZoneRef = useRef();
@@ -25,11 +33,54 @@ const BusinessSettingsPage = () => {
 
 
        const [stateCountries, setStateCountries] = useState('Select Country');
-       const [countries, setCountries] = useState([{ name: 'Egypt' }, { name: 'USA' }, { name: 'UK' }, { name: 'Canada' }]);
+       const [selectedCountry, setSelectedCountry] = useState('');
+       const [countries, setCountries] = useState([
+              { name: 'Afghanistan' }, { name: 'Albania' }, { name: 'Algeria' }, { name: 'Andorra' }, { name: 'Angola' },
+              { name: 'Antigua and Barbuda' }, { name: 'Argentina' }, { name: 'Armenia' }, { name: 'Australia' }, { name: 'Austria' },
+              { name: 'Azerbaijan' }, { name: 'Bahamas' }, { name: 'Bahrain' }, { name: 'Bangladesh' }, { name: 'Barbados' },
+              { name: 'Belarus' }, { name: 'Belgium' }, { name: 'Belize' }, { name: 'Benin' }, { name: 'Bhutan' },
+              { name: 'Bolivia' }, { name: 'Bosnia and Herzegovina' }, { name: 'Botswana' }, { name: 'Brazil' }, { name: 'Brunei' },
+              { name: 'Bulgaria' }, { name: 'Burkina Faso' }, { name: 'Burundi' }, { name: 'Cabo Verde' }, { name: 'Cambodia' },
+              { name: 'Cameroon' }, { name: 'Canada' }, { name: 'Central African Republic' }, { name: 'Chad' }, { name: 'Chile' },
+              { name: 'China' }, { name: 'Colombia' }, { name: 'Comoros' }, { name: 'Congo, Democratic Republic of the' }, { name: 'Congo, Republic of the' },
+              { name: 'Costa Rica' }, { name: 'Croatia' }, { name: 'Cuba' }, { name: 'Cyprus' }, { name: 'Czech Republic' },
+              { name: 'Denmark' }, { name: 'Djibouti' }, { name: 'Dominica' }, { name: 'Dominican Republic' }, { name: 'Ecuador' },
+              { name: 'Egypt' }, { name: 'El Salvador' }, { name: 'Equatorial Guinea' }, { name: 'Eritrea' }, { name: 'Estonia' },
+              { name: 'Eswatini' }, { name: 'Ethiopia' }, { name: 'Fiji' }, { name: 'Finland' }, { name: 'France' },
+              { name: 'Gabon' }, { name: 'Gambia' }, { name: 'Georgia' }, { name: 'Germany' }, { name: 'Ghana' },
+              { name: 'Greece' }, { name: 'Grenada' }, { name: 'Guatemala' }, { name: 'Guinea' }, { name: 'Guinea-Bissau' },
+              { name: 'Guyana' }, { name: 'Haiti' }, { name: 'Honduras' }, { name: 'Hungary' }, { name: 'Iceland' },
+              { name: 'India' }, { name: 'Indonesia' }, { name: 'Iran' }, { name: 'Iraq' }, { name: 'Ireland' },
+              { name: 'Israel' }, { name: 'Italy' }, { name: 'Jamaica' }, { name: 'Japan' }, { name: 'Jordan' },
+              { name: 'Kazakhstan' }, { name: 'Kenya' }, { name: 'Kiribati' }, { name: 'Korea, North' }, { name: 'Korea, South' },
+              { name: 'Kosovo' }, { name: 'Kuwait' }, { name: 'Kyrgyzstan' }, { name: 'Laos' }, { name: 'Latvia' },
+              { name: 'Lebanon' }, { name: 'Lesotho' }, { name: 'Liberia' }, { name: 'Libya' }, { name: 'Liechtenstein' },
+              { name: 'Lithuania' }, { name: 'Luxembourg' }, { name: 'Madagascar' }, { name: 'Malawi' }, { name: 'Malaysia' },
+              { name: 'Maldives' }, { name: 'Mali' }, { name: 'Malta' }, { name: 'Marshall Islands' }, { name: 'Mauritania' },
+              { name: 'Mauritius' }, { name: 'Mexico' }, { name: 'Micronesia' }, { name: 'Moldova' }, { name: 'Monaco' },
+              { name: 'Mongolia' }, { name: 'Montenegro' }, { name: 'Morocco' }, { name: 'Mozambique' }, { name: 'Myanmar' },
+              { name: 'Namibia' }, { name: 'Nauru' }, { name: 'Nepal' }, { name: 'Netherlands' }, { name: 'New Zealand' },
+              { name: 'Nicaragua' }, { name: 'Niger' }, { name: 'Nigeria' }, { name: 'North Macedonia' }, { name: 'Norway' },
+              { name: 'Oman' }, { name: 'Pakistan' }, { name: 'Palau' }, { name: 'Palestine' }, { name: 'Panama' },
+              { name: 'Papua New Guinea' }, { name: 'Paraguay' }, { name: 'Peru' }, { name: 'Philippines' }, { name: 'Poland' },
+              { name: 'Portugal' }, { name: 'Qatar' }, { name: 'Romania' }, { name: 'Russia' }, { name: 'Rwanda' },
+              { name: 'Saint Kitts and Nevis' }, { name: 'Saint Lucia' }, { name: 'Saint Vincent and the Grenadines' }, { name: 'Samoa' }, { name: 'San Marino' },
+              { name: 'Sao Tome and Principe' }, { name: 'Saudi Arabia' }, { name: 'Senegal' }, { name: 'Serbia' }, { name: 'Seychelles' },
+              { name: 'Sierra Leone' }, { name: 'Singapore' }, { name: 'Slovakia' }, { name: 'Slovenia' }, { name: 'Solomon Islands' },
+              { name: 'Somalia' }, { name: 'South Africa' }, { name: 'South Sudan' }, { name: 'Spain' }, { name: 'Sri Lanka' },
+              { name: 'Sudan' }, { name: 'Suriname' }, { name: 'Sweden' }, { name: 'Switzerland' }, { name: 'Syria' },
+              { name: 'Taiwan' }, { name: 'Tajikistan' }, { name: 'Tanzania' }, { name: 'Thailand' }, { name: 'Timor-Leste' },
+              { name: 'Togo' }, { name: 'Tonga' }, { name: 'Trinidad and Tobago' }, { name: 'Tunisia' }, { name: 'Turkey' },
+              { name: 'Turkmenistan' }, { name: 'Tuvalu' }, { name: 'Uganda' }, { name: 'Ukraine' }, { name: 'United Arab Emirates' },
+              { name: 'United Kingdom' }, { name: 'United States' }, { name: 'Uruguay' }, { name: 'Uzbekistan' }, { name: 'Vanuatu' },
+              { name: 'Vatican City' }, { name: 'Venezuela' }, { name: 'Vietnam' }, { name: 'Yemen' }, { name: 'Zambia' },
+              { name: 'Zimbabwe' }
+       ]);
        const [isOpenCountries, setIsOpenCountries] = useState(false);
 
        const [stateTimeZone, setStateTimeZone] = useState('Select Time Zone');
-       const [timeZone, setTimeZone] = useState([{ name: 'Cairo' }, { name: 'New York' }, { name: 'London' }, { name: 'Toronto' }]);
+       const [selectedTimeZone, setSelectedTimeZone] = useState('');
+       const [timeZone, setTimeZone] = useState([]);
        const [isOpenTimeZone, setIsOpenTimeZone] = useState(false);
 
        const [stateTimeFormat, setStateTimeFormat] = useState('Select Time Format');
@@ -60,6 +111,10 @@ const BusinessSettingsPage = () => {
        const [startDate, setStartDate] = useState('');
        const [endDate, setEndDate] = useState('');
 
+       useEffect(() => {
+              const timeZones = moment.tz.names().map((name) => ({ name: name }));
+              setTimeZone(timeZones);
+       }, []);
 
        const closeAll = () => {
               setIsOpenCountries(false)
@@ -344,7 +399,7 @@ const BusinessSettingsPage = () => {
                             <TitleSection text={'Business Information'} />
 
                             {/* Countries */}
-                            <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                            {/* <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                                    <span className="text-xl font-TextFontRegular text-thirdColor">Countries:</span>
                                    <DropDown
                                           ref={CountriesRef}
@@ -356,11 +411,17 @@ const BusinessSettingsPage = () => {
                                           options={countries}
                                           border={false}
                                    />
+                            </div> */}
+                            {/* Countries 2 */}
+                            <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                   <span className="text-xl font-TextFontRegular text-thirdColor">Countries:</span>
+                                   <Dropdown value={selectedCountry} onChange={(e) => setSelectedCountry(e.value)} options={countries} optionLabel="name" placeholder="Select a Country"
+                                          filter className="w-full md:w-14rem" />
                             </div>
                             {/* Time Zone */}
                             <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                                    <span className="text-xl font-TextFontRegular text-thirdColor">Time Zone:</span>
-                                   <DropDown
+                                   {/* <DropDown
                                           ref={TimeZoneRef}
                                           handleOpen={handleOpenTimeZone}
                                           stateoption={stateTimeZone}
@@ -369,7 +430,9 @@ const BusinessSettingsPage = () => {
                                           onSelectOption={handleSelectTimeZone}
                                           options={timeZone}
                                           border={false}
-                                   />
+                                   /> */}
+                                   <Dropdown value={selectedTimeZone} onChange={(e) => setSelectedTimeZone(e.value)} options={timeZone} optionLabel="name" placeholder="Select a Time Zone"
+                                          filter className="w-full md:w-14rem" />
                             </div>
                             {/* Time Format */}
                             <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
