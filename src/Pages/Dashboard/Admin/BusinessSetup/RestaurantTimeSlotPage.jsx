@@ -104,25 +104,29 @@ const RestaurantTimeSlotPage = () => {
                                           </div> */}
 
                                           {allClosestTime.map((time, index) => (
-                                                 <div key={index} className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                                        <span className="text-xl font-TextFontRegular text-thirdColor">Closing Time Am:</span>
-                                                        <TimeInput
-                                                               value={time.closingTimeAm}
-                                                               onChange={(e) => {
-                                                                      const newTime = [...allClosestTime];
-                                                                      newTime[index].closingTimeAm = e.target.value;
-                                                                      setAllClosestTime(newTime);
-                                                               }}
-                                                        />
-                                                        <span className="text-xl font-TextFontRegular text-thirdColor">Closing Time Pm:</span>
-                                                        <TimeInput
-                                                               value={time.closingTimePm}
-                                                               onChange={(e) => {
-                                                                      const newTime = [...allClosestTime];
-                                                                      newTime[index].closingTimePm = e.target.value;
-                                                                      setAllClosestTime(newTime);
-                                                               }}
-                                                        />
+                                                 <div key={index} className="w-full flex flex-wrap items-center gap-8 mt-3">
+                                                        <div className="sm:w-full lg:w-[35%] flex sm:flex-col xl:flex-row items-center justify-center gap-2">
+                                                               <span className="w-9/12 text-xl font-TextFontRegular text-thirdColor">Closing Time Am:</span>
+                                                               <TimeInput
+                                                                      value={time.closingTimeAm}
+                                                                      onChange={(e) => {
+                                                                             const newTime = [...allClosestTime];
+                                                                             newTime[index].closingTimeAm = e.target.value;
+                                                                             setAllClosestTime(newTime);
+                                                                      }}
+                                                               />
+                                                        </div>
+                                                        <div className="sm:w-full lg:w-[35%] flex sm:flex-col xl:flex-row items-center justify-center gap-2">
+                                                               <span className="w-9/12 text-xl font-TextFontRegular text-thirdColor">Closing Time Pm:</span>
+                                                               <TimeInput
+                                                                      value={time.closingTimePm}
+                                                                      onChange={(e) => {
+                                                                             const newTime = [...allClosestTime];
+                                                                             newTime[index].closingTimePm = e.target.value;
+                                                                             setAllClosestTime(newTime);
+                                                                      }}
+                                                               />
+                                                        </div>
                                                  </div>
                                           ))}
 
