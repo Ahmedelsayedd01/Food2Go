@@ -70,11 +70,11 @@ const BusinessSetupNav = () => {
        return (
               <>
                      <nav className="flex flex-wrap items-center w-full justify-start gap-8">
-                            <Link to={"business_settings"} className={isActiveBusinessSettings ? "text-2xl font-TextFontMedium border-b-4 border-mainColor pb-2 text-mainColor" : "text-2xl font-TextFontMedium pb-2 text-mainColor"} onClick={handleBusinessSettings}>Business Settings</Link>
-                            <Link to={"main_branch_setup"} className={isActiveMainBranchSetup ? "text-2xl font-TextFontMedium border-b-4 border-mainColor pb-2 text-mainColor" : "text-2xl font-TextFontMedium pb-2 text-mainColor"} onClick={handleMainBranchSetup}>Main Branch Setup</Link>
-                            <Link to={"restaurant_time_slot"} className={isActiveRestaurantTimeSlot ? "text-2xl font-TextFontMedium border-b-4 border-mainColor pb-2 text-mainColor" : "text-2xl font-TextFontMedium pb-2 text-mainColor"} onClick={handleRestaurantTimeSlot}>Restaurant Availabilty Time Slot</Link>
-                            <Link to={"customer_login"} className={isActiveCustomerLogin ? "text-2xl font-TextFontMedium border-b-4 border-mainColor pb-2 text-mainColor" : "text-2xl font-TextFontMedium pb-2 text-mainColor"} onClick={handleCustomerLogin}>Customer Login</Link>
-                            <Link to={"orders"} className={isActiveOrders ? "text-2xl font-TextFontMedium border-b-4 border-mainColor pb-2 text-mainColor" : "text-2xl font-TextFontMedium pb-2 text-mainColor"} onClick={handleOrders}>Orders</Link>
+                            <Link to={"business_settings"} className={isActiveBusinessSettings ? "text-2xl font-TextFontMedium border-b-4 border-mainColor pb-2 text-mainColor" : "text-2xl font-TextFontMedium pb-2 text-gray-500"} onClick={handleBusinessSettings}>Business Settings</Link>
+                            <Link to={"main_branch_setup"} className={isActiveMainBranchSetup ? "text-2xl font-TextFontMedium border-b-4 border-mainColor pb-2 text-mainColor" : "text-2xl font-TextFontMedium pb-2 text-gray-500"} onClick={handleMainBranchSetup}>Main Branch Setup</Link>
+                            <Link to={"restaurant_time_slot"} className={isActiveRestaurantTimeSlot ? "text-2xl font-TextFontMedium border-b-4 border-mainColor pb-2 text-mainColor" : "text-2xl font-TextFontMedium pb-2 text-gray-500"} onClick={handleRestaurantTimeSlot}>Restaurant Availabilty Time Slot</Link>
+                            <Link to={"customer_login"} className={isActiveCustomerLogin ? "text-2xl font-TextFontMedium border-b-4 border-mainColor pb-2 text-mainColor" : "text-2xl font-TextFontMedium pb-2 text-gray-500"} onClick={handleCustomerLogin}>Customer Login</Link>
+                            <Link to={"orders"} className={isActiveOrders ? "text-2xl font-TextFontMedium border-b-4 border-mainColor pb-2 text-mainColor" : "text-2xl font-TextFontMedium pb-2 text-gray-500"} onClick={handleOrders}>Orders</Link>
                      </nav>
               </>
        )
