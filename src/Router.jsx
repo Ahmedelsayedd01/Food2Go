@@ -262,6 +262,10 @@ export const router = createBrowserRouter([
                 path: 'delivery_time',
                 element: <DeliveryTimeLayout />,
               },
+              {
+                path: 'sound',
+                element: <SongLayout />,
+              },
             ]
           },
           {
@@ -419,10 +423,6 @@ export const router = createBrowserRouter([
                 element: <EditDiscountLayout />,
               }
             ]
-          },
-          {
-            path: 'song',
-            element: <SongLayout />,
           },
           {
             path: 'deal_order',
