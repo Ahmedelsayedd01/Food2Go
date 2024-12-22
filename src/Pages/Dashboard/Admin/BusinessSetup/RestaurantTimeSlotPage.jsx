@@ -3,10 +3,6 @@ import { AddButton, DateInput, DropDown, StaticButton, SubmitButton, TimeInput, 
 
 const RestaurantTimeSlotPage = () => {
        const dropDown = useRef();
-       const allClosest = useRef([]);
-
-       // const [closingTimeAm, setClosingTimeAm] = useState('');
-       // const [closingTimePm, setClosingTimePm] = useState('');
 
        const [allClosestTime, setAllClosestTime] = useState([{ closingTimeAm: '', closingTimePm: '' }]);
 
@@ -17,15 +13,6 @@ const RestaurantTimeSlotPage = () => {
        const [stateOption, setStateOption] = useState('Select Option');
        const [optionName, setOptionName] = useState('');
        const [isOpenOption, setIsOpenOption] = useState(false);
-       const ref = useRef(null);
-       
-       const handleAddTimeSlot = () => {
-              const newTime = {
-                closingTimeAm: '',
-                closingTimePm: ''
-              };
-              setTimeSlots((prev) => [...prev, newTime]); 
-       }
 
        const handleOpen = () => setIsOpenOption(!isOpenOption);
        const handleOpenOptions = () => setIsOpenOption(false);
@@ -59,8 +46,7 @@ const RestaurantTimeSlotPage = () => {
 
 
        const handleReset = () => {
-              setClosingTimeAm('');
-              setClosingTimePm('');
+              setAllClosestTime([{ closingTimeAm: '', closingTimePm: '' }]);
               setStateOption('Select Option');
               setOptionName('');
        }
@@ -93,22 +79,6 @@ const RestaurantTimeSlotPage = () => {
 
                             {optionName === 'daily' && (
                                    <>
-                                          {/* Closing Time Am */}
-                                          {/* <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                                 <span className="text-xl font-TextFontRegular text-thirdColor">Closing Time Am:</span>
-                                                 <TimeInput
-                                                        value={closingTimeAm}
-                                                        onChange={(e) => setClosingTimeAm(e.target.value)}
-                                                 />
-                                          </div> */}
-                                          {/* Closing Time Pm */}
-                                          {/* <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                                 <span className="text-xl font-TextFontRegular text-thirdColor">Closing Time Pm:</span>
-                                                 <TimeInput
-                                                        value={closingTimePm}
-                                                        onChange={(e) => setClosingTimePm(e.target.value)}
-                                                 />
-                                          </div> */}
 
                                           {allClosestTime.map((time, index) => (
                                                  <div key={index} className="w-full flex flex-wrap items-center gap-8 mt-3">
