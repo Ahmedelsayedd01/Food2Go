@@ -339,11 +339,6 @@ const AddBannerSection = ({ update, setUpdate }) => {
                 {/* Branch Preparion Time */}
                 <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                   <span className="text-xl font-TextFontRegular text-thirdColor">Food Preparation Time:</span>
-                  {/* <TimeInput
-                    value={foodPreparationTime}
-                    onChange={handleTimeChange}
-                    placeholder="Food Preparation Time"
-                  /> */}
                   <CustomTimeInput
                     value={foodPreparationTime}
                     onChange={(newTime) => setFoodPreparationTime(newTime)}
