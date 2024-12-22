@@ -17,8 +17,15 @@ const RestaurantTimeSlotPage = () => {
        const [stateOption, setStateOption] = useState('Select Option');
        const [optionName, setOptionName] = useState('');
        const [isOpenOption, setIsOpenOption] = useState(false);
-
-
+       const ref = useRef(null);
+       
+       const handleAddTimeSlot = () => {
+              const newTime = {
+                closingTimeAm: '',
+                closingTimePm: ''
+              };
+              setTimeSlots((prev) => [...prev, newTime]); 
+       }
 
        const handleOpen = () => setIsOpenOption(!isOpenOption);
        const handleOpenOptions = () => setIsOpenOption(false);
