@@ -84,6 +84,8 @@ const LinksSidebar = () => {
        const [isActiveDeliveryTime, setIsActiveDeliveryTime] = useState(stateLink.isActiveDeliveryTime ?? false);
 
        const [isActiveAutomaticPayment, setIsActiveAutomaticPayment] = useState(stateLink.isActiveAutomaticPayment ?? false);
+       /* Sound */
+       const [isActiveSound, setIsActiveSound] = useState(stateLink.isActiveSound ?? false);
 
        /* Taxes */
        const [isOpenTaxes, setIsOpenTaxes] = useState(stateLink.isOpenTaxes ?? false);
@@ -125,9 +127,7 @@ const LinksSidebar = () => {
        /* Languages */
        const [isActiveLanguages, setIsActiveLanguages] = useState(stateLink.isActiveLanguages ?? false);
        const [isActiveLanguagesIcon, setIsActiveLanguagesIcon] = useState(stateLink.isActiveLanguagesIcon ?? false);
-       /* Song */
-       const [isActiveSongIcon, setIsActiveSongIcon] = useState(stateLink.isActiveSongIcon ?? false);
-       const [isActiveSong, setIsActiveSong] = useState(stateLink.isActiveSong ?? false);
+
        /* Deal Order */
        const [isActiveDealOrderIcon, setIsActiveDealOrderIcon] = useState(stateLink.isActiveDealOrderIcon ?? false);
        const [isActiveDealOrder, setIsActiveDealOrder] = useState(stateLink.isActiveDealOrder ?? false);
@@ -185,6 +185,7 @@ const LinksSidebar = () => {
                      isActiveResturantTime,
                      isActiveCancelTime,
                      isActiveDeliveryTime,
+                     isActiveSound,
 
 
                      isActiveDeliveryMan,
@@ -210,8 +211,6 @@ const LinksSidebar = () => {
                      isActiveLanguages,
                      isActiveLanguagesIcon,
 
-                     isActiveSongIcon,
-                     isActiveSong,
 
                      isActiveDealOrderIcon,
                      isActiveDealOrder,
@@ -272,6 +271,7 @@ const LinksSidebar = () => {
               isActiveResturantTime,
               isActiveCancelTime,
               isActiveDeliveryTime,
+              isActiveSound,
 
               isActiveDeliveryMan,
               isActiveDeliveryManIcon,
@@ -295,9 +295,6 @@ const LinksSidebar = () => {
 
               isActiveLanguages,
               isActiveLanguagesIcon,
-
-              isActiveSongIcon,
-              isActiveSong,
 
               isActiveDealOrderIcon,
               isActiveDealOrder,
@@ -363,6 +360,7 @@ const LinksSidebar = () => {
               isActiveResturantTime,
               isActiveCancelTime,
               isActiveDeliveryTime,
+              isActiveSound,
 
               isActiveDeliveryMan,
               isActiveDeliveryManIcon,
@@ -386,9 +384,6 @@ const LinksSidebar = () => {
 
               isActiveLanguages,
               isActiveLanguagesIcon,
-
-              isActiveSongIcon,
-              isActiveSong,
 
               isActiveDealOrderIcon,
               isActiveDealOrder,
@@ -454,6 +449,7 @@ const LinksSidebar = () => {
               setIsActiveResturantTime(false)
               setIsActiveCancelTime(false)
               setIsActiveDeliveryTime(false)
+              setIsActiveSound(false)
 
               setIsActiveOrdersPayment(false)
               setIsActiveOrdersPaymentIcon(false)
@@ -480,9 +476,6 @@ const LinksSidebar = () => {
 
               setIsActiveLanguages(false)
               setIsActiveLanguagesIcon(false)
-
-              setIsActiveSongIcon(false)
-              setIsActiveSong(false)
 
               setIsActiveDealOrderIcon(false)
               setIsActiveDealOrder(false)
@@ -648,7 +641,8 @@ const LinksSidebar = () => {
                             "/dashboard/setting/resturant_time",
                             "/dashboard/setting/cancel_time",
                             "/dashboard/setting/delivery_time",
-                            "/dashboard/setting/automatic_payment"
+                            "/dashboard/setting/automatic_payment",
+                            "/dashboard/setting/sound"
                      ].some(path => pathName.startsWith(path))
               ) {
                      handleClickSetting();
@@ -788,6 +782,21 @@ const LinksSidebar = () => {
               const result = part.slice(0, 4).join('/');
               if (result == "/dashboard/setting/delivery_time") {
                      handleClickDeliveryTime()
+              }
+       }, [location])
+
+       /* Sound */
+       const handleClickSound = useCallback(() => {
+              handleStateLinks();
+              setIsOpenSetting(true);
+              setIsActiveSetting(true);
+              setIsActiveSound(true);
+       }, []);
+       useEffect(() => {
+              const part = pathName.split('/');
+              const result = part.slice(0, 4).join('/');
+              if (result == "/dashboard/setting/sound") {
+                     handleClickSound()
               }
        }, [location])
 
@@ -941,20 +950,6 @@ const LinksSidebar = () => {
               const result = part.slice(0, 3).join('/');
               if (result == "/dashboard/languages") {
                      handleClickLanguages()
-              }
-       }, [location])
-
-       /* Song */
-       const handleClickSong = useCallback(() => {
-              handleStateLinks();
-              setIsActiveSong(true);
-              setIsActiveSongIcon(true);
-       }, []);
-       useEffect(() => {
-              const part = pathName.split('/');
-              const result = part.slice(0, 3).join('/');
-              if (result == "/dashboard/song") {
-                     handleClickSong()
               }
        }, [location])
 
@@ -1489,6 +1484,39 @@ const LinksSidebar = () => {
                                                  Delivery Time
                                           </li>
                                    </Link>
+                                   <Link to={"setting/sound"} onClick={handleClickDeliveryTime}>
+                                          <li
+                                                 className={`${isActiveSound ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                 }>
+                                                 Sound
+                                          </li>
+                                   </Link>
+                                   {/*  <Link to="sound"
+                            onMouseMove={() => setIsActiveSoundIcon(true)}
+                            onMouseOut={() => setIsActiveSoundIcon(false)}
+                            onClick={handleClickSound}
+                            className={`
+                                   ${isActiveSound ? 'active' : ''}
+                                   ${hideSide ? 'justify-between' : 'justify-center'} 
+                                   hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
+                                   hover:text-mainColor w-full flex items-center 
+                                   transition-all duration-300 group`}
+                     >
+                            <div className="flex items-center gap-x-2">
+                                   <MdNotificationsActive
+                                          className={`${isActiveSoundIcon || isActiveSound ? 'text-[#9E090F]' : 'text-[#fff]'} text-2xl`}
+                                   />
+                                   <span
+                                          className={`${hideSide ? 'block' : 'hidden'}
+                                           ${isActiveSound ? "text-mainColor" : "text-white"}
+                                          text-lg font-TextFontRegular transition-all duration-300
+                                          group-hover:text-mainColor`}
+                                   >
+                                          Sound
+                                   </span>
+                            </div>
+                     </Link> */}
                             </ul>
 
                      </div>
@@ -1765,13 +1793,13 @@ const LinksSidebar = () => {
                                    </span>
                             </div>
                      </Link>
-                     {/* Song */}
-                     <Link to="song"
-                            onMouseMove={() => setIsActiveSongIcon(true)}
-                            onMouseOut={() => setIsActiveSongIcon(false)}
-                            onClick={handleClickSong}
+                     {/* Sound */}
+                     {/* <Link to="sound"
+                            onMouseMove={() => setIsActiveSoundIcon(true)}
+                            onMouseOut={() => setIsActiveSoundIcon(false)}
+                            onClick={handleClickSound}
                             className={`
-                                   ${isActiveSong ? 'active' : ''}
+                                   ${isActiveSound ? 'active' : ''}
                                    ${hideSide ? 'justify-between' : 'justify-center'} 
                                    hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
                                    hover:text-mainColor w-full flex items-center 
@@ -1779,18 +1807,18 @@ const LinksSidebar = () => {
                      >
                             <div className="flex items-center gap-x-2">
                                    <MdNotificationsActive
-                                          className={`${isActiveSongIcon || isActiveSong ? 'text-[#9E090F]' : 'text-[#fff]'} text-2xl`}
+                                          className={`${isActiveSoundIcon || isActiveSound ? 'text-[#9E090F]' : 'text-[#fff]'} text-2xl`}
                                    />
                                    <span
                                           className={`${hideSide ? 'block' : 'hidden'}
-                                           ${isActiveSong ? "text-mainColor" : "text-white"}
+                                           ${isActiveSound ? "text-mainColor" : "text-white"}
                                           text-lg font-TextFontRegular transition-all duration-300
                                           group-hover:text-mainColor`}
                                    >
                                           Sound
                                    </span>
                             </div>
-                     </Link>
+                     </Link> */}
                      {/* Deal Order */}
                      <Link to="deal_order"
                             onMouseMove={() => setIsActiveDealOrderIcon(true)}
