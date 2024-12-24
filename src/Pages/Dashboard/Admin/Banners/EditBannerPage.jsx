@@ -13,7 +13,7 @@ const EditBannerPage = () => {
 
        const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://Bcknd.food2go.online/admin/translation' });
        const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: 'https://Bcknd.food2go.online/admin/category' });
-       const { refetch: refetchData, loading: loadingData, data: allData } = useGet({ url: 'https://bcknd.food2go.online/admin/banner' });
+       const { refetch: refetchData, loading: loadingData, data: allData } = useGet({ url: 'https://Bcknd.food2go.online/admin/banner' });
 
        const { refetch: refetchBanner, loading: loadingBanner, data: dataBanner } = useGet({ url: `https://Bcknd.food2go.online/admin/banner/item/${bannerId}` });
        const { postData, loadingPost, response } = usePost({ url: `https://Bcknd.food2go.online/admin/banner/update/${bannerId}` });

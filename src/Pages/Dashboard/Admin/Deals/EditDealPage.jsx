@@ -14,7 +14,7 @@ const EditDealPage = () => {
 
   const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://Bcknd.food2go.online/admin/translation' });
   const { refetch: refetchDeal, loading: loadingDeal, data: dataDeal } = useGet({ url: `https://Bcknd.food2go.online/admin/deal/item/${dealId}` });
-  const { postData, loadingPost, response } = usePost({ url: `https://bcknd.food2go.online/admin/deal/update/${dealId}` });
+  const { postData, loadingPost, response } = usePost({ url: `https://Bcknd.food2go.online/admin/deal/update/${dealId}` });
 
   const auth = useAuth();
   const navigate = useNavigate();

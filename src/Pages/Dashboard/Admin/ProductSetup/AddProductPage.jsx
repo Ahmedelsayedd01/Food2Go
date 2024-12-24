@@ -691,7 +691,7 @@ const AddProductPage = () => {
     //   console.log('selectedAddonsId', selectedAddonsId)
     //   return;
     // }
-    
+
     if (!selectedItemTypeName) {
       auth.toastError('please Enter Item Type')
       console.log('selectedItemTypeName', selectedItemTypeName)

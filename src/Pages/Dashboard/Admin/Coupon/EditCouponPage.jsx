@@ -8,9 +8,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 const EditCouponPage = () => {
         const { couponId } = useParams()
-        const { refetch: refetchAllCoupon, loading: loadingAllCoupon, data: dataAllCoupon } = useGet({ url: `https://bcknd.food2go.online/admin/coupon` });
-        const { refetch: refetchCoupon, loading: loadingCoupon, data: dataCoupon } = useGet({ url: `https://bcknd.food2go.online/admin/coupon/item/${couponId}` });
-        const { postData, loadingPost, response } = usePost({ url: `https://bcknd.food2go.online/admin/coupon/update/${couponId}` });
+        const { refetch: refetchAllCoupon, loading: loadingAllCoupon, data: dataAllCoupon } = useGet({ url: `https://Bcknd.food2go.online/admin/coupon` });
+        const { refetch: refetchCoupon, loading: loadingCoupon, data: dataCoupon } = useGet({ url: `https://Bcknd.food2go.online/admin/coupon/item/${couponId}` });
+        const { postData, loadingPost, response } = usePost({ url: `https://Bcknd.food2go.online/admin/coupon/update/${couponId}` });
         const [coupons, setCoupons] = useState([]);
 
         const auth = useAuth();
