@@ -29,7 +29,53 @@ const DetailsOrderPage = () => {
 
        const [openDeliveries, setOpenDeliveries] = useState(null);
 
+       const timeString = dataDetailsOrder?.order?.date || '';
+       const [olderHours, olderMinutes] = timeString.split(':').map(Number); // Extract hours and minutes as numbers
+       const dateObj = new Date();
+       dateObj.setHours(olderHours, olderMinutes);
 
+       const dayString = dataDetailsOrder?.order?.order_date || '';
+       const [olderyear, olderMonth, olderDay] = dayString.split('-').map(Number); // Extract year, month, and day as numbers
+       const dayObj = new Date();
+       console.log('dayString', dayString);
+       dayObj.setFullYear(olderyear);
+       dayObj.setMonth(olderMonth - 1); // Months are zero-based in JavaScript Date
+       dayObj.setDate(olderDay);
+
+       // Create a new Date object for the current date and time
+       const time = new Date();
+
+       // Extract time components using Date methods
+       const day = time.getDate();
+       const hour = time.getHours();
+       const minute = time.getMinutes();
+       const second = time.getSeconds();
+
+       console.log('day', day);
+       console.log('hour', hour);
+       console.log('minute', minute);
+       console.log('second', second);
+
+       // If you need to modify the time object (not necessary here):
+       time.setDate(day);
+       time.setHours(hour);
+       time.setMinutes(minute);
+       time.setSeconds(second);
+
+       console.log('Updated time', time);
+
+       // Create an object with the extracted time values
+       const initialTime = {
+              currentDay: day,
+              currentHour: hour,
+              currentMinute: minute,
+              currentSecond: second,
+       };
+
+
+
+
+       console.log('initialTime', initialTime)
        const handleChangeDeliveries = (e) => {
               const value = e.target.value.toLowerCase(); // Normalize input value
               setSearchDelivery(value);
@@ -590,16 +636,25 @@ const DetailsOrderPage = () => {
                                                                              {preparationTime ? (
                                                                                     <span
                                                                                            className={
-                                                                                                  preparationTime?.days === 0 &&
-                                                                                                         preparationTime?.hours === 0 &&
-                                                                                                         preparationTime?.minutes === 0 &&
-                                                                                                         preparationTime?.seconds === 0
+                                                                                                  (preparationTime?.hours - olderHours) < 0
                                                                                                          ? "text-red-500"
                                                                                                          : "text-cyan-400"
                                                                                            }
                                                                                     >
-                                                                                           {preparationTime?.days}d {preparationTime?.hours}h{" "}
-                                                                                           {preparationTime?.minutes}m {preparationTime?.seconds}s Left
+                                                                                           {(preparationTime?.hours - olderHours < 0) ? (
+                                                                                                  <>
+                                                                                                         {initialTime.currentDay - olderDay}d {olderHours - preparationTime?.hours}h{" "}
+                                                                                                         {preparationTime?.minutes - olderMinutes}m {preparationTime?.seconds}s
+                                                                                                  </>
+
+                                                                                           ) : (
+                                                                                                  <>
+                                                                                                         {preparationTime.days}d {olderHours - preparationTime?.hours}h{" "}
+                                                                                                         {olderMinutes - preparationTime?.minutes}m {preparationTime?.seconds}s
+                                                                                                  </>
+                                                                                           )}
+
+                                                                                           {(preparationTime?.hours - olderHours < 0) ? "Over" : "Left"}
                                                                                     </span>
                                                                              ) : (
                                                                                     <span className="text-gray-400">Preparing time not available</span>
