@@ -1,8 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { DateInput, DropDown, EmailInput, NumberInput, StaticButton, SubmitButton, Switch, TextInput, TitleSection, UploadInput } from '../../../../Components/Components';
+import { DateInput, DropDown, EmailInput, NumberInput, StaticButton, StaticLoader, SubmitButton, Switch, TextInput, TitleSection, UploadInput } from '../../../../Components/Components';
 import { Dropdown } from 'primereact/dropdown';
 
 import moment from 'moment-timezone';
+import { useGet } from '../../../../Hooks/useGet';
+import { usePost } from '../../../../Hooks/usePostJson';
+import { useAuth } from '../../../../Context/Auth';
 
 
 
@@ -10,6 +13,40 @@ import moment from 'moment-timezone';
 const BusinessSettingsPage = () => {
        const LogoRef = useRef();
        const IconRef = useRef();
+       const auth = useAuth();
+
+       const { refetch: refetchCompany, loading: loadingCompany, data: dataCompany } = useGet({ url: 'https://bcknd.food2go.online/admin/settings/business_setup/company' });
+       const { refetch: refetchCity, loading: loadingCity, data: dataCity } = useGet({ url: 'https://bcknd.food2go.online/admin/settings/city' });
+       const [dataCompany2,setDataCompany] =useState(null)
+       const [data_City,setDataCity] =useState([])
+       const [dataCompanyInfo,setDataCompanyInfo] =useState([])
+       const [dataCurrency,setDataCurrency] =useState([]);
+       const [currencyID,setCurrencyId]= useState();
+       const { postData, loadingPost, response } = usePost({ url:'https://bcknd.food2go.online/admin/settings/business_setup/company/add'});
+
+
+         useEffect(() => {
+              refetchCompany();
+              // refetchCity();
+          }, [refetchCompany]);
+
+             useEffect(() => {
+              if(dataCompany){
+              setDataCompany(dataCompany)
+              setDataCurrency(dataCompany.currency || [])
+              console.log("data fetch currency :", dataCurrency);
+              }
+             
+               console.log("data fetch company :", dataCompany);
+              //  console.log("data currency " , dataCompany.currency[0]?.currancy_name)
+             }, [dataCompany])
+
+       //       useEffect(() => {
+       //        if(dataCity)
+       //        setDataCity(dataCity)
+       //         console.log("data fetch city :", dataCity);
+       //       }, [dataCity])
+
 
        console.log('moment', moment.tz.names())
 
@@ -17,7 +54,7 @@ const BusinessSettingsPage = () => {
        const TimeZoneRef = useRef();
        const TimeFormatRef = useRef();
        const CurrencyRef = useRef();
-
+       
        const [maintenanceMode, setMaintenanceMode] = useState(0);
 
        const [companyName, setCompanyName] = useState('');
@@ -76,6 +113,7 @@ const BusinessSettingsPage = () => {
               { name: 'Vatican City' }, { name: 'Venezuela' }, { name: 'Vietnam' }, { name: 'Yemen' }, { name: 'Zambia' },
               { name: 'Zimbabwe' }
        ]);
+
        const [isOpenCountries, setIsOpenCountries] = useState(false);
 
        const [stateTimeZone, setStateTimeZone] = useState('Select Time Zone');
@@ -87,9 +125,11 @@ const BusinessSettingsPage = () => {
        const [timeFormat, setTimeFormat] = useState([{ name: 'am/pm' }, { name: '24hours' }]);
        const [isOpenTimeFormat, setIsOpenTimeFormat] = useState(false);
 
-       const [stateCurrency, setStateCurrency] = useState('Select Currency');
-       const [currency, setCurrency] = useState([{ name: 'EGP' }, { name: 'USD' }, { name: 'GBP' }, { name: 'CAD' }]);
-       const [isOpenCurrency, setIsOpenCurrency] = useState(false);
+       // const [stateCurrency, setStateCurrency] = useState('Select Currency');
+       // const [currency, setCurrency] = useState([{ name: 'EGP' }, { name: 'USD' }, { name: 'GBP' }, { name: 'CAD' }]);
+       // const [isOpenCurrency, setIsOpenCurrency] = useState(false);
+       const [stateDataCurrency, setStateDataCurrency] = useState('Select Currency');
+       const [isOpenDataCurrency, setIsOpenDataCurrency] = useState(false);
 
 
        const [leftCurrency, setLeftCurrency] = useState(0);
@@ -110,6 +150,78 @@ const BusinessSettingsPage = () => {
 
        const [startDate, setStartDate] = useState('');
        const [endDate, setEndDate] = useState('');
+       
+       const handelAddCompany = async (e)=>{
+              e.preventDefault();
+
+                 // Validation for required fields
+                 if (!companyName) {
+                     auth.toastError('Please enter companyName ');
+                     return;
+                 }
+                 if (!companyPhone) {
+                     auth.toastError('Please enter companyPhone');
+                     return;
+                 }
+                 if (!companyEmail) {
+                     auth.toastError('Please enter companyEmail ');
+                     return;
+                 }
+                 if (!companyAddress) {
+                     auth.toastError('Please enter companyAddress');
+                   }
+                   if (!logo) {
+                     auth.toastError('Please enter logo');
+                   }
+                   if (!icon) {
+                     auth.toastError('Please enter icon');
+                   }
+                   if (!selectedTimeZone) {
+                     auth.toastError('Please enter timeZone');
+                   }
+                   if (!timeFormat) {
+                     auth.toastError('Please enter timeFormat');
+                   }
+
+              //      if (!currency) {
+              //        auth.toastError('Please enter currency');
+              //      }
+                 
+                   if (!companyCopyrightText) {
+                     auth.toastError('Please enter companyCopyrightText');
+                   }
+
+                if (leftCurrency === 0 && rightCurrency === 0) {
+                     auth.toastError('Please enter either leftCurrency or rightCurrency'); 
+              }
+
+
+                   const formData = new FormData();
+                   formData.append('name', companyName);
+                   formData.append('phone', companyPhone);
+                   formData.append('email', companyEmail);
+                   formData.append('address', companyAddress);
+
+                   formData.append('logo', logo);
+                   formData.append('fav_icon', icon);
+                   formData.append('time_zone', selectedTimeZone);
+
+                   formData.append('time_format', stateTimeFormat);
+                   formData.append('currency_id', currencyID);
+
+                   if (leftCurrency === 0 && rightCurrency===0) {
+                     formData.append('currency_position', "");
+                 }else if (leftCurrency === 0 && rightCurrency===1){
+                     formData.append('currency_position', "right");
+                 }else if (leftCurrency === 1 && rightCurrency===0){
+                     formData.append('currency_position', "left");
+                 }
+
+                   formData.append('copy_right', companyCopyrightText);
+
+                   postData(formData, 'Branch Added Success');
+
+       }
 
        useEffect(() => {
               const timeZones = moment.tz.names().map((name) => ({ name: name }));
@@ -120,7 +232,8 @@ const BusinessSettingsPage = () => {
               setIsOpenCountries(false)
               setIsOpenTimeZone(false)
               setIsOpenTimeFormat(false)
-              setIsOpenCurrency(false)
+              // setIsOpenCurrency(false)
+              setIsOpenDataCurrency(false)
        };
        const handleOpenCountries = () => {
               closeAll();
@@ -134,9 +247,13 @@ const BusinessSettingsPage = () => {
               closeAll();
               setIsOpenTimeFormat(!isOpenTimeFormat)
        };
+       // const handleOpenCurrency = () => {
+       //        closeAll();
+       //        setIsOpenCurrency(!isOpenCurrency)
+       // };
        const handleOpenCurrency = () => {
               closeAll();
-              setIsOpenCurrency(!isOpenCurrency)
+              setIsOpenDataCurrency(!isOpenDataCurrency)
        };
 
        const handleSelectCountry = (country) => {
@@ -148,8 +265,14 @@ const BusinessSettingsPage = () => {
        const handleSelectTimeFormat = (timeFormat) => {
               setStateTimeFormat(timeFormat.name);
        };
-       const handleSelectCurrency = (currency) => {
-              setStateCurrency(currency.name);
+       // const handleSelectCurrency = (currency) => {
+       //        setStateCurrency(currency.name );
+       // };
+       const handleSelectDataCurrency = (currency) => {
+              setStateDataCurrency(currency.currancy_name );
+              setCurrencyId(currency.id)
+
+              console.log(currency)
        };
 
        const handleClickLeftCurrency = (e) => {
@@ -272,7 +395,8 @@ const BusinessSettingsPage = () => {
                             setIsOpenCountries(false);
                             setIsOpenTimeZone(false);
                             setIsOpenTimeFormat(false);
-                            setIsOpenCurrency(false);
+                            // setIsOpenCurrency(false);
+                            setIsOpenDataCurrency(false)
                      }
               };
 
@@ -295,7 +419,8 @@ const BusinessSettingsPage = () => {
               setStateCountries('Select Country');
               setStateTimeZone('Select Time Zone');
               setStateTimeFormat('Select Time Format');
-              setStateCurrency('Select Currency');
+              // setStateCurrency('Select Currency');
+              setDataCurrency('Select Currency')
               setLeftCurrency(0);
               setRightCurrency(0);
               setCompanyCopyrightText('');
@@ -314,9 +439,16 @@ const BusinessSettingsPage = () => {
 
        return (
               <>
+               { loadingCompany || loadingPost ? (
+                            <>
+                                   <div className="w-full h-56 flex justify-center items-center">
+                                          <StaticLoader />
+                                   </div>
+                            </>
+                     ):
                      <form
                             className="w-full flex sm:flex-col lg:flex-row flex-wrap items-start justify-start gap-4"
-                            onSubmit={(e) => e.preventDefault()}
+                            onSubmit={handelAddCompany}
                      >
                             <div className="w-full">
                                    <TitleSection text={'System Maintenance'} />
@@ -449,7 +581,7 @@ const BusinessSettingsPage = () => {
                                    />
                             </div>
                             {/* Currency */}
-                            <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                            {/* <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                                    <span className="text-xl font-TextFontRegular text-thirdColor">Currency:</span>
                                    <DropDown
                                           ref={CurrencyRef}
@@ -459,6 +591,19 @@ const BusinessSettingsPage = () => {
                                           handleOpenOption={handleOpenCurrency}
                                           onSelectOption={handleSelectCurrency}
                                           options={currency}
+                                          border={false}
+                                   />
+                            </div> */}
+                            <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                   <span className="text-xl font-TextFontRegular text-thirdColor">Currency:</span>
+                                   <DropDown
+                                          ref={CurrencyRef}
+                                          handleOpen={handleOpenCurrency}
+                                          stateoption={stateDataCurrency}
+                                          openMenu={isOpenDataCurrency}
+                                          handleOpenOption={handleOpenCurrency}
+                                          onSelectOption={handleSelectDataCurrency}
+                                          options={dataCurrency || []} 
                                           border={false}
                                    />
                             </div>
@@ -637,12 +782,13 @@ const BusinessSettingsPage = () => {
                                           <SubmitButton
                                                  text={'Submit'}
                                                  rounded='rounded-full'
-                                                 handleClick={(e) => e.preventDefault()}
+                                                 handleClick={handelAddCompany}
                                           />
                                    </div>
 
                             </div>
                      </form>
+}
               </>
        )
 }

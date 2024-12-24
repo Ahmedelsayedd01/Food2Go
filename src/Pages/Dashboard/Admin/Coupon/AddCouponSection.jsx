@@ -318,7 +318,7 @@ const AddCouponPage =({ update, setUpdate })=>{
         formData.append('code', code);
         formData.append('start_date', startDate);
         formData.append('expire_date', expireDate);
-
+ 
         if(valueTypeName === "Percentage"){
                 formData.append('discount_type', "percentage");
         }

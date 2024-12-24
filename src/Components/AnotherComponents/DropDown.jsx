@@ -47,7 +47,7 @@ const DropDown = forwardRef(({
                      </div>
               </div>
 
-       );
+);
 });
 
 export default DropDown;

@@ -1,9 +1,32 @@
-import React, { useRef, useState } from 'react'
-import { EmailInput, NumberInput, PasswordInput, StaticButton, SubmitButton, TextInput, TitleSection, UploadInput } from '../../../../Components/Components';
+import React, { useEffect, useRef, useState } from 'react'
+import { DropDown, EmailInput, NumberInput, PasswordInput, StaticButton, StaticLoader, SubmitButton, TextInput, TitleSection, UploadInput } from '../../../../Components/Components';
+import { usePost } from '../../../../Hooks/usePostJson';
+import { useGet } from '../../../../Hooks/useGet';
+import axios from 'axios';
+import { useAuth } from '../../../../Context/Auth';
 
-const MainBranchSetupPage = () => {
+const MainBranchSetupPage = ({refetch}) => {
+       const { refetch: refetchBranch, loading: loadingBranch, data: dataBranch } = useGet({ url: 'https://bcknd.food2go.online/admin/settings/business_setup/branch' });
+       const [branch,setBranch] = useState([]) 
+
+       const { postData, loadingPost, response } = usePost({ url:'https://bcknd.food2go.online/admin/settings/business_setup/branch/add'});
+
+   useEffect(() => {
+    refetchBranch();
+
+   }, [refetchBranch]);
+   
+   useEffect(() => {
+    if(dataBranch){
+       setBranch(dataBranch)
+       console.log("data fetch branch : ", dataBranch);
+    }
+   }, [dataBranch])
+
+       const auth = useAuth();
        const BranchImageRef = useRef();
        const BranchCoverRef = useRef();
+       const CountriesRef = useRef();
 
        const [name, setName] = useState('');
        const [foodPreparationTime, setFoodPreparationTime] = useState('00:00');
@@ -11,7 +34,14 @@ const MainBranchSetupPage = () => {
        const [email, setEmail] = useState('');
        const [phone, setPhone] = useState('');
        const [password, setPassword] = useState('');
-       
+       const [stateCountries, setStateCountries] = useState('Select Country');
+       const [selectedCountry, setSelectedCountry] = useState('');
+       const [countries, setCountries] = useState([
+                  { name: 'Afghanistan' }, { name: 'Albania' }, { name: 'Algeria' }, { name: 'Andorra' }, { name: 'Angola' },
+                  { name: 'Antigua and Barbuda' }, { name: 'Argentina' }, { name: 'Armenia' }, { name: 'Australia' }, { name: 'Austria' },
+                  { name: 'Azerbaijan' }, { name: 'Bahamas' }, { name: 'Bahrain' }, { name: 'Bangladesh' }, { name: 'Barbados' },   
+       ]);
+       const [isOpenCountries, setIsOpenCountries] = useState(false);
        const [branchImage, setBranchImage] = useState('');
        const [branchImageFile, setBranchImageFile] = useState(null);
        const [branchCover, setBranchCover] = useState('');
@@ -20,6 +50,117 @@ const MainBranchSetupPage = () => {
        const [latitude, setLatitude] = useState('');
        const [longitude, setLongitude] = useState('');
        const [coverage, setCoverage] = useState('');
+       const handleOpenCountries = () => {
+              closeAll();
+              setIsOpenCountries(!isOpenCountries)
+       };
+       const handleSelectCountry = (country) => {
+              setStateCountries(country.name);
+       };
+         useEffect(() => {
+                     const handleClickOutside = (event) => {
+                            // Close dropdown if clicked outside
+                            if (
+                                   CountriesRef.current && !CountriesRef.current.contains(event.target)
+                            ) {
+                                   setIsOpenCountries(false);
+                                   // setIsOpenTimeZone(false);
+                                   // setIsOpenTimeFormat(false);
+                                   // // setIsOpenCurrency(false);
+                                   // setIsOpenDataCurrency(false)
+                            }
+                     };
+       
+                     document.addEventListener('mousedown', handleClickOutside);
+                     return () => {
+                            document.removeEventListener('mousedown', handleClickOutside);
+                     };
+              }, []);
+
+       //  post formdata in postdata
+       const handleBranchAdd = async (e) => {
+              e.preventDefault();
+          
+              // Validation for required fields
+              if (!name) {
+                  auth.toastError('Please enter first name');
+                  return;
+              }
+              if (foodPreparationTime === '00:00') {
+                  auth.toastError('Please enter preparation time');
+                  return;
+              }
+              if (!address) {
+                  auth.toastError('Please enter address');
+                  return;
+              }
+              if (!email) {
+                  auth.toastError('Please enter email');
+                  return;
+              }
+              if (!phone) {
+                  auth.toastError('Please enter phone number');
+                  return;
+              }
+              if (!password) {
+                  auth.toastError('Please enter password');
+                  return;
+              }
+              if (!branchImageFile) {
+                  auth.toastError('Please upload branch image file');
+                  return;
+              }
+              if (!branchCoverFile) {
+                  auth.toastError('Please upload branch cover file');
+                  return;
+              }
+              if (!latitude) {
+                  auth.toastError('Please enter latitude');
+                  return;
+              }
+              if (!longitude) {
+                  auth.toastError('Please enter longitude');
+                  return;
+              }
+              if (!coverage) {
+                  auth.toastError('Please enter coverage');
+                  return;
+              }
+
+              const formData = new FormData();
+              formData.append('name', name);
+              formData.append('food_preparion_time', foodPreparationTime);
+              formData.append('address', address);
+              formData.append('email', email);
+              formData.append('phone', phone);
+              formData.append('password', password);
+              formData.append('branch_image', branchImageFile);  // File Upload
+              formData.append('branch_cover', branchCoverFile);  // File Upload
+              formData.append('latitude', latitude);
+              formData.append('longitude', longitude);
+              formData.append('coverage', coverage);
+              formData.append('status', 1); 
+              formData.append('city_id', 3);
+
+            postData(formData, 'Branch Added Success done');
+
+              // try {
+              //     const response = await 
+                  
+              //     if (response?.status === 200) {
+              //         auth.toastSuccess('Branch successfully added!');
+              //     } else {
+              //         auth.toastError('Failed to add branch. Please try again.');
+              //     }
+                  
+              // } catch (error) {
+              //     auth.toastError('An error occurred. Please check your input.');
+              //     console.error('Error during post:', error);
+              // }
+              
+              
+          };
+          
 
        const handleBranchImageChange = (e) => {
               const file = e.target.files[0];
@@ -55,6 +196,7 @@ const MainBranchSetupPage = () => {
               setEmail('');
               setPhone('');
               setPassword('');
+              setStateCountries('Select Country');
               setBranchImage('');
               setBranchImageFile(null);
               setBranchCover('');
@@ -66,9 +208,16 @@ const MainBranchSetupPage = () => {
 
        return (
               <>
+                { loadingBranch || loadingPost ? (
+                            <>
+                                   <div className="w-full h-56 flex justify-center items-center">
+                                          <StaticLoader />
+                                   </div>
+                            </>
+                     ):
                      <form
                             className="w-full flex sm:flex-col lg:flex-row flex-wrap items-start justify-start gap-4"
-                            onSubmit={(e) => e.preventDefault()}
+                            onSubmit={handleBranchAdd}
                      >
                             {/* Name */}
                             <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
@@ -149,6 +298,12 @@ const MainBranchSetupPage = () => {
                                           onClick={() => handleBranchCoverClick(BranchCoverRef)}
                                    />
                             </div>
+                               <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                                               <span className="text-xl font-TextFontRegular text-thirdColor">Countries:</span>
+                                                               <DropDown value={selectedCountry} onChange={(e) => setSelectedCountry(e.value)} options={countries} optionLabel="name" placeholder="Select a Country"
+                                                                      filter className="w-full md:w-14rem" />
+                               </div>
+
                             <TitleSection text={'Store Location'} />
                             {/* Latitude */}
                             <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
@@ -168,6 +323,7 @@ const MainBranchSetupPage = () => {
                                           placeholder="Longitude"
                                    />
                             </div>
+                         
                             {/* Coverage */}
                             <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                                    <span className="text-xl font-TextFontRegular text-thirdColor">Coverage (km):</span>
@@ -186,12 +342,13 @@ const MainBranchSetupPage = () => {
                                           <SubmitButton
                                                  text={'Submit'}
                                                  rounded='rounded-full'
-                                                 handleClick={(e) => e.preventDefault()}
+                                                 handleClick={handleBranchAdd}
                                           />
                                    </div>
 
                             </div>
                      </form>
+}
               </>
        )
 }

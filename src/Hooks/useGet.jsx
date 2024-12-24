@@ -20,6 +20,7 @@ export const useGet = ({ url }) => {
             });
             if (response.status === 200) {
                 setData(response.data);
+               
             }
         } catch (error) {
             console.error('errorGet', error);

@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { AddButton, DateInput, DropDown, StaticButton, SubmitButton, TimeInput, TitleSection } from '../../../../Components/Components';
+import { useGet } from '../../../../Hooks/useGet';
+import { usePost } from '../../../../Hooks/usePostJson';
 
-const RestaurantTimeSlotPage = () => {
+const RestaurantTimeSlotPage = ({refetch}) => {
        const dropDown = useRef();
-
        const [allClosestTime, setAllClosestTime] = useState([{ closingTimeAm: '', closingTimePm: '' }]);
 
        const [day, setDay] = useState('');
@@ -53,7 +54,7 @@ const RestaurantTimeSlotPage = () => {
 
        return (
               <>
-                     <form
+              <form
                             className="w-full flex sm:flex-col lg:flex-row flex-wrap items-start justify-start gap-4"
                             onSubmit={(e) => e.preventDefault()}
                      >
@@ -149,7 +150,8 @@ const RestaurantTimeSlotPage = () => {
                                    </div>
 
                             </div>
-                     </form>
+              </form>
+
               </>
        )
 }
