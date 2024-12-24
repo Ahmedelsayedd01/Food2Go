@@ -6,7 +6,7 @@ import { useChangeState } from '../../../../../Hooks/useChangeState';
 
 const OrderTypePage = () => {
        const { refetch: refetchOrderType, loading: loadingOrderType, data: dataOrderType } = useGet({
-              url: 'https://bcknd.food2go.online/admin/settings/order_type',
+              url: 'https://Bcknd.food2go.online/admin/settings/order_type',
        });
 
        const { changeState, loadingChange, responseChange } = useChangeState();

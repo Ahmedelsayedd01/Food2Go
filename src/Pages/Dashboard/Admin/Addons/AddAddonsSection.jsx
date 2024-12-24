@@ -82,12 +82,7 @@ const AddAddonsSection = ({ update, setUpdate }) => {
        useEffect(() => {
               console.log('response', response)
               if (!loadingPost) {
-                     setAddonsName([])
-                     setAddonPrice('')
-                     setStateAddonTaxes('Select Tax')
-                     setAddonTaxesId('')
-                     setAddonTaxesName('')
-                     setAddonQuantity(0)
+                     handleReset()
               }
               setUpdate(!update)
        }, [response])

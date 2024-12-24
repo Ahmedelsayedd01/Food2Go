@@ -1,18 +1,18 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useGet } from '../../../../../Hooks/useGet';
 import { usePost } from '../../../../../Hooks/usePostJson';
-import { Switch, TextInput, UploadInput, StaticLoader ,SubmitButton, DropDown} from '../../../../../Components/Components';
+import { Switch, TextInput, UploadInput, StaticLoader, SubmitButton, DropDown } from '../../../../../Components/Components';
 import { useChangeState } from '../../../../../Hooks/useChangeState';
 
 const AutomaticPaymentPage = ({ refetch }) => {
   const { refetch: refetchAutomaticPayment, loading: loadingAutomaticPayment, data: dataAutomaticPayment } = useGet({
-    url: 'https://bcknd.food2go.online/admin/settings/payment_methods_auto',
+    url: 'https://Bcknd.food2go.online/admin/settings/payment_methods_auto',
   });
 
   const [automaticPayments, setAutomaticPayments] = useState([]);
   const [currentTap, setCurrentTap] = useState(0);
-  const { postData , loadingPost, response} = usePost({
-    url: `https://bcknd.food2go.online/admin/settings/payment_methods_auto/update/${automaticPayments[currentTap]?.id || 0}`,
+  const { postData, loadingPost, response } = usePost({
+    url: `https://Bcknd.food2go.online/admin/settings/payment_methods_auto/update/${automaticPayments[currentTap]?.id || 0}`,
   });
 
   const { changeState, loadingChange, responseChange } = useChangeState();
@@ -55,15 +55,15 @@ const AutomaticPaymentPage = ({ refetch }) => {
         setPaymobIntegrationId(currentPayment.payment_method_data.integration_id || '');
         setPaymobHmac(currentPayment.payment_method_data.Hmac || '');
 
-        if(currentPayment.payment_method_data.type === "test"){
+        if (currentPayment.payment_method_data.type === "test") {
           setStatePaymentType("Test");
           setPaymentTypeName("Test");
         }
-        else if (currentPayment.payment_method_data.type === "live"){
+        else if (currentPayment.payment_method_data.type === "live") {
           setStatePaymentType("Live");
           setPaymentTypeName("Live");
-        } 
-        else{
+        }
+        else {
           setStatePaymentType('Select Payment Type');
           setPaymentTypeName('Select Payment Type');
         }
@@ -83,8 +83,8 @@ const AutomaticPaymentPage = ({ refetch }) => {
   const handleOpenOptionPaymentType = () => setIsOpenPaymentType(false);
 
   const handleSelectPaymentType = (option) => {
-         setStatePaymentType(option.name);
-         setPaymentTypeName(option.name);
+    setStatePaymentType(option.name);
+    setPaymentTypeName(option.name);
   };
 
   const handleImageChange = (e) => {
@@ -101,24 +101,24 @@ const AutomaticPaymentPage = ({ refetch }) => {
     }
   };
 
-   // Change Payment status 
-   const handleChangeStaus = async (id, name, status) => {
+  // Change Payment status 
+  const handleChangeStaus = async (id, name, status) => {
     const response = await changeState(
-          ` https://bcknd.food2go.online/admin/settings/payment_methods_auto/status/${id}`,
-          `${name} Changed Status.`,
-          { status } // Pass status as an object if changeState expects an object
+      ` https://Bcknd.food2go.online/admin/settings/payment_methods_auto/status/${id}`,
+      `${name} Changed Status.`,
+      { status } // Pass status as an object if changeState expects an object
     );
 
     if (response) {
-          // Update categories only if changeState succeeded
-          setAutomaticPayments((prevPayment) =>
-            prevPayment.map((payment) =>
-                payment.id === id ? { ...payment, status: status } : payment
-              )
-          );
+      // Update categories only if changeState succeeded
+      setAutomaticPayments((prevPayment) =>
+        prevPayment.map((payment) =>
+          payment.id === id ? { ...payment, status: status } : payment
+        )
+      );
     }
 
-};
+  };
 
   const handleAutomaticPaymentEdit = (e) => {
     e.preventDefault();
@@ -159,11 +159,10 @@ const AutomaticPaymentPage = ({ refetch }) => {
                 <span
                   key={payment.id}
                   onClick={() => handleTap(index)}
-                  className={`${
-                    currentTap === index
-                      ? 'text-mainColor border-b-4 border-mainColor'
-                      : 'text-thirdColor'
-                  } pb-1 text-xl font-TextFontMedium transition-colors duration-300 cursor-pointer hover:text-mainColor`}
+                  className={`${currentTap === index
+                    ? 'text-mainColor border-b-4 border-mainColor'
+                    : 'text-thirdColor'
+                    } pb-1 text-xl font-TextFontMedium transition-colors duration-300 cursor-pointer hover:text-mainColor`}
                 >
                   {payment.name}
                 </span>
@@ -179,10 +178,10 @@ const AutomaticPaymentPage = ({ refetch }) => {
                         {automaticPayments[currentTap]?.name}:
                       </span>
                       <Switch
-                            checked={automaticPayments[currentTap]?.status === 1}
-                            handleClick={() => {
-                                  handleChangeStaus(automaticPayments[currentTap]?.id, automaticPayments[currentTap]?.name, automaticPayments[currentTap]?.status === 1 ? 0 : 1);
-                            }}
+                        checked={automaticPayments[currentTap]?.status === 1}
+                        handleClick={() => {
+                          handleChangeStaus(automaticPayments[currentTap]?.id, automaticPayments[currentTap]?.name, automaticPayments[currentTap]?.status === 1 ? 0 : 1);
+                        }}
                       />
                     </div>
                     <div className="flex justify-center">
@@ -211,83 +210,83 @@ const AutomaticPaymentPage = ({ refetch }) => {
                       onChange={(e) => setPaymobTitle(e.target.value)}
                       placeholder="Paymob Title"
                     />
-                </div>
-                {/* Type Input */}
-                <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                  </div>
+                  {/* Type Input */}
+                  <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                     <span className="text-xl font-TextFontRegular text-thirdColor">Payment Type:</span>
                     <DropDown
-                          ref={dropDownPaymentType}
-                          handleOpen={handleOpenPaymentType}
-                          stateoption={statePaymentType}
-                          openMenu={isOpenPaymentType}
-                          handleOpenOption={handleOpenOptionPaymentType}
-                          options={paymentType}
-                          onSelectOption={handleSelectPaymentType}
-                          border={false}
+                      ref={dropDownPaymentType}
+                      handleOpen={handleOpenPaymentType}
+                      stateoption={statePaymentType}
+                      openMenu={isOpenPaymentType}
+                      handleOpenOption={handleOpenOptionPaymentType}
+                      options={paymentType}
+                      onSelectOption={handleSelectPaymentType}
+                      border={false}
                     />
-                </div>
-                {/* CallBack Url Input */}
-                <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                        <span className="text-xl font-TextFontRegular text-thirdColor">Paymob CallBack Url:</span>
-                        <TextInput
-                                value={paymobCallBackUrl} // Access category_name property
-                                onChange={(e) => setPaymobCallBackUrl(e.target.value)}
-                                placeholder="Paymob CallBack Url"
-                        />
-                </div>
+                  </div>
+                  {/* CallBack Url Input */}
+                  <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                    <span className="text-xl font-TextFontRegular text-thirdColor">Paymob CallBack Url:</span>
+                    <TextInput
+                      value={paymobCallBackUrl} // Access category_name property
+                      onChange={(e) => setPaymobCallBackUrl(e.target.value)}
+                      placeholder="Paymob CallBack Url"
+                    />
+                  </div>
 
-                    {/* Api Key Input */}
-                    <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                        <span className="text-xl font-TextFontRegular text-thirdColor">Paymob Api Key:</span>
-                        <TextInput
-                                value={paymobApiKey} // Access category_name property
-                                onChange={(e) => setPaymobApiKey(e.target.value)}
-                                placeholder="Paymob Api Key"
-                        />
-                </div>
-                    {/* Iframe Id Input */}
-                    <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                        <span className="text-xl font-TextFontRegular text-thirdColor">Paymob Iframe Id:</span>
-                        <TextInput
-                                value={paymobIframeId} // Access category_name property
-                                onChange={(e) => setPaymobIframeId(e.target.value)}
-                                placeholder="Paymob Iframe Id"
-                        />
-                </div>
-                    {/* Integration Id Input */}
-                    <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                        <span className="text-xl font-TextFontRegular text-thirdColor">Paymob Integration Id:</span>
-                        <TextInput
-                                value={paymobIntegrationId} // Access category_name property
-                                onChange={(e) => setPaymobIntegrationId(e.target.value)}
-                                placeholder="Paymob Integration Id"
-                        />
-                </div>
-                {/* Hmac Input */}
-                <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                  {/* Api Key Input */}
+                  <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                    <span className="text-xl font-TextFontRegular text-thirdColor">Paymob Api Key:</span>
+                    <TextInput
+                      value={paymobApiKey} // Access category_name property
+                      onChange={(e) => setPaymobApiKey(e.target.value)}
+                      placeholder="Paymob Api Key"
+                    />
+                  </div>
+                  {/* Iframe Id Input */}
+                  <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                    <span className="text-xl font-TextFontRegular text-thirdColor">Paymob Iframe Id:</span>
+                    <TextInput
+                      value={paymobIframeId} // Access category_name property
+                      onChange={(e) => setPaymobIframeId(e.target.value)}
+                      placeholder="Paymob Iframe Id"
+                    />
+                  </div>
+                  {/* Integration Id Input */}
+                  <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                    <span className="text-xl font-TextFontRegular text-thirdColor">Paymob Integration Id:</span>
+                    <TextInput
+                      value={paymobIntegrationId} // Access category_name property
+                      onChange={(e) => setPaymobIntegrationId(e.target.value)}
+                      placeholder="Paymob Integration Id"
+                    />
+                  </div>
+                  {/* Hmac Input */}
+                  <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                     <span className="text-xl font-TextFontRegular text-thirdColor">Paymob Hmac:</span>
                     <TextInput
-                            value={paymobHmac} // Access category_name property
-                            onChange={(e) => setPaymobHmac(e.target.value)}
-                            placeholder="Paymob Hmac"
+                      value={paymobHmac} // Access category_name property
+                      onChange={(e) => setPaymobHmac(e.target.value)}
+                      placeholder="Paymob Hmac"
                     />
+                  </div>
                 </div>
-            </div>
 
               )}
             </div>
             {/* Buttons*/}
-                <div className="w-full flex items-center justify-end gap-x-4">
-                {/* <div className="">
+            <div className="w-full flex items-center justify-end gap-x-4">
+              {/* <div className="">
                 <StaticButton text={'Reset'} handleClick={handleReset} bgColor='bg-transparent' Color='text-mainColor' border={'border-2'} borderColor={'border-mainColor'} rounded='rounded-full' />
                 </div> */}
-                <div className="">
+              <div className="">
                 <SubmitButton
-                        text={'Edit'}
-                        rounded='rounded-full'
-                        handleClick={handleAutomaticPaymentEdit}
+                  text={'Edit'}
+                  rounded='rounded-full'
+                  handleClick={handleAutomaticPaymentEdit}
                 />
-                </div>
+              </div>
             </div>
           </form>
         </section>

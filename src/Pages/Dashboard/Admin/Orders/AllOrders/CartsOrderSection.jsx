@@ -8,7 +8,7 @@ const CartsOrderSection = ({ ordersNum }) => {
     <>
       <div className="w-full flex sm:flex-col lg:flex-row flex-wrap items-start justify-center gap-4 mt-4">
         <Cart
-          route={'/dashboard/orders/all'}
+          route={'/dashboard/orders/pending'}
           icon={<PendingIcon />}
           title={'Pending'}
           count={ordersNum.ordersPending || 0}

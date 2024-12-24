@@ -644,12 +644,16 @@ const EditProductPage = () => {
               if (validProductNames.length === 0) {
                      auth.toastError('Please enter a product name');
                      console.log('productNames', validProductNames);
+                     console.log('validProductNames.length', validProductNames.length);
+                     console.log('validProductNames', validProductNames)
                      return;
               }
 
               if (validProductNames.length !== taps.length) {
                      auth.toastError('Please enter all product names');
                      console.log('productNames', validProductNames);
+                     console.log('taps.length', taps.length)
+                     console.log('validProductNames', validProductNames)
                      return;
               }
 
