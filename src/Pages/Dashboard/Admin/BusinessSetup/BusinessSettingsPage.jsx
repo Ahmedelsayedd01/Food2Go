@@ -17,44 +17,43 @@ const BusinessSettingsPage = () => {
 
        const { refetch: refetchCompany, loading: loadingCompany, data: dataCompany } = useGet({ url: 'https://bcknd.food2go.online/admin/settings/business_setup/company' });
        const { refetch: refetchCity, loading: loadingCity, data: dataCity } = useGet({ url: 'https://bcknd.food2go.online/admin/settings/city' });
-       const [dataCompany2,setDataCompany] =useState(null)
-       const [data_City,setDataCity] =useState([])
-       const [dataCompanyInfo,setDataCompanyInfo] =useState([])
-       const [dataCurrency,setDataCurrency] =useState([]);
-       const [currencyID,setCurrencyId]= useState();
-       const { postData, loadingPost, response } = usePost({ url:'https://bcknd.food2go.online/admin/settings/business_setup/company/add'});
+       const [dataCompany2, setDataCompany] = useState(null)
+       const [data_City, setDataCity] = useState([])
+       const [dataCompanyInfo, setDataCompanyInfo] = useState([])
+
+       const [dataCurrency, setDataCurrency] = useState([]);
+       const [stateCurrency, setStateCurrency] = useState('Select Currency');
+       const [currencyId, setCurrencyId] = useState('');
+       const [isOpenCurrency, setIsOpenCurrency] = useState(false);
+
+       const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/settings/business_setup/company/add' });
 
 
-         useEffect(() => {
+       useEffect(() => {
               refetchCompany();
               // refetchCity();
-          }, [refetchCompany]);
+       }, [refetchCompany]);
 
-             useEffect(() => {
-              if(dataCompany){
-              setDataCompany(dataCompany)
-              setDataCurrency(dataCompany.currency || [])
-              console.log("data fetch currency :", dataCurrency);
+       useEffect(() => {
+              if (dataCompany && dataCompany.company) {
+                     setDataCompany(dataCompany);
+                     setDataCurrency(dataCompany.currency || []);
               }
-             
-               console.log("data fetch company :", dataCompany);
-              //  console.log("data currency " , dataCompany.currency[0]?.currancy_name)
-             }, [dataCompany])
 
-       //       useEffect(() => {
-       //        if(dataCity)
-       //        setDataCity(dataCity)
-       //         console.log("data fetch city :", dataCity);
-       //       }, [dataCity])
+              console.log("data fetch company :", dataCompany);
+       }, [dataCompany]);
 
+       useEffect(() => {
+              // Log updated dataCurrency when it changes
+              console.log("data fetch currency :", dataCurrency);
+       }, [dataCurrency]);
 
-       console.log('moment', moment.tz.names())
 
        const CountriesRef = useRef();
        const TimeZoneRef = useRef();
        const TimeFormatRef = useRef();
        const CurrencyRef = useRef();
-       
+
        const [maintenanceMode, setMaintenanceMode] = useState(0);
 
        const [companyName, setCompanyName] = useState('');
@@ -128,8 +127,6 @@ const BusinessSettingsPage = () => {
        // const [stateCurrency, setStateCurrency] = useState('Select Currency');
        // const [currency, setCurrency] = useState([{ name: 'EGP' }, { name: 'USD' }, { name: 'GBP' }, { name: 'CAD' }]);
        // const [isOpenCurrency, setIsOpenCurrency] = useState(false);
-       const [stateDataCurrency, setStateDataCurrency] = useState('Select Currency');
-       const [isOpenDataCurrency, setIsOpenDataCurrency] = useState(false);
 
 
        const [leftCurrency, setLeftCurrency] = useState(0);
@@ -150,82 +147,83 @@ const BusinessSettingsPage = () => {
 
        const [startDate, setStartDate] = useState('');
        const [endDate, setEndDate] = useState('');
-       
-       const handelAddCompany = async (e)=>{
+
+       const handelAddCompany = async (e) => {
               e.preventDefault();
 
-                 // Validation for required fields
-                 if (!companyName) {
+              // Validation for required fields
+              if (!companyName) {
                      auth.toastError('Please enter companyName ');
                      return;
-                 }
-                 if (!companyPhone) {
+              }
+              if (!companyPhone) {
                      auth.toastError('Please enter companyPhone');
                      return;
-                 }
-                 if (!companyEmail) {
+              }
+              if (!companyEmail) {
                      auth.toastError('Please enter companyEmail ');
                      return;
-                 }
-                 if (!companyAddress) {
+              }
+              if (!companyAddress) {
                      auth.toastError('Please enter companyAddress');
-                   }
-                   if (!logo) {
+              }
+              if (!logo) {
                      auth.toastError('Please enter logo');
-                   }
-                   if (!icon) {
+              }
+              if (!icon) {
                      auth.toastError('Please enter icon');
-                   }
-                   if (!selectedTimeZone) {
+              }
+              if (!selectedTimeZone) {
                      auth.toastError('Please enter timeZone');
-                   }
-                   if (!timeFormat) {
+              }
+              if (!timeFormat) {
                      auth.toastError('Please enter timeFormat');
-                   }
+              }
 
               //      if (!currency) {
               //        auth.toastError('Please enter currency');
               //      }
-                 
-                   if (!companyCopyrightText) {
-                     auth.toastError('Please enter companyCopyrightText');
-                   }
 
-                if (leftCurrency === 0 && rightCurrency === 0) {
-                     auth.toastError('Please enter either leftCurrency or rightCurrency'); 
+              if (!companyCopyrightText) {
+                     auth.toastError('Please enter companyCopyrightText');
+              }
+
+              if (leftCurrency === 0 && rightCurrency === 0) {
+                     auth.toastError('Please enter either leftCurrency or rightCurrency');
               }
 
 
-                   const formData = new FormData();
-                   formData.append('name', companyName);
-                   formData.append('phone', companyPhone);
-                   formData.append('email', companyEmail);
-                   formData.append('address', companyAddress);
+              const formData = new FormData();
+              formData.append('name', companyName);
+              formData.append('phone', companyPhone);
+              formData.append('email', companyEmail);
+              formData.append('address', companyAddress);
 
-                   formData.append('logo', logo);
-                   formData.append('fav_icon', icon);
-                   formData.append('time_zone', selectedTimeZone);
+              formData.append('logo', logo);
+              formData.append('fav_icon', icon);
+              formData.append('time_zone', selectedTimeZone);
 
-                   formData.append('time_format', stateTimeFormat);
-                   formData.append('currency_id', currencyID);
+              formData.append('time_format', stateTimeFormat);
+              formData.append('currency_id', currencyId);
 
-                   if (leftCurrency === 0 && rightCurrency===0) {
+              if (leftCurrency === 0 && rightCurrency === 0) {
                      formData.append('currency_position', "");
-                 }else if (leftCurrency === 0 && rightCurrency===1){
+              } else if (leftCurrency === 0 && rightCurrency === 1) {
                      formData.append('currency_position', "right");
-                 }else if (leftCurrency === 1 && rightCurrency===0){
+              } else if (leftCurrency === 1 && rightCurrency === 0) {
                      formData.append('currency_position', "left");
-                 }
+              }
 
-                   formData.append('copy_right', companyCopyrightText);
+              formData.append('copy_right', companyCopyrightText);
 
-                   postData(formData, 'Branch Added Success');
+              postData(formData, 'Branch Added Success');
 
        }
 
        useEffect(() => {
               const timeZones = moment.tz.names().map((name) => ({ name: name }));
               setTimeZone(timeZones);
+              console.log('moment', moment.tz.names())
        }, []);
 
        const closeAll = () => {
@@ -233,8 +231,15 @@ const BusinessSettingsPage = () => {
               setIsOpenTimeZone(false)
               setIsOpenTimeFormat(false)
               // setIsOpenCurrency(false)
-              setIsOpenDataCurrency(false)
+              setIsOpenCurrency(false)
        };
+       const handleOpenCurrency = () => {
+              closeAll();
+              setIsOpenCurrency(!isOpenCurrency);
+       }
+
+       const handleOpenOptionCurrency = () => setIsOpenCurrency(false);
+
        const handleOpenCountries = () => {
               closeAll();
               setIsOpenCountries(!isOpenCountries)
@@ -247,13 +252,10 @@ const BusinessSettingsPage = () => {
               closeAll();
               setIsOpenTimeFormat(!isOpenTimeFormat)
        };
-       // const handleOpenCurrency = () => {
-       //        closeAll();
-       //        setIsOpenCurrency(!isOpenCurrency)
-       // };
-       const handleOpenCurrency = () => {
-              closeAll();
-              setIsOpenDataCurrency(!isOpenDataCurrency)
+
+       const handleSelectCurrency = (option) => {
+              setCurrencyId(option.id);
+              setStateCurrency(option.name);
        };
 
        const handleSelectCountry = (country) => {
@@ -268,12 +270,6 @@ const BusinessSettingsPage = () => {
        // const handleSelectCurrency = (currency) => {
        //        setStateCurrency(currency.name );
        // };
-       const handleSelectDataCurrency = (currency) => {
-              setStateDataCurrency(currency.currancy_name );
-              setCurrencyId(currency.id)
-
-              console.log(currency)
-       };
 
        const handleClickLeftCurrency = (e) => {
               const isChecked = e.target.checked;
@@ -395,8 +391,7 @@ const BusinessSettingsPage = () => {
                             setIsOpenCountries(false);
                             setIsOpenTimeZone(false);
                             setIsOpenTimeFormat(false);
-                            // setIsOpenCurrency(false);
-                            setIsOpenDataCurrency(false)
+                            setIsOpenCurrency(false);
                      }
               };
 
@@ -420,7 +415,8 @@ const BusinessSettingsPage = () => {
               setStateTimeZone('Select Time Zone');
               setStateTimeFormat('Select Time Format');
               // setStateCurrency('Select Currency');
-              setDataCurrency('Select Currency')
+              setStateCurrency('Select Currency')
+              setCurrencyId('')
               setLeftCurrency(0);
               setRightCurrency(0);
               setCompanyCopyrightText('');
@@ -439,99 +435,99 @@ const BusinessSettingsPage = () => {
 
        return (
               <>
-               { loadingCompany || loadingPost ? (
+                     {loadingCompany || loadingPost ? (
                             <>
                                    <div className="w-full h-56 flex justify-center items-center">
                                           <StaticLoader />
                                    </div>
                             </>
-                     ):
-                     <form
-                            className="w-full flex sm:flex-col lg:flex-row flex-wrap items-start justify-start gap-4"
-                            onSubmit={handelAddCompany}
-                     >
-                            <div className="w-full">
-                                   <TitleSection text={'System Maintenance'} />
-                                   <p className='text-xl font-TextFontMedium text-secoundColor'>*By turning on maintenance mode Control your all system & function</p>
-                            </div>
-                            {/* Maintenance Mode */}
-                            <div className="sm:w-full xl:w-[30%] flex items-center justify-start gap-3">
-                                   <span className="text-xl font-TextFontRegular text-thirdColor">Maintenance Mode:</span>
-                                   <div>
-                                          <Switch
-                                                 checked={maintenanceMode}
-                                                 handleClick={handleClickMaintenanceMode}
+                     ) :
+                            <form
+                                   className="w-full flex sm:flex-col lg:flex-row flex-wrap items-start justify-start gap-4"
+                                   onSubmit={handelAddCompany}
+                            >
+                                   <div className="w-full">
+                                          <TitleSection text={'System Maintenance'} />
+                                          <p className='text-xl font-TextFontMedium text-secoundColor'>*By turning on maintenance mode Control your all system & function</p>
+                                   </div>
+                                   {/* Maintenance Mode */}
+                                   <div className="sm:w-full xl:w-[30%] flex items-center justify-start gap-3">
+                                          <span className="text-xl font-TextFontRegular text-thirdColor">Maintenance Mode:</span>
+                                          <div>
+                                                 <Switch
+                                                        checked={maintenanceMode}
+                                                        handleClick={handleClickMaintenanceMode}
+                                                 />
+                                          </div>
+                                   </div>
+
+                                   <TitleSection text={'Company Information'} />
+                                   {/* Company Name */}
+                                   <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                          <span className="text-xl font-TextFontRegular text-thirdColor">Company Name:</span>
+                                          <TextInput
+                                                 value={companyName}
+                                                 onChange={(e) => setCompanyName(e.target.value)}
+                                                 placeholder="Company Name"
                                           />
                                    </div>
-                            </div>
+                                   {/* Company Phone */}
+                                   <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                          <span className="text-xl font-TextFontRegular text-thirdColor">Company Phone:</span>
+                                          <NumberInput
+                                                 value={companyPhone}
+                                                 onChange={(e) => setCompanyPhone(e.target.value)}
+                                                 placeholder="Company Phone"
+                                          />
+                                   </div>
+                                   {/* Company Email */}
+                                   <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                          <span className="text-xl font-TextFontRegular text-thirdColor">Company Email:</span>
+                                          <EmailInput
+                                                 backgound='white'
+                                                 value={companyEmail}
+                                                 onChange={(e) => setCompanyEmail(e.target.value)}
+                                                 placeholder="Company Email"
+                                          />
+                                   </div>
+                                   {/* Company Address */}
+                                   <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                          <span className="text-xl font-TextFontRegular text-thirdColor">Company Address:</span>
+                                          <TextInput
+                                                 value={companyAddress}
+                                                 onChange={(e) => setCompanyAddress(e.target.value)}
+                                                 placeholder="Company Address"
+                                          />
+                                   </div>
+                                   {/* Logo */}
+                                   <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                          <span className="text-xl font-TextFontRegular text-thirdColor">Logo:</span>
+                                          <UploadInput
+                                                 value={logo}
+                                                 uploadFileRef={LogoRef}
+                                                 placeholder="Logo"
+                                                 handleFileChange={handleLogo}
+                                                 onChange={(e) => setLogo(e.target.value)}
+                                                 onClick={() => handleLogoClick(LogoRef)}
+                                          />
+                                   </div>
+                                   {/* Icon */}
+                                   <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                          <span className="text-xl font-TextFontRegular text-thirdColor">Fav Icon:</span>
+                                          <UploadInput
+                                                 value={icon}
+                                                 uploadFileRef={IconRef}
+                                                 placeholder="Fav Icon"
+                                                 handleFileChange={handleIcon}
+                                                 onChange={(e) => setIcon(e.target.value)}
+                                                 onClick={() => handleIconClick(IconRef)}
+                                          />
+                                   </div>
 
-                            <TitleSection text={'Company Information'} />
-                            {/* Company Name */}
-                            <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                   <span className="text-xl font-TextFontRegular text-thirdColor">Company Name:</span>
-                                   <TextInput
-                                          value={companyName}
-                                          onChange={(e) => setCompanyName(e.target.value)}
-                                          placeholder="Company Name"
-                                   />
-                            </div>
-                            {/* Company Phone */}
-                            <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                   <span className="text-xl font-TextFontRegular text-thirdColor">Company Phone:</span>
-                                   <NumberInput
-                                          value={companyPhone}
-                                          onChange={(e) => setCompanyPhone(e.target.value)}
-                                          placeholder="Company Phone"
-                                   />
-                            </div>
-                            {/* Company Email */}
-                            <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                   <span className="text-xl font-TextFontRegular text-thirdColor">Company Email:</span>
-                                   <EmailInput
-                                          backgound='white'
-                                          value={companyEmail}
-                                          onChange={(e) => setCompanyEmail(e.target.value)}
-                                          placeholder="Company Email"
-                                   />
-                            </div>
-                            {/* Company Address */}
-                            <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                   <span className="text-xl font-TextFontRegular text-thirdColor">Company Address:</span>
-                                   <TextInput
-                                          value={companyAddress}
-                                          onChange={(e) => setCompanyAddress(e.target.value)}
-                                          placeholder="Company Address"
-                                   />
-                            </div>
-                            {/* Logo */}
-                            <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                   <span className="text-xl font-TextFontRegular text-thirdColor">Logo:</span>
-                                   <UploadInput
-                                          value={logo}
-                                          uploadFileRef={LogoRef}
-                                          placeholder="Logo"
-                                          handleFileChange={handleLogo}
-                                          onChange={(e) => setLogo(e.target.value)}
-                                          onClick={() => handleLogoClick(LogoRef)}
-                                   />
-                            </div>
-                            {/* Icon */}
-                            <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                   <span className="text-xl font-TextFontRegular text-thirdColor">Fav Icon:</span>
-                                   <UploadInput
-                                          value={icon}
-                                          uploadFileRef={IconRef}
-                                          placeholder="Fav Icon"
-                                          handleFileChange={handleIcon}
-                                          onChange={(e) => setIcon(e.target.value)}
-                                          onClick={() => handleIconClick(IconRef)}
-                                   />
-                            </div>
+                                   <TitleSection text={'Business Information'} />
 
-                            <TitleSection text={'Business Information'} />
-
-                            {/* Countries */}
-                            {/* <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                   {/* Countries */}
+                                   {/* <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                                    <span className="text-xl font-TextFontRegular text-thirdColor">Countries:</span>
                                    <DropDown
                                           ref={CountriesRef}
@@ -544,16 +540,16 @@ const BusinessSettingsPage = () => {
                                           border={false}
                                    />
                             </div> */}
-                            {/* Countries 2 */}
-                            <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                   <span className="text-xl font-TextFontRegular text-thirdColor">Countries:</span>
-                                   <Dropdown value={selectedCountry} onChange={(e) => setSelectedCountry(e.value)} options={countries} optionLabel="name" placeholder="Select a Country"
-                                          filter className="w-full md:w-14rem" />
-                            </div>
-                            {/* Time Zone */}
-                            <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                   <span className="text-xl font-TextFontRegular text-thirdColor">Time Zone:</span>
-                                   {/* <DropDown
+                                   {/* Countries 2 */}
+                                   <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                          <span className="text-xl font-TextFontRegular text-thirdColor">Countries:</span>
+                                          <Dropdown value={selectedCountry} onChange={(e) => setSelectedCountry(e.value)} options={countries} optionLabel="name" placeholder="Select a Country"
+                                                 filter className="w-full md:w-14rem" />
+                                   </div>
+                                   {/* Time Zone */}
+                                   <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                          <span className="text-xl font-TextFontRegular text-thirdColor">Time Zone:</span>
+                                          {/* <DropDown
                                           ref={TimeZoneRef}
                                           handleOpen={handleOpenTimeZone}
                                           stateoption={stateTimeZone}
@@ -563,232 +559,219 @@ const BusinessSettingsPage = () => {
                                           options={timeZone}
                                           border={false}
                                    /> */}
-                                   <Dropdown value={selectedTimeZone} onChange={(e) => setSelectedTimeZone(e.value)} options={timeZone} optionLabel="name" placeholder="Select a Time Zone"
-                                          filter className="w-full md:w-14rem" />
-                            </div>
-                            {/* Time Format */}
-                            <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                   <span className="text-xl font-TextFontRegular text-thirdColor">Time Format:</span>
-                                   <DropDown
-                                          ref={TimeFormatRef}
-                                          handleOpen={handleOpenTimeFormat}
-                                          stateoption={stateTimeFormat}
-                                          openMenu={isOpenTimeFormat}
-                                          handleOpenOption={handleOpenTimeFormat}
-                                          onSelectOption={handleSelectTimeFormat}
-                                          options={timeFormat}
-                                          border={false}
-                                   />
-                            </div>
-                            {/* Currency */}
-                            {/* <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                   <span className="text-xl font-TextFontRegular text-thirdColor">Currency:</span>
-                                   <DropDown
-                                          ref={CurrencyRef}
-                                          handleOpen={handleOpenCurrency}
-                                          stateoption={stateCurrency}
-                                          openMenu={isOpenCurrency}
-                                          handleOpenOption={handleOpenCurrency}
-                                          onSelectOption={handleSelectCurrency}
-                                          options={currency}
-                                          border={false}
-                                   />
-                            </div> */}
-                            <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                   <span className="text-xl font-TextFontRegular text-thirdColor">Currency:</span>
-                                   <DropDown
-                                          ref={CurrencyRef}
-                                          handleOpen={handleOpenCurrency}
-                                          stateoption={stateDataCurrency}
-                                          openMenu={isOpenDataCurrency}
-                                          handleOpenOption={handleOpenCurrency}
-                                          onSelectOption={handleSelectDataCurrency}
-                                          options={dataCurrency || []} 
-                                          border={false}
-                                   />
-                            </div>
-
-                            <div className="w-full flex sm:flex-col lg:flex-row flex-wrap items-center justify-start gap-4">
-
-                                   {/* Currency Position */}
-                                   <span className="text-xl font-TextFontRegular text-thirdColor">Currency Position:</span>
-                                   <div className="sm:w-full xl:w-[30%] flex items-center justify-start gap-3">
-                                          <span className="text-xl font-TextFontRegular text-thirdColor">(E£) Left:</span>
-                                          <div>
-                                                 <Switch
-                                                        checked={leftCurrency}
-                                                        handleClick={handleClickLeftCurrency}
-                                                 />
-                                          </div>
+                                          <Dropdown value={selectedTimeZone} onChange={(e) => setSelectedTimeZone(e.value)} options={timeZone} optionLabel="name" placeholder="Select a Time Zone"
+                                                 filter className="w-full md:w-14rem" />
                                    </div>
-                                   <div className="sm:w-full xl:w-[30%] flex items-center justify-start gap-3">
-                                          <span className="text-xl font-TextFontRegular text-thirdColor">(E£) Right:</span>
-                                          <div>
-                                                 <Switch
-                                                        checked={rightCurrency}
-                                                        handleClick={handleClickRightCurrency}
-                                                 />
-                                          </div>
+                                   {/* Time Format */}
+                                   <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                          <span className="text-xl font-TextFontRegular text-thirdColor">Time Format:</span>
+                                          <DropDown
+                                                 ref={TimeFormatRef}
+                                                 handleOpen={handleOpenTimeFormat}
+                                                 stateoption={stateTimeFormat}
+                                                 openMenu={isOpenTimeFormat}
+                                                 handleOpenOption={handleOpenTimeFormat}
+                                                 onSelectOption={handleSelectTimeFormat}
+                                                 options={timeFormat}
+                                                 border={false}
+                                          />
                                    </div>
-                            </div>
-
-                            {/* Company Copyright Text */}
-                            <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                   <span className="text-xl font-TextFontRegular text-thirdColor">Company Copyright Text:</span>
-                                   <TextInput
-                                          value={companyCopyrightText}
-                                          onChange={(e) => setCompanyCopyrightText(e.target.value)}
-                                          placeholder="Company Copyright Text"
-                                   />
-                            </div>
-
-                            {maintenanceMode === 1 && (
-                                   <>
-                                          <div className="w-full">
-                                                 <TitleSection text={'Select System'} />
-                                                 <p className='text-xl font-TextFontMedium text-secoundColor'>Select the systems you want to temporarily deactivate for maintenance</p>
-                                          </div>
-                                          {/* All System */}
-                                          <div className="sm:w-full xl:w-[20%] flex items-center justify-start gap-3">
-                                                 <span className="text-xl font-TextFontRegular text-thirdColor">All System:</span>
-                                                 <div>
-                                                        <Switch
-                                                               checked={allSystem}
-                                                               handleClick={handleClickAllSystem}
-                                                        />
-                                                 </div>
-                                          </div>
-                                          {/* Branch Panel */}
-                                          <div className="sm:w-full xl:w-[20%] flex items-center justify-start gap-3">
-                                                 <span className="text-xl font-TextFontRegular text-thirdColor">Branch Panel:</span>
-                                                 <div>
-                                                        <Switch
-                                                               checked={branchPanel}
-                                                               handleClick={handleClickBranchPanel}
-                                                        />
-                                                 </div>
-                                          </div>
-                                          {/* Customer App */}
-                                          <div className="sm:w-full xl:w-[20%] flex items-center justify-start gap-3">
-                                                 <span className="text-xl font-TextFontRegular text-thirdColor">Customer App:</span>
-                                                 <div>
-                                                        <Switch
-                                                               checked={customerApp}
-                                                               handleClick={handleClickCustomerApp}
-                                                        />
-                                                 </div>
-                                          </div>
-                                          {/* Web App */}
-                                          <div className="sm:w-full xl:w-[20%] flex items-center justify-start gap-3">
-                                                 <span className="text-xl font-TextFontRegular text-thirdColor">Web App:</span>
-                                                 <div>
-                                                        <Switch
-                                                               checked={webApp}
-                                                               handleClick={handleClickWebApp}
-                                                        />
-                                                 </div>
-                                          </div>
-                                          {/* Deliveryman App */}
-                                          <div className="sm:w-full xl:w-[20%] flex items-center justify-start gap-3">
-                                                 <span className="text-xl font-TextFontRegular text-thirdColor">Deliveryman App:</span>
-                                                 <div>
-                                                        <Switch
-                                                               checked={deliverymanApp}
-                                                               handleClick={handleClickDeliverymanApp}
-                                                        />
-                                                 </div>
-                                          </div>
-
-                                          <div className="w-full">
-                                                 <TitleSection text={'Maintenance Date & Time'} />
-                                                 <p className='text-xl font-TextFontMedium text-secoundColor'>Choose the maintenance mode duration for your selected system.</p>
-                                          </div>
-
-                                          {/* For 24 Hours */}
-                                          <div className="sm:w-full xl:w-[20%] flex items-center justify-start gap-3">
-                                                 <span className="text-xl font-TextFontRegular text-thirdColor">For 24 Hours:</span>
-                                                 <div>
-                                                        <Switch
-                                                               checked={forDay}
-                                                               handleClick={handleClickForDay}
-                                                        />
-                                                 </div>
-                                          </div>
-                                          {/*  For 1 Week */}
-                                          <div className="sm:w-full xl:w-[20%] flex items-center justify-start gap-3">
-                                                 <span className="text-xl font-TextFontRegular text-thirdColor">For 1 Week:</span>
-                                                 <div>
-                                                        <Switch
-                                                               checked={forWeek}
-                                                               handleClick={handleClickForWeek}
-                                                        />
-                                                 </div>
-                                          </div>
-                                          {/* Until I Change */}
-                                          <div className="sm:w-full xl:w-[20%] flex items-center justify-start gap-3">
-                                                 <span className="text-xl font-TextFontRegular text-thirdColor">Until I Change:</span>
-                                                 <div>
-                                                        <Switch
-                                                               checked={untilChange}
-                                                               handleClick={handleClickUntilChange}
-                                                        />
-                                                 </div>
-                                          </div>
-                                          {/* Customize */}
-                                          <div className="sm:w-full xl:w-[20%] flex items-center justify-start gap-3">
-                                                 <span className="text-xl font-TextFontRegular text-thirdColor">Customize:</span>
-                                                 <div>
-                                                        <Switch
-                                                               checked={Customize}
-                                                               handleClick={handleClickCustomize}
-                                                        />
-                                                 </div>
-                                          </div>
-                                          {/* Start Date */}
-                                          <div className="sm:w-full xl:w-[30%] flex items-center justify-start gap-3">
-                                                 <span className="text-xl font-TextFontRegular text-thirdColor">Start Date:</span>
-                                                 <div>
-                                                        <DateInput
-                                                               value={startDate}
-                                                               onChange={e => setStartDate(e.target.value)}
-                                                               maxDate={false}
-                                                               minDate={true}
-                                                        />
-                                                 </div>
-                                          </div>
-                                          {/* End Date */}
-                                          <div className="sm:w-full xl:w-[30%] flex items-center justify-start gap-3">
-                                                 <span className="text-xl font-TextFontRegular text-thirdColor">End Date:</span>
-                                                 <div>
-                                                        <DateInput
-                                                               value={endDate}
-                                                               onChange={e => setEndDate(e.target.value)}
-                                                               maxDate={false}
-                                                               minDate={true}
-                                                        />
-                                                 </div>
-                                          </div>
-
-                                   </>
-                            )}
-
-
-                            {/* Buttons */}
-                            <div className="w-full flex items-center justify-end gap-x-4 mb-32">
-                                   <div className="">
-                                          <StaticButton text={'Reset'} handleClick={handleReset} bgColor='bg-transparent' Color='text-mainColor' border={'border-2'} borderColor={'border-mainColor'} rounded='rounded-full' />
-                                   </div>
-                                   <div className="">
-                                          <SubmitButton
-                                                 text={'Submit'}
-                                                 rounded='rounded-full'
-                                                 handleClick={handelAddCompany}
+                                   {/* Currency */}
+                                   <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                          <span className="text-xl font-TextFontRegular text-thirdColor">Currency:</span>
+                                          <DropDown
+                                                 ref={CurrencyRef}
+                                                 handleOpen={handleOpenCurrency}
+                                                 stateoption={stateCurrency}
+                                                 openMenu={isOpenCurrency}
+                                                 handleOpenOption={handleOpenOptionCurrency}
+                                                 onSelectOption={handleSelectCurrency}
+                                                 options={dataCompany.currency || []}
+                                                 border={false}
                                           />
                                    </div>
 
-                            </div>
-                     </form>
-}
+                                   <div className="w-full flex sm:flex-col lg:flex-row flex-wrap items-center justify-start gap-4">
+
+                                          {/* Currency Position */}
+                                          <span className="text-xl font-TextFontRegular text-thirdColor">Currency Position:</span>
+                                          <div className="sm:w-full xl:w-[30%] flex items-center justify-start gap-3">
+                                                 <span className="text-xl font-TextFontRegular text-thirdColor">(E£) Left:</span>
+                                                 <div>
+                                                        <Switch
+                                                               checked={leftCurrency}
+                                                               handleClick={handleClickLeftCurrency}
+                                                        />
+                                                 </div>
+                                          </div>
+                                          <div className="sm:w-full xl:w-[30%] flex items-center justify-start gap-3">
+                                                 <span className="text-xl font-TextFontRegular text-thirdColor">(E£) Right:</span>
+                                                 <div>
+                                                        <Switch
+                                                               checked={rightCurrency}
+                                                               handleClick={handleClickRightCurrency}
+                                                        />
+                                                 </div>
+                                          </div>
+                                   </div>
+
+                                   {/* Company Copyright Text */}
+                                   <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                          <span className="text-xl font-TextFontRegular text-thirdColor">Company Copyright Text:</span>
+                                          <TextInput
+                                                 value={companyCopyrightText}
+                                                 onChange={(e) => setCompanyCopyrightText(e.target.value)}
+                                                 placeholder="Company Copyright Text"
+                                          />
+                                   </div>
+
+                                   {maintenanceMode === 1 && (
+                                          <>
+                                                 <div className="w-full">
+                                                        <TitleSection text={'Select System'} />
+                                                        <p className='text-xl font-TextFontMedium text-secoundColor'>Select the systems you want to temporarily deactivate for maintenance</p>
+                                                 </div>
+                                                 {/* All System */}
+                                                 <div className="sm:w-full xl:w-[20%] flex items-center justify-start gap-3">
+                                                        <span className="text-xl font-TextFontRegular text-thirdColor">All System:</span>
+                                                        <div>
+                                                               <Switch
+                                                                      checked={allSystem}
+                                                                      handleClick={handleClickAllSystem}
+                                                               />
+                                                        </div>
+                                                 </div>
+                                                 {/* Branch Panel */}
+                                                 <div className="sm:w-full xl:w-[20%] flex items-center justify-start gap-3">
+                                                        <span className="text-xl font-TextFontRegular text-thirdColor">Branch Panel:</span>
+                                                        <div>
+                                                               <Switch
+                                                                      checked={branchPanel}
+                                                                      handleClick={handleClickBranchPanel}
+                                                               />
+                                                        </div>
+                                                 </div>
+                                                 {/* Customer App */}
+                                                 <div className="sm:w-full xl:w-[20%] flex items-center justify-start gap-3">
+                                                        <span className="text-xl font-TextFontRegular text-thirdColor">Customer App:</span>
+                                                        <div>
+                                                               <Switch
+                                                                      checked={customerApp}
+                                                                      handleClick={handleClickCustomerApp}
+                                                               />
+                                                        </div>
+                                                 </div>
+                                                 {/* Web App */}
+                                                 <div className="sm:w-full xl:w-[20%] flex items-center justify-start gap-3">
+                                                        <span className="text-xl font-TextFontRegular text-thirdColor">Web App:</span>
+                                                        <div>
+                                                               <Switch
+                                                                      checked={webApp}
+                                                                      handleClick={handleClickWebApp}
+                                                               />
+                                                        </div>
+                                                 </div>
+                                                 {/* Deliveryman App */}
+                                                 <div className="sm:w-full xl:w-[20%] flex items-center justify-start gap-3">
+                                                        <span className="text-xl font-TextFontRegular text-thirdColor">Deliveryman App:</span>
+                                                        <div>
+                                                               <Switch
+                                                                      checked={deliverymanApp}
+                                                                      handleClick={handleClickDeliverymanApp}
+                                                               />
+                                                        </div>
+                                                 </div>
+
+                                                 <div className="w-full">
+                                                        <TitleSection text={'Maintenance Date & Time'} />
+                                                        <p className='text-xl font-TextFontMedium text-secoundColor'>Choose the maintenance mode duration for your selected system.</p>
+                                                 </div>
+
+                                                 {/* For 24 Hours */}
+                                                 <div className="sm:w-full xl:w-[20%] flex items-center justify-start gap-3">
+                                                        <span className="text-xl font-TextFontRegular text-thirdColor">For 24 Hours:</span>
+                                                        <div>
+                                                               <Switch
+                                                                      checked={forDay}
+                                                                      handleClick={handleClickForDay}
+                                                               />
+                                                        </div>
+                                                 </div>
+                                                 {/*  For 1 Week */}
+                                                 <div className="sm:w-full xl:w-[20%] flex items-center justify-start gap-3">
+                                                        <span className="text-xl font-TextFontRegular text-thirdColor">For 1 Week:</span>
+                                                        <div>
+                                                               <Switch
+                                                                      checked={forWeek}
+                                                                      handleClick={handleClickForWeek}
+                                                               />
+                                                        </div>
+                                                 </div>
+                                                 {/* Until I Change */}
+                                                 <div className="sm:w-full xl:w-[20%] flex items-center justify-start gap-3">
+                                                        <span className="text-xl font-TextFontRegular text-thirdColor">Until I Change:</span>
+                                                        <div>
+                                                               <Switch
+                                                                      checked={untilChange}
+                                                                      handleClick={handleClickUntilChange}
+                                                               />
+                                                        </div>
+                                                 </div>
+                                                 {/* Customize */}
+                                                 <div className="sm:w-full xl:w-[20%] flex items-center justify-start gap-3">
+                                                        <span className="text-xl font-TextFontRegular text-thirdColor">Customize:</span>
+                                                        <div>
+                                                               <Switch
+                                                                      checked={Customize}
+                                                                      handleClick={handleClickCustomize}
+                                                               />
+                                                        </div>
+                                                 </div>
+                                                 {/* Start Date */}
+                                                 <div className="sm:w-full xl:w-[30%] flex items-center justify-start gap-3">
+                                                        <span className="text-xl font-TextFontRegular text-thirdColor">Start Date:</span>
+                                                        <div>
+                                                               <DateInput
+                                                                      value={startDate}
+                                                                      onChange={e => setStartDate(e.target.value)}
+                                                                      maxDate={false}
+                                                                      minDate={true}
+                                                               />
+                                                        </div>
+                                                 </div>
+                                                 {/* End Date */}
+                                                 <div className="sm:w-full xl:w-[30%] flex items-center justify-start gap-3">
+                                                        <span className="text-xl font-TextFontRegular text-thirdColor">End Date:</span>
+                                                        <div>
+                                                               <DateInput
+                                                                      value={endDate}
+                                                                      onChange={e => setEndDate(e.target.value)}
+                                                                      maxDate={false}
+                                                                      minDate={true}
+                                                               />
+                                                        </div>
+                                                 </div>
+
+                                          </>
+                                   )}
+
+
+                                   {/* Buttons */}
+                                   <div className="w-full flex items-center justify-end gap-x-4 mb-32">
+                                          <div className="">
+                                                 <StaticButton text={'Reset'} handleClick={handleReset} bgColor='bg-transparent' Color='text-mainColor' border={'border-2'} borderColor={'border-mainColor'} rounded='rounded-full' />
+                                          </div>
+                                          <div className="">
+                                                 <SubmitButton
+                                                        text={'Submit'}
+                                                        rounded='rounded-full'
+                                                        handleClick={handelAddCompany}
+                                                 />
+                                          </div>
+
+                                   </div>
+                            </form>
+                     }
               </>
        )
 }
