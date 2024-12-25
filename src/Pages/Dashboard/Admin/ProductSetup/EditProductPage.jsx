@@ -410,6 +410,20 @@ const EditProductPage = () => {
               );
        };
 
+       // Remove an option from a specific Option within a Variation
+       const handleRemoveOption = (variationIndex, optionIndex) => {
+              setProductVariations((prevVariations) =>
+                     prevVariations.map((variation, vIdx) =>
+                            vIdx === variationIndex
+                                   ? {
+                                          ...variation,
+                                          options: variation.options.filter((_, oIdx) => oIdx !== optionIndex),
+                                   }
+                                   : variation
+                     )
+              );
+       };
+       
        // Remove an Extra from a specific Option within a Variation
        const handleRemoveExtraAtOption = (variationIndex, optionIndex, extraIndex) => {
               setProductVariations((prevVariations) =>
@@ -1637,6 +1651,17 @@ const EditProductPage = () => {
                                                                                                                                                                  handleClick={() => handleAddExtraAtOption(indexVariation, indexOption)}
                                                                                                                                                           />
                                                                                                                                                    </div>
+                                                                                                                                                   {ele.options.length > 1 && (
+
+                                                                                                                                                          <div className="sm:w-full lg:w-[20%] flex items-center justify-center lg:mt-8">
+                                                                                                                                                                 <StaticButton
+                                                                                                                                                                        text="Remove option"
+                                                                                                                                                                        handleClick={() =>
+                                                                                                                                                                               handleRemoveOption(indexVariation, indexOption)
+                                                                                                                                                                        }
+                                                                                                                                                                 />
+                                                                                                                                                          </div>
+                                                                                                                                                   )}
                                                                                                                                             </div>
                                                                                                                                      ))}
                                                                                                                               </div>

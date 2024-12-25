@@ -297,6 +297,7 @@ const CategoryPage = ({ refetch, setUpdate }) => {
                                                                                                                                                    <span className="text-mainColor text-lg lg:text-xl font-semibold capitalize">
                                                                                                                                                           {displayIndex}. {supcategory.name}
                                                                                                                                                    </span>
+                                                                                                                                                   <Link to={`edit/${supcategory.id}`}  ><EditIcon /></Link>
                                                                                                                                                    <button
                                                                                                                                                           type="button"
                                                                                                                                                           onClick={() => handleOpenSupDelete(supcategory.id)}

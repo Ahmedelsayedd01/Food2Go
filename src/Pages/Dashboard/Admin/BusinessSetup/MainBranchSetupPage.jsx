@@ -3,10 +3,9 @@ import { DropDown, EmailInput, LoaderLogin, NumberInput, PasswordInput, StaticBu
 import { Dropdown } from 'primereact/dropdown';
 import { usePost } from '../../../../Hooks/usePostJson';
 import { useGet } from '../../../../Hooks/useGet';
-import axios from 'axios';
 import { useAuth } from '../../../../Context/Auth';
 
-const MainBranchSetupPage = ({ refetch }) => {
+const MainBranchSetupPage = () => {
        const { refetch: refetchBranch, loading: loadingBranch, data: dataBranch } = useGet({ url: 'https://bcknd.food2go.online/admin/settings/business_setup/branch' });
        const [branch, setBranch] = useState([])
 
@@ -90,8 +89,8 @@ const MainBranchSetupPage = ({ refetch }) => {
                      const city_id = dataBranch.branches.city.id;
                      setCityID(city_id);  // Store city_id in state
               }
-        
-          };
+
+       };
        //  post formdata in postdata
        const handleBranchAdd = async (e) => {
               e.preventDefault();
@@ -148,7 +147,7 @@ const MainBranchSetupPage = ({ refetch }) => {
               formData.append('address', address);
               formData.append('email', email);
               formData.append('phone', phone);
-              formData.append('password', password?password:"");
+              formData.append('password', password ? password : "");
               formData.append('image', branchImageFile);  // File Upload
               formData.append('cover_image', branchCoverFile);  // File Upload
               formData.append('latitude', latitude);
@@ -225,13 +224,12 @@ const MainBranchSetupPage = ({ refetch }) => {
               <>
                      {loadingBranch || loadingPost ? (
                             <>
-                                   <div className="w-full h-56 flex justify-center items-center">
+                                   <div className="w-full h-56 flex justify-center items-center mt-8">
                                           <LoaderLogin />
                                    </div>
                             </>
                      ) :
-                         <div className="flex flex-col">
-                               <form
+                            <form
                                    className="w-full flex sm:flex-col lg:flex-row flex-wrap items-start justify-start gap-4"
                                    onSubmit={handleBranchAdd}
                             >
@@ -371,7 +369,6 @@ const MainBranchSetupPage = ({ refetch }) => {
                                    </div>
                             </form>
 
-                         </div>
                      }
               </>
        )
