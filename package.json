@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
+    "@mui/x-charts": "^7.23.2",
+    "@nivo/line": "^0.88.0",
     "@reduxjs/toolkit": "^2.3.0",
     "axios": "^1.7.7",
     "classnames": "^2.5.1",
@@ -42,19 +44,16 @@
     "tailwindcss": "^3.4.14",
     "vite": "^5.4.8"
   },
-  
-    "env": {
-      "browser": true,
-      "es2021": true
-    },
-    "extends": [
-      "eslint:recommended",
-      "plugin:react/recommended"
-    ],
-    "rules": {
-      "react/prop-types": "off",
-      "no-unused-vars": "warn"
-    }
-  
-  
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react/recommended"
+  ],
+  "rules": {
+    "react/prop-types": "off",
+    "no-unused-vars": "warn"
+  }
 }

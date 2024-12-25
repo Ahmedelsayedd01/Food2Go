@@ -12,10 +12,25 @@ const MainBranchSetupPage = ({ refetch }) => {
 
        const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/settings/business_setup/branch/add' });
 
+       const {
+              refetch: refetchCity,
+              loading: loadingCity,
+              data: dataCity,
+            } = useGet({ url: "https://bcknd.food2go.online/admin/settings/city" });
+            
        useEffect(() => {
               refetchBranch();
+              refetchCity();
 
-       }, [refetchBranch]);
+       }, [refetchBranch,refetchCity]);
+
+     useEffect(() => {
+        if (dataCity && dataCity.cities) {
+          const cityNames = dataCity.cities.map((city) => ({ name: city.name }));
+          setCities(cityNames);
+        }
+        console.log("data city ", dataCity?.cities?.[0]?.name);
+      }, [dataCity]);
 
        useEffect(() => {
               if (dataBranch) {
@@ -36,6 +51,8 @@ const MainBranchSetupPage = ({ refetch }) => {
               }
        }, [dataBranch])
 
+     
+
        const auth = useAuth();
        const BranchImageRef = useRef();
        const BranchCoverRef = useRef();
@@ -50,6 +67,7 @@ const MainBranchSetupPage = ({ refetch }) => {
        const [stateCountries, setStateCountries] = useState('Select City');
        const [selectedCity, setSelectedCity] = useState('');
        const [city_id,setCityID] = useState();
+
        const [cities, setCities] = useState([
               // { name: 'Afghanistan' }, { name: 'Albania' }, { name: 'Algeria' }, { name: 'Andorra' }, { name: 'Angola' },
               // { name: 'Antigua and Barbuda' }, { name: 'Argentina' }, { name: 'Armenia' }, { name: 'Australia' }, { name: 'Austria' },
