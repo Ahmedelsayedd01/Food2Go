@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { DropDown, EmailInput, NumberInput, PasswordInput, StaticButton, StaticLoader, SubmitButton, TextInput, TitleSection, UploadInput } from '../../../../Components/Components';
+import { DropDown, EmailInput, LoaderLogin, NumberInput, PasswordInput, StaticButton, StaticLoader, SubmitButton, TextInput, TitleSection, UploadInput } from '../../../../Components/Components';
 import { Dropdown } from 'primereact/dropdown';
 import { usePost } from '../../../../Hooks/usePostJson';
 import { useGet } from '../../../../Hooks/useGet';
@@ -20,6 +20,18 @@ const MainBranchSetupPage = ({ refetch }) => {
        useEffect(() => {
               if (dataBranch) {
                      setBranch(dataBranch)
+                     setName(dataBranch.branches.name)
+                     setAddress(dataBranch.branches.address)
+                     setBranchCover(dataBranch.branches.cover_image_link)
+                     setBranchImage(dataBranch.branches.image_link)
+                     setLatitude(dataBranch.branches.latitude)
+                     setCoverage(dataBranch.branches.coverage)
+                     setLongitude(dataBranch.branches.longitude)
+                     setPhone(dataBranch.branches.phone)
+                     setEmail(dataBranch.branches.email)
+                     setFoodPreparationTime(dataBranch.branches.food_preparion_time)
+                     setCities([dataBranch.branches.city.name]);
+
                      console.log("data fetch branch : ", dataBranch);
               }
        }, [dataBranch])
@@ -37,10 +49,11 @@ const MainBranchSetupPage = ({ refetch }) => {
        const [password, setPassword] = useState('');
        const [stateCountries, setStateCountries] = useState('Select City');
        const [selectedCity, setSelectedCity] = useState('');
+       const [city_id,setCityID] = useState();
        const [cities, setCities] = useState([
-              { name: 'Afghanistan' }, { name: 'Albania' }, { name: 'Algeria' }, { name: 'Andorra' }, { name: 'Angola' },
-              { name: 'Antigua and Barbuda' }, { name: 'Argentina' }, { name: 'Armenia' }, { name: 'Australia' }, { name: 'Austria' },
-              { name: 'Azerbaijan' }, { name: 'Bahamas' }, { name: 'Bahrain' }, { name: 'Bangladesh' }, { name: 'Barbados' },
+              // { name: 'Afghanistan' }, { name: 'Albania' }, { name: 'Algeria' }, { name: 'Andorra' }, { name: 'Angola' },
+              // { name: 'Antigua and Barbuda' }, { name: 'Argentina' }, { name: 'Armenia' }, { name: 'Australia' }, { name: 'Austria' },
+              // { name: 'Azerbaijan' }, { name: 'Bahamas' }, { name: 'Bahrain' }, { name: 'Bangladesh' }, { name: 'Barbados' },
        ]);
        const [branchImage, setBranchImage] = useState('');
        const [branchImageFile, setBranchImageFile] = useState(null);
@@ -51,6 +64,16 @@ const MainBranchSetupPage = ({ refetch }) => {
        const [longitude, setLongitude] = useState('');
        const [coverage, setCoverage] = useState('');
 
+       const handleChangeCity = (e) => {
+              const selected = e.value;
+              const city_id = selected.id;  // Extract city ID
+              if (selected === dataBranch.branches.city.name) {
+                     setSelectedCity(dataBranch.branches.city.name)
+                     const city_id = dataBranch.branches.city.id;
+                     setCityID(city_id);  // Store city_id in state
+              }
+        
+          };
        //  post formdata in postdata
        const handleBranchAdd = async (e) => {
               e.preventDefault();
@@ -76,10 +99,10 @@ const MainBranchSetupPage = ({ refetch }) => {
                      auth.toastError('Please enter phone number');
                      return;
               }
-              if (!password) {
-                     auth.toastError('Please enter password');
-                     return;
-              }
+              // if (!password) {
+              //        auth.toastError('Please enter password');
+              //        return;
+              // }
               if (!branchImageFile) {
                      auth.toastError('Please upload branch image file');
                      return;
@@ -107,14 +130,14 @@ const MainBranchSetupPage = ({ refetch }) => {
               formData.append('address', address);
               formData.append('email', email);
               formData.append('phone', phone);
-              formData.append('password', password);
-              formData.append('branch_image', branchImageFile);  // File Upload
-              formData.append('branch_cover', branchCoverFile);  // File Upload
+              formData.append('password', password?password:"");
+              formData.append('image', branchImageFile);  // File Upload
+              formData.append('cover_image', branchCoverFile);  // File Upload
               formData.append('latitude', latitude);
               formData.append('longitude', longitude);
               formData.append('coverage', coverage);
               formData.append('status', 1);
-              formData.append('city_id', 3);
+              formData.append('city_id', city_id);
 
               postData(formData, 'Branch Added Success done');
 
@@ -185,11 +208,12 @@ const MainBranchSetupPage = ({ refetch }) => {
                      {loadingBranch || loadingPost ? (
                             <>
                                    <div className="w-full h-56 flex justify-center items-center">
-                                          <StaticLoader />
+                                          <LoaderLogin />
                                    </div>
                             </>
                      ) :
-                            <form
+                         <div className="flex flex-col">
+                               <form
                                    className="w-full flex sm:flex-col lg:flex-row flex-wrap items-start justify-start gap-4"
                                    onSubmit={handleBranchAdd}
                             >
@@ -276,10 +300,10 @@ const MainBranchSetupPage = ({ refetch }) => {
                                           <span className="text-xl font-TextFontRegular text-thirdColor">Cities:</span>
                                           <Dropdown
                                                  value={selectedCity}
-                                                 onChange={(e) => setSelectedCity(e.value)}
+                                                 onChange={handleChangeCity}
                                                  options={cities}
                                                  optionLabel="name"
-                                                 placeholder="Select a City"
+                                                 placeholder={stateCountries}
                                                  filter
                                                  className="w-full md:w-14rem" />
                                    </div>
@@ -328,6 +352,8 @@ const MainBranchSetupPage = ({ refetch }) => {
 
                                    </div>
                             </form>
+
+                         </div>
                      }
               </>
        )
