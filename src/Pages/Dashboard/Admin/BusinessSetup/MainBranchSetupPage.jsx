@@ -49,7 +49,7 @@ const MainBranchSetupPage = ({ refetch }) => {
        const [password, setPassword] = useState('');
        const [stateCountries, setStateCountries] = useState('Select City');
        const [selectedCity, setSelectedCity] = useState('');
-       const [city_id,setCityID] = useState();
+       const [city_id, setCityID] = useState();
        const [cities, setCities] = useState([
               // { name: 'Afghanistan' }, { name: 'Albania' }, { name: 'Algeria' }, { name: 'Andorra' }, { name: 'Angola' },
               // { name: 'Antigua and Barbuda' }, { name: 'Argentina' }, { name: 'Armenia' }, { name: 'Australia' }, { name: 'Austria' },
@@ -72,8 +72,8 @@ const MainBranchSetupPage = ({ refetch }) => {
                      const city_id = dataBranch.branches.city.id;
                      setCityID(city_id);  // Store city_id in state
               }
-        
-          };
+
+       };
        //  post formdata in postdata
        const handleBranchAdd = async (e) => {
               e.preventDefault();
@@ -130,7 +130,7 @@ const MainBranchSetupPage = ({ refetch }) => {
               formData.append('address', address);
               formData.append('email', email);
               formData.append('phone', phone);
-              formData.append('password', password?password:"");
+              formData.append('password', password ? password : "");
               formData.append('image', branchImageFile);  // File Upload
               formData.append('cover_image', branchCoverFile);  // File Upload
               formData.append('latitude', latitude);
@@ -207,13 +207,12 @@ const MainBranchSetupPage = ({ refetch }) => {
               <>
                      {loadingBranch || loadingPost ? (
                             <>
-                                   <div className="w-full h-56 flex justify-center items-center">
+                                   <div className="w-full h-56 flex justify-center items-center mt-8">
                                           <LoaderLogin />
                                    </div>
                             </>
                      ) :
-                         <div className="flex flex-col">
-                               <form
+                            <form
                                    className="w-full flex sm:flex-col lg:flex-row flex-wrap items-start justify-start gap-4"
                                    onSubmit={handleBranchAdd}
                             >
@@ -353,7 +352,6 @@ const MainBranchSetupPage = ({ refetch }) => {
                                    </div>
                             </form>
 
-                         </div>
                      }
               </>
        )

@@ -579,7 +579,7 @@ const BusinessSettingsPage = () => {
     <>
       {loadingCompany || loadingPost ? (
         <>
-          <div className="w-full h-56 flex justify-center items-center">
+          <div className="w-full h-56 flex justify-center items-center mt-8">
             <LoaderLogin />
           </div>
         </>
