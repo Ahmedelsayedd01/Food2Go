@@ -15,21 +15,21 @@ const MainBranchSetupPage = () => {
               refetch: refetchCity,
               loading: loadingCity,
               data: dataCity,
-            } = useGet({ url: "https://bcknd.food2go.online/admin/settings/city" });
-            
+       } = useGet({ url: "https://bcknd.food2go.online/admin/settings/city" });
+
        useEffect(() => {
               refetchBranch();
               refetchCity();
 
-       }, [refetchBranch,refetchCity]);
+       }, [refetchBranch, refetchCity]);
 
-     useEffect(() => {
-        if (dataCity && dataCity.cities) {
-          const cityNames = dataCity.cities.map((city) => ({ name: city.name }));
-          setCities(cityNames);
-        }
-        console.log("data city ", dataCity?.cities?.[0]?.name);
-      }, [dataCity]);
+       useEffect(() => {
+              if (dataCity && dataCity.cities) {
+                     // const cityNames = dataCity.cities.map((city) => ({ name: city.name }));
+                     setCities(dataCity?.cities || []);
+              }
+              console.log("data city ", dataCity?.cities?.[0]?.name);
+       }, [dataCity]);
 
        useEffect(() => {
               if (dataBranch) {
@@ -44,18 +44,16 @@ const MainBranchSetupPage = () => {
                      setPhone(dataBranch.branches.phone)
                      setEmail(dataBranch.branches.email)
                      setFoodPreparationTime(dataBranch.branches.food_preparion_time)
-                     setCities([dataBranch.branches.city.name]);
 
                      console.log("data fetch branch : ", dataBranch);
               }
        }, [dataBranch])
 
-     
+
 
        const auth = useAuth();
        const BranchImageRef = useRef();
        const BranchCoverRef = useRef();
-       const CountriesRef = useRef();
 
        const [name, setName] = useState('');
        const [foodPreparationTime, setFoodPreparationTime] = useState('00:00');
@@ -63,15 +61,11 @@ const MainBranchSetupPage = () => {
        const [email, setEmail] = useState('');
        const [phone, setPhone] = useState('');
        const [password, setPassword] = useState('');
-       const [stateCountries, setStateCountries] = useState('Select City');
+       const [stateCity, setStateCity] = useState('Select City');
        const [selectedCity, setSelectedCity] = useState('');
-       const [city_id,setCityID] = useState();
+       const [city_id, setCityID] = useState();
 
-       const [cities, setCities] = useState([
-              // { name: 'Afghanistan' }, { name: 'Albania' }, { name: 'Algeria' }, { name: 'Andorra' }, { name: 'Angola' },
-              // { name: 'Antigua and Barbuda' }, { name: 'Argentina' }, { name: 'Armenia' }, { name: 'Australia' }, { name: 'Austria' },
-              // { name: 'Azerbaijan' }, { name: 'Bahamas' }, { name: 'Bahrain' }, { name: 'Bangladesh' }, { name: 'Barbados' },
-       ]);
+       const [cities, setCities] = useState(null);
        const [branchImage, setBranchImage] = useState('');
        const [branchImageFile, setBranchImageFile] = useState(null);
        const [branchCover, setBranchCover] = useState('');
@@ -210,7 +204,7 @@ const MainBranchSetupPage = () => {
               setEmail('');
               setPhone('');
               setPassword('');
-              setStateCountries('Select City');
+              setStateCity('Select City');
               setBranchImage('');
               setBranchImageFile(null);
               setBranchCover('');
@@ -316,10 +310,10 @@ const MainBranchSetupPage = () => {
                                           <span className="text-xl font-TextFontRegular text-thirdColor">Cities:</span>
                                           <Dropdown
                                                  value={selectedCity}
-                                                 onChange={handleChangeCity}
+                                                 onChange={(e) => setSelectedCity(e.value)}
                                                  options={cities}
                                                  optionLabel="name"
-                                                 placeholder={stateCountries}
+                                                 placeholder={stateCity}
                                                  filter
                                                  className="w-full md:w-14rem" />
                                    </div>
