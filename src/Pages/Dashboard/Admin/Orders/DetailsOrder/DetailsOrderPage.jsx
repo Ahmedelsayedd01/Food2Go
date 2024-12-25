@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { useGet } from '../../../../../Hooks/useGet';
-import { DropDown, LoaderLogin, SearchBar } from '../../../../../Components/Components';
+import { DropDown, LoaderLogin, SearchBar, TextInput } from '../../../../../Components/Components';
 import { FaClock, FaUser } from 'react-icons/fa';
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import { usePost } from '../../../../../Hooks/usePostJson';
@@ -27,6 +27,9 @@ const DetailsOrderPage = () => {
 
        const [preparationTime, setPreparationTime] = useState({})
 
+       const [orderNumber, setOrderNumber] = useState('')
+
+       const [openOrderNumber, setOpenOrderNumber] = useState(null);
        const [openDeliveries, setOpenDeliveries] = useState(null);
 
        const timeString = dataDetailsOrder?.order?.date || '';
@@ -37,7 +40,6 @@ const DetailsOrderPage = () => {
        const dayString = dataDetailsOrder?.order?.order_date || '';
        const [olderyear, olderMonth, olderDay] = dayString.split('-').map(Number); // Extract year, month, and day as numbers
        const dayObj = new Date();
-       console.log('dayString', dayString);
        dayObj.setFullYear(olderyear);
        dayObj.setMonth(olderMonth - 1); // Months are zero-based in JavaScript Date
        dayObj.setDate(olderDay);
@@ -51,18 +53,12 @@ const DetailsOrderPage = () => {
        const minute = time.getMinutes();
        const second = time.getSeconds();
 
-       console.log('day', day);
-       console.log('hour', hour);
-       console.log('minute', minute);
-       console.log('second', second);
 
        // If you need to modify the time object (not necessary here):
        time.setDate(day);
        time.setHours(hour);
        time.setMinutes(minute);
        time.setSeconds(second);
-
-       console.log('Updated time', time);
 
        // Create an object with the extracted time values
        const initialTime = {
@@ -75,7 +71,14 @@ const DetailsOrderPage = () => {
 
 
 
-       console.log('initialTime', initialTime)
+       // console.log('dayString', dayString);
+       // console.log('initialTime', initialTime)
+       // console.log('day', day);
+       // console.log('hour', hour);
+       // console.log('minute', minute);
+       // console.log('second', second);
+       // console.log('Updated time', time);
+
        const handleChangeDeliveries = (e) => {
               const value = e.target.value.toLowerCase(); // Normalize input value
               setSearchDelivery(value);
@@ -106,6 +109,14 @@ const DetailsOrderPage = () => {
               console.log('response', response)
        }, [response]);
 
+       const handleOpenOrderNumber = (orderId) => {
+              setOpenOrderNumber(orderId);
+       };
+       const handleCloseOrderNumber = () => {
+              setOpenOrderNumber(null);
+       };
+
+
        const handleOpenDeliviers = (deliveryId) => {
               setOpenDeliveries(deliveryId);
        };
@@ -119,42 +130,42 @@ const DetailsOrderPage = () => {
        };
        const handleOpenOptionOrderStatus = () => setIsOpenOrderStatus(false);
 
-       // const handleSelectOrderStatus = (option) => {
-       //        setOrderStatusName(option.name);
-
-       //        const handleChangeStaus = async (id, name, status) => {
-       //               const response = await changeState(
-       //                      `https://Bcknd.food2go.online/admin/delivery/status/${id}`,
-       //                      `${name} Changed Status.`,
-       //                      { status } // Pass status as an object if changeState expects an object
-       //               );
-
-       //               if (response) {
-       //                      refetchDetailsOrder()
-       //               }
-
-       //        };
-       //        handleChangeStaus()
-       // };
-
        const handleSelectOrderStatus = (option) => {
               if (!option) return;
 
-              setOrderStatusName(option.name);
+              // setOrderStatusName(option.name);
 
               // Call handleChangeStaus with appropriate arguments
-              handleChangeStaus(detailsData.id, detailsData.order_number, option.name);
+
+              if (option.name === 'processing') {
+                     handleOpenOrderNumber(detailsData.id)
+                     // setOpenOrderNumber(detailsData.id)
+                     // handleChangeStaus(detailsData.id, detailsData.order_number, option.name);
+              } else {
+                     setOrderStatusName(option.name);
+                     handleChangeStaus(detailsData.id, '', option.name);
+              }
+       };
+
+       const handleOrderNumber = (id) => {
+              if (!orderNumber) {
+                     auth.toastError('please set your order Number')
+                     return;
+              }
+
+              handleChangeStaus(id, orderNumber, 'processing');
+              setOpenOrderNumber(null);
        };
 
        // Move handleChangeStaus outside the function
-       const handleChangeStaus = async (orderId, orderName, orderStatus) => {
+       const handleChangeStaus = async (orderId, orderNumber, orderStatus) => {
               try {
                      const responseStatus = await changeState(
                             `https://Bcknd.food2go.online/admin/order/status/${orderId}`,
-                            `${orderName} Changed Status.`,
+                            `Changed Status Successes.`,
                             {
                                    order_status: orderStatus,
-                                   order_id: orderId
+                                   order_number: orderNumber
                             }
                      );
 
@@ -192,10 +203,10 @@ const DetailsOrderPage = () => {
        }, [orderId]);
 
        useEffect(() => {
-              // if (!initialTime) return;
-
               const countdown = setInterval(() => {
                      setPreparationTime((prevTime) => {
+                            if (!prevTime) return prevTime;
+
                             const { days, hours, minutes, seconds } = prevTime;
 
                             // Calculate the next time
@@ -223,21 +234,33 @@ const DetailsOrderPage = () => {
                                    return { days: 0, hours: 0, minutes: 0, seconds: 0 };
                             }
 
-                            return {
-                                   days: newDays,
-                                   hours: newHours,
-                                   minutes: newMinutes,
-                                   seconds: newSeconds,
-                            };
+                            return { days: newDays, hours: newHours, minutes: newMinutes, seconds: newSeconds };
                      });
               }, 1000);
 
-              // Clear the interval on component unmount
+              // Clear interval on unmount
               return () => clearInterval(countdown);
-       }, [preparationTime]);
+       }, []); // Dependency array is empty to ensure the effect runs only once
+
 
        let totalAddonPrice = 0;
        let totalItemPrice = 0;
+
+       useEffect(() => {
+              const handleClickOutside = (event) => {
+                     // Close dropdown if clicked outside
+                     if (
+                            StatusRef.current && !StatusRef.current.contains(event.target)
+                     ) {
+                            setIsOpenOrderStatus(false);
+                     }
+              };
+
+              document.addEventListener('mousedown', handleClickOutside);
+              return () => {
+                     document.removeEventListener('mousedown', handleClickOutside);
+              };
+       }, []);
 
        return (
               <>
@@ -310,7 +333,7 @@ const DetailsOrderPage = () => {
 
 
                                                                                     {/* Items Table */}
-                                                                                    {detailsData.order_details.map((item, index) => (
+                                                                                    {(detailsData?.order_details || []).map((item, index) => (
                                                                                            <div className='border-b-2 border-gray-500 mt-4' key={index} >
                                                                                                   <div className="text-center mb-2">
                                                                                                          <strong>Product Num({index + 1})</strong>
@@ -473,7 +496,7 @@ const DetailsOrderPage = () => {
                                                                                     {/* Order Summary */}
                                                                                     <div className="my-4 flex flex-col gap-y-1">
                                                                                            <p className='w-full flex items-center justify-between'>
-                                                                                                  {detailsData.order_details.forEach((orderDetail) => {
+                                                                                                  {(detailsData?.order_details || []).forEach((orderDetail) => {
                                                                                                          // Sum extras prices
                                                                                                          orderDetail.extras.forEach((extraItem) => {
                                                                                                                 totalItemPrice += extraItem.price;
@@ -505,7 +528,7 @@ const DetailsOrderPage = () => {
                                                                                                   </span>
                                                                                            </p>
                                                                                            <p className="w-full flex items-center justify-between">
-                                                                                                  {detailsData.order_details.forEach((orderDetail) => {
+                                                                                                  {(detailsData?.order_details || []).forEach((orderDetail) => {
                                                                                                          orderDetail.addons.forEach((addonItem) => {
                                                                                                                 // Add the price of each addon to the total
                                                                                                                 totalAddonPrice += addonItem.addon.price * addonItem.count;
@@ -556,6 +579,49 @@ const DetailsOrderPage = () => {
                                                                                     options={orderStatus}
                                                                              />
 
+                                                                             {openOrderNumber === detailsData?.id && (
+                                                                                    <Dialog open={true} onClose={handleCloseOrderNumber} className="relative z-10">
+                                                                                           <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                                                                                           <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                                                                                                  <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                                                                                                         <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl">
+
+                                                                                                                {/* Permissions List */}
+                                                                                                                <div className="w-full flex flex-col items-start justify-center gap-4 my-4 px-4 sm:p-6 sm:pb-4">
+                                                                                                                       <span>Order Number:</span>
+                                                                                                                       {/* <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center"> */}
+                                                                                                                       <TextInput
+                                                                                                                              value={orderNumber} // Access category_name property
+                                                                                                                              onChange={(e) => setOrderNumber(e.target.value)}
+                                                                                                                              placeholder="Order Number"
+                                                                                                                       />
+                                                                                                                       {/* </div> */}
+                                                                                                                </div>
+
+                                                                                                                {/* Dialog Footer */}
+                                                                                                                <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-x-3">
+                                                                                                                       <button
+                                                                                                                              type="button"
+                                                                                                                              onClick={handleCloseOrderNumber}
+                                                                                                                              className="inline-flex w-full justify-center rounded-md bg-white border-2 px-6 py-3 text-sm font-medium text-mainColor sm:mt-0 sm:w-auto"
+                                                                                                                       >
+                                                                                                                              Close
+                                                                                                                       </button>
+                                                                                                                       <button
+                                                                                                                              type="button"
+                                                                                                                              onClick={() => handleOrderNumber(detailsData.id)}
+                                                                                                                              className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-medium text-white sm:mt-0 sm:w-auto"
+                                                                                                                       >
+                                                                                                                              Change Status
+                                                                                                                       </button>
+                                                                                                                </div>
+
+                                                                                                         </DialogPanel>
+                                                                                                  </div>
+                                                                                           </div>
+                                                                                    </Dialog>
+                                                                             )}
+
                                                                       </div>
                                                                       <div className="mt-4">
                                                                              <label className="text-sm">Delivery Date & Time</label>
@@ -564,7 +630,7 @@ const DetailsOrderPage = () => {
                                                                                     <input type="time" className="w-1/2 p-2 border rounded-md" value={detailsData.date} readOnly />
                                                                              </div>
                                                                       </div>
-                                                                      {detailsData.delivery_id === null && (
+                                                                      {detailsData.order_status === 'processing' && (
                                                                              <button className="w-full bg-mainColor text-white py-2 rounded-md mt-4"
                                                                                     onClick={() => handleOpenDeliviers(detailsData.id)}>
                                                                                     Assign Delivery Man
@@ -629,41 +695,60 @@ const DetailsOrderPage = () => {
                                                                       )}
                                                                </div>
                                                                {/* Food Preparation Time */}
-                                                               <div className="w-full bg-white rounded-xl shadow-md p-4 mt-4">
-                                                                      <h3 className="text-lg font-semibold">Food Preparation Time</h3>
-                                                                      <div className="flex items-center">
-                                                                             <FaClock className="mr-2 text-gray-500" />
-                                                                             {preparationTime ? (
-                                                                                    <span
-                                                                                           className={
-                                                                                                  (preparationTime?.hours - olderHours) < 0
-                                                                                                         ? "text-red-500"
-                                                                                                         : "text-cyan-400"
-                                                                                           }
-                                                                                    >
-                                                                                           {(preparationTime?.hours - olderHours < 0) ? (
+                                                               {(detailsData.order_status === 'pending' ||
+                                                                      detailsData.order_status === 'confirmed' ||
+                                                                      detailsData.order_status === 'processing' ||
+                                                                      detailsData.order_status === 'out_for_delivery') && (
+                                                                             <div className="w-full bg-white rounded-xl shadow-md p-4 mt-4">
+                                                                                    <h3 className="text-lg font-semibold">Food Preparation Time</h3>
+                                                                                    <div className="flex items-center">
+                                                                                           <FaClock className="mr-2 text-gray-500" />
+                                                                                           {preparationTime ? (
                                                                                                   <>
-                                                                                                         {initialTime.currentDay - olderDay}d {olderHours - preparationTime?.hours}h{" "}
-                                                                                                         {preparationTime?.minutes - olderMinutes}m {preparationTime?.seconds}s
+                                                                                                         <span
+                                                                                                                className={
+                                                                                                                       (olderHours + preparationTime.hours) - initialTime.currentHour <= 0 ||
+                                                                                                                              (olderDay + preparationTime.days) - initialTime.currentDay <= 0
+                                                                                                                              ? "text-red-500"
+                                                                                                                              : "text-cyan-400"
+                                                                                                                }
+                                                                                                         >
+                                                                                                                {(olderHours + preparationTime.hours) - initialTime.currentHour <= 0 ? (
+                                                                                                                       <>
+                                                                                                                              {(olderDay + preparationTime.days) - initialTime.currentDay}d{" "}
+                                                                                                                              {initialTime.currentHour - (olderHours + preparationTime.hours)}h{" "}
+                                                                                                                              {(olderMinutes + preparationTime.minutes) - initialTime.currentMinute}m{" "}
+                                                                                                                              {preparationTime.seconds}s Over
+                                                                                                                       </>
+                                                                                                                ) : (
+                                                                                                                       <>
+                                                                                                                              {initialTime.currentDay - olderDay}d {preparationTime.hours}h{" "}
+                                                                                                                              {(olderMinutes + preparationTime.minutes) - initialTime.currentMinute}m{" "}
+                                                                                                                              {preparationTime.seconds}s Left
+                                                                                                                       </>
+                                                                                                                )}
+                                                                                                         </span>
                                                                                                   </>
-
                                                                                            ) : (
-                                                                                                  <>
-                                                                                                         {preparationTime.days}d {olderHours - preparationTime?.hours}h{" "}
-                                                                                                         {olderMinutes - preparationTime?.minutes}m {preparationTime?.seconds}s
-                                                                                                  </>
+                                                                                                  <span className="text-gray-400">Preparing time not available</span>
                                                                                            )}
+                                                                                    </div>
+                                                                                    {/* <span>preparationTime.hours: {preparationTime?.hours}</span>
+                                                                                    <br />
+                                                                                    <span>olderHours: {olderHours}</span>
+                                                                                    <br />
+                                                                                    <span>currentHour: {initialTime?.currentHour}</span>
+                                                                                    <br />
+                                                                                    <span>preparationTime.minutes: {preparationTime?.minutes}</span>
+                                                                                    <br />
+                                                                                    <span>olderMinutes: {olderMinutes}</span>
+                                                                                    <br />
+                                                                                    <span>currentMinute: {initialTime?.currentMinute}</span> */}
+                                                                             </div>
+                                                                      )
+                                                               }
 
-                                                                                           {(preparationTime?.hours - olderHours < 0) ? "Over" : "Left"}
-                                                                                    </span>
-                                                                             ) : (
-                                                                                    <span className="text-gray-400">Preparing time not available</span>
-                                                                             )}
 
-                                                                      </div>
-                                                               </div>
-
-                                                               {/* Delivery Man */}
                                                                {detailsData.delivery_id !== null && (
 
                                                                       <div className="w-full bg-white rounded-xl shadow-md p-4 mt-4">
