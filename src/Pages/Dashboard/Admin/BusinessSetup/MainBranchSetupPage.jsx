@@ -65,6 +65,13 @@ const MainBranchSetupPage = () => {
        const [selectedCity, setSelectedCity] = useState('');
        const [city_id, setCityID] = useState();
 
+       useEffect(() => {
+              console.log('stateCity', stateCity)
+              console.log('selectedCity', selectedCity)
+              console.log('selectedCity', selectedCity.id)
+       }, [selectedCity, stateCity])
+
+
        const [cities, setCities] = useState(null);
        const [branchImage, setBranchImage] = useState('');
        const [branchImageFile, setBranchImageFile] = useState(null);
@@ -148,7 +155,7 @@ const MainBranchSetupPage = () => {
               formData.append('longitude', longitude);
               formData.append('coverage', coverage);
               formData.append('status', 1);
-              formData.append('city_id', city_id);
+              formData.append('city_id', selectedCity.id);
 
               postData(formData, 'Branch Added Success done');
 
