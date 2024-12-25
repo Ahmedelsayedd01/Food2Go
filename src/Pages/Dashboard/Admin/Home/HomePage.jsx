@@ -6,6 +6,7 @@ import { OrdersComponent } from '../../../../Store/CreateSlices'
 import { useGet } from '../../../../Hooks/useGet'
 // import LineChartComponent from '../../../../Components/Charts/LineChart'
 // import LineChartComponent from '../../../../Components/Charts/LineChart'
+// import LineChartComponent from '../../../../Components/Charts/LineChart'
 // import { pData,uData,xLabels } from '../../../../Components/Charts/data'
 
 const HomePage = () => {
@@ -65,6 +66,8 @@ const HomePage = () => {
                             ) : (
                                    <>
                                           <CartsOrderSection ordersNum={counters} />
+
+                                          {/* <LineChartComponent pData={mockData.pData} uData={mockData.uData} xLabels={mockData.xLabels}/> */}
                                           {/* <div className="">heloo</div> */}
 
                                         

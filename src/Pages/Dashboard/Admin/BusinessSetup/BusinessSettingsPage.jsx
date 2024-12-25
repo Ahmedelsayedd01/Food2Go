@@ -41,8 +41,6 @@ const BusinessSettingsPage = () => {
               url: "https://bcknd.food2go.online/admin/settings/business_setup/maintenance",
        });
 
-
-
        const {
               refetch: refetchCity,
               loading: loadingCity,
