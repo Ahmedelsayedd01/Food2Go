@@ -3,10 +3,9 @@ import { DropDown, EmailInput, LoaderLogin, NumberInput, PasswordInput, StaticBu
 import { Dropdown } from 'primereact/dropdown';
 import { usePost } from '../../../../Hooks/usePostJson';
 import { useGet } from '../../../../Hooks/useGet';
-import axios from 'axios';
 import { useAuth } from '../../../../Context/Auth';
 
-const MainBranchSetupPage = ({ refetch }) => {
+const MainBranchSetupPage = () => {
        const { refetch: refetchBranch, loading: loadingBranch, data: dataBranch } = useGet({ url: 'https://bcknd.food2go.online/admin/settings/business_setup/branch' });
        const [branch, setBranch] = useState([])
 
