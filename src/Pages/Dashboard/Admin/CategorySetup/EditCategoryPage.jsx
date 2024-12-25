@@ -94,8 +94,8 @@ const EditCategoryPage = () => {
                      setImageFile(dataCategory.category.image_link);
                      setBanner(dataCategory.category.banner_link);
                      setBannerFile(dataCategory.category.banner_link);
-                     setStateCategoriesParent(dataCategory?.category?.category_id || stateCategoriesParent);
-                     setCategoriesParentId(dataCategory?.category?.category_id || '');
+                     setStateCategoriesParent(dataCategory?.category?.parent?.name || stateCategoriesParent);
+                     setCategoriesParentId(dataCategory?.category?.parent?.id || '');
                      setSelectedCategoriesAddons(dataCategory.category.addons);
                      setStatusCategory(dataCategory.category.status)
                      setActiveCategory(dataCategory.category.active)
