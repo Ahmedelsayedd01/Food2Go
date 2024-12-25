@@ -73,6 +73,7 @@ const OrdersPaymentPending = () => {
       auth.toastError('please set your reason reject')
       return;
     }
+
     const response = await changeState(
       `https://Bcknd.food2go.online/admin/payment/rejected/${id}`,
       `${id} Is Rejected.`,
@@ -119,7 +120,7 @@ const OrdersPaymentPending = () => {
                 currentOrdersPaymentPending.map((paymentPending, index) => ( // Example with two rows
                   <tr className="w-full border-b-2" key={index}>
                     <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                      {(currentpage - 1) * ordersPaymentPendingPerPage + index + 1}
+                      {(currentPage - 1) * ordersPaymentPendingPerPage + index + 1}
                     </td>
                     <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
                       {paymentPending?.user?.name || '-'}
