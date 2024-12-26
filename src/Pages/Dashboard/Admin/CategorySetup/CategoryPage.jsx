@@ -213,7 +213,7 @@ const CategoryPage = ({ refetch, setUpdate }) => {
               };
        }, []);
 
-       const headers = ['SL', 'Image', "Banner", 'Name', 'Sup Category', 'Status', 'Active', 'Priority', 'Action'];
+       const headers = ['SL', 'Image', "Banner", 'Name', 'Subcategory', 'Status', 'Active', 'Priority', 'Action'];
 
        return (
               <div className="w-full pb-28 flex items-start justify-start overflow-x-scroll scrollSection">
