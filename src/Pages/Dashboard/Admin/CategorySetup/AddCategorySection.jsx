@@ -63,9 +63,11 @@ const AddCategorySection = ({ update, setUpdate }) => {
               // setUpdate(!update)
        }, [refetchCategory, update])
        useEffect(() => {
+
               if (dataCategory) {
+
                      setCategories(dataCategory.categories);
-                     setCategoriesParent(dataCategory.parent_categories);
+                     setCategoriesParent([{ id: '', name: 'Select Category Parent' }, ...dataCategory.parent_categories]);
                      setCategoriesAddonse(dataCategory.addons);
                      setCategoriesPriority(() => {
                             const priorities = [];
