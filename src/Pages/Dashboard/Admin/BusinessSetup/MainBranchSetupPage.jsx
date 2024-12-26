@@ -54,11 +54,6 @@ const MainBranchSetupPage = () => {
        const auth = useAuth();
        const BranchImageRef = useRef();
        const BranchCoverRef = useRef();
-<<<<<<< HEAD
-       const CountriesRef = useRef();
-       
-=======
->>>>>>> 84db068f7c40d5fcf1237989ac1c2d929eafa4b3
 
        const [name, setName] = useState('');
        const [foodPreparationTime, setFoodPreparationTime] = useState('00:00');
