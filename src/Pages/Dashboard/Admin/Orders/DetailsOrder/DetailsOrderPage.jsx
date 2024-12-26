@@ -630,7 +630,7 @@ const DetailsOrderPage = () => {
                                                                                     <input type="time" className="w-1/2 p-2 border rounded-md" value={detailsData.date} readOnly />
                                                                              </div>
                                                                       </div>
-                                                                      {detailsData.order_status === 'processing' && (
+                                                                      {detailsData.order_type === 'delivery' && detailsData.order_status === 'processing' && (
                                                                              <button className="w-full bg-mainColor text-white py-2 rounded-md mt-4"
                                                                                     onClick={() => handleOpenDeliviers(detailsData.id)}>
                                                                                     Assign Delivery Man
@@ -763,23 +763,25 @@ const DetailsOrderPage = () => {
 
 
                                                                {/* Delivery Information */}
-                                                               <div className="w-full bg-white rounded-xl shadow-md p-4 mt-4">
-                                                                      <div className="flex items-center gap-x-2 text-lg font-semibold"><span><FaUser className='text-mainColor' /></span>Delivery Information</div>
-                                                                      <p className="text-sm">Name: {detailsData?.user?.f_name || '-'} {detailsData?.user?.l_name || '-'}</p>
-                                                                      <p className="text-sm">Contact: {detailsData?.user?.phone || '-'}</p>
-                                                                      <p className="text-sm">Floor: {detailsData?.address?.floor_num || '-'}</p>
-                                                                      <p className="text-sm">House: {detailsData?.address?.building_num || '-'}</p>
-                                                                      <p className="text-sm">Road: {detailsData?.address?.street || '-'}</p>
-                                                                      <p className="text-sm pb-2 text-center">
-                                                                             {detailsData?.address?.address || '-'}
-                                                                      </p>
-                                                                      {detailsData?.address?.additional_data || '' && (
-                                                                             <p className="text-sm border-t-2 text-center pt-2">
-                                                                                    {detailsData?.address?.additional_data || '-'}
+                                                               {detailsData.order_type === 'delivery' && (
+                                                                      <div className="w-full bg-white rounded-xl shadow-md p-4 mt-4">
+                                                                             <div className="flex items-center gap-x-2 text-lg font-semibold"><span><FaUser className='text-mainColor' /></span>Delivery Information</div>
+                                                                             <p className="text-sm">Name: {detailsData?.user?.f_name || '-'} {detailsData?.user?.l_name || '-'}</p>
+                                                                             <p className="text-sm">Contact: {detailsData?.user?.phone || '-'}</p>
+                                                                             <p className="text-sm">Floor: {detailsData?.address?.floor_num || '-'}</p>
+                                                                             <p className="text-sm">House: {detailsData?.address?.building_num || '-'}</p>
+                                                                             <p className="text-sm">Road: {detailsData?.address?.street || '-'}</p>
+                                                                             <p className="text-sm pb-2 text-center">
+                                                                                    {detailsData?.address?.address || '-'}
                                                                              </p>
-                                                                      )}
+                                                                             {detailsData?.address?.additional_data || '' && (
+                                                                                    <p className="text-sm border-t-2 text-center pt-2">
+                                                                                           {detailsData?.address?.additional_data || '-'}
+                                                                                    </p>
+                                                                             )}
 
-                                                               </div>
+                                                                      </div>
+                                                               )}
 
                                                                <div className="w-full bg-white rounded-xl shadow-md p-4 mt-4">
                                                                       <div className="flex items-center gap-x-2 text-lg font-semibold"><span><FaUser className='text-mainColor' /></span>Customer Information</div>
