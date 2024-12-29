@@ -24,139 +24,6 @@ const BusinessSettingsPage = () => {
   const LogoRef = useRef();
   const IconRef = useRef();
   const auth = useAuth();
-
-  const {
-    refetch: refetchCompany,
-    loading: loadingCompany,
-    data: dataCompany,
-  } = useGet({
-    url: "https://bcknd.food2go.online/admin/settings/business_setup/company",
-  });
-
-  const {
-       refetch: refetchMaintenance,
-       loading: loadingMaintenance,
-       data: dataMaintennance,
-     } = useGet({
-       url: "https://bcknd.food2go.online/admin/settings/business_setup/maintenance",
-     });
-
-
-
-  const {
-    refetch: refetchCity,
-    loading: loadingCity,
-    data: dataCity,
-  } = useGet({ url: "https://bcknd.food2go.online/admin/settings/city" });
-  
-  const [dataCompany2, setDataCompany] = useState(null);
-  const [data_City, setDataCity] = useState([]);
-  const [dataMaintenancece ,setDataMaintenance]= useState([]);
-
-  const [dataCompanyInfo, setDataCompanyInfo] = useState([]);
-
-  const [dataCurrency, setDataCurrency] = useState([]);
-  const [stateCurrency, setStateCurrency] = useState("Select Currency");
-  const [currencyId, setCurrencyId] = useState("");
-  const [isOpenCurrency, setIsOpenCurrency] = useState(false);
-
-  const { postData, loadingPost, response } = usePost({
-    url: "https://bcknd.food2go.online/admin/settings/business_setup/company/add",
-  });
-
-
-  const { postDataStatus, loadingPostStatus, responseStatus } = usePost({
-       url: "https://bcknd.food2go.online/admin/settings/business_setup/maintenance/status",
-     });
-
-     const { postDataMaintenance, loadingPostMaintenance, responseMaintenanace } = usePost({
-       url: "https://bcknd.food2go.online/admin/settings/business_setup/maintenance/add",
-     });
-
-  useEffect(() => {
-    refetchCompany();
-    refetchCity();
-    refetchMaintenance();
-  }, [refetchCompany, refetchCity,refetchMaintenance]);
- 
-
-  useEffect(() => {
-    if (dataCompany) {
-      setDataCompany(dataCompany);
-      setDataCurrency(dataCompany.currency || []);
-      setDataCompanyInfo(dataCompany.company_info || []);
-
-      setCompanyName(dataCompanyInfo.name);
-      setCompanyPhone(dataCompanyInfo.phone);
-      setCompanyEmail(dataCompanyInfo.email);
-      setCompanyAddress(dataCompanyInfo.address);
-      setIcon(dataCompanyInfo.fav_icon_link);
-      setLogo(dataCompanyInfo.logo_link);
-      setSelectedCountry(dataCompanyInfo.country);
-      setSelectedTimeZone(dataCompanyInfo.time_zone);
-      setStateTimeFormat(dataCompanyInfo.time_format)
-      if (dataCompanyInfo.currency_id) {
-        const matchedCurrency = dataCompany.currency.find(
-          (curr) => curr.id === dataCompanyInfo.currency_id
-        );
-        
-        if (matchedCurrency) {
-          setStateCurrency(matchedCurrency.name);
-        }
-      }
-      // setTimeFormat(dataCompanyInfo.time_format)
-      setCompanyCopyrightText(dataCompanyInfo.copy_right);
-      if (dataCompanyInfo.currency_position === "right") {
-        setLeftCurrency(0);
-        setRightCurrency(1);
-      } else {
-        setLeftCurrency(1);
-        setRightCurrency(0);
-      }
-    }
-
-    console.log("data fetch company :", dataCompany);
-  }, [dataCompany, dataCompanyInfo]);
-  
-
-  // useEffect(() => {
-  //   if (dataCity && dataCity.cities) {
-  //     const cityNames = dataCity.cities.map((city) => ({ name: city.name }));
-  //     setCountries(cityNames);
-  //   }
-  //   console.log("data city ", dataCity?.cities?.[0]?.name);
-  // }, [dataCity]);
-  
-  useEffect(() => {
-       if (dataMaintennance ) {
-              setDataMaintenance(dataMaintennance)
-              setMaintenanceMode(dataMaintennance.maintenance.status)
-              setEndDate(dataMaintennance.maintenance.end_date)
-              setStartDate(dataMaintennance.maintenance.start_date)
-              setCustomize(dataMaintennance.maintenance.customize)
-              setUntilChange(dataMaintennance.maintenance.until_change)
-              setForWeek(dataMaintennance.maintenance.week)
-              setForDay(dataMaintennance.maintenance.day)
-              setDeliverymanApp(dataMaintennance.maintenance.delivery)
-              setBranchPanel(dataMaintennance.maintenance.branch)
-              setCustomerApp(dataMaintennance.maintenance.customer)
-              setAllSystem(dataMaintennance.maintenance.all)
-              setWebApp(dataMaintennance.maintenance.web)
-
-       }
-       console.log("data maintence ",dataMaintennance );
-     }, [dataMaintennance]);
-
-
-  useEffect(() => {
-    // Log updated dataCurrency when it changes
-    console.log("data fetch currency :", dataCurrency);
-    
-    console.log("data fetch company info :", dataCompanyInfo);
-    console.log("data fetch maintenenn :", dataMaintennance);
-  }, [dataCurrency, dataCompanyInfo,dataMaintennance]);
-
-
   const CountriesRef = useRef();
   const TimeZoneRef = useRef();
   const TimeFormatRef = useRef();
@@ -177,6 +44,7 @@ const BusinessSettingsPage = () => {
 
   const [stateCountries, setStateCountries] = useState("Select Country");
   const [selectedCountry, setSelectedCountry] = useState("");
+
   const [countries, setCountries] = useState(
            [
            { name: 'Afghanistan' }, { name: 'Albania' }, { name: 'Algeria' }, { name: 'Andorra' }, { name: 'Angola' },
@@ -259,6 +127,166 @@ const BusinessSettingsPage = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
+  const {
+    refetch: refetchCompany,
+    loading: loadingCompany,
+    data: dataCompany,
+  } = useGet({
+    url: "https://bcknd.food2go.online/admin/settings/business_setup/company",
+  });
+
+  const {
+       refetch: refetchMaintenance,
+       loading: loadingMaintenance,
+       data: dataMaintennance,
+     } = useGet({
+       url: "https://bcknd.food2go.online/admin/settings/business_setup/maintenance",
+     });
+
+  const {
+    refetch: refetchCity,
+    loading: loadingCity,
+    data: dataCity,
+  } = useGet({ url: "https://bcknd.food2go.online/admin/settings/city" });
+  
+  const [dataCompany2, setDataCompany] = useState(null);
+
+
+  const [dataCompanyInfo, setDataCompanyInfo] = useState([]);
+
+  const [dataCurrency, setDataCurrency] = useState([]);
+  const [stateCurrency, setStateCurrency] = useState("Select Currency");
+  const [currencyId, setCurrencyId] = useState("");
+  const [isOpenCurrency, setIsOpenCurrency] = useState(false);
+  const [dataMain,setDataMain] = useState([])
+    const [formDataMaintenance,setFormDataMaintenance] = useState({})
+
+  const { postData, loadingPost, response } = usePost({
+    url: "https://bcknd.food2go.online/admin/settings/business_setup/company/add",
+  });
+
+
+  // const { postDataStatus, loadingPostStatus, responseStatus } = usePost({
+  //      url: "https://bcknd.food2go.online/admin/settings/business_setup/maintenance/status",
+  //    });
+
+    //  const { postDataMaintenance, loadingPostMaintenance, responseMaintenanace } = usePost({
+    //    url: "https://bcknd.food2go.online/admin/settings/business_setup/maintenance/add",
+    //  });
+
+  useEffect(() => {
+    refetchCompany();
+    refetchCity();
+    refetchMaintenance();
+  }, [refetchCompany, refetchCity,refetchMaintenance]);
+ 
+
+  useEffect(() => {
+    if (dataCompany) {
+      setDataCompany(dataCompany);
+      setDataCurrency(dataCompany.currency || []);
+      setDataCompanyInfo(dataCompany.company_info || []);
+      setCompanyName(dataCompanyInfo.name);
+      setCompanyPhone(dataCompanyInfo.phone);
+      setCompanyEmail(dataCompanyInfo.email);
+      setCompanyAddress(dataCompanyInfo.address);
+      setIcon(dataCompanyInfo.fav_icon_link);
+      setLogo(dataCompanyInfo.logo_link);
+      setStateCountries(dataCompanyInfo.country);
+      setSelectedCountry(dataCompanyInfo.country)
+      setSelectedTimeZone(dataCompanyInfo.time_zone);
+      setStateTimeFormat(dataCompanyInfo.time_format)
+
+      if (dataCompanyInfo.currency_id) {
+        const matchedCurrency = dataCompany.currency.find(
+          (curr) => curr.id === dataCompanyInfo.currency_id
+        );
+        
+        if (matchedCurrency) {
+          setStateCurrency(matchedCurrency.name);
+        }
+      }
+      // setTimeFormat(dataCompanyInfo.time_format)
+      setCompanyCopyrightText(dataCompanyInfo.copy_right);
+      if (dataCompanyInfo.currency_position === "right") {
+        setLeftCurrency(0);
+        setRightCurrency(1);
+      } else {
+        setLeftCurrency(1);
+        setRightCurrency(0);
+      }
+
+     
+    }
+
+    console.log("data fetch company :", dataCompany);
+  }, [dataCompany, dataCompanyInfo]);
+  
+  useEffect(() => {
+  if(dataMaintennance){
+
+    setDataMain(dataMaintennance)
+     // data maintenance
+     setMaintenanceMode(dataMaintennance.maintenance.status)
+     setEndDate(dataMaintennance.maintenance.end_date)
+     setStartDate(dataMaintennance.maintenance.start_date)
+     setCustomize(dataMaintennance.maintenance.customize)
+     setUntilChange(dataMaintennance.maintenance.until_change)
+     setForWeek(dataMaintennance.maintenance.week)
+     setForDay(dataMaintennance.maintenance.day)
+     setDeliverymanApp(dataMaintennance.maintenance.delivery)
+     setBranchPanel(dataMaintennance.maintenance.branch)
+     setCustomerApp(dataMaintennance.maintenance.customer)
+     setAllSystem(dataMaintennance.maintenance.all)
+     setWebApp(dataMaintennance.maintenance.web)
+console.log('data menteneance100' ,dataMaintennance)
+  }
+  }, [dataMaintennance])
+
+  // useEffect(() => {
+  //   if (dataCity && dataCity.cities) {
+  //     const cityNames = dataCity.cities.map((city) => ({ name: city.name }));
+  //     setCountries(cityNames);
+  //   }
+  //   console.log("data city ", dataCity?.cities?.[0]?.name);
+  // }, [dataCity]);
+  
+  // useEffect(() => {
+  //      if (dataMain ) {
+  //             setDataMaintenance(dataMain)
+  //             setMaintenanceMode(dataMain.status)
+  //             setEndDate(dataMain.end_date)
+  //             setStartDate(dataMain.start_date)
+  //             setCustomize(dataMain.customize)
+  //             setUntilChange(dataMain.until_change)
+  //             setForWeek(dataMain.week)
+  //             setForDay(dataMain.day)
+  //             setDeliverymanApp(dataMain.delivery)
+  //             setBranchPanel(dataMain.branch)
+  //             setCustomerApp(dataMain.customer)
+  //             setAllSystem(dataMain.all)
+  //             setWebApp(dataMain.web)
+
+  //      }
+  //      console.log("data maintence2 ",formDataMaintenance );
+  //    }, [formDataMaintenance,dataMain]);
+
+
+  useEffect(() => {
+    // Log updated dataCurrency when it changes
+    console.log("data fetch currency :", dataCurrency);
+    
+    console.log("data fetch company info :", dataCompanyInfo);
+    console.log("data fetch maintenenn :", dataMain);
+  }, [dataCurrency, dataCompanyInfo,dataMain]);
+
+
+  
+
+  // useEffect(() => {
+
+  // }, [maintenanceMode,allSystem,branchPanel,customerApp,webApp,deliverymanApp,forDay,forWeek,untilChange,Customize,startDate,endDate])
+
   const handelAddCompany = async (e) => {
     e.preventDefault();
 
@@ -315,19 +343,40 @@ const BusinessSettingsPage = () => {
        auth.toastError("Please select at least one system.");
    }
     
-    const formDataMaintenance = new FormData();
-    formDataMaintenance.append("status",maintenanceMode)
-    formDataMaintenance.append("all",allSystem)
-    formDataMaintenance.append("branch",branchPanel)
-    formDataMaintenance.append("customer",customerApp)
-    formDataMaintenance.append("web",webApp)
-    formDataMaintenance.append("delivery",deliverymanApp)
-    formDataMaintenance.append("day",forDay)
-    formDataMaintenance.append("week",forWeek)
-    formDataMaintenance.append("until_change",untilChange)
-    formDataMaintenance.append("customize",Customize)
-    formDataMaintenance.append("start_date",startDate)
-    formDataMaintenance.append("end_date",endDate)
+    // const formDataMaintenance = new FormData();
+    // formDataMaintenance.append("status",maintenanceMode)
+    // formDataMaintenance.append("all",allSystem)
+    // formDataMaintenance.append("branch",branchPanel)
+    // formDataMaintenance.append("customer",customerApp)
+    // formDataMaintenance.append("web",webApp)
+    // formDataMaintenance.append("delivery",deliverymanApp)
+    // formDataMaintenance.append("day",forDay)
+    // formDataMaintenance.append("week",forWeek)
+    // formDataMaintenance.append("until_change",untilChange)
+    // formDataMaintenance.append("customize",Customize)
+    // formDataMaintenance.append("start_date",startDate)
+    // formDataMaintenance.append("end_date",endDate)
+
+
+  
+
+    // const updatedData = [
+    //   ["status", maintenanceMode],
+    //   ["all", allSystem],
+    //   ["branch", branchPanel],
+    //   ["customer", customerApp],
+    //   ["web", webApp],
+    //   ["delivery", deliverymanApp],
+    //   ["day", forDay],
+    //   ["week", forWeek],
+    //   ["until_change", untilChange],
+    //   ["customize", Customize],
+    //   ["start_date", startDate],
+    //   ["end_date", endDate]
+    // ];
+  
+    // // Update the state with the new array
+    // setFormDataMaintenance(updatedData);
 
 //    { postDataMaintenance(formDataMaintenance,"System Added Success")}
 
@@ -335,11 +384,32 @@ const BusinessSettingsPage = () => {
 //     postDataMain(formDataMaintenance, "Branch Added Success");
 
 //  ----------------------------------
+const updatedData = {
+  status: maintenanceMode,  
+  all: allSystem,       
+  branch: branchPanel,  
+  customer: customerApp, 
+  web: webApp,        
+  delivery: deliverymanApp,  
+  day: forDay,         
+  week: forWeek,        
+  until_change: untilChange,  
+  customize: Customize,  
+  start_date: startDate,  
+  end_date: endDate     
+};
+
+// Update the state with the new object
+
+// setFormDataMaintenance(updatedData);
+
+
     const formData = new FormData();
     
     formData.append("name", companyName);
     formData.append("phone", companyPhone);
     formData.append("email", companyEmail);
+    formData.append("address", companyAddress);
     formData.append("address", companyAddress);
 
     formData.append("logo", logo);
@@ -347,7 +417,8 @@ const BusinessSettingsPage = () => {
     formData.append("time_zone", selectedTimeZone);
 
     formData.append("time_format", stateTimeFormat);
-    formData.append("currency_id", currencyId);
+    formData.append("currency_id", currencyId );
+    formData.append("country", selectedCountry );
 
     if (leftCurrency === 0 && rightCurrency === 0) {
       formData.append("currency_position", "");
@@ -359,14 +430,13 @@ const BusinessSettingsPage = () => {
     
 
     formData.append("copy_right", companyCopyrightText);
-
-//     if(maintenanceMode===0){
-//        formData.append("maintenance", "");
-//     }else{
-//        formData.append("maintenance", JSON.stringify(formDataMaintenance));
-//     }
+    for (const [key, value] of Object.entries(updatedData)) {
+      formData.append(`maintenance[${key}]`, value);
+    }
+  
 
     postData(formData, "Branch Added Success");
+    console.log("all data ",formData)
   };
 
   useEffect(() => {

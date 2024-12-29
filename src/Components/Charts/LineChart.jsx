@@ -1,44 +1,105 @@
 import React, { useState } from 'react';
-import { LineChart } from '@mui/x-charts/LineChart';
-import { MenuItem, Select, FormControl } from '@mui/material';
+import { Line } from 'react-chartjs-2';
+import 'chart.js/auto';
 
-const LineChartComponent = ({ pData, uData, xLabels }) => {
-  const [timeScale, setTimeScale] = useState('Month');
+const LineChart = ({title}) => {
+  const [selectedMonth, setSelectedMonth] = useState('All');
 
-  const handleChange = (event) => {
-    setTimeScale(event.target.value);
+  const data = {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+    datasets: [
+      {
+        data: [2, 3, 4, 3, 5, 6, 4, 5, 6, 5, 4, 5],
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 2,
+        fill: true,
+        backgroundColor: (context) => {
+          const { chart } = context;
+          const { ctx, chartArea } = chart;
+          if (!chartArea) return null;
+          const gradient = ctx.createLinearGradient(0, 0, 0, chartArea.bottom);
+          gradient.addColorStop(0, 'rgba(255, 99, 132, 0.2)');
+          gradient.addColorStop(1, 'rgba(255, 99, 132, 0)');
+          return gradient;
+        },
+        tension: 0.4,
+      },
+      {
+        data: [1, 2, 3, 4, 4, 5, 5, 6, 5, 5, 6, 7],
+        borderColor: 'rgba(255, 99, 132, 0.5)',
+        borderDash: [5, 5],
+        borderWidth: 2,
+        fill: false,
+        tension: 0.4,
+      },
+    ],
+  };
+
+  const filteredData = {
+    labels: selectedMonth === 'All' ? data.labels : [selectedMonth],
+    datasets: data.datasets.map((dataset) => ({
+      ...dataset,
+      data:
+        selectedMonth === 'All'
+          ? dataset.data
+          : [dataset.data[data.labels.indexOf(selectedMonth)]],
+    })),
+  };
+
+  const options = {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: false,  // Hide legend (removes labels)
+      },
+      // title: {
+      //   display: true,
+      //   text: 'Order Statistics',
+      //   align: 'start',
+      //   color: '#991b1b',
+      //   font: {
+      //     size: 16,
+      //   },
+      // },
+    },
+    scales: {
+      x: {
+        grid: {
+          display: false,
+        },
+      },
+      y: {
+        grid: {
+          color: '#e5e7eb',
+        },
+        beginAtZero: true,
+        ticks: {
+          stepSize: 1,
+        },
+      },
+    },
   };
 
   return (
-    <div style={{ width: '100%', maxWidth: '800px', margin: 'auto', border: '1px solid #ddd', borderRadius: '10px', padding: '20px' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-        <h2 style={{ color: 'darkred', margin: 0 }}>Order Statistics</h2>
-        <FormControl>
-          <Select
-            value={timeScale}
-            onChange={handleChange}
-            displayEmpty
-            inputProps={{ 'aria-label': 'Without label' }}
-            sx={{ color: 'darkred', borderColor: 'darkred' }}
-          >
-            <MenuItem value="Month">Month</MenuItem>
-            <MenuItem value="Week">Week</MenuItem>
-            <MenuItem value="Year">Year</MenuItem>
-          </Select>
-        </FormControl>
+    <div className="p-4 bg-white rounded-lg shadow-lg">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-lg font-semibold  text-[#991b1b] ">{title}</h2>
+        <select
+          className="bg-transparent text-[#991b1b] rounded px-3 py-2 text-sm font-bold"
+          value={selectedMonth}
+          onChange={(e) => setSelectedMonth(e.target.value)}
+        >
+          <option value="All">All Months</option>
+          {data.labels.map((month) => (
+            <option key={month} value={month}>
+              {month}
+            </option>
+          ))}
+        </select>
       </div>
-      <LineChart
-        width={800}
-        height={400}
-        series={[
-          { data: pData.map(item => item.y), label: 'Orders (pv)', yAxisKey: 'leftAxisId', color: 'darkred', dashed: false },
-          { data: uData.map(item => item.y), label: 'Users (uv)', yAxisKey: 'rightAxisId', color: 'darkred', dashed: true },
-        ]}
-        xAxis={[{ scaleType: 'point', data: xLabels }]}
-        yAxis={[{ id: 'leftAxisId' }, { id: 'rightAxisId' }]}
-      />
+      <Line data={filteredData} options={options} />
     </div>
   );
 };
 
-export default LineChartComponent;
+export default LineChart;
