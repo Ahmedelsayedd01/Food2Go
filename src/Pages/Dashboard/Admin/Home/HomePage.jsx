@@ -19,37 +19,37 @@ const HomePage = () => {
     url: "https://Bcknd.food2go.online/admin/order/count",
   });
 
-//   const {
-//     refetch: refetchChart,
-//     loading: loadingChart,
-//     data: dataChart,
-//   } = useGet({
-//     url: "https://bcknd.food2go.online/admin/home",
-//   });
-//   const [dataHome, setDataHome] = useState([]);
-//   const [order_statistics,setOrder_statistics] = useState({})
-//   const [earning_statistics,setEarning_statistics] = useState({})
-//   const [recent_orders,setRecent_orders] = useState([])
+  //   const {
+  //     refetch: refetchChart,
+  //     loading: loadingChart,
+  //     data: dataChart,
+  //   } = useGet({
+  //     url: "https://bcknd.food2go.online/admin/home",
+  //   });
+  //   const [dataHome, setDataHome] = useState([]);
+  //   const [order_statistics,setOrder_statistics] = useState({})
+  //   const [earning_statistics,setEarning_statistics] = useState({})
+  //   const [recent_orders,setRecent_orders] = useState([])
 
-//   useEffect(() => {
-//     refetchChart();
-//   }, [refetchChart]);
+  //   useEffect(() => {
+  //     refetchChart();
+  //   }, [refetchChart]);
 
 
-//   useEffect(() => {
-//     if (dataChart) {
-//       setDataHome(dataChart);
-//       setOrder_statistics(dataChart.order_statistics)
-//       setEarning_statistics(dataChart.earning_statistics)
-//       setRecent_orders(dataChart.recent_orders)
+  //   useEffect(() => {
+  //     if (dataChart) {
+  //       setDataHome(dataChart);
+  //       setOrder_statistics(dataChart.order_statistics)
+  //       setEarning_statistics(dataChart.earning_statistics)
+  //       setRecent_orders(dataChart.recent_orders)
 
-//     }
-//     console.log("fetch data Home", dataChart);
-//     console.log("fetch data Home stat order", dataChart.order_statistics);
-//     console.log("fetch data Home stat earn",dataChart.earning_statistics);
-//     console.log("fetch data Home stat recent",dataChart.recent_orders);
+  //     }
+  //     console.log("fetch data Home", dataChart);
+  //     console.log("fetch data Home stat order", dataChart.order_statistics);
+  //     console.log("fetch data Home stat earn",dataChart.earning_statistics);
+  //     console.log("fetch data Home stat recent",dataChart.recent_orders);
 
-//   }, [dataChart]);
+  //   }, [dataChart]);
 
 
   const mockData = {
@@ -105,11 +105,7 @@ const HomePage = () => {
           <>
             <div className="flex flex-col gap-7 items-start justify-center">
               <CartsOrderSection ordersNum={counters} />
-              <Chart
-
-
-             
-              />
+              <Chart />
             </div>
           </>
         )}

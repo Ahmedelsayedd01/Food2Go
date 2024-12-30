@@ -6,13 +6,13 @@ import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
 Chart.register(ArcElement, Tooltip, Legend);
 
 const DonutChart = () => {
-    const totalOrders = 8;
+    const totalOrders = 0;
 
     const data = {
         labels: ['Pending', 'Canceled', 'Ongoing', 'Returned', 'Delivered', 'Failed To Deliver'],
         datasets: [
             {
-                data: [1, 1, 2, 1, 2, 1],
+                data: [0, 0, 0, 0, 0, 0],
                 backgroundColor: [
                     '#f3d9d9',  // Pending
                     '#f28c8c',  // Canceled

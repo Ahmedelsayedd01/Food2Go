@@ -9,7 +9,7 @@ const LineChart = ({title}) => {
     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
     datasets: [
       {
-        data: [2, 3, 4, 3, 5, 6, 4, 5, 6, 5, 4, 5],
+        data: [0,0,0,0,0,0,0,0,0,0,0,0],
         borderColor: 'rgba(255, 99, 132, 1)',
         borderWidth: 2,
         fill: true,
@@ -25,7 +25,7 @@ const LineChart = ({title}) => {
         tension: 0.4,
       },
       {
-        data: [1, 2, 3, 4, 4, 5, 5, 6, 5, 5, 6, 7],
+        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
         borderColor: 'rgba(255, 99, 132, 0.5)',
         borderDash: [5, 5],
         borderWidth: 2,
