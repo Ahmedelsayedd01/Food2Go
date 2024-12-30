@@ -183,7 +183,7 @@ const CategoryPage = ({ refetch, setUpdate }) => {
        useEffect(() => {
               if (dataCategory && dataCategory.categories) {
                      // setCategories(dataCategory.categories);
-                     setCategories([{ id: '', name: 'Select Category' }, ...dataCategory.parent_categories] || []);
+                     setCategories(dataCategory.parent_categories || []);
                      // dispatch(setCategory)
                      setCategoryAddons(dataCategory.addons);
               }
