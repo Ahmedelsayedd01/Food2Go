@@ -67,11 +67,11 @@ const EditAddonsPage = () => {
                      console.log('addonsName2', addonsName)
 
 
-                     setAddonPrice(dataAddonsEdit.addon?.price || addonPrice)
-                     setStateAddonTaxes(dataAddonsEdit.addon?.tax.name || stateAddonTaxes)
-                     setAddonTaxesId(dataAddonsEdit.addon?.tax.id || addonTaxesId)
-                     setAddonTaxesName(dataAddonsEdit.addon?.tax.name || addonTaxesName)
-                     setAddonQuantity(dataAddonsEdit.addon?.quantity_add || addonQuantity)
+                     setAddonPrice(dataAddonsEdit?.addon?.price || addonPrice)
+                     setStateAddonTaxes(dataAddonsEdit?.addon?.tax?.name || stateAddonTaxes)
+                     setAddonTaxesId(dataAddonsEdit?.addon?.tax?.id || addonTaxesId)
+                     setAddonTaxesName(dataAddonsEdit?.addon?.tax?.name || addonTaxesName)
+                     setAddonQuantity(dataAddonsEdit?.addon?.quantity_add || addonQuantity)
               }
               console.log('dataAddonsEdit', dataAddonsEdit)
        }, [dataAddonsEdit]);
