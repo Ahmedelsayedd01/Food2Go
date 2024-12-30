@@ -8,7 +8,6 @@ import {
 } from "../../../../Components/Components";
 import { useGet } from "../../../../Hooks/useGet";
 import { usePost } from "../../../../Hooks/usePostJson";
-import { Login } from "@mui/icons-material";
 import { useAuth } from "../../../../Context/Auth";
 
 const CustomerLoginPage = () => {
