@@ -5,14 +5,18 @@ import { DropDown, NumberInput, StaticButton, StaticLoader, SubmitButton, TextIn
 
 
 const AddDiscountSection = ({ update, setUpdate }) => {
-       const { postData, loadingPost, response } = usePost({ url: 'https://Bcknd.food2go.online/admin/settings/discount/add' });
+       const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/admin/settings/discount/add' });
 
        const dropDownType = useRef();
        const auth = useAuth();
 
        const [discountName, setDiscountName] = useState('');
        const [discountAmount, setDiscountAmount] = useState('');
-       const [discountType] = useState([{ name: 'precentage' }, { name: 'value' }])
+       const [discountType] = useState([
+              { id: "", name: 'Select Discount Type' },
+              { id: "precentage", name: 'precentage' },
+              { id: "value", name: 'value' }
+       ])
 
        const [stateType, setStateType] = useState('Select Discount Type');
        const [typeName, setTypeName] = useState('');
@@ -26,7 +30,7 @@ const AddDiscountSection = ({ update, setUpdate }) => {
        const handleOpenOptionDiscountType = () => setIsOpenDiscountType(false);
 
        const handleSelectDiscountType = (option) => {
-              setTypeName(option.name);
+              setTypeName(option.id);
               setStateType(option.name);
        };
 

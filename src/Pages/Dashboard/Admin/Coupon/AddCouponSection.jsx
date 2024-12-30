@@ -6,8 +6,8 @@ import { useAuth } from '../../../../Context/Auth';
 import { MultiSelect } from 'primereact/multiselect';
 
 const AddCouponPage = ({ update, setUpdate }) => {
-        const { refetch: refetchCoupon, loading: loadingCoupon, data: dataCoupon } = useGet({ url: 'https://Bcknd.food2go.online/admin/coupon' });
-        const { postData, loadingPost, response } = usePost({ url: 'https://Bcknd.food2go.online/admin/coupon/add' });
+        const { refetch: refetchCoupon, loading: loadingCoupon, data: dataCoupon } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/coupon' });
+        const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/admin/coupon/add' });
 
         const auth = useAuth();
 

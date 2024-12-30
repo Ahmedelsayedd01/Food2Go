@@ -5,10 +5,10 @@ import { LoaderLogin, SubmitButton, UploadInput } from '../../../../Components/C
 
 const SongPage = () => {
   const { refetch: refetchSong, loading: loadingSong, data: dataSong } = useGet({
-    url: 'https://Bcknd.food2go.online/admin/settings/notification_sound',
+    url: 'https://lamadabcknd.food2go.online/admin/settings/notification_sound',
   });
   const { postData, loadingPost, response } = usePost({
-    url: 'https://Bcknd.food2go.online/admin/settings/notification_sound_update',
+    url: 'https://lamadabcknd.food2go.online/admin/settings/notification_sound_update',
   });
 
   const songRef = useRef();

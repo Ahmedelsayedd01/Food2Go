@@ -12,9 +12,9 @@ import { useAuth } from '../../../../Context/Auth';
 const EditDealPage = () => {
   const { dealId } = useParams();
 
-  const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://Bcknd.food2go.online/admin/translation' });
-  const { refetch: refetchDeal, loading: loadingDeal, data: dataDeal } = useGet({ url: `https://Bcknd.food2go.online/admin/deal/item/${dealId}` });
-  const { postData, loadingPost, response } = usePost({ url: `https://Bcknd.food2go.online/admin/deal/update/${dealId}` });
+  const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/translation' });
+  const { refetch: refetchDeal, loading: loadingDeal, data: dataDeal } = useGet({ url: `https://lamadabcknd.food2go.online/admin/deal/item/${dealId}` });
+  const { postData, loadingPost, response } = usePost({ url: `https://lamadabcknd.food2go.online/admin/deal/update/${dealId}` });
 
   const auth = useAuth();
   const navigate = useNavigate();
@@ -151,18 +151,18 @@ const EditDealPage = () => {
       auth.toastError('please Enter Deal Title')
       return;
     }
-    if (dealTitle.length !== taps.length) {
-      auth.toastError('please Enter All Deal Titles')
-      return;
-    }
+    // if (dealTitle.length !== taps.length) {
+    //   auth.toastError('please Enter All Deal Titles')
+    //   return;
+    // }
     if (dealDescription.length === 0) {
       auth.toastError('please Enter Deal Description')
       return;
     }
-    if (dealDescription.length !== taps.length) {
-      auth.toastError('please Enter All Deal Descriptions')
-      return;
-    }
+    // if (dealDescription.length !== taps.length) {
+    //   auth.toastError('please Enter All Deal Descriptions')
+    //   return;
+    // }
 
     if (daily === 0) {
 

@@ -9,7 +9,7 @@ import Warning from '../../../../Assets/Icons/AnotherIcons/WarningIcon';
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 
 const BannersPage = ({ refetch, setUpdate }) => {
-       const { refetch: refetchBanners, loading: loadingBanners, data: dataBanners } = useGet({ url: 'https://Bcknd.food2go.online/admin/banner' });
+       const { refetch: refetchBanners, loading: loadingBanners, data: dataBanners } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/banner' });
        const { changeState, loadingChange, responseChange } = useChangeState();
        const { deleteData, loadingDelete, responseDelete } = useDelete();
 
@@ -50,7 +50,7 @@ const BannersPage = ({ refetch, setUpdate }) => {
 
        // Delete Category
        const handleDelete = async (id, name) => {
-              const success = await deleteData(`https://Bcknd.food2go.online/admin/banner/delete/${id}`, `${name} Deleted Success.`);
+              const success = await deleteData(`https://lamadabcknd.food2go.online/admin/banner/delete/${id}`, `${name} Deleted Success.`);
 
               if (success) {
                      // Update categories only if changeState succeeded

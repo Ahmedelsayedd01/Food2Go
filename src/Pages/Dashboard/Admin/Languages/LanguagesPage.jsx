@@ -8,7 +8,7 @@ import Warning from '../../../../Assets/Icons/AnotherIcons/WarningIcon';
 import { useChangeState } from '../../../../Hooks/useChangeState';
 
 const LanguagesPage = ({ refetch, setUpdate }) => {
-  const { refetch: refetchLanguages, loading: loadingLanguages, data: dataLanguages } = useGet({ url: 'https://Bcknd.food2go.online/admin/translation' });
+  const { refetch: refetchLanguages, loading: loadingLanguages, data: dataLanguages } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/translation' });
   const { changeState, loadingChange, responseChange } = useChangeState();
   const { deleteData, loadingDelete, responseDelete } = useDelete();
 
@@ -48,7 +48,7 @@ const LanguagesPage = ({ refetch, setUpdate }) => {
 
   const handleChangeActive = async (id, name, status) => {
     const response = await changeState(
-      `https://Bcknd.food2go.online/admin/translation/status/${id}`,
+      `https://lamadabcknd.food2go.online/admin/translation/status/${id}`,
       `${name} Changed Status.`,
       { status } // Pass status as an object if changeState expects an object
     );
@@ -66,7 +66,7 @@ const LanguagesPage = ({ refetch, setUpdate }) => {
 
   // Delete Language
   const handleDelete = async (id, name) => {
-    const success = await deleteData(`https://Bcknd.food2go.online/admin/translation/delete/${id}`, `${name} Deleted Success.`);
+    const success = await deleteData(`https://lamadabcknd.food2go.online/admin/translation/delete/${id}`, `${name} Deleted Success.`);
 
     if (success) {
       // Update Languages only if changeState succeeded

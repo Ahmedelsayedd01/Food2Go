@@ -7,8 +7,8 @@ import { useGet } from '../../../../../Hooks/useGet';
 
 
 const AddBannerSection = ({ update, setUpdate }) => {
-  const { refetch: refetchCities, loading: loadingCities, data: dataCities } = useGet({ url: 'https://Bcknd.food2go.online/admin/settings/city' });
-  const { postData, loadingPost, response } = usePost({ url: 'https://Bcknd.food2go.online/admin/branch/add' });
+  const { refetch: refetchCities, loading: loadingCities, data: dataCities } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/settings/city' });
+  const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/admin/branch/add' });
 
   const dropDownCities = useRef();
   const ImageRef = useRef();
@@ -47,7 +47,7 @@ const AddBannerSection = ({ update, setUpdate }) => {
 
   useEffect(() => {
     if (dataCities) {
-      setCities(dataCities.cities);
+      setCities([{ id: '', name: 'Select City' }, ...dataCities.cities] || []);
 
     }
     console.log('cities', cities)

@@ -11,7 +11,7 @@ import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import Warning from '../../../../Assets/Icons/AnotherIcons/WarningIcon';
 
 const CouponPage = ({ refetch, setUpdate }) => {
-      const { refetch: refetchCoupon, loading: loadingCoupon, data: dataCoupon } = useGet({ url: 'https://Bcknd.food2go.online/admin/coupon' });
+      const { refetch: refetchCoupon, loading: loadingCoupon, data: dataCoupon } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/coupon' });
       const { deleteData, loadingDelete, responseDelete } = useDelete();
       const { changeState, loadingChange, responseChange } = useChangeState();
 
@@ -46,7 +46,7 @@ const CouponPage = ({ refetch, setUpdate }) => {
       // Change coupon status 
       const handleChangeStaus = async (id, name, status) => {
             const response = await changeState(
-                  ` https://Bcknd.food2go.online/admin/coupon/status/${id}`,
+                  ` https://lamadabcknd.food2go.online/admin/coupon/status/${id}`,
                   `${name} Changed Status.`,
                   { status } // Pass status as an object if changeState expects an object
             );
@@ -75,7 +75,7 @@ const CouponPage = ({ refetch, setUpdate }) => {
 
       // Delete Language
       const handleDelete = async (id, name) => {
-            const success = await deleteData(`https://Bcknd.food2go.online/admin/coupon/delete/${id}`, `${name} Deleted Success.`);
+            const success = await deleteData(`https://lamadabcknd.food2go.online/admin/coupon/delete/${id}`, `${name} Deleted Success.`);
 
             if (success) {
                   // Update Discounts only if changeState succeeded

@@ -5,14 +5,18 @@ import { DropDown, NumberInput, StaticButton, StaticLoader, SubmitButton, TextIn
 
 
 const AddTaxSection = ({ update, setUpdate }) => {
-       const { postData, loadingPost, response } = usePost({ url: 'https://Bcknd.food2go.online/admin/settings/tax/add' });
+       const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/admin/settings/tax/add' });
 
        const dropDownType = useRef();
        const auth = useAuth();
 
        const [taxName, setTaxName] = useState('');
        const [taxAmount, setTaxAmount] = useState('');
-       const [taxType] = useState([{ name: 'precentage' }, { name: 'value' }])
+       const [taxType] = useState([
+              { id: "", name: 'Select Tax Type' },
+              { id: "precentage", name: 'precentage' },
+              { id: "value", name: 'value' }
+       ])
 
        const [stateType, setStateType] = useState('Select Tax Type');
        const [typeName, setTypeName] = useState('');
@@ -26,7 +30,7 @@ const AddTaxSection = ({ update, setUpdate }) => {
        const handleOpenOptiontaxType = () => setIsOpentaxType(false);
 
        const handleSelecttaxType = (option) => {
-              setTypeName(option.name);
+              setTypeName(option.id);
               setStateType(option.name);
        };
 

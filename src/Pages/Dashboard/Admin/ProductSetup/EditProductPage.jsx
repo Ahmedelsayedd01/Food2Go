@@ -13,12 +13,12 @@ const EditProductPage = () => {
        const auth = useAuth();
        /* Get Data */
 
-       const { refetch: refetchProductEdit, loading: loadingProductEdit, data: dataProductEdit } = useGet({ url: `https://Bcknd.food2go.online/admin/product/item/${productId}` });
+       const { refetch: refetchProductEdit, loading: loadingProductEdit, data: dataProductEdit } = useGet({ url: `https://lamadabcknd.food2go.online/admin/product/item/${productId}` });
 
-       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://Bcknd.food2go.online/admin/translation' });
-       const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: 'https://Bcknd.food2go.online/admin/category' });
-       const { refetch: refetchProduct, loading: loadingProduct, data: dataProduct } = useGet({ url: 'https://Bcknd.food2go.online/admin/product' });
-       const { postData, loadingPost, response } = usePost({ url: `https://Bcknd.food2go.online/admin/product/update/${productId}` });
+       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/translation' });
+       const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/category' });
+       const { refetch: refetchProduct, loading: loadingProduct, data: dataProduct } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/product' });
+       const { postData, loadingPost, response } = usePost({ url: `https://lamadabcknd.food2go.online/admin/product/update/${productId}` });
        /* Refs */
        const variationTypeRef = useRef([]);
        const [openVariationIndex, setOpenVariationIndex] = useState(null); // Tracks which variation's dropdown is open
@@ -46,8 +46,8 @@ const EditProductPage = () => {
        const [discounts, setDiscounts] = useState([])
        const [taxes, setTaxes] = useState([])
 
-       const [itemTypes, setItemTypes] = useState([{ name: 'online' }, { name: 'offline' }, { name: 'all' }])
-       const [stockTypes, setStockTypes] = useState([{ name: 'unlimited' }, { name: 'daily' }, { name: 'fixed' }])
+       const [itemTypes, setItemTypes] = useState([{ id: '', name: 'Selected Item Type' }, , { id: '', name: 'online' }, { id: '', name: 'offline' }, { id: '', name: 'all' }])
+       const [stockTypes, setStockTypes] = useState([{ id: '', name: 'Selected Stock Type' }, , { id: '', name: 'unlimited' }, { id: '', name: 'daily' }, { id: '', name: 'fixed' }])
 
        /*  */
        const [productEdit, setProductEdit] = useState([]);
@@ -73,7 +73,7 @@ const EditProductPage = () => {
        const [selectedCategoryId, setSelectedCategoryId] = useState('')
 
        // Product SubCategory
-       const [selectedSubCategoryState, setSelectedSubCategoryState] = useState('Selected SubCategory')
+       const [selectedSubCategoryState, setSelectedSubCategoryState] = useState('Selected Subcategory')
        // const [selectedSubCategoryName, setSelectedSubCategoryName] = useState('')
        const [selectedSubCategoryId, setSelectedSubCategoryId] = useState('')
 
@@ -144,14 +144,15 @@ const EditProductPage = () => {
               }
               /* Set data to Categories && Addons && SubCategories */
               if (dataCategory) {
-                     setCategories(dataCategory?.categories || [])
-                     setSubCategories(dataCategory?.sub_categories || [])
+                     setCategories([{ id: '', name: 'Select Category' }, ...dataCategory.parent_categories] || [])
+                     setSubCategories([{ id: '', name: 'Select Subcategory ' }, ...dataCategory?.sub_categories] || [])
+                     // setFilterSubCategories(dataCategory?.sub_categories || [])
                      setAddons(dataCategory?.addons || [])
               }
               /* Set data to Discounts && Taxes */
               if (dataProduct) {
-                     setDiscounts(dataProduct?.discounts || []);
-                     setTaxes(dataProduct?.taxes || []);
+                     setDiscounts([{ id: '', name: 'Select Discount' }, ...dataProduct?.discounts] || []);
+                     setTaxes([{ id: '', name: 'Select Tax' }, ...dataProduct?.taxes] || []);
               }
               if (dataProductEdit) {
                      setProductEdit(dataProductEdit?.product || []);
@@ -423,7 +424,7 @@ const EditProductPage = () => {
                      )
               );
        };
-       
+
        // Remove an Extra from a specific Option within a Variation
        const handleRemoveExtraAtOption = (variationIndex, optionIndex, extraIndex) => {
               setProductVariations((prevVariations) =>
@@ -460,23 +461,37 @@ const EditProductPage = () => {
               setOpenVariationIndex(null); // Close the dropdown
        };
 
+       const handleCloseAllDropdowns = () => {
+              setIsOPenProductCategory(false);
+              setIsOPenProductSubCategory(false);
+              setIsOPenProductItemType(false);
+              setIsOPenProductStockType(false);
+              setIsOPenProductDiscount(false);
+              setIsOPenProductTax(false);
+       };
 
        const handleOpenCategory = () => {
+              handleCloseAllDropdowns()
               setIsOPenProductCategory(!isOPenProductCategory);
        };
        const handleOpenSubCategory = () => {
+              handleCloseAllDropdowns()
               setIsOPenProductSubCategory(!isOPenProductSubCategory);
        };
        const handleOpenItemType = () => {
+              handleCloseAllDropdowns()
               setIsOPenProductItemType(!isOPenProductItemType);
        };
        const handleOpenStockType = () => {
+              handleCloseAllDropdowns()
               setIsOPenProductStockType(!isOPenProductStockType);
        };
        const handleOpenDiscount = () => {
+              handleCloseAllDropdowns()
               setIsOPenProductDiscount(!isOPenProductDiscount);
        };
        const handleOpenTax = () => {
+              handleCloseAllDropdowns()
               setIsOPenProductTax(!isOPenProductTax);
        };
 
@@ -575,12 +590,7 @@ const EditProductPage = () => {
                             discountRef.current && !discountRef.current.contains(event.target) &&
                             taxRef.current && !taxRef.current.contains(event.target)
                      ) {
-                            setIsOPenProductCategory(null);
-                            setIsOPenProductSubCategory(null);
-                            setIsOPenProductItemType(null);
-                            setIsOPenProductStockType(null);
-                            setIsOPenProductDiscount(null);
-                            setIsOPenProductTax(null);
+                            handleCloseAllDropdowns()
                      }
 
                      // Handle closing variation dropdowns
@@ -663,13 +673,13 @@ const EditProductPage = () => {
                      return;
               }
 
-              if (validProductNames.length !== taps.length) {
-                     auth.toastError('Please enter all product names');
-                     console.log('productNames', validProductNames);
-                     console.log('taps.length', taps.length)
-                     console.log('validProductNames', validProductNames)
-                     return;
-              }
+              // if (validProductNames.length !== taps.length) {
+              //        auth.toastError('Please enter all product names');
+              //        console.log('productNames', validProductNames);
+              //        console.log('taps.length', taps.length)
+              //        console.log('validProductNames', validProductNames)
+              //        return;
+              // }
 
               // Filter out any invalid or empty entries description Names
               const validDescriptionNames = descriptionNames.filter(
@@ -682,11 +692,11 @@ const EditProductPage = () => {
                      return;
               }
 
-              if (validDescriptionNames.length !== taps.length) {
-                     auth.toastError('Please enter all description names');
-                     console.log('descriptionNames', validDescriptionNames);
-                     return;
-              }
+              // if (validDescriptionNames.length !== taps.length) {
+              //        auth.toastError('Please enter all description names');
+              //        console.log('descriptionNames', validDescriptionNames);
+              //        return;
+              // }
 
 
               if (productExclude.length === 0) {
@@ -694,15 +704,15 @@ const EditProductPage = () => {
                      console.log('productExclude', productExclude)
                      return;
               }
-              for (const ex of productExclude) {
-                     for (const name of ex.names) {
-                            if (!name.exclude_name || name.exclude_name.trim() === '') {
-                                   auth.toastError('Please Enter All Exclude names');
-                                   console.log('productExclude', productExclude)
-                                   return;
-                            }
-                     }
-              }
+              // for (const ex of productExclude) {
+              //        for (const name of ex.names) {
+              //               if (!name.exclude_name || name.exclude_name.trim() === '') {
+              //                      auth.toastError('Please Enter All Exclude names');
+              //                      console.log('productExclude', productExclude)
+              //                      return;
+              //               }
+              //        }
+              // }
 
 
               if (!selectedCategoryId) {

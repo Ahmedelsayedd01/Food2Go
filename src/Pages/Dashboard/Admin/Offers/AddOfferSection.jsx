@@ -6,8 +6,8 @@ import { usePost } from '../../../../Hooks/usePostJson';
 
 
 const AddOfferSection = ({ refetch, setRefetch }) => {
-       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://Bcknd.food2go.online/admin/translation' });
-       const { postData, loadingPost, response } = usePost({ url: 'https://Bcknd.food2go.online/admin/offer/add' });
+       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/translation' });
+       const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/admin/offer/add' });
 
        const ImageRef = useRef();
        const auth = useAuth();
@@ -99,10 +99,10 @@ const AddOfferSection = ({ refetch, setRefetch }) => {
                      auth.toastError('please Enter Offer Names')
                      return;
               }
-              if (offerNames.length !== taps.length) {
-                     auth.toastError('please Enter All Offer Names')
-                     return;
-              }
+              // if (offerNames.length !== taps.length) {
+              //        auth.toastError('please Enter All Offer Names')
+              //        return;
+              // }
 
               if (!imageFile) {
                      auth.toastError('please Set Offer Image')

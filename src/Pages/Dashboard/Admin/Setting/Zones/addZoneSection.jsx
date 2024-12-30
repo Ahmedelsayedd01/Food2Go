@@ -7,9 +7,9 @@ import { useGet } from '../../../../../Hooks/useGet';
 
 
 const AddZoneSection = ({ update, setUpdate }) => {
-  const { refetch: refetchCities, loading: loadingCities, data: dataCities } = useGet({ url: 'https://Bcknd.food2go.online/admin/settings/city' });
-  const { refetch: refetchBranches, loading: loadingBranches, data: dataBranches } = useGet({ url: 'https://Bcknd.food2go.online/admin/branch' });
-  const { postData, loadingPost, response } = usePost({ url: 'https://Bcknd.food2go.online/admin/settings/zone/add' });
+  const { refetch: refetchCities, loading: loadingCities, data: dataCities } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/settings/city' });
+  const { refetch: refetchBranches, loading: loadingBranches, data: dataBranches } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/branch' });
+  const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/admin/settings/zone/add' });
 
   const dropDownCities = useRef();
   const dropDownBranches = useRef();
@@ -41,11 +41,11 @@ const AddZoneSection = ({ update, setUpdate }) => {
 
   useEffect(() => {
     if (dataCities) {
-      setCities(dataCities.cities);
+      setCities([{ id: '', name: 'Select City' }, ...dataCities.cities] || []);
     }
 
     if (dataBranches) {
-      setBranches(dataBranches.branches);
+      setBranches([{ id: '', name: 'Select Branch' }, ...dataBranches.branches] || []);
     }
     console.log('cities', cities)
     console.log('Branches', branches)

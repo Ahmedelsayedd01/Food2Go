@@ -5,7 +5,7 @@ import { useGet } from '../../../../Hooks/useGet';
 import { OrdersComponent } from '../../../../Store/CreateSlices';
 
 const PendingOrdersLayout = () => {
-       const { refetch: refetchBranch, loading: loadingBranch, data: dataBranch } = useGet({ url: 'https://Bcknd.food2go.online/admin/order/branches' });
+       const { refetch: refetchBranch, loading: loadingBranch, data: dataBranch } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/order/branches' });
 
        useEffect(() => {
               refetchBranch(); // Refetch data when the component mounts

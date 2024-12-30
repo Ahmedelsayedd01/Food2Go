@@ -8,9 +8,9 @@ import { MultiSelect } from 'primereact/multiselect';
 
 
 const AddCategorySection = ({ update, setUpdate }) => {
-       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://Bcknd.food2go.online/admin/translation' });
-       const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: 'https://Bcknd.food2go.online/admin/category' });
-       const { postData, loadingPost, response } = usePost({ url: 'https://Bcknd.food2go.online/admin/category/add' });
+       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/translation' });
+       const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/category' });
+       const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/admin/category/add' });
 
        const dropDownCategoriesParent = useRef();
        const ImageRef = useRef();
@@ -67,7 +67,7 @@ const AddCategorySection = ({ update, setUpdate }) => {
               if (dataCategory) {
 
                      setCategories(dataCategory.categories);
-                     setCategoriesParent([{ id: '', name: 'Select Category Parent' }, ...dataCategory.parent_categories]);
+                     setCategoriesParent([{ id: '', name: 'Select Category Parent' }, ...dataCategory.parent_categories] || []);
                      setCategoriesAddonse(dataCategory.addons);
                      setCategoriesPriority(() => {
                             const priorities = [];
@@ -254,10 +254,10 @@ const AddCategorySection = ({ update, setUpdate }) => {
                      auth.toastError('please Enter Category Names')
                      return;
               }
-              if (categoryName.length !== taps.length) {
-                     auth.toastError('please Enter All Category Names')
-                     return;
-              }
+              // if (categoryName.length !== taps.length) {
+              //        auth.toastError('please Enter All Category Names')
+              //        return;
+              // }
 
               if (!imageFile) {
                      auth.toastError('please Set Category Image')

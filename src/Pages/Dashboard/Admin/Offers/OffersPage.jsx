@@ -38,7 +38,7 @@ const OffersPage = ({ data, setOffers, loading }) => {
 
        // Delete Delivery
        const handleDelete = async (id, name) => {
-              const success = await deleteData(`https://Bcknd.food2go.online/admin/offer/delete/${id}`, `${name} Deleted Success.`);
+              const success = await deleteData(`https://lamadabcknd.food2go.online/admin/offer/delete/${id}`, `${name} Deleted Success.`);
 
               if (success) {
                      // Update Deliveries only if changeState succeeded

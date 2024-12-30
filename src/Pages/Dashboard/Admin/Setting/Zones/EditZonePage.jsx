@@ -11,10 +11,10 @@ const EditZonePage = () => {
        const { zoneId } = useParams();
        const navigate = useNavigate();
 
-       const { refetch: refetchCities, loading: loadingCities, data: dataCities } = useGet({ url: 'https://Bcknd.food2go.online/admin/settings/city' });
-       const { refetch: refetchBranches, loading: loadingBranches, data: dataBranches } = useGet({ url: 'https://Bcknd.food2go.online/admin/branch' });
-       const { refetch: refetchZone, loading: loadingZone, data: dataZone } = useGet({ url: `https://Bcknd.food2go.online/admin/settings/zone/item/${zoneId}` });
-       const { postData, loadingPost, response } = usePost({ url: `https://Bcknd.food2go.online/admin/settings/zone/update/${zoneId}` });
+       const { refetch: refetchCities, loading: loadingCities, data: dataCities } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/settings/city' });
+       const { refetch: refetchBranches, loading: loadingBranches, data: dataBranches } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/branch' });
+       const { refetch: refetchZone, loading: loadingZone, data: dataZone } = useGet({ url: `https://lamadabcknd.food2go.online/admin/settings/zone/item/${zoneId}` });
+       const { postData, loadingPost, response } = usePost({ url: `https://lamadabcknd.food2go.online/admin/settings/zone/update/${zoneId}` });
 
        const dropDownCities = useRef();
        const dropDownBranches = useRef();
@@ -47,11 +47,11 @@ const EditZonePage = () => {
 
        useEffect(() => {
               if (dataCities) {
-                     setCities(dataCities.cities);
+                     setCities([{ id: '', name: 'Select City' }, ...dataCities.cities] || []);
               }
 
               if (dataBranches) {
-                     setBranches(dataBranches.branches);
+                     setBranches([{ id: '', name: 'Select Branch' }, ...dataBranches.branches] || []);
               }
               if (dataZone) {
                      setZone(dataZone.zones);

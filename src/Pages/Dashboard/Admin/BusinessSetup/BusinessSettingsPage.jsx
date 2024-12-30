@@ -132,23 +132,23 @@ const BusinessSettingsPage = () => {
     loading: loadingCompany,
     data: dataCompany,
   } = useGet({
-    url: "https://bcknd.food2go.online/admin/settings/business_setup/company",
+    url: "https://lamadabcknd.food2go.online/admin/settings/business_setup/company",
   });
 
   const {
-       refetch: refetchMaintenance,
-       loading: loadingMaintenance,
-       data: dataMaintennance,
-     } = useGet({
-       url: "https://bcknd.food2go.online/admin/settings/business_setup/maintenance",
-     });
+    refetch: refetchMaintenance,
+    loading: loadingMaintenance,
+    data: dataMaintennance,
+  } = useGet({
+    url: "https://lamadabcknd.food2go.online/admin/settings/business_setup/maintenance",
+  });
 
   const {
     refetch: refetchCity,
     loading: loadingCity,
     data: dataCity,
-  } = useGet({ url: "https://bcknd.food2go.online/admin/settings/city" });
-  
+  } = useGet({ url: "https://lamadabcknd.food2go.online/admin/settings/city" });
+
   const [dataCompany2, setDataCompany] = useState(null);
 
 
@@ -162,7 +162,7 @@ const BusinessSettingsPage = () => {
     const [formDataMaintenance,setFormDataMaintenance] = useState({})
 
   const { postData, loadingPost, response } = usePost({
-    url: "https://bcknd.food2go.online/admin/settings/business_setup/company/add",
+    url: "https://lamadabcknd.food2go.online/admin/settings/business_setup/company/add",
   });
 
 
@@ -178,8 +178,8 @@ const BusinessSettingsPage = () => {
     refetchCompany();
     refetchCity();
     refetchMaintenance();
-  }, [refetchCompany, refetchCity,refetchMaintenance]);
- 
+  }, [refetchCompany, refetchCity, refetchMaintenance]);
+
 
   useEffect(() => {
     if (dataCompany) {
@@ -201,12 +201,12 @@ const BusinessSettingsPage = () => {
         const matchedCurrency = dataCompany.currency.find(
           (curr) => curr.id === dataCompanyInfo.currency_id
         );
-        
+
         if (matchedCurrency) {
           setStateCurrency(matchedCurrency.name);
         }
       }
-      // setTimeFormat(dataCompanyInfo.time_format)
+      // setTimeFormats(dataCompanyInfo.time_format)
       setCompanyCopyrightText(dataCompanyInfo.copy_right);
       if (dataCompanyInfo.currency_position === "right") {
         setLeftCurrency(0);
@@ -275,7 +275,7 @@ console.log('data menteneance100' ,dataMaintennance)
   useEffect(() => {
     // Log updated dataCurrency when it changes
     console.log("data fetch currency :", dataCurrency);
-    
+
     console.log("data fetch company info :", dataCompanyInfo);
     console.log("data fetch maintenenn :", dataMain);
   }, [dataCurrency, dataCompanyInfo,dataMain]);
@@ -290,8 +290,8 @@ console.log('data menteneance100' ,dataMaintennance)
   const handelAddCompany = async (e) => {
     e.preventDefault();
 
-  
-       // Validation for required fields
+
+    // Validation for required fields
 
     if (!companyName) {
       auth.toastError("Please enter companyName ");
@@ -333,10 +333,10 @@ console.log('data menteneance100' ,dataMaintennance)
     if (leftCurrency === 0 && rightCurrency === 0) {
       auth.toastError("Please enter either leftCurrency or rightCurrency");
     }
-// -----------------------------------
-    if (maintenanceMode===0){
-       auth.toastError("Please enter maintenanceMode ");
-       return;
+    // -----------------------------------
+    if (maintenanceMode === 0) {
+      auth.toastError("Please enter maintenanceMode ");
+      return;
     }
 
     if (allSystem === 0 && branchPanel === 0 && customerApp === 0 && webApp === 0 && deliverymanApp === 0) {
@@ -378,10 +378,10 @@ console.log('data menteneance100' ,dataMaintennance)
     // // Update the state with the new array
     // setFormDataMaintenance(updatedData);
 
-//    { postDataMaintenance(formDataMaintenance,"System Added Success")}
+    //    { postDataMaintenance(formDataMaintenance,"System Added Success")}
 
 
-//     postDataMain(formDataMaintenance, "Branch Added Success");
+    //     postDataMain(formDataMaintenance, "Branch Added Success");
 
 //  ----------------------------------
 const updatedData = {
@@ -405,7 +405,7 @@ const updatedData = {
 
 
     const formData = new FormData();
-    
+
     formData.append("name", companyName);
     formData.append("phone", companyPhone);
     formData.append("email", companyEmail);
@@ -426,8 +426,8 @@ const updatedData = {
       formData.append("currency_position", "right");
     } else if (leftCurrency === 1 && rightCurrency === 0) {
       formData.append("currency_position", "left");
-    } 
-    
+    }
+
 
     formData.append("copy_right", companyCopyrightText);
     for (const [key, value] of Object.entries(updatedData)) {
@@ -484,6 +484,7 @@ const updatedData = {
     setStateTimeZone(timeZone.name);
   };
   const handleSelectTimeFormat = (timeFormat) => {
+    setTimeFormat(timeFormat.id);
     setStateTimeFormat(timeFormat.name);
   };
   // const handleSelectCurrency = (currency) => {
@@ -829,7 +830,7 @@ const updatedData = {
               openMenu={isOpenTimeFormat}
               handleOpenOption={handleOpenTimeFormat}
               onSelectOption={handleSelectTimeFormat}
-              options={timeFormat}
+              options={timeFormats}
               border={false}
             />
           </div>
@@ -845,7 +846,7 @@ const updatedData = {
               openMenu={isOpenCurrency}
               handleOpenOption={handleOpenOptionCurrency}
               onSelectOption={handleSelectCurrency}
-              options={dataCompany.currency || []}
+              options={[{ id: '', name: 'Select Currency' }, ...dataCompany.currency] || []}
               border={false}
             />
           </div>

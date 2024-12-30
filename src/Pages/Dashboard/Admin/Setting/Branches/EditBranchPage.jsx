@@ -8,9 +8,9 @@ import { useGet } from '../../../../../Hooks/useGet';
 
 const EditBranchPage = () => {
        const { branchId } = useParams()
-       const { refetch: refetchCities, loading: loadingCities, data: dataCities } = useGet({ url: 'https://Bcknd.food2go.online/admin/settings/city' });
-       const { refetch: refetchBranch, loading: loadingBranch, data: dataBranch } = useGet({ url: `https://Bcknd.food2go.online/admin/branch/item/${branchId}` });
-       const { postData, loadingPost, response } = usePost({ url: `https://Bcknd.food2go.online/admin/branch/update/${branchId}` });
+       const { refetch: refetchCities, loading: loadingCities, data: dataCities } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/settings/city' });
+       const { refetch: refetchBranch, loading: loadingBranch, data: dataBranch } = useGet({ url: `https://lamadabcknd.food2go.online/admin/branch/item/${branchId}` });
+       const { postData, loadingPost, response } = usePost({ url: `https://lamadabcknd.food2go.online/admin/branch/update/${branchId}` });
 
        const auth = useAuth();
        const navigate = useNavigate();
@@ -53,7 +53,7 @@ const EditBranchPage = () => {
 
        useEffect(() => {
               if (dataCities && dataCities.city) {
-                     setCities(dataCities.cities);
+                     setCities([{ id: '', name: 'Select City' }, ...dataCities.cities] || []);
               }
               if (dataBranch) {
                      setBranch(dataBranch.branch);

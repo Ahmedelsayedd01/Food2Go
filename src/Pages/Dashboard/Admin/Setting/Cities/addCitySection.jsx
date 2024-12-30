@@ -5,7 +5,7 @@ import { useAuth } from '../../../../../Context/Auth';
 
 
 const AddCitySection = ({ update, setUpdate }) => {
-  const { postData, loadingPost, response } = usePost({ url: 'https://Bcknd.food2go.online/admin/settings/city/add' });
+  const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/admin/settings/city/add' });
 
   const auth = useAuth();
 

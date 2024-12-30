@@ -18,7 +18,7 @@ const AllOrdersLayout = () => {
        const ordersCanceledCount = useSelector(state => state.ordersCanceled.data);
        const ordersScheduleCount = useSelector(state => state.ordersSchedule.data);
 
-       const { refetch: refetchBranch, loading: loadingBranch, data: dataBranch } = useGet({ url: 'https://Bcknd.food2go.online/admin/order/branches' });
+       const { refetch: refetchBranch, loading: loadingBranch, data: dataBranch } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/order/branches' });
 
        console.log('orderAllCount', ordersAllCount)
        useEffect(() => {
