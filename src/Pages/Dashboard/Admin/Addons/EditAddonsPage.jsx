@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { DropDown, NumberInput, StaticButton, StaticLoader, SubmitButton, Switch, TextInput, UploadInput } from '../../../../Components/Components';
+import { DropDown, LoaderLogin, NumberInput, StaticButton, StaticLoader, SubmitButton, Switch, TextInput, UploadInput } from '../../../../Components/Components';
 import { useGet } from '../../../../Hooks/useGet';
 import { usePost } from '../../../../Hooks/usePostJson';
 import { useAuth } from '../../../../Context/Auth';
@@ -179,8 +179,8 @@ const EditAddonsPage = () => {
               <>
                      {loadingTranslation || loadingAddons || loadingAddonsEdit || loadingPost ? (
                             <>
-                                   <div className="w-full h-56 flex justify-center items-center">
-                                          <StaticLoader />
+                                   <div className="w-full flex justify-center items-center">
+                                          <LoaderLogin />
                                    </div>
                             </>
                      ) : (
