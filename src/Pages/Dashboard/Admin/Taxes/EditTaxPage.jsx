@@ -8,8 +8,8 @@ import { DropDown, LoaderLogin, NumberInput, StaticButton, SubmitButton, TextInp
 
 const EditTaxPage = () => {
        const { taxId } = useParams()
-       const { refetch: refetchTax, loading: loadingTax, data: dataTax } = useGet({ url: `https://Bcknd.food2go.online/admin/settings/tax/item/${taxId}` });
-       const { postData, loadingPost, response } = usePost({ url: `https://Bcknd.food2go.online/admin/settings/tax/update/${taxId}` });
+       const { refetch: refetchTax, loading: loadingTax, data: dataTax } = useGet({ url: `https://lamadabcknd.food2go.online/admin/settings/tax/item/${taxId}` });
+       const { postData, loadingPost, response } = usePost({ url: `https://lamadabcknd.food2go.online/admin/settings/tax/update/${taxId}` });
 
        const auth = useAuth();
        const navigate = useNavigate();
@@ -18,7 +18,11 @@ const EditTaxPage = () => {
 
        const [taxName, setTaxName] = useState('');
        const [taxAmount, setTaxAmount] = useState('');
-       const [taxType] = useState([{ name: 'precentage' }, { name: 'value' }])
+       const [taxType] = useState([
+              { id: "", name: '' },
+              { id: "precentage", name: 'precentage' },
+              { id: "value", name: 'value' }
+       ])
 
        const [stateType, setStateType] = useState('Select Tax Type');
        const [typeName, setTypeName] = useState('');
@@ -45,7 +49,7 @@ const EditTaxPage = () => {
 
        const handleSelecttaxType = (option) => {
               setTypeName(option.name);
-              setStateType(option.name);
+              setStateType(option.id);
        };
 
        useEffect(() => {

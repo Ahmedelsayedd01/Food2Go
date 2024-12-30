@@ -6,9 +6,9 @@ import { useAuth } from '../../../../Context/Auth';
 
 
 const AddBannerSection = ({ update, setUpdate }) => {
-  const { refetch: refetchData, loading: loadingData, data: allData } = useGet({ url: 'https://Bcknd.food2go.online/admin/banner' });
-  const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: 'https://Bcknd.food2go.online/admin/category' });
-  const { postData, loadingPost, response } = usePost({ url: 'https://Bcknd.food2go.online/admin/banner/add' });
+  const { refetch: refetchData, loading: loadingData, data: allData } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/banner' });
+  const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/category' });
+  const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/admin/banner/add' });
 
   const dropDownCategories = useRef();
   const dropDownProducts = useRef();
@@ -180,10 +180,10 @@ const AddBannerSection = ({ update, setUpdate }) => {
       return;
     }
 
-    if (imageFile.length !== taps.length) {
-      auth.toastError('Please Enter All Banner Image');
-      return;
-    }
+    // if (imageFile.length !== taps.length) {
+    //   auth.toastError('Please Enter All Banner Image');
+    //   return;
+    // }
 
 
     if (!categoryId) {

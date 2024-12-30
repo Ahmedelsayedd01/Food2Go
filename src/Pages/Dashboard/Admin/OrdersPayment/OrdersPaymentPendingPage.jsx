@@ -10,7 +10,7 @@ import { useAuth } from '../../../../Context/Auth';
 
 const OrdersPaymentPending = () => {
   const auth = useAuth()
-  const { refetch: refetchOrdersPaymentPending, loading: loadingOrdersPaymentPending, data: dataOrdersPaymentPending } = useGet({ url: 'https://Bcknd.food2go.online/admin/payment/pending' });
+  const { refetch: refetchOrdersPaymentPending, loading: loadingOrdersPaymentPending, data: dataOrdersPaymentPending } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/payment/pending' });
   const { changeState, loadingChange, responseChange } = useChangeState();
   const [ordersPaymentPending, setOrdersPaymentPending] = useState([]);
   const [reasonReject, setReasonReject] = useState('');
@@ -57,7 +57,7 @@ const OrdersPaymentPending = () => {
 
   const handleApprove = async (id) => {
     const response = await changeState(
-      `https://Bcknd.food2go.online/admin/payment/approve/${id}`,
+      `https://lamadabcknd.food2go.online/admin/payment/approve/${id}`,
       `${id} Is Approved.`
     );
     if (response) {
@@ -75,7 +75,7 @@ const OrdersPaymentPending = () => {
     }
 
     const response = await changeState(
-      `https://Bcknd.food2go.online/admin/payment/rejected/${id}`,
+      `https://lamadabcknd.food2go.online/admin/payment/rejected/${id}`,
       `${id} Is Rejected.`,
       { rejected_reason: reasonReject }
     );

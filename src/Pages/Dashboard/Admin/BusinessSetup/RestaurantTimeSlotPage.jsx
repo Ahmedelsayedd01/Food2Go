@@ -3,13 +3,17 @@ import { AddButton, DateInput, DropDown, StaticButton, SubmitButton, TimeInput, 
 import { useGet } from '../../../../Hooks/useGet';
 import { usePost } from '../../../../Hooks/usePostJson';
 
-const RestaurantTimeSlotPage = ({refetch}) => {
+const RestaurantTimeSlotPage = () => {
        const dropDown = useRef();
        const [allClosestTime, setAllClosestTime] = useState([{ closingTimeAm: '', closingTimePm: '' }]);
 
        const [day, setDay] = useState('');
 
-       const [options, setOptions] = useState([{ name: 'daily' }, { name: 'customize' }]);
+       const [options, setOptions] = useState([
+              { id: "", name: 'Select Option' },
+              { id: "daily", name: 'daily' },
+              { id: "customize", name: 'customize' }
+       ]);
 
        const [stateOption, setStateOption] = useState('Select Option');
        const [optionName, setOptionName] = useState('');
@@ -19,7 +23,7 @@ const RestaurantTimeSlotPage = ({refetch}) => {
        const handleOpenOptions = () => setIsOpenOption(false);
 
        const handleSelectOption = (option) => {
-              setOptionName(option.name);
+              setOptionName(option.id);
               setStateOption(option.name);
        };
 
@@ -54,7 +58,7 @@ const RestaurantTimeSlotPage = ({refetch}) => {
 
        return (
               <>
-              <form
+                     <form
                             className="w-full flex sm:flex-col lg:flex-row flex-wrap items-start justify-start gap-4"
                             onSubmit={(e) => e.preventDefault()}
                      >
@@ -150,7 +154,7 @@ const RestaurantTimeSlotPage = ({refetch}) => {
                                    </div>
 
                             </div>
-              </form>
+                     </form>
 
               </>
        )

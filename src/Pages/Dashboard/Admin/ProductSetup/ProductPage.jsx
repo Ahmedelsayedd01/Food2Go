@@ -8,7 +8,7 @@ import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import Warning from '../../../../Assets/Icons/AnotherIcons/WarningIcon';
 
 const ProductPage = () => {
-       const { refetch: refetchProducts, loading: loadingProducts, data: dataProducts } = useGet({ url: 'https://Bcknd.food2go.online/admin/product' });
+       const { refetch: refetchProducts, loading: loadingProducts, data: dataProducts } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/product' });
        const { deleteData, loadingDelete, responseDelete } = useDelete();
        const [products, setProducts] = useState([])
        const [openDescriptionView, setOpenDescriptionView] = useState(null);
@@ -91,7 +91,7 @@ const ProductPage = () => {
 
        // Delete Product
        const handleDelete = async (id, name) => {
-              const success = await deleteData(`https://Bcknd.food2go.online/admin/product/delete/${id}`, `${name} Deleted Success.`);
+              const success = await deleteData(`https://lamadabcknd.food2go.online/admin/product/delete/${id}`, `${name} Deleted Success.`);
 
               if (success) {
                      setProducts(

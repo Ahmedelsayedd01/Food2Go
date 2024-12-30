@@ -6,13 +6,13 @@ import { useChangeState } from '../../../../../Hooks/useChangeState';
 
 const AutomaticPaymentPage = ({ refetch }) => {
   const { refetch: refetchAutomaticPayment, loading: loadingAutomaticPayment, data: dataAutomaticPayment } = useGet({
-    url: 'https://Bcknd.food2go.online/admin/settings/payment_methods_auto',
+    url: 'https://lamadabcknd.food2go.online/admin/settings/payment_methods_auto',
   });
 
   const [automaticPayments, setAutomaticPayments] = useState([]);
   const [currentTap, setCurrentTap] = useState(0);
   const { postData, loadingPost, response } = usePost({
-    url: `https://Bcknd.food2go.online/admin/settings/payment_methods_auto/update/${automaticPayments[currentTap]?.id || 0}`,
+    url: `https://lamadabcknd.food2go.online/admin/settings/payment_methods_auto/update/${automaticPayments[currentTap]?.id || 0}`,
   });
 
   const { changeState, loadingChange, responseChange } = useChangeState();
@@ -104,7 +104,7 @@ const AutomaticPaymentPage = ({ refetch }) => {
   // Change Payment status 
   const handleChangeStaus = async (id, name, status) => {
     const response = await changeState(
-      ` https://Bcknd.food2go.online/admin/settings/payment_methods_auto/status/${id}`,
+      ` https://lamadabcknd.food2go.online/admin/settings/payment_methods_auto/status/${id}`,
       `${name} Changed Status.`,
       { status } // Pass status as an object if changeState expects an object
     );

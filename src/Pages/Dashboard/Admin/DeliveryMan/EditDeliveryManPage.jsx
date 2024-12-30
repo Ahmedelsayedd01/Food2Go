@@ -7,10 +7,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 const EditDeliveryManPage = () => {
   const { deliveryManId } = useParams();
-  const { refetch: refetchDeliveries, loading: loadingDeliveries, data: dataDeliveries } = useGet({ url: 'https://Bcknd.food2go.online/admin/delivery' });
+  const { refetch: refetchDeliveries, loading: loadingDeliveries, data: dataDeliveries } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/delivery' });
 
-  const { refetch: refetchDeliveryMan, loading: loadingDeliveryMan, data: dataDeliveryMan } = useGet({ url: `https://Bcknd.food2go.online/admin/delivery/item/${deliveryManId}` });
-  const { postData, loadingPost, response } = usePost({ url: `https://Bcknd.food2go.online/admin/delivery/update/${deliveryManId}` });
+  const { refetch: refetchDeliveryMan, loading: loadingDeliveryMan, data: dataDeliveryMan } = useGet({ url: `https://lamadabcknd.food2go.online/admin/delivery/item/${deliveryManId}` });
+  const { postData, loadingPost, response } = usePost({ url: `https://lamadabcknd.food2go.online/admin/delivery/update/${deliveryManId}` });
 
   const [branches, setBranches] = useState([]);
 
@@ -62,7 +62,7 @@ const EditDeliveryManPage = () => {
   useEffect(() => {
     if (dataDeliveries && dataDeliveries.branches) {
       // setDeliveries(dataDeliveries.deliveries);
-      setBranches(dataDeliveries.branches);
+      setBranches([{ id: '', name: 'Select Branche' }, ...dataDeliveries.branches] || []);
     }
     console.log('dataDeliveries', dataDeliveries)
   }, [dataDeliveries]); // Only run this effect when `data` changes

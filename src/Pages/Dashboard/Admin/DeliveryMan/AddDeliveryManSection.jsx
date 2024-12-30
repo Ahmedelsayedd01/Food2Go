@@ -4,7 +4,7 @@ import { usePost } from '../../../../Hooks/usePostJson';
 import { useAuth } from '../../../../Context/Auth';
 
 const AddDeliveryManSection = ({ data, refetch, setRefetch }) => {
-       const { postData, loadingPost, response } = usePost({ url: 'https://Bcknd.food2go.online/admin/delivery/add' });
+       const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/admin/delivery/add' });
 
        const auth = useAuth();
        const BranchesRef = useRef();
@@ -29,7 +29,7 @@ const AddDeliveryManSection = ({ data, refetch, setRefetch }) => {
        const [deliveryBranchName, setDeliveryBranchName] = useState('')
        const [deliveryBranchId, setDeliveryBranchId] = useState('')
 
-       const [identityTypes, setIdentityTypes] = useState([{ name: 'Card' }, { name: 'Passport' }])
+       const [identityTypes, setIdentityTypes] = useState([{ id: '', name: 'Select Identity Type' }, { id: 'Card', name: 'Card' }, { id: 'Passport', name: 'Passport' }])
        const [identityTypeState, setIdentityTypeState] = useState('Select Identity Type')
        const [identityTypeName, setIdentityTypeName] = useState('')
 
@@ -62,7 +62,7 @@ const AddDeliveryManSection = ({ data, refetch, setRefetch }) => {
 
        const handleSelectIdentityType = (option) => {
               setIdentityTypeState(option.name);
-              setIdentityTypeName(option.name);
+              setIdentityTypeName(option.id);
        };
 
 

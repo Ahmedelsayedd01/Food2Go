@@ -9,8 +9,8 @@ import { Dropdown } from 'primereact/dropdown';
 
 
 const AddDealSection = ({ refetch, setRefetch }) => {
-       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://Bcknd.food2go.online/admin/translation' });
-       const { postData, loadingPost, response } = usePost({ url: 'https://Bcknd.food2go.online/admin/deal/add' });
+       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/translation' });
+       const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/admin/deal/add' });
 
        const auth = useAuth();
 
@@ -183,18 +183,18 @@ const AddDealSection = ({ refetch, setRefetch }) => {
                      auth.toastError('please Enter Deal Title')
                      return;
               }
-              if (dealTitle.length !== taps.length) {
-                     auth.toastError('please Enter All Deal Titles')
-                     return;
-              }
+              // if (dealTitle.length !== taps.length) {
+              //        auth.toastError('please Enter All Deal Titles')
+              //        return;
+              // }
               if (dealDescription.length === 0) {
                      auth.toastError('please Enter Deal Description')
                      return;
               }
-              if (dealDescription.length !== taps.length) {
-                     auth.toastError('please Enter All Deal Descriptions')
-                     return;
-              }
+              // if (dealDescription.length !== taps.length) {
+              //        auth.toastError('please Enter All Deal Descriptions')
+              //        return;
+              // }
 
 
 

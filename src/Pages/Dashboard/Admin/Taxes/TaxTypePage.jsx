@@ -4,13 +4,17 @@ import { usePost } from '../../../../Hooks/usePostJson';
 import { DropDown, LoaderLogin, StaticLoader, SubmitButton, TextInput } from '../../../../Components/Components';
 
 const TaxTypePage = () => {
-       const { refetch: refetchTaxType, loading: loadingTaxType, data: dataTaxType } = useGet({ url: 'https://Bcknd.food2go.online/admin/settings/tax_type' });
-       const { postData, loadingPost, response } = usePost({ url: 'https://Bcknd.food2go.online/admin/settings/tax_update' });
+       const { refetch: refetchTaxType, loading: loadingTaxType, data: dataTaxType } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/settings/tax_type' });
+       const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/admin/settings/tax_update' });
 
        const dropDownType = useRef();
        const [taxType, setTaxType] = useState('');
-       const [stateType, setStateType] = useState('');
-       const [taxTypes] = useState([{ name: 'included' }, { name: 'excluded' }])
+       const [stateType, setStateType] = useState('Select Tax Type');
+       const [taxTypes] = useState([
+              { id: "", name: 'Select Tax Type' },
+              { id: "included", name: 'included' },
+              { id: "excluded", name: 'excluded' }
+       ])
 
 
        const [isOpentaxType, setIsOpentaxType] = useState(false);
@@ -18,6 +22,7 @@ const TaxTypePage = () => {
        useEffect(() => {
               console.log('response', response)
               if (!loadingPost) {
+                     setStateType(stateType)
                      setTaxType(stateType)
               }
        }, [response])
@@ -39,7 +44,7 @@ const TaxTypePage = () => {
        const handleOpenOptiontaxType = () => setIsOpentaxType(false);
 
        const handleSelecttaxType = (option) => {
-              // setTaxType(option.name);
+              setTaxType(option.id);
               setStateType(option.name);
        };
 
@@ -71,7 +76,7 @@ const TaxTypePage = () => {
 
               const formData = new FormData();
 
-              formData.append("tax", stateType);
+              formData.append("tax", taxType);
 
 
               console.log(...formData.entries());

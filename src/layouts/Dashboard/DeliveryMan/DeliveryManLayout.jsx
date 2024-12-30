@@ -5,7 +5,7 @@ import { useGet } from '../../../Hooks/useGet';
 
 
 const DeliveryManLayout = () => {
-       const { refetch: refetchDeliveries, loading: loadingDeliveries, data: dataDeliveries } = useGet({ url: 'https://Bcknd.food2go.online/admin/delivery' });
+       const { refetch: refetchDeliveries, loading: loadingDeliveries, data: dataDeliveries } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/delivery' });
 
        const [refetch, setRefetch] = useState(false)
 
@@ -22,7 +22,7 @@ const DeliveryManLayout = () => {
        useEffect(() => {
               if (dataDeliveries && dataDeliveries.deliveries && dataDeliveries.branches) {
                      setDeliveries(dataDeliveries.deliveries);
-                     setBranches(dataDeliveries.branches);
+                     setBranches([{ id: '', name: 'Select Branche' }, ...dataDeliveries.branches] || []);
               }
               console.log('dataDeliveries', dataDeliveries)
        }, [dataDeliveries]); // Only run this effect when `data` changes

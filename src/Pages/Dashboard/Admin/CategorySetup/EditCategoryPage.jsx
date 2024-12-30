@@ -10,11 +10,11 @@ import { useAuth } from '../../../../Context/Auth';
 
 const EditCategoryPage = () => {
        const { categoryId } = useParams();
-       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://Bcknd.food2go.online/admin/translation' });
-       const { refetch: refetchCategories, loading: loadingCategories, data: dataCategories } = useGet({ url: 'https://Bcknd.food2go.online/admin/category' });
+       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/translation' });
+       const { refetch: refetchCategories, loading: loadingCategories, data: dataCategories } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/category' });
 
-       const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: `https://Bcknd.food2go.online/admin/category/item/${categoryId}` });
-       const { postData, loadingPost, response } = usePost({ url: `https://Bcknd.food2go.online/admin/category/update/${categoryId}` });
+       const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: `https://lamadabcknd.food2go.online/admin/category/item/${categoryId}` });
+       const { postData, loadingPost, response } = usePost({ url: `https://lamadabcknd.food2go.online/admin/category/update/${categoryId}` });
 
        const dropDownCategoriesParent = useRef();
        const ImageRef = useRef();
@@ -64,7 +64,7 @@ const EditCategoryPage = () => {
               if (dataTranslation && dataCategories) {
                      setTaps(dataTranslation.translation);
                      setCategories(dataCategories.categories);
-                     setCategoriesParent(dataCategories.parent_categories);
+                     setCategoriesParent([{ id: '', name: 'Select Category Parent' }, ...dataCategories.parent_categories] || []);
                      setCategoriesAddonse(dataCategories.addons);
               }
        }, [dataTranslation, dataCategories]);
@@ -214,10 +214,10 @@ const EditCategoryPage = () => {
                      auth.toastError('please Enter Category Names')
                      return;
               }
-              if (categoryName.length !== taps.length) {
-                     auth.toastError('please Enter All Category Names')
-                     return;
-              }
+              // if (categoryName.length !== taps.length) {
+              //        auth.toastError('please Enter All Category Names')
+              //        return;
+              // }
 
               if (!imageFile) {
                      auth.toastError('please Set Category Image')

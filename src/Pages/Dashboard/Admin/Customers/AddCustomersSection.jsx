@@ -4,7 +4,7 @@ import { usePost } from '../../../../Hooks/usePostJson';
 import { useAuth } from '../../../../Context/Auth';
 
 const AddCustomersSection = ({ update, setUpdate }) => {
-       const { postData, loadingPost, response } = usePost({ url: 'https://Bcknd.food2go.online/admin/customer/add' });
+       const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/admin/customer/add' });
 
        const auth = useAuth();
        const ImageRef = useRef();

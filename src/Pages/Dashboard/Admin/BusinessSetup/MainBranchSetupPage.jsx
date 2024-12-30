@@ -6,16 +6,16 @@ import { useGet } from '../../../../Hooks/useGet';
 import { useAuth } from '../../../../Context/Auth';
 
 const MainBranchSetupPage = () => {
-       const { refetch: refetchBranch, loading: loadingBranch, data: dataBranch } = useGet({ url: 'https://bcknd.food2go.online/admin/settings/business_setup/branch' });
+       const { refetch: refetchBranch, loading: loadingBranch, data: dataBranch } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/settings/business_setup/branch' });
        const [branch, setBranch] = useState([])
 
-       const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/settings/business_setup/branch/add' });
+       const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/admin/settings/business_setup/branch/add' });
 
        const {
               refetch: refetchCity,
               loading: loadingCity,
               data: dataCity,
-       } = useGet({ url: "https://bcknd.food2go.online/admin/settings/city" });
+       } = useGet({ url: "https://lamadabcknd.food2go.online/admin/settings/city" });
 
        useEffect(() => {
               refetchBranch();

@@ -6,7 +6,7 @@ import { useChangeState } from '../../../../../Hooks/useChangeState';
 
 const OrderTypePage = () => {
        const { refetch: refetchOrderType, loading: loadingOrderType, data: dataOrderType } = useGet({
-              url: 'https://Bcknd.food2go.online/admin/settings/order_type',
+              url: 'https://lamadabcknd.food2go.online/admin/settings/order_type',
        });
 
        const { changeState, loadingChange, responseChange } = useChangeState();
@@ -29,7 +29,7 @@ const OrderTypePage = () => {
 
        const handleChangeStatus = async (id, name, status) => {
               const response = await changeState(
-                     'https://Bcknd.food2go.online/admin/settings/order_type/update',
+                     'https://lamadabcknd.food2go.online/admin/settings/order_type/update',
                      `${name} Changed Status.`,
                      { id, status } // Pass status as an object if changeState expects an object
               );

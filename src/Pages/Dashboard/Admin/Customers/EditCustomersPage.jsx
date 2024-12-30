@@ -7,9 +7,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 const EditCustomersPage = () => {
        const { customerId } = useParams();
-       const { refetch: refetchAllCustomer, loading: loadingAllCustomer, data: dataAllCustomer } = useGet({ url: `https://Bcknd.food2go.online/admin/customer` });
-       const { refetch: refetchCustomer, loading: loadingCustomer, data: dataCustomer } = useGet({ url: `https://Bcknd.food2go.online/admin/customer/item/${customerId}` });
-       const { postData, loadingPost, response } = usePost({ url: `https://Bcknd.food2go.online/admin/customer/update/${customerId}` });
+       const { refetch: refetchAllCustomer, loading: loadingAllCustomer, data: dataAllCustomer } = useGet({ url: `https://lamadabcknd.food2go.online/admin/customer` });
+       const { refetch: refetchCustomer, loading: loadingCustomer, data: dataCustomer } = useGet({ url: `https://lamadabcknd.food2go.online/admin/customer/item/${customerId}` });
+       const { postData, loadingPost, response } = usePost({ url: `https://lamadabcknd.food2go.online/admin/customer/update/${customerId}` });
 
        const auth = useAuth();
        const navigate = useNavigate();

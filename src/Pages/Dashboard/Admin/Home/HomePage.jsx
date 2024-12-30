@@ -7,7 +7,7 @@ import { useGet } from '../../../../Hooks/useGet'
 
 const HomePage = () => {
        const { refetch: refetchCountOrders, loading, data: dataCountOrders } = useGet({
-              url: "https://Bcknd.food2go.online/admin/order/count",
+              url: "https://lamadabcknd.food2go.online/admin/order/count",
        });
 
        useEffect(() => {

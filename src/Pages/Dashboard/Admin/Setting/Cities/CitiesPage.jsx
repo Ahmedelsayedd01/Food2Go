@@ -9,7 +9,7 @@ import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import Warning from '../../../../../Assets/Icons/AnotherIcons/WarningIcon';
 
 const CitiesPage = ({ refetch }) => {
-       const { refetch: refetchCities, loading: loadingCities, data: dataCities } = useGet({ url: 'https://Bcknd.food2go.online/admin/settings/city' });
+       const { refetch: refetchCities, loading: loadingCities, data: dataCities } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/settings/city' });
        const { changeState, loadingChange, responseChange } = useChangeState();
        const { deleteData, loadingDelete, responseDelete } = useDelete();
        const [cities, setCities] = useState([]);
@@ -41,7 +41,7 @@ const CitiesPage = ({ refetch }) => {
        // Change paymentMethod status 
        const handleChangeStaus = async (id, name, status) => {
               const response = await changeState(
-                     `https://Bcknd.food2go.online/admin/settings/city/status/${id}`,
+                     `https://lamadabcknd.food2go.online/admin/settings/city/status/${id}`,
                      `${name} Changed Status.`,
                      { status } // Pass status as an object if changeState expects an object
               );
@@ -65,7 +65,7 @@ const CitiesPage = ({ refetch }) => {
 
        // Delete payment Method
        const handleDelete = async (id, name) => {
-              const success = await deleteData(`https://Bcknd.food2go.online/admin/settings/city/delete/${id}`, `${name} Deleted Success.`);
+              const success = await deleteData(`https://lamadabcknd.food2go.online/admin/settings/city/delete/${id}`, `${name} Deleted Success.`);
 
               if (success) {
                      setCities(
@@ -117,7 +117,7 @@ const CitiesPage = ({ refetch }) => {
                                                         currentCities.map((city, index) => ( // Example with two rows
                                                                <tr className="w-full border-b-2" key={index}>
                                                                       <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                      {(currentPage - 1) * citiesPerPage + index + 1}
+                                                                             {(currentPage - 1) * citiesPerPage + index + 1}
                                                                       </td>
                                                                       <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
                                                                              {city.name}

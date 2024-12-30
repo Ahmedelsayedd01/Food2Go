@@ -8,8 +8,8 @@ import { usePost } from '../../../../Hooks/usePostJson';
 
 const EditDiscountPage = () => {
        const { discountId } = useParams()
-       const { refetch: refetchDiscount, loading: loadingDiscount, data: dataDiscount } = useGet({ url: `https://Bcknd.food2go.online/admin/settings/discount/item/${discountId}` });
-       const { postData, loadingPost, response } = usePost({ url: `https://Bcknd.food2go.online/admin/settings/discount/update/${discountId}` });
+       const { refetch: refetchDiscount, loading: loadingDiscount, data: dataDiscount } = useGet({ url: `https://lamadabcknd.food2go.online/admin/settings/discount/item/${discountId}` });
+       const { postData, loadingPost, response } = usePost({ url: `https://lamadabcknd.food2go.online/admin/settings/discount/update/${discountId}` });
 
        const auth = useAuth();
        const navigate = useNavigate();

@@ -5,7 +5,7 @@ import { useAuth } from '../../../../../Context/Auth';
 
 
 const AddPaymentMethodSection = ({ update, setUpdate }) => {
-       const { postData, loadingPost, response } = usePost({ url: 'https://Bcknd.food2go.online/admin/settings/payment_methods/add' });
+       const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/admin/settings/payment_methods/add' });
 
        const ImageRef = useRef();
        const auth = useAuth();

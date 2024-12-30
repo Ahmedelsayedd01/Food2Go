@@ -8,7 +8,7 @@ import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import Warning from '../../../../Assets/Icons/AnotherIcons/WarningIcon';
 
 const TaxesPage = ({ refetch, setUpdate }) => {
-       const { refetch: refetchTaxes, loading: loadingTaxes, data: dataTaxes } = useGet({ url: 'https://Bcknd.food2go.online/admin/settings/tax' });
+       const { refetch: refetchTaxes, loading: loadingTaxes, data: dataTaxes } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/settings/tax' });
        // const { changeState, loadingChange, responseChange } = useChangeState();
        const { deleteData, loadingDelete, responseDelete } = useDelete();
 
@@ -48,7 +48,7 @@ const TaxesPage = ({ refetch, setUpdate }) => {
 
        // const handleChangeActive = async (id, name, status) => {
        //        const response = await changeState(
-       //               `https://Bcknd.food2go.online/admin/translation/active/${id}`,
+       //               `https://lamadabcknd.food2go.online/admin/translation/active/${id}`,
        //               `${name} Changed Active.`,
        //               { active: status } // Pass status as an object if changeState expects an object
        //        );
@@ -76,7 +76,7 @@ const TaxesPage = ({ refetch, setUpdate }) => {
 
        // Delete Language
        const handleDelete = async (id, name) => {
-              const success = await deleteData(`https://Bcknd.food2go.online/admin/settings/tax/delete/${id}`, `${name} Deleted Success.`);
+              const success = await deleteData(`https://lamadabcknd.food2go.online/admin/settings/tax/delete/${id}`, `${name} Deleted Success.`);
 
               if (success) {
                      // Update taxes only if changeState succeeded
