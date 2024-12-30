@@ -46,7 +46,7 @@ const AddAddonsSection = ({ update, setUpdate }) => {
 
        useEffect(() => {
               if (dataAddons) {
-                     setAddonTaxes(dataAddons.taxes);
+                     setAddonTaxes([{ id: '', name: 'Select Tax' }, ...dataAddons.taxes]);
               }
               console.log('dataAddons', dataAddons)
        }, [dataAddons]);

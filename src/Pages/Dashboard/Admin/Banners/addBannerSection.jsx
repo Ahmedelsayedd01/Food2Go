@@ -54,10 +54,10 @@ const AddBannerSection = ({ update, setUpdate }) => {
       allData?.products &&
       allData?.deals) {
       setTaps(allData?.translations || []);
-      setCategories(dataCategory?.parent_categories || []);
-      setProducts(allData?.products || []);
-      setFilterProducts(allData?.products || []);
-      setDeals(allData?.deals || []);
+      setCategories([{ id: '', name: 'Select Category' }, ...dataCategory.parent_categories] || []);
+      setProducts([{ id: '', name: 'Select product' }, ...allData?.products] || []);
+      setFilterProducts([{ id: '', name: 'Select product' }, ...allData?.products] || []);
+      setDeals([{ id: '', name: 'Select deal' }, ...allData?.deals] || []);
     }
     console.log('taps', taps)
     console.log('categories', categories)
@@ -90,7 +90,7 @@ const AddBannerSection = ({ update, setUpdate }) => {
     });
 
     console.log('filterProducts', filterProducts)
-    setFilterProducts(filterProducts)
+    setFilterProducts([{ id: '', name: 'Select product' }, ...filterProducts])
   };
 
   const handleOpenProduct = () => {
