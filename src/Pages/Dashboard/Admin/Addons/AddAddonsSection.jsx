@@ -127,10 +127,10 @@ const AddAddonsSection = ({ update, setUpdate }) => {
               //        return;
               // }
 
-              if (!addonTaxesId) {
-                     auth.toastError('please Select Addon Tax')
-                     return;
-              }
+              // if (!addonTaxesId) {
+              //        auth.toastError('please Select Addon Tax')
+              //        return;
+              // }
               if (!addonPrice) {
                      auth.toastError('please Enter Addon Price')
                      return;
