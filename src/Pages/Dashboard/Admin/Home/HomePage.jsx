@@ -103,7 +103,7 @@ const HomePage = () => {
           </>
         ) : (
           <>
-            <div className="flex flex-col gap-7 items-start justify-center">
+            <div className="flex flex-col gap-7 items-start justify-center pb-16">
               <CartsOrderSection ordersNum={counters} />
               <Chart />
             </div>
