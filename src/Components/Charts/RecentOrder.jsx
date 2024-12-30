@@ -1,12 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const orders = [
-    { id: 1, number: '100008', status: 'Pending', date: '28-09-24', time: '03:09 PM' },
-    { id: 2, number: '100008', status: 'Canceled', date: '28-09-24', time: '03:09 PM' },
-    { id: 3, number: '100008', status: 'Pending', date: '28-09-24', time: '03:09 PM' },
-    { id: 4, number: '100008', status: 'Processing', date: '28-09-24', time: '03:09 PM' },
-    { id: 5, number: '100008', status: 'Canceled', date: '28-09-24', time: '03:09 PM' },
-    { id: 6, number: '100008', status: 'Processing', date: '28-09-24', time: '03:09 PM' },
+    // { id: 1, number: '100008', status: 'Pending', date: '28-09-24', time: '03:09 PM' },
+    // { id: 2, number: '100008', status: 'Canceled', date: '28-09-24', time: '03:09 PM' },
+    // { id: 3, number: '100008', status: 'Pending', date: '28-09-24', time: '03:09 PM' },
+    // { id: 4, number: '100008', status: 'Processing', date: '28-09-24', time: '03:09 PM' },
+    // { id: 5, number: '100008', status: 'Canceled', date: '28-09-24', time: '03:09 PM' },
+    // { id: 6, number: '100008', status: 'Processing', date: '28-09-24', time: '03:09 PM' },
 ];
 
 const statusColors = {
@@ -20,7 +21,7 @@ const RecentOrders = () => {
         <div className="bg-white p-5 w-full mx-auto">
             <div className="flex justify-between items-center mb-4">
                 <h3 className="text-lg font-semibold text-[#8c0000]">Recent Orders</h3>
-                <a href="#" className="text-sm text-[#8c0000] underline">View All</a>
+                <Link to={'/dashboard/orders/all'} href="#" className="text-sm text-[#8c0000] underline">View All</Link>
             </div>
 
             {orders.map((order) => (
