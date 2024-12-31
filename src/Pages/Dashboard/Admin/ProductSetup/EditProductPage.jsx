@@ -46,9 +46,8 @@ const EditProductPage = () => {
        const [discounts, setDiscounts] = useState([])
        const [taxes, setTaxes] = useState([])
 
-       const [itemTypes, setItemTypes] = useState([{ id: '', name: 'Selected Item Type' }, , { id: '', name: 'online' }, { id: '', name: 'offline' }, { id: '', name: 'all' }])
-       const [stockTypes, setStockTypes] = useState([{ id: '', name: 'Selected Stock Type' }, , { id: '', name: 'unlimited' }, { id: '', name: 'daily' }, { id: '', name: 'fixed' }])
-
+       const [itemTypes, setItemTypes] = useState([{ id: '', name: 'Selected Item Type' }, , { id: 'online', name: 'online' }, { id: 'offline', name: 'offline' }, { id: 'all', name: 'all' }])
+       const [stockTypes, setStockTypes] = useState([{ id: '', name: 'Selected Stock Type' }, , { id: 'unlimited', name: 'unlimited' }, { id: 'daily', name: 'daily' }, { id: 'fixed', name: 'fixed' }])
        /*  */
        const [productEdit, setProductEdit] = useState([]);
        // Selected Data 
@@ -725,11 +724,12 @@ const EditProductPage = () => {
               }
 
 
-              if (productExclude.length === 0) {
-                     auth.toastError('please Enter Exclude Name')
-                     console.log('productExclude', productExclude)
-                     return;
-              }
+              // if (productExclude.length === 0) {
+              //        auth.toastError('please Enter Exclude Name')
+              //        console.log('productExclude', productExclude)
+              //        return;
+              // }
+              
               // for (const ex of productExclude) {
               //        for (const name of ex.names) {
               //               if (!name.exclude_name || name.exclude_name.trim() === '') {
