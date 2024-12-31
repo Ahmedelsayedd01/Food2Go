@@ -75,7 +75,6 @@ const HomePage = () => {
     refetchCountOrders();
   }, [refetchCountOrders]);
 
-  const userName = useSelector((state) => state.user.name);
 
   const counters = {
     ordersAll: dataCountOrders?.orders || 0,
@@ -93,7 +92,6 @@ const HomePage = () => {
   return (
     <>
       <OrdersComponent />
-      <strong>{userName || "asada"}</strong>
       <div className="w-full flex flex-col mb-0">
         {loading ? (
           <>
