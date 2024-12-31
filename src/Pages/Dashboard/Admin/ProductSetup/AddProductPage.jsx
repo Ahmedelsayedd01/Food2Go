@@ -9,14 +9,13 @@ import { useAuth } from '../../../../Context/Auth';
 const AddProductPage = () => {
   const auth = useAuth();
   /* Get Data */
-  const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/translation' });
-  const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/category' });
-  const { refetch: refetchProduct, loading: loadingProduct, data: dataProduct } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/product' });
-  const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/admin/product/add' });
+  const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://bcknd.food2go.online/admin/translation' });
+  const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: 'https://bcknd.food2go.online/admin/category' });
+  const { refetch: refetchProduct, loading: loadingProduct, data: dataProduct } = useGet({ url: 'https://bcknd.food2go.online/admin/product' });
+  const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/product/add' });
   /* Refs */
   const variationTypeRef = useRef([]);
   const [openVariationIndex, setOpenVariationIndex] = useState(null); // Tracks which variation's dropdown is open
-
 
   const categoryRef = useRef();
   const subCategoryRef = useRef();
