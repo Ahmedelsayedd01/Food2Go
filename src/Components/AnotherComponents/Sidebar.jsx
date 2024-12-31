@@ -30,7 +30,7 @@ const Sidebar = () => {
                      {/* <aside className=""> */}
                             <div className="w-full flex items-center justify-between cursor-pointer border-b-2 border-b-gray-300 pb-1"
                                    onClick={handleSidebar}>
-                                   <span className={`${stateSide ? 'block' : 'hidden'} font-TextFontLight text-white text-4xl`}>Lamada</span>
+                                   <span className={`${stateSide ? 'block' : 'hidden'} font-TextFontLight text-white text-4xl`}>Food2go</span>
                                    <WhiteLogo width={50} height={50} />
                             </div>
                             <div className="w-full h-[42rem] overflow-scroll scrollSidebar scroll-smooth mt-2">

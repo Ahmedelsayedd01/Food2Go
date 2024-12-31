@@ -69,7 +69,7 @@ const Navbar = () => {
                                    </div>
                                    {/* Name Admin */}
                                    <div className="sm:w-10/12">
-                                          <span className='w-full text-2xl text-left text-mainColor font-bold'>Hello, {auth.user?.name || "Ahmed"}</span>
+                                          <span className='w-full text-2xl text-left text-mainColor font-bold'>Hello, {auth.user?.name || ""}</span>
                                    </div>
                             </div>
                             <div className='sm:hidden lg:flex w-5/12'>
