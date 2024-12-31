@@ -23,6 +23,7 @@ import { useAuth } from "../../../../Context/Auth";
 const BusinessSettingsPage = () => {
   const LogoRef = useRef();
   const IconRef = useRef();
+
   const auth = useAuth();
   const CountriesRef = useRef();
   const TimeZoneRef = useRef();
@@ -112,6 +113,7 @@ const BusinessSettingsPage = () => {
   const [rightCurrency, setRightCurrency] = useState(0);
 
   const [companyCopyrightText, setCompanyCopyrightText] = useState("");
+  const [timeFormats, setTimeFormats] = useState([]);
 
   const [allSystem, setAllSystem] = useState(0);
   const [branchPanel, setBranchPanel] = useState(0);
@@ -184,18 +186,18 @@ const BusinessSettingsPage = () => {
   useEffect(() => {
     if (dataCompany) {
       setDataCompany(dataCompany);
-      setDataCurrency(dataCompany.currency || []);
-      setDataCompanyInfo(dataCompany.company_info || []);
-      setCompanyName(dataCompanyInfo.name);
-      setCompanyPhone(dataCompanyInfo.phone);
-      setCompanyEmail(dataCompanyInfo.email);
-      setCompanyAddress(dataCompanyInfo.address);
-      setIcon(dataCompanyInfo.fav_icon_link);
-      setLogo(dataCompanyInfo.logo_link);
-      setStateCountries(dataCompanyInfo.country);
-      setSelectedCountry(dataCompanyInfo.country)
-      setSelectedTimeZone(dataCompanyInfo.time_zone);
-      setStateTimeFormat(dataCompanyInfo.time_format)
+      // setDataCurrency(dataCompany?.currency || []);
+      // setDataCompanyInfo(dataCompany?.company_info || []);
+      setCompanyName(dataCompanyInfo?.name || '');
+      setCompanyPhone(dataCompanyInfo?.phone || '');
+      setCompanyEmail(dataCompanyInfo?.email || '');
+      setCompanyAddress(dataCompanyInfo?.address || '');
+      setIcon(dataCompanyInfo?.fav_icon_link || '');
+      setLogo(dataCompanyInfo?.logo_link || '');
+      setStateCountries(dataCompanyInfo?.country || stateCountries);
+      setSelectedCountry(dataCompanyInfo?.country || selectedCountry)
+      setSelectedTimeZone(dataCompanyInfo?.time_zone || selectedTimeZone);
+      setStateTimeFormat(dataCompanyInfo?.time_format || stateTimeFormat)
 
       if (dataCompanyInfo.currency_id) {
         const matchedCurrency = dataCompany.currency.find(
@@ -206,7 +208,7 @@ const BusinessSettingsPage = () => {
           setStateCurrency(matchedCurrency.name);
         }
       }
-      // setTimeFormats(dataCompanyInfo.time_format)
+      setTimeFormats(dataCompanyInfo.time_format)
       setCompanyCopyrightText(dataCompanyInfo.copy_right);
       if (dataCompanyInfo.currency_position === "right") {
         setLeftCurrency(0);
@@ -571,18 +573,25 @@ const BusinessSettingsPage = () => {
     setCustomize(isChecked ? 1 : 0);
   };
 
+  // Logo handler
   const handleLogo = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setLogoFile(file);
-      setLogo(file.name);
+      setLogoFile(file); // Assuming setLogoFile is defined elsewhere
+      setLogo(file.name); // Set the file name as the value for logo
+    } else {
+      setLogo(''); // Reset logo value if no file is selected
     }
   };
+
+  // Icon handler
   const handleIcon = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setIconFile(file);
-      setIcon(file.name);
+      setIconFile(file); // Assuming setIconFile is defined elsewhere
+      setIcon(file.name); // Set the file name as the value for icon
+    } else {
+      setIcon(''); // Reset icon value if no file is selected
     }
   };
 
@@ -735,9 +744,7 @@ const BusinessSettingsPage = () => {
           </div>
           {/* Logo */}
           <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-            <span className="text-xl font-TextFontRegular text-thirdColor">
-              Logo:
-            </span>
+            <span className="text-xl font-TextFontRegular text-thirdColor">Logo:</span>
             <UploadInput
               value={logo}
               uploadFileRef={LogoRef}
@@ -749,9 +756,7 @@ const BusinessSettingsPage = () => {
           </div>
           {/* Icon */}
           <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-            <span className="text-xl font-TextFontRegular text-thirdColor">
-              Fav Icon:
-            </span>
+            <span className="text-xl font-TextFontRegular text-thirdColor">Fav Icon:</span>
             <UploadInput
               value={icon}
               uploadFileRef={IconRef}

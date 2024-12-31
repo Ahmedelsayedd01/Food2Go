@@ -36,18 +36,18 @@ const MainBranchSetupPage = () => {
        useEffect(() => {
               if (dataBranch) {
                      setBranch(dataBranch)
-                     setName(dataBranch.branches.name)
-                     setAddress(dataBranch.branches.address)
-                     setBranchCover(dataBranch.branches.cover_image_link)
-                     setBranchImage(dataBranch.branches.image_link)
-                     setLatitude(dataBranch.branches.latitude)
-                     setCoverage(dataBranch.branches.coverage)
-                     setLongitude(dataBranch.branches.longitude)
-                     setStateCity(dataBranch.branches.city.name)
-                     setSelectedCity(dataBranch.branches.city.name)
-                     setPhone(dataBranch.branches.phone)
-                     setEmail(dataBranch.branches.email)
-                     setFoodPreparationTime(dataBranch.branches.food_preparion_time)
+                     setName(dataBranch?.branches?.name || '')
+                     setAddress(dataBranch?.branches?.address || '')
+                     setBranchCover(dataBranch?.branches?.cover_image_link || '')
+                     setBranchImage(dataBranch?.branches?.image_link || '')
+                     setLatitude(dataBranch?.branches?.latitude || '')
+                     setCoverage(dataBranch?.branches?.coverage || '')
+                     setLongitude(dataBranch?.branches?.longitude || '')
+                     setStateCity(dataBranch?.branches?.city?.name || stateCity)
+                     setSelectedCity(dataBranch?.branches?.city?.name || selectedCity)
+                     setPhone(dataBranch?.branches?.phone || '')
+                     setEmail(dataBranch?.branches?.email || '')
+                     setFoodPreparationTime(dataBranch?.branches?.food_preparion_time || '')
 
                      console.log("data fetch branch : ", dataBranch);
               }
