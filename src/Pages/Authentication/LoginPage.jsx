@@ -12,7 +12,7 @@ const LoginPage = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate();
 
-  const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/api/admin/auth/login' }); // Destructure as an object
+  const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/api/admin/auth/login' }); // Destructure as an object
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 

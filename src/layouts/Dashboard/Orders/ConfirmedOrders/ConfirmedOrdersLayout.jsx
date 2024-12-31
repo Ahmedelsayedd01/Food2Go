@@ -6,7 +6,7 @@ import { OrdersComponent } from '../../../../Store/CreateSlices';
 
 const ConfirmedOrdersLayout = () => {
 
-       const { refetch: refetchBranch, loading: loadingBranch, data: dataBranch } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/order/branches' });
+       const { refetch: refetchBranch, loading: loadingBranch, data: dataBranch } = useGet({ url: 'https://bcknd.food2go.online/admin/order/branches' });
 
        useEffect(() => {
               refetchBranch(); // Refetch data when the component mounts

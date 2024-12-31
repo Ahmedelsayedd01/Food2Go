@@ -5,7 +5,7 @@ import { useGet } from '../../../Hooks/useGet';
 
 
 const DeliveryManLayout = () => {
-       const { refetch: refetchDeliveries, loading: loadingDeliveries, data: dataDeliveries } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/delivery' });
+       const { refetch: refetchDeliveries, loading: loadingDeliveries, data: dataDeliveries } = useGet({ url: 'https://bcknd.food2go.online/admin/delivery' });
 
        const [refetch, setRefetch] = useState(false)
 

@@ -10,11 +10,11 @@ import { useAuth } from '../../../../Context/Auth';
 
 const EditCategoryPage = () => {
        const { categoryId } = useParams();
-       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/translation' });
-       const { refetch: refetchCategories, loading: loadingCategories, data: dataCategories } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/category' });
+       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://bcknd.food2go.online/admin/translation' });
+       const { refetch: refetchCategories, loading: loadingCategories, data: dataCategories } = useGet({ url: 'https://bcknd.food2go.online/admin/category' });
 
-       const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: `https://lamadabcknd.food2go.online/admin/category/item/${categoryId}` });
-       const { postData, loadingPost, response } = usePost({ url: `https://lamadabcknd.food2go.online/admin/category/update/${categoryId}` });
+       const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: `https://bcknd.food2go.online/admin/category/item/${categoryId}` });
+       const { postData, loadingPost, response } = usePost({ url: `https://bcknd.food2go.online/admin/category/update/${categoryId}` });
 
        const dropDownCategoriesParent = useRef();
        const ImageRef = useRef();

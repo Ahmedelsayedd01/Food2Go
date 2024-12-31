@@ -9,12 +9,12 @@ const EditAddonsPage = () => {
        const { addonId } = useParams();
        const navigate = useNavigate();
 
-       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/translation' });
-       const { refetch: refetchAddons, loading: loadingAddons, data: dataAddons } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/addons' });
-       const { refetch: refetchAddonsEdit, loading: loadingAddonsEdit, data: dataAddonsEdit } = useGet({ url: `https://lamadabcknd.food2go.online/admin/addons/item/${addonId}` });
+       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://bcknd.food2go.online/admin/translation' });
+       const { refetch: refetchAddons, loading: loadingAddons, data: dataAddons } = useGet({ url: 'https://bcknd.food2go.online/admin/addons' });
+       const { refetch: refetchAddonsEdit, loading: loadingAddonsEdit, data: dataAddonsEdit } = useGet({ url: `https://bcknd.food2go.online/admin/addons/item/${addonId}` });
 
        const { postData, loadingPost, response } = usePost({
-              url: `https://lamadabcknd.food2go.online/admin/addons/update/${addonId}`
+              url: `https://bcknd.food2go.online/admin/addons/update/${addonId}`
        });
 
        const dropDownTax = useRef();

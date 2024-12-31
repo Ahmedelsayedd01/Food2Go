@@ -9,7 +9,7 @@ import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import Warning from '../../../../../Assets/Icons/AnotherIcons/WarningIcon';
 
 const ZonePage = ({ refetch }) => {
-       const { refetch: refetchZones, loading: loadingZones, data: dataZones } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/settings/zone' });
+       const { refetch: refetchZones, loading: loadingZones, data: dataZones } = useGet({ url: 'https://bcknd.food2go.online/admin/settings/zone' });
        const { changeState, loadingChange, responseChange } = useChangeState();
        const { deleteData, loadingDelete, responseDelete } = useDelete();
        const [zones, setZones] = useState([]);
@@ -41,7 +41,7 @@ const ZonePage = ({ refetch }) => {
        // Change paymentMethod status 
        const handleChangeStaus = async (id, name, status) => {
               const response = await changeState(
-                     `https://lamadabcknd.food2go.online/admin/settings/zone/status/${id}`,
+                     `https://bcknd.food2go.online/admin/settings/zone/status/${id}`,
                      `${name} Changed Status.`,
                      { status } // Pass status as an object if changeState expects an object
               );
@@ -65,7 +65,7 @@ const ZonePage = ({ refetch }) => {
 
        // Delete payment Method
        const handleDelete = async (id, name) => {
-              const success = await deleteData(`https://lamadabcknd.food2go.online/admin/settings/zone/delete/${id}`, `${name} Deleted Success.`);
+              const success = await deleteData(`https://bcknd.food2go.online/admin/settings/zone/delete/${id}`, `${name} Deleted Success.`);
 
               if (success) {
                      setZones(

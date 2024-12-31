@@ -4,7 +4,7 @@ import { TitlePage, TitleSection } from '../../../Components/Components';
 import { AddDealSection, DealsPage } from '../../../Pages/Pages';
 
 const DealsLayout = () => {
-       const { refetch: refetchDeals, loading: loadingDeals, data: dataDeals } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/deal' });
+       const { refetch: refetchDeals, loading: loadingDeals, data: dataDeals } = useGet({ url: 'https://bcknd.food2go.online/admin/deal' });
 
        const [refetch, setRefetch] = useState(false)
 

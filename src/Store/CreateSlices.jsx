@@ -263,7 +263,7 @@ const ordersScheduleSlice = createSlice({
 export const OrdersComponent = () => {
        const dispatch = useDispatch();
        const { refetch: refetchOrders, data: dataOrders, loading, error } = useGet({
-              url: "https://lamadabcknd.food2go.online/admin/order",
+              url: "https://bcknd.food2go.online/admin/order",
        });
 
        // Log data to debug
@@ -313,7 +313,7 @@ export const OrdersComponent = () => {
 
 // const dispatch = useDispatch();
 // const { refetch: refetchOrders, data: dataOrders, loading, error } = useGet({
-//        url: "https://lamadabcknd.food2go.online/admin/order",
+//        url: "https://bcknd.food2go.online/admin/order",
 // });
 
 // useEffect(() => {

@@ -57,7 +57,7 @@ const DealsPage = ({ data, setDeals, loading }) => {
        // Change Deal status 
        const handleChangeStaus = async (id, name, status) => {
               const response = await changeState(
-                     `https://lamadabcknd.food2go.online/admin/deal/status/${id}`,
+                     `https://bcknd.food2go.online/admin/deal/status/${id}`,
                      `${name} Changed Status.`,
                      { status } // Pass status as an object if changeState expects an object
               );
@@ -75,7 +75,7 @@ const DealsPage = ({ data, setDeals, loading }) => {
 
        // Delete Deal
        const handleDelete = async (id, name) => {
-              const success = await deleteData(`https://lamadabcknd.food2go.online/admin/deal/delete/${id}`, `${name} Deleted Success.`);
+              const success = await deleteData(`https://bcknd.food2go.online/admin/deal/delete/${id}`, `${name} Deleted Success.`);
 
               if (success) {
                      // Update Deliveries only if changeState succeeded

@@ -8,7 +8,7 @@ import Warning from '../../../../Assets/Icons/AnotherIcons/WarningIcon';
 import { Link } from 'react-router-dom';
 
 const DiscountPage = ({ refetch, setUpdate }) => {
-       const { refetch: refetchDiscounts, loading: loadingDiscounts, data: dataDiscounts } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/settings/discount' });
+       const { refetch: refetchDiscounts, loading: loadingDiscounts, data: dataDiscounts } = useGet({ url: 'https://bcknd.food2go.online/admin/settings/discount' });
        // const { changeState, loadingChange, responseChange } = useChangeState();
        const { deleteData, loadingDelete, responseDelete } = useDelete();
 
@@ -48,7 +48,7 @@ const DiscountPage = ({ refetch, setUpdate }) => {
 
        // const handleChangeActive = async (id, name, status) => {
        //        const response = await changeState(
-       //               `https://lamadabcknd.food2go.online/admin/translation/active/${id}`,
+       //               `https://bcknd.food2go.online/admin/translation/active/${id}`,
        //               `${name} Changed Active.`,
        //               { active: status } // Pass status as an object if changeState expects an object
        //        );
@@ -76,7 +76,7 @@ const DiscountPage = ({ refetch, setUpdate }) => {
 
        // Delete Language
        const handleDelete = async (id, name) => {
-              const success = await deleteData(`https://lamadabcknd.food2go.online/admin/settings/discount/delete/${id}`, `${name} Deleted Success.`);
+              const success = await deleteData(`https://bcknd.food2go.online/admin/settings/discount/delete/${id}`, `${name} Deleted Success.`);
 
               if (success) {
                      // Update Discounts only if changeState succeeded

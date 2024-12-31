@@ -5,7 +5,7 @@ import { useGet } from '../../../../Hooks/useGet';
 import { LoaderLogin } from '../../../../Components/Components';
 
 const OrdersPaymentHistory = () => {
-  const { refetch: refetchOrdersPaymentHistory, loading: loadingOrdersPaymentHistory, data: dataOrdersPaymentHistory } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/payment/history' });
+  const { refetch: refetchOrdersPaymentHistory, loading: loadingOrdersPaymentHistory, data: dataOrdersPaymentHistory } = useGet({ url: 'https://bcknd.food2go.online/admin/payment/history' });
   const [ordersPaymentHistory, setOrdersPaymentHistory] = useState([]);
 
   // Fetch Orders Payment History when the component mounts or when refetch is called

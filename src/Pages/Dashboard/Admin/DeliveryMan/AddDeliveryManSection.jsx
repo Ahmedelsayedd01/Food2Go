@@ -4,7 +4,7 @@ import { usePost } from '../../../../Hooks/usePostJson';
 import { useAuth } from '../../../../Context/Auth';
 
 const AddDeliveryManSection = ({ data, refetch, setRefetch }) => {
-       const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/admin/delivery/add' });
+       const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/delivery/add' });
 
        const auth = useAuth();
        const BranchesRef = useRef();

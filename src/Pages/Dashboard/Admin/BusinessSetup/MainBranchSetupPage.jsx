@@ -6,16 +6,16 @@ import { useGet } from '../../../../Hooks/useGet';
 import { useAuth } from '../../../../Context/Auth';
 
 const MainBranchSetupPage = () => {
-       const { refetch: refetchBranch, loading: loadingBranch, data: dataBranch } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/settings/business_setup/branch' });
+       const { refetch: refetchBranch, loading: loadingBranch, data: dataBranch } = useGet({ url: 'https://bcknd.food2go.online/admin/settings/business_setup/branch' });
        const [branch, setBranch] = useState([])
-       const [previousBranchData, setPreviousBranchData] = useState({}); 
+       const [previousBranchData, setPreviousBranchData] = useState({});
        const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/settings/business_setup/branch/add' });
 
        const {
               refetch: refetchCity,
               loading: loadingCity,
               data: dataCity,
-       } = useGet({ url: "https://lamadabcknd.food2go.online/admin/settings/city" });
+       } = useGet({ url: "https://bcknd.food2go.online/admin/settings/city" });
 
        useEffect(() => {
               refetchBranch();
@@ -27,7 +27,7 @@ const MainBranchSetupPage = () => {
               if (dataCity && dataCity.cities) {
                      // const cityNames = dataCity.cities.map((city) => ({ name: city.name }));
                      setCities(dataCity?.cities || []);
-                    
+
               }
               console.log("data city ", dataCity?.cities?.[0]?.name);
 
@@ -88,20 +88,20 @@ const MainBranchSetupPage = () => {
 
        const handleChangeCity = (e) => {
               const selected = e.value;
-      
+
               // Check if the selected city matches the current branch's city name
               if (selected.name === dataBranch.branches.city.name) {
-                  setSelectedCity(selected.name); // Update the selected city name
-                  setCityID(selected.id); // Set the city ID from the selected city
+                     setSelectedCity(selected.name); // Update the selected city name
+                     setCityID(selected.id); // Set the city ID from the selected city
               } else {
-                  // Handle other logic if needed when the city doesn't match
-                  setSelectedCity(selected.name);
-                  setCityID(selected.id);
+                     // Handle other logic if needed when the city doesn't match
+                     setSelectedCity(selected.name);
+                     setCityID(selected.id);
               }
-      
+
               console.log("Selected City:", selected.name);
               console.log("City ID:", selected.id);
-          };
+       };
        //  post formdata in postdata
        const handleBranchAdd = async (e) => {
               e.preventDefault();
@@ -168,7 +168,7 @@ const MainBranchSetupPage = () => {
               formData.append('city_id', city_id);
 
               postData(formData, 'Branch Added Success done');
-              console.log("all data submitted" , formData)
+              console.log("all data submitted", formData)
 
               // try {
               //     const response = await 

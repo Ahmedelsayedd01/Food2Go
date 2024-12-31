@@ -7,11 +7,11 @@ import { Dialog } from '@headlessui/react';
 const DealOrderPage = () => {
        const auth = useAuth();
        const { postData: postDealOrder, loadingPost: loadingDealOrder, response: responseDealOrder } = usePost({
-              url: 'https://lamadabcknd.food2go.online/admin/dealOrder',
+              url: 'https://bcknd.food2go.online/admin/dealOrder',
        });
 
        const { postData: postDealOrderAdd, loadingPost: loadingDealOrderAdd, response: responseDealOrderAdd } = usePost({
-              url: 'https://lamadabcknd.food2go.online/admin/dealOrder/add',
+              url: 'https://bcknd.food2go.online/admin/dealOrder/add',
        });
 
 

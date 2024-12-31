@@ -6,8 +6,8 @@ import { usePost } from '../../../../Hooks/usePostJson';
 
 
 const AddOfferSection = ({ refetch, setRefetch }) => {
-       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/translation' });
-       const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/admin/offer/add' });
+       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://bcknd.food2go.online/admin/translation' });
+       const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/offer/add' });
 
        const ImageRef = useRef();
        const auth = useAuth();
