@@ -44,7 +44,7 @@ const Navbar = () => {
        }, []);
 
        const handleLogout = () => {
-              // auth.logout()
+              auth.logout()
               dispatch(removeUser())
               dispatch(removeCategory())
               navigate("/", { replace: true });
