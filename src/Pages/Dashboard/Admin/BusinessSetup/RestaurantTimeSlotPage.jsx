@@ -6,7 +6,7 @@ import { Dropdown } from 'primereact/dropdown';
 
 const RestaurantTimeSlotPage = ({ refetch }) => {
     const [allClosestTime, setAllClosestTime] = useState([{ closingTimeAm: '', closingTimePm: '' }]);
-    const { refetch: refetchTimeSlot, loading: loadingTime,  data: dataSlot} = useGet({ url: 'https://lamadabckend.food2go.online/admin/settings/business_setup/time_slot' });
+    const { refetch: refetchTimeSlot, loading: loadingTime,  data: dataSlot} = useGet({ url: 'https://bcknd.food2go.online/admin/settings/business_setup/time_slot' });
     const { postData ,loadingPost, response } = usePost({ url: 'https://lamadabckend.food2go.online/admin/settings/business_setup/time_slot/add' });
 
     const [timeSlot, setTimeSlot] = useState({ daily: [], custom: [] });
@@ -14,7 +14,7 @@ const RestaurantTimeSlotPage = ({ refetch }) => {
     const [optionName, setOptionName] = useState('');
     const [selectDay,setSelectDay] = useState('')
     const [stateDay, setStateDay] = useState('Select Day');
-
+    
     useEffect(() => {
         refetchTimeSlot();
     }, [refetchTimeSlot]);
@@ -40,6 +40,7 @@ const RestaurantTimeSlotPage = ({ refetch }) => {
             );
            
         }
+
         console.log("data fetch slot" ,dataSlot)
         
     }, [dataSlot]);
