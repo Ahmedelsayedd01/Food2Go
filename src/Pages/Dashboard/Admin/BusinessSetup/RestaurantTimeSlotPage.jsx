@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { AddButton, DateInput, LoaderLogin, StaticButton, SubmitButton, TimeInput, TitleSection } from '../../../../Components/Components';
 import { useGet } from '../../../../Hooks/useGet';
 import { usePost } from '../../../../Hooks/usePostJson';
+import { Dropdown } from 'primereact/dropdown';
 
 const RestaurantTimeSlotPage = ({ refetch }) => {
     const [allClosestTime, setAllClosestTime] = useState([{ closingTimeAm: '', closingTimePm: '' }]);
@@ -11,16 +12,19 @@ const RestaurantTimeSlotPage = ({ refetch }) => {
     const [timeSlot, setTimeSlot] = useState({ daily: [], custom: [] });
     const [day, setDay] = useState('');
     const [optionName, setOptionName] = useState('');
+    const [selectDay,setSelectDay] = useState('')
+    const [stateDay, setStateDay] = useState('Select Day');
 
     useEffect(() => {
         refetchTimeSlot();
     }, [refetchTimeSlot]);
 
     useEffect(() => {
+        
         if (dataSlot) {
             const { time_slot } = dataSlot;
             const setting = JSON.parse(time_slot.setting);
-            
+           
             setTimeSlot({
                 daily: setting.daily || [],
                 custom: setting.custom || [],
@@ -34,7 +38,10 @@ const RestaurantTimeSlotPage = ({ refetch }) => {
                     closingTimePm: item.to || '',
                 }))
             );
+           
         }
+        console.log("data fetch slot" ,dataSlot)
+        
     }, [dataSlot]);
 
     const preparePostData = () => {
@@ -138,12 +145,14 @@ const RestaurantTimeSlotPage = ({ refetch }) => {
             {optionName === 'customize' && (
                 <div className="sm:w-full lg:w-[30%] flex flex-col items-start gap-y-1 mt-3">
                     <span className="text-xl text-thirdColor">Day:</span>
-                    <DateInput
-                        value={day}
-                        onChange={(e) => setDay(e.target.value)}
-                        minDate={true}
-                        maxDate={false}
-                    />
+                    {/* <Dropdown
+                                                                   value={selectDay}
+                                                                   onChange={(e) => setSelectDay(e.value)}
+                                                                   options={cities}
+                                                                   optionLabel="name"
+                                                                   placeholder={stateCity}
+                                                                   filter
+                                                                   className="w-full md:w-14rem" /> */}
                 </div>
             )}
 
