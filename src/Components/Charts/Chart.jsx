@@ -44,56 +44,56 @@ const Chart = () => {
   }, [dataCharts, dataHome, order_statistics]);
   return (
     <>
-      {loadingChart ? (
+      {/* {loadingChart ? (
         <div className="w-full h-56 flex justify-center items-center mt-8">
           <LoaderLogin />
         </div>
-      ) : (
-        <div className="space-y-8 text-black w-full px-6 py-4 lg:px-10 lg:py-12">
-          {/* First Row */}
-          <div className="flex flex-col lg:flex-row w-full gap-6">
-            {/* Chart Container for LineChart */}
-            <div className="w-full lg:w-[70%] p-6 flex flex-1">
-              <div
-                id="chart1"
-                className="bg-white rounded-lg shadow-xl w-full h-full"
-              >
-                <LineChart title={"Order Statistics"} data={order_statistics} />
-              </div>
-            </div>
-
-            {/* Container for DoughnutChart */}
-            <div className="w-full lg:w-[30%] p-6">
-              <div className="bg-white p-3 rounded-lg shadow-xl h-full">
-                <DoughnutChart ordersData={ordersData} />
-              </div>
+      ) : ( */}
+      <div className="space-y-8 text-black w-full px-6 py-4 lg:px-10 lg:py-12">
+        {/* First Row */}
+        <div className="flex flex-col lg:flex-row w-full gap-6">
+          {/* Chart Container for LineChart */}
+          <div className="w-full lg:w-[70%] p-6 flex flex-1">
+            <div
+              id="chart1"
+              className="bg-white rounded-lg shadow-xl w-full h-full"
+            >
+              <LineChart title={"Order Statistics"} data={order_statistics} />
             </div>
           </div>
 
-          {/* Second Row */}
-          <div className="flex flex-col lg:flex-row w-full gap-6">
-            {/* Chart Container for Earning Statistics */}
-            <div className="w-full lg:w-[70%] p-6 flex flex-1">
-              <div
-                id="chart2"
-                className="bg-white p-6 rounded-lg shadow-xl w-full h-full"
-              >
-                <LineChart
-                  title={"Earning Statistics"}
-                  data={earning_statistics}
-                />
-              </div>
-            </div>
-
-            {/* Flex Container for Recent Orders */}
-            <div className="w-full lg:w-[30%] p-5">
-              <div className="bg-white p-1 rounded-lg shadow-xl h-full">
-                <RecentOrders recent_orders={recent_orders} />
-              </div>
+          {/* Container for DoughnutChart */}
+          <div className="w-full lg:w-[30%] p-6">
+            <div className="bg-white p-3 rounded-lg shadow-xl h-full">
+              <DoughnutChart ordersData={ordersData} />
             </div>
           </div>
         </div>
-      )}
+
+        {/* Second Row */}
+        <div className="flex flex-col lg:flex-row w-full gap-6">
+          {/* Chart Container for Earning Statistics */}
+          <div className="w-full lg:w-[70%] p-6 flex flex-1">
+            <div
+              id="chart2"
+              className="bg-white p-6 rounded-lg shadow-xl w-full h-full"
+            >
+              <LineChart
+                title={"Earning Statistics"}
+                data={earning_statistics}
+              />
+            </div>
+          </div>
+
+          {/* Flex Container for Recent Orders */}
+          <div className="w-full lg:w-[30%] p-5">
+            <div className="bg-white p-1 rounded-lg shadow-xl h-full">
+              <RecentOrders recent_orders={recent_orders} />
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* )} */}
     </>
   );
 };
