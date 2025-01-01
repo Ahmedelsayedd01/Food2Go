@@ -10,8 +10,8 @@ import { useChangeState } from '../../../../../Hooks/useChangeState';
 const DetailsOrderPage = () => {
        const StatusRef = useRef()
        const { orderId } = useParams();
-       const { refetch: refetchDetailsOrder, loading: loadingDetailsOrder, data: dataDetailsOrder } = useGet({ url: `https://lamadabcknd.food2go.online/admin/order/order/${orderId}` });
-       const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/admin/order/delivery' });
+       const { refetch: refetchDetailsOrder, loading: loadingDetailsOrder, data: dataDetailsOrder } = useGet({ url: `https://bcknd.food2go.online/admin/order/order/${orderId}` });
+       const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/order/delivery' });
        const { changeState, loadingChange, responseChange } = useChangeState();
 
        const [detailsData, setDetailsData] = useState([])
@@ -161,7 +161,7 @@ const DetailsOrderPage = () => {
        const handleChangeStaus = async (orderId, orderNumber, orderStatus) => {
               try {
                      const responseStatus = await changeState(
-                            `https://lamadabcknd.food2go.online/admin/order/status/${orderId}`,
+                            `https://bcknd.food2go.online/admin/order/status/${orderId}`,
                             `Changed Status Successes.`,
                             {
                                    order_status: orderStatus,

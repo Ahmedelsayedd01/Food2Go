@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { DropDown, NumberInput, StaticButton, StaticLoader, SubmitButton, Switch, TextInput, UploadInput } from '../../../../Components/Components';
+import { DropDown, LoaderLogin, NumberInput, StaticButton, StaticLoader, SubmitButton, Switch, TextInput, UploadInput } from '../../../../Components/Components';
 import { useGet } from '../../../../Hooks/useGet';
 import { usePost } from '../../../../Hooks/usePostJson';
 import { useAuth } from '../../../../Context/Auth';
@@ -9,12 +9,12 @@ const EditAddonsPage = () => {
        const { addonId } = useParams();
        const navigate = useNavigate();
 
-       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/translation' });
-       const { refetch: refetchAddons, loading: loadingAddons, data: dataAddons } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/addons' });
-       const { refetch: refetchAddonsEdit, loading: loadingAddonsEdit, data: dataAddonsEdit } = useGet({ url: `https://lamadabcknd.food2go.online/admin/addons/item/${addonId}` });
+       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://bcknd.food2go.online/admin/translation' });
+       const { refetch: refetchAddons, loading: loadingAddons, data: dataAddons } = useGet({ url: 'https://bcknd.food2go.online/admin/addons' });
+       const { refetch: refetchAddonsEdit, loading: loadingAddonsEdit, data: dataAddonsEdit } = useGet({ url: `https://bcknd.food2go.online/admin/addons/item/${addonId}` });
 
        const { postData, loadingPost, response } = usePost({
-              url: `https://lamadabcknd.food2go.online/admin/addons/update/${addonId}`
+              url: `https://bcknd.food2go.online/admin/addons/update/${addonId}`
        });
 
        const dropDownTax = useRef();
@@ -67,11 +67,11 @@ const EditAddonsPage = () => {
                      console.log('addonsName2', addonsName)
 
 
-                     setAddonPrice(dataAddonsEdit.addon?.price || addonPrice)
-                     setStateAddonTaxes(dataAddonsEdit.addon?.tax.name || stateAddonTaxes)
-                     setAddonTaxesId(dataAddonsEdit.addon?.tax.id || addonTaxesId)
-                     setAddonTaxesName(dataAddonsEdit.addon?.tax.name || addonTaxesName)
-                     setAddonQuantity(dataAddonsEdit.addon?.quantity_add || addonQuantity)
+                     setAddonPrice(dataAddonsEdit?.addon?.price || addonPrice)
+                     setStateAddonTaxes(dataAddonsEdit?.addon?.tax?.name || stateAddonTaxes)
+                     setAddonTaxesId(dataAddonsEdit?.addon?.tax?.id || addonTaxesId)
+                     setAddonTaxesName(dataAddonsEdit?.addon?.tax?.name || addonTaxesName)
+                     setAddonQuantity(dataAddonsEdit?.addon?.quantity_add || addonQuantity)
               }
               console.log('dataAddonsEdit', dataAddonsEdit)
        }, [dataAddonsEdit]);
@@ -152,10 +152,10 @@ const EditAddonsPage = () => {
               //        return;
               // }
 
-              if (!addonTaxesId) {
-                     auth.toastError('please Select Addon Tax')
-                     return;
-              }
+              // if (!addonTaxesId) {
+              //        auth.toastError('please Select Addon Tax')
+              //        return;
+              // }
               if (!addonPrice) {
                      auth.toastError('please Enter Addon Price')
                      return;
@@ -179,8 +179,8 @@ const EditAddonsPage = () => {
               <>
                      {loadingTranslation || loadingAddons || loadingAddonsEdit || loadingPost ? (
                             <>
-                                   <div className="w-full h-56 flex justify-center items-center">
-                                          <StaticLoader />
+                                   <div className="w-full flex justify-center items-center">
+                                          <LoaderLogin />
                                    </div>
                             </>
                      ) : (

@@ -8,9 +8,9 @@ import { useAuth } from '../../../../Context/Auth';
 
 const EditOfferPage = () => {
        const { offerId } = useParams();
-       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/translation' });
-       const { refetch: refetchOffer, loading: loadingOffer, data: dataOffer } = useGet({ url: `https://lamadabcknd.food2go.online/admin/offer/item/${offerId}` });
-       const { postData, loadingPost, response } = usePost({ url: `https://lamadabcknd.food2go.online/admin/offer/update/${offerId}` });
+       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://bcknd.food2go.online/admin/translation' });
+       const { refetch: refetchOffer, loading: loadingOffer, data: dataOffer } = useGet({ url: `https://bcknd.food2go.online/admin/offer/item/${offerId}` });
+       const { postData, loadingPost, response } = usePost({ url: `https://bcknd.food2go.online/admin/offer/update/${offerId}` });
 
        const ImageRef = useRef();
        const auth = useAuth();

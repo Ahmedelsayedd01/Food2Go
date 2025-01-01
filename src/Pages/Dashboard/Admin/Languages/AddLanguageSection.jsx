@@ -4,7 +4,7 @@ import { StaticButton, StaticLoader, SubmitButton, Switch, TextInput } from '../
 import { useAuth } from '../../../../Context/Auth';
 
 const AddLanguageSection = ({ update, setUpdate }) => {
-       const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/admin/translation/add' });
+       const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/translation/add' });
 
        const auth = useAuth();
 

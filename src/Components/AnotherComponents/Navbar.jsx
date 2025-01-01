@@ -44,7 +44,7 @@ const Navbar = () => {
        }, []);
 
        const handleLogout = () => {
-              // auth.logout()
+              auth.logout()
               dispatch(removeUser())
               dispatch(removeCategory())
               navigate("/", { replace: true });
@@ -69,10 +69,10 @@ const Navbar = () => {
                                    </div>
                                    {/* Name Admin */}
                                    <div className="sm:w-10/12">
-                                          <span className='w-full text-2xl text-left text-mainColor font-bold'>Hello, {auth.user?.name || "Ahmed"}</span>
+                                          <span className='w-full text-2xl text-left text-mainColor font-bold'>Hello, {auth.user?.name || ""}</span>
                                    </div>
                             </div>
-                            <div className='sm:hidden lg:flex w-5/12'>
+                            {/* <div className='sm:hidden lg:flex w-5/12'>
                                    <SearchBar bgColor="bg-mainBgColor" pr='4' />
                             </div>
                             <div className='sm:hidden xl:flex w-2/12  items-center justify-center gap-x-10'>
@@ -98,7 +98,7 @@ const Navbar = () => {
                                                  <IoMdNotificationsOutline className='text-mainColor text-3xl' />
                                           </button>
                                    </div>
-                            </div>
+                            </div> */}
                             <div className="">
                                    <StaticButton type='button' text={'Logout'} handleClick={handleLogout} />
                             </div>

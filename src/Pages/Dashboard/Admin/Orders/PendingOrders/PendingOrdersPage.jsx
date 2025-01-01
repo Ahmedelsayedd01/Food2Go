@@ -21,6 +21,10 @@ const PendingOrdersPage = () => {
     (currentPage - 1) * filteredOrdersPerPage,
     currentPage * filteredOrdersPerPage
   );
+  // handle page change
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
 
   useEffect(() => {
     if (Array.isArray(ordersPending.data)) {

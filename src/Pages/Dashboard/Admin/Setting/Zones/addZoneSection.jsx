@@ -7,9 +7,9 @@ import { useGet } from '../../../../../Hooks/useGet';
 
 
 const AddZoneSection = ({ update, setUpdate }) => {
-  const { refetch: refetchCities, loading: loadingCities, data: dataCities } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/settings/city' });
-  const { refetch: refetchBranches, loading: loadingBranches, data: dataBranches } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/branch' });
-  const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/admin/settings/zone/add' });
+  const { refetch: refetchCities, loading: loadingCities, data: dataCities } = useGet({ url: 'https://bcknd.food2go.online/admin/settings/city' });
+  const { refetch: refetchBranches, loading: loadingBranches, data: dataBranches } = useGet({ url: 'https://bcknd.food2go.online/admin/branch' });
+  const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/settings/zone/add' });
 
   const dropDownCities = useRef();
   const dropDownBranches = useRef();

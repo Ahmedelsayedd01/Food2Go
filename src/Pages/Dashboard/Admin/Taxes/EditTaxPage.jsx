@@ -8,8 +8,8 @@ import { DropDown, LoaderLogin, NumberInput, StaticButton, SubmitButton, TextInp
 
 const EditTaxPage = () => {
        const { taxId } = useParams()
-       const { refetch: refetchTax, loading: loadingTax, data: dataTax } = useGet({ url: `https://lamadabcknd.food2go.online/admin/settings/tax/item/${taxId}` });
-       const { postData, loadingPost, response } = usePost({ url: `https://lamadabcknd.food2go.online/admin/settings/tax/update/${taxId}` });
+       const { refetch: refetchTax, loading: loadingTax, data: dataTax } = useGet({ url: `https://bcknd.food2go.online/admin/settings/tax/item/${taxId}` });
+       const { postData, loadingPost, response } = usePost({ url: `https://bcknd.food2go.online/admin/settings/tax/update/${taxId}` });
 
        const auth = useAuth();
        const navigate = useNavigate();

@@ -8,8 +8,8 @@ import { LoaderLogin, StaticButton, SubmitButton, Switch, TextInput, UploadInput
 
 const EditPaymentMethodPage = () => {
   const { paymentMethodId } = useParams();
-  const { refetch: refetchPaymentMethod, loading: loadingPaymentMethod, data: dataPaymentMethod } = useGet({ url: `https://lamadabcknd.food2go.online/admin/settings/payment_methods/item/${paymentMethodId}` });
-  const { postData, loadingPost, response } = usePost({ url: `https://lamadabcknd.food2go.online/admin/settings/payment_methods/update/${paymentMethodId}` });
+  const { refetch: refetchPaymentMethod, loading: loadingPaymentMethod, data: dataPaymentMethod } = useGet({ url: `https://bcknd.food2go.online/admin/settings/payment_methods/item/${paymentMethodId}` });
+  const { postData, loadingPost, response } = usePost({ url: `https://bcknd.food2go.online/admin/settings/payment_methods/update/${paymentMethodId}` });
 
   const auth = useAuth();
   const navigate = useNavigate();

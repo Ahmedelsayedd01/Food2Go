@@ -16,9 +16,9 @@ const App = () => {
   const hideSide = auth.hideSidebar;
 
   const { refetch: refetchSong, loading: loadingSong, data: dataSong } = useGet({
-    url: 'https://lamadabcknd.food2go.online/admin/settings/notification_sound',
+    url: 'https://bcknd.food2go.online/admin/settings/notification_sound',
   });
-  const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/admin/order/notification' });
+  const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/order/notification' });
   const ordersAll = useSelector((state) => state.ordersAll.data);
   const newOrders = useSelector((state) => state.newOrders);
   const soundNotification = useSelector((state) => state.soundNotification);

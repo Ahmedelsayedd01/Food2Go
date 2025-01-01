@@ -9,14 +9,13 @@ import { useAuth } from '../../../../Context/Auth';
 const AddProductPage = () => {
   const auth = useAuth();
   /* Get Data */
-  const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/translation' });
-  const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/category' });
-  const { refetch: refetchProduct, loading: loadingProduct, data: dataProduct } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/product' });
-  const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/admin/product/add' });
+  const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://bcknd.food2go.online/admin/translation' });
+  const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: 'https://bcknd.food2go.online/admin/category' });
+  const { refetch: refetchProduct, loading: loadingProduct, data: dataProduct } = useGet({ url: 'https://bcknd.food2go.online/admin/product' });
+  const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/product/add' });
   /* Refs */
   const variationTypeRef = useRef([]);
   const [openVariationIndex, setOpenVariationIndex] = useState(null); // Tracks which variation's dropdown is open
-
 
   const categoryRef = useRef();
   const subCategoryRef = useRef();
@@ -40,8 +39,8 @@ const AddProductPage = () => {
   const [discounts, setDiscounts] = useState([])
   const [taxes, setTaxes] = useState([])
 
-  const [itemTypes, setItemTypes] = useState([{ id: '', name: 'Selected Item Type' }, , { id: '', name: 'online' }, { id: '', name: 'offline' }, { id: '', name: 'all' }])
-  const [stockTypes, setStockTypes] = useState([{ id: '', name: 'Selected Stock Type' }, , { id: '', name: 'unlimited' }, { id: '', name: 'daily' }, { id: '', name: 'fixed' }])
+  const [itemTypes, setItemTypes] = useState([{ id: '', name: 'Selected Item Type' }, , { id: 'online', name: 'online' }, { id: 'offline', name: 'offline' }, { id: 'all', name: 'all' }])
+  const [stockTypes, setStockTypes] = useState([{ id: '', name: 'Selected Stock Type' }, , { id: 'unlimited', name: 'unlimited' }, { id: 'daily', name: 'daily' }, { id: 'fixed', name: 'fixed' }])
 
   // Selected Data 
   // Product Names
@@ -577,6 +576,8 @@ const AddProductPage = () => {
   useEffect(() => { console.log('descriptionNames', descriptionNames) }, [descriptionNames])
   /* Reset Details Product */
   const handleReset = () => {
+    console.log('productNames', productNames)
+    console.log('descriptionNames', descriptionNames)
     setCurrentProductNamesTap(0)
     setCurrentExcludeNamesTap(0)
     setCurrentExtraNamesTap(0)
@@ -632,58 +633,6 @@ const AddProductPage = () => {
     //   console.log('productNames', productNames)
     //   return;
     // }
-
-    // Filter out any invalid or empty entries in product Names
-    const validProductNames = productNames.filter(
-      (product) => product && product.tranlation_id && product.product_name && product.tranlation_name
-    );
-
-    if (validProductNames.length === 0) {
-      auth.toastError('Please enter a product name');
-      console.log('productNames', validProductNames);
-      return;
-    }
-
-    // if (validProductNames.length !== taps.length) {
-    //   auth.toastError('Please enter all product names');
-    //   console.log('productNames', validProductNames);
-    //   return;
-    // }
-
-    // Filter out any invalid or empty entries description Names
-    const validDescriptionNames = descriptionNames.filter(
-      (desc) => desc && desc.tranlation_id && desc.description_name && desc.tranlation_name
-    );
-
-    if (validDescriptionNames.length === 0) {
-      auth.toastError('Please enter a description name');
-      console.log('descriptionNames', validDescriptionNames);
-      return;
-    }
-
-    // if (validDescriptionNames.length !== taps.length) {
-    //   auth.toastError('Please enter all description names');
-    //   console.log('descriptionNames', validDescriptionNames);
-    //   return;
-    // }
-
-
-    if (productExclude.length === 0) {
-      auth.toastError('please Enter Exclude Name')
-      console.log('productExclude', productExclude)
-      return;
-    }
-
-    // for (const ex of productExclude) {
-    //   for (const name of ex.names) {
-    //     if (!name.exclude_name || name.exclude_name.trim() === '') {
-    //       auth.toastError('Please Enter All Exclude names');
-    //       console.log('productExclude', productExclude)
-    //       return;
-    //     }
-    //   }
-    // }
-
 
     if (!selectedCategoryId) {
       auth.toastError('please Select Category Name')
@@ -746,6 +695,60 @@ const AddProductPage = () => {
       console.log('productImage', productImage)
       return;
     }
+
+
+    // if (productExclude.length === 0) {
+    //   auth.toastError('please Enter Exclude Name')
+    //   console.log('productExclude', productExclude)
+    //   return;
+    // }
+
+    // for (const ex of productExclude) {
+    //   for (const name of ex.names) {
+    //     if (!name.exclude_name || name.exclude_name.trim() === '') {
+    //       auth.toastError('Please Enter All Exclude names');
+    //       console.log('productExclude', productExclude)
+    //       return;
+    //     }
+    //   }
+    // }
+
+
+    // Filter out any invalid or empty entries in product Names
+    const validProductNames = productNames.filter(
+      (product) => product && product.tranlation_id && product.product_name && product.tranlation_name
+    );
+
+    if (validProductNames.length === 0) {
+      auth.toastError('Please enter a product name');
+      console.log('productNames', validProductNames);
+      return;
+    }
+
+    // if (validProductNames.length !== taps.length) {
+    //   auth.toastError('Please enter all product names');
+    //   console.log('productNames', validProductNames);
+    //   return;
+    // }
+
+    // Filter out any invalid or empty entries description Names
+    const validDescriptionNames = descriptionNames.filter(
+      (desc) => desc && desc.tranlation_id && desc.description_name && desc.tranlation_name
+    );
+
+    // if (validDescriptionNames.length === 0) {
+    //   auth.toastError('Please enter a description name');
+    //   console.log('descriptionNames', validDescriptionNames);
+    //   return;
+    // }
+
+    // if (validDescriptionNames.length !== taps.length) {
+    //   auth.toastError('Please enter all description names');
+    //   console.log('descriptionNames', validDescriptionNames);
+    //   return;
+    // }
+
+
     const formData = new FormData();
     formData.append('category_id', selectedCategoryId)
     formData.append('sub_category_id', selectedSubCategoryId)
@@ -1023,6 +1026,198 @@ const AddProductPage = () => {
                 ))}
 
 
+              </div>
+
+            </div>
+
+            {/* Product Details */}
+
+            {/* More Details */}
+            <div className="w-full sm:flex-col lg:flex-row flex items-start justify-start  gap-5">
+              {/* Product Category  */}
+              <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
+                <span className="text-xl font-TextFontRegular text-thirdColor">Category Name:</span>
+                <DropDown
+                  ref={categoryRef}
+                  handleOpen={handleOpenCategory}
+                  stateoption={selectedCategoryState}
+                  openMenu={isOPenProductCategory}
+                  handleOpenOption={handleOpenOptionProductCategory}
+                  options={categories}
+                  onSelectOption={handleSelectProductCategory}
+                />
+              </div>
+              {/* Product SubCategory  */}
+              <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
+                <span className="text-xl font-TextFontRegular text-thirdColor">SubCategory Name:</span>
+                <DropDown
+                  ref={subCategoryRef}
+                  handleOpen={handleOpenSubCategory}
+                  stateoption={selectedSubCategoryState}
+                  openMenu={isOPenProductSubCategory}
+                  handleOpenOption={handleOpenOptionProductSubCategory}
+                  options={filterSubCategories}
+                  onSelectOption={handleSelectProductSubCategory}
+                />
+              </div>
+              {/* Product Addons  */}
+              <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
+                <span className="text-xl font-TextFontRegular text-thirdColor">Addons Names:</span>
+                <MultiSelect
+                  value={selectedAddonsId}
+                  onChange={(e) => setSelectedAddonsId(e.value)} // Assigns entire selected array
+                  options={addons}
+                  optionLabel="name"
+                  display="chip"
+                  placeholder={selectedAddonsState}
+                  maxSelectedLabels={3}
+                  className="w-full md:w-20rem bg-white shadow"
+                />
+              </div>
+            </div>
+
+            <div className="w-full sm:flex-col lg:flex-row flex items-start justify-start gap-5">
+              {/* Product Item Type  */}
+              <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
+                <span className="text-xl font-TextFontRegular text-thirdColor">Item Type:</span>
+                <DropDown
+                  ref={itemTypeRef}
+                  handleOpen={handleOpenItemType}
+                  stateoption={selectedItemTypeState}
+                  openMenu={isOPenProductItemType}
+                  handleOpenOption={handleOpenOptionProductItemType}
+                  options={itemTypes}
+                  onSelectOption={handleSelectProductItemType}
+                />
+              </div>
+              {/* Product Stock Type  */}
+              <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
+                <span className="text-xl font-TextFontRegular text-thirdColor">Stock Type:</span>
+                <DropDown
+                  ref={stockTypeRef}
+                  handleOpen={handleOpenStockType}
+                  stateoption={selectedStockTypeState}
+                  openMenu={isOPenProductStockType}
+                  handleOpenOption={handleOpenOptionProductStockType}
+                  options={stockTypes}
+                  onSelectOption={handleSelectProductStockType}
+                />
+              </div>
+
+              {selectedStockTypeName === 'daily' || selectedStockTypeName === 'fixed' ? (
+                <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
+                  <span className="text-xl font-TextFontRegular text-thirdColor">Number:</span>
+                  <NumberInput
+                    value={productStockNumber}
+                    onChange={(e) => setProductStockNumber(e.target.value)}
+                    placeholder={'Number'}
+                  />
+                </div>
+              ) : ('')}
+
+              {/* Product Price */}
+              <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
+                <span className="text-xl font-TextFontRegular text-thirdColor">Price:</span>
+                <NumberInput
+                  value={productPrice}
+                  onChange={(e) => setProductPrice(e.target.value)}
+                  placeholder={'Price'}
+                />
+              </div>
+            </div>
+
+            <div className="w-full sm:flex-col lg:flex-row flex items-start justify-start gap-5">
+              {/* Product Discount  */}
+              <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
+                <span className="text-xl font-TextFontRegular text-thirdColor">Discount Name:</span>
+                <DropDown
+                  ref={discountRef}
+                  handleOpen={handleOpenDiscount}
+                  stateoption={selectedDiscountState}
+                  openMenu={isOPenProductDiscount}
+                  handleOpenOption={handleOpenOptionProductDiscount}
+                  options={discounts}
+                  onSelectOption={handleSelectProductDiscount}
+                />
+              </div>
+              {/* Product Tax  */}
+              <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
+                <span className="text-xl font-TextFontRegular text-thirdColor">Tax Name:</span>
+                <DropDown
+                  ref={taxRef}
+                  handleOpen={handleOpenTax}
+                  stateoption={selectedTaxState}
+                  openMenu={isOPenProductTax}
+                  handleOpenOption={handleOpenOptionProductTax}
+                  options={taxes}
+                  onSelectOption={handleSelectProductTax}
+                />
+              </div>
+              {/* Product Point */}
+              <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
+                <span className="text-xl font-TextFontRegular text-thirdColor">Point:</span>
+                <NumberInput
+                  value={productPoint}
+                  onChange={(e) => setProductPoint(e.target.value)}
+                  placeholder={'Point'}
+                />
+              </div>
+            </div>
+
+            <div className="w-full flex sm:flex-col lg:flex-row items-start justify-start mt-2 gap-5">
+              {/* Product Image */}
+              {/* <div className="sm:w-full lg:w-[33%]  sm:flex-col lg:flex-row flex sm:items-start lg:items-center justify-start gap-x-3"> */}
+              <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
+                <span className="text-xl font-TextFontRegular text-thirdColor">Product Image:</span>
+                <UploadInput
+                  value={productImageName}
+                  uploadFileRef={productImageRef}
+                  placeholder="Product Image"
+                  handleFileChange={handleProductImageChange}
+                  onChange={(e) => setProductImage(e.target.value)}
+                  onClick={() => handleProductImageClick(productImageRef)}
+                />
+              </div>
+
+              {productTimeStatus === 1 && (
+                <>
+
+                  <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
+                    <span className="text-xl font-TextFontRegular text-thirdColor">From:</span>
+                    <TimeInput
+                      value={productStatusFrom ?? ''}
+                      onChange={(e) => setProductStatusFrom(e.target.value)}
+                    />
+                    {/* <input type="time" /> */}
+                  </div>
+
+                  <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
+                    <span className="text-xl font-TextFontRegular text-thirdColor">To:</span>
+                    <TimeInput
+                      value={productStatusTo ?? ''}
+                      onChange={(e) => setProductStatusTo(e.target.value)}
+                    />
+                  </div>
+                </>
+              )}
+            </div>
+
+            <div className="w-full sm:flex-col lg:flex-row flex items-start justify-start gap-4">
+
+              {/* Product Status */}
+              <div className='sm:w-full lg:w-[20%] flex items-center justify-start gap-x-3'>
+                <span className="text-xl font-TextFontRegular text-thirdColor">Status:</span>
+                <Switch handleClick={handleProductStatus} checked={productStatus} />
+              </div>
+              {/* Product Product Recommended */}
+              <div className='sm:w-full lg:w-[40%] flex items-center justify-start gap-x-3'>
+                <span className="text-xl font-TextFontRegular text-thirdColor">Product Recommended:</span>
+                <Switch handleClick={handleProductRecommended} checked={productRecommended} />
+              </div>
+              {/* Product Time Status */}
+              <div className='sm:w-full lg:w-[35%] flex items-center justify-start gap-x-3'>
+                <span className="text-xl font-TextFontRegular text-thirdColor">Product Time Status:</span>
+                <Switch handleClick={handleProductTimeStatus} checked={productTimeStatus} />
               </div>
 
             </div>
@@ -1670,196 +1865,6 @@ const AddProductPage = () => {
                     </div>
                   )
                 ))}
-              </div>
-
-            </div>
-
-            {/* More Details */}
-            <div className="w-full sm:flex-col lg:flex-row flex items-start justify-start  gap-5">
-              {/* Product Category  */}
-              <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
-                <span className="text-xl font-TextFontRegular text-thirdColor">Category Name:</span>
-                <DropDown
-                  ref={categoryRef}
-                  handleOpen={handleOpenCategory}
-                  stateoption={selectedCategoryState}
-                  openMenu={isOPenProductCategory}
-                  handleOpenOption={handleOpenOptionProductCategory}
-                  options={categories}
-                  onSelectOption={handleSelectProductCategory}
-                />
-              </div>
-              {/* Product SubCategory  */}
-              <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
-                <span className="text-xl font-TextFontRegular text-thirdColor">SubCategory Name:</span>
-                <DropDown
-                  ref={subCategoryRef}
-                  handleOpen={handleOpenSubCategory}
-                  stateoption={selectedSubCategoryState}
-                  openMenu={isOPenProductSubCategory}
-                  handleOpenOption={handleOpenOptionProductSubCategory}
-                  options={filterSubCategories}
-                  onSelectOption={handleSelectProductSubCategory}
-                />
-              </div>
-              {/* Product Addons  */}
-              <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
-                <span className="text-xl font-TextFontRegular text-thirdColor">Addons Names:</span>
-                <MultiSelect
-                  value={selectedAddonsId}
-                  onChange={(e) => setSelectedAddonsId(e.value)} // Assigns entire selected array
-                  options={addons}
-                  optionLabel="name"
-                  display="chip"
-                  placeholder={selectedAddonsState}
-                  maxSelectedLabels={3}
-                  className="w-full md:w-20rem bg-white shadow"
-                />
-              </div>
-            </div>
-
-            <div className="w-full sm:flex-col lg:flex-row flex items-start justify-start gap-5">
-              {/* Product Item Type  */}
-              <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
-                <span className="text-xl font-TextFontRegular text-thirdColor">Item Type:</span>
-                <DropDown
-                  ref={itemTypeRef}
-                  handleOpen={handleOpenItemType}
-                  stateoption={selectedItemTypeState}
-                  openMenu={isOPenProductItemType}
-                  handleOpenOption={handleOpenOptionProductItemType}
-                  options={itemTypes}
-                  onSelectOption={handleSelectProductItemType}
-                />
-              </div>
-              {/* Product Stock Type  */}
-              <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
-                <span className="text-xl font-TextFontRegular text-thirdColor">Stock Type:</span>
-                <DropDown
-                  ref={stockTypeRef}
-                  handleOpen={handleOpenStockType}
-                  stateoption={selectedStockTypeState}
-                  openMenu={isOPenProductStockType}
-                  handleOpenOption={handleOpenOptionProductStockType}
-                  options={stockTypes}
-                  onSelectOption={handleSelectProductStockType}
-                />
-              </div>
-
-              {selectedStockTypeName === 'daily' || selectedStockTypeName === 'fixed' ? (
-                <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
-                  <span className="text-xl font-TextFontRegular text-thirdColor">Number:</span>
-                  <NumberInput
-                    value={productStockNumber}
-                    onChange={(e) => setProductStockNumber(e.target.value)}
-                    placeholder={'Number'}
-                  />
-                </div>
-              ) : ('')}
-
-              {/* Product Price */}
-              <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
-                <span className="text-xl font-TextFontRegular text-thirdColor">Price:</span>
-                <NumberInput
-                  value={productPrice}
-                  onChange={(e) => setProductPrice(e.target.value)}
-                  placeholder={'Price'}
-                />
-              </div>
-            </div>
-
-            <div className="w-full sm:flex-col lg:flex-row flex items-start justify-start gap-5">
-              {/* Product Discount  */}
-              <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
-                <span className="text-xl font-TextFontRegular text-thirdColor">Discount Name:</span>
-                <DropDown
-                  ref={discountRef}
-                  handleOpen={handleOpenDiscount}
-                  stateoption={selectedDiscountState}
-                  openMenu={isOPenProductDiscount}
-                  handleOpenOption={handleOpenOptionProductDiscount}
-                  options={discounts}
-                  onSelectOption={handleSelectProductDiscount}
-                />
-              </div>
-              {/* Product Tax  */}
-              <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
-                <span className="text-xl font-TextFontRegular text-thirdColor">Tax Name:</span>
-                <DropDown
-                  ref={taxRef}
-                  handleOpen={handleOpenTax}
-                  stateoption={selectedTaxState}
-                  openMenu={isOPenProductTax}
-                  handleOpenOption={handleOpenOptionProductTax}
-                  options={taxes}
-                  onSelectOption={handleSelectProductTax}
-                />
-              </div>
-              {/* Product Point */}
-              <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
-                <span className="text-xl font-TextFontRegular text-thirdColor">Point:</span>
-                <NumberInput
-                  value={productPoint}
-                  onChange={(e) => setProductPoint(e.target.value)}
-                  placeholder={'Point'}
-                />
-              </div>
-            </div>
-
-            <div className="w-full flex sm:flex-col lg:flex-row items-start justify-start mt-2 gap-5">
-              {/* Product Image */}
-              {/* <div className="sm:w-full lg:w-[33%]  sm:flex-col lg:flex-row flex sm:items-start lg:items-center justify-start gap-x-3"> */}
-              <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
-                <span className="text-xl font-TextFontRegular text-thirdColor">Product Image:</span>
-                <UploadInput
-                  value={productImageName}
-                  uploadFileRef={productImageRef}
-                  placeholder="Product Image"
-                  handleFileChange={handleProductImageChange}
-                  onChange={(e) => setProductImage(e.target.value)}
-                  onClick={() => handleProductImageClick(productImageRef)}
-                />
-              </div>
-
-              {productTimeStatus === 1 && (
-                <>
-
-                  <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
-                    <span className="text-xl font-TextFontRegular text-thirdColor">From:</span>
-                    <TimeInput
-                      value={productStatusFrom ?? ''}
-                      onChange={(e) => setProductStatusFrom(e.target.value)}
-                    />
-                    {/* <input type="time" /> */}
-                  </div>
-
-                  <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
-                    <span className="text-xl font-TextFontRegular text-thirdColor">To:</span>
-                    <TimeInput
-                      value={productStatusTo ?? ''}
-                      onChange={(e) => setProductStatusTo(e.target.value)}
-                    />
-                  </div>
-                </>
-              )}
-            </div>
-
-            <div className="w-full sm:flex-col lg:flex-row flex items-start justify-start gap-4">
-
-              {/* Product Status */}
-              <div className='sm:w-full lg:w-[20%] flex items-center justify-start gap-x-3'>
-                <span className="text-xl font-TextFontRegular text-thirdColor">Status:</span>
-                <Switch handleClick={handleProductStatus} checked={productStatus} />
-              </div>
-              {/* Product Product Recommended */}
-              <div className='sm:w-full lg:w-[40%] flex items-center justify-start gap-x-3'>
-                <span className="text-xl font-TextFontRegular text-thirdColor">Product Recommended:</span>
-                <Switch handleClick={handleProductRecommended} checked={productRecommended} />
-              </div>
-              {/* Product Time Status */}
-              <div className='sm:w-full lg:w-[35%] flex items-center justify-start gap-x-3'>
-                <span className="text-xl font-TextFontRegular text-thirdColor">Product Time Status:</span>
-                <Switch handleClick={handleProductTimeStatus} checked={productTimeStatus} />
               </div>
 
             </div>

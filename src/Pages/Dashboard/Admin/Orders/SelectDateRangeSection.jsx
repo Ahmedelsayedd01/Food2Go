@@ -7,7 +7,7 @@ import { OrdersComponent, setOrdersAll, setOrdersCanceled, setOrdersConfirmed, s
 const SelectDateRangeSection = ({ typPage, branchsData }) => {
        const dispatch = useDispatch()
 
-       const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/admin/order/filter' });
+       const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/order/filter' });
 
        const dropDownBranch = useRef();
        const [isOpenBranch, setIsOpenBranch] = useState(false)

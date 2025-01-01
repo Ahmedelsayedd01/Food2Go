@@ -8,7 +8,7 @@ import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import Warning from '../../../../Assets/Icons/AnotherIcons/WarningIcon';
 
 const AddonsPage = ({ refetch }) => {
-       const { refetch: refetchAddons, loading: loadingAddons, data: dataAddons } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/addons' });
+       const { refetch: refetchAddons, loading: loadingAddons, data: dataAddons } = useGet({ url: 'https://bcknd.food2go.online/admin/addons' });
        const { deleteData, loadingDelete, responseDelete } = useDelete();
        const [addons, setAddons] = useState([]);
 
@@ -45,7 +45,7 @@ const AddonsPage = ({ refetch }) => {
        };
        // Delete addon
        const handleDelete = async (id, name) => {
-              const success = await deleteData(`https://lamadabcknd.food2go.online/admin/addons/delete/${id}`, `${name} Deleted Success.`);
+              const success = await deleteData(`https://bcknd.food2go.online/admin/addons/delete/${id}`, `${name} Deleted Success.`);
 
               if (success) {
                      // Update addons only if changeState succeeded

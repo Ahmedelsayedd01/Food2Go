@@ -5,7 +5,7 @@ import { DropDown, NumberInput, StaticButton, StaticLoader, SubmitButton, TextIn
 
 
 const AddDiscountSection = ({ update, setUpdate }) => {
-       const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/admin/settings/discount/add' });
+       const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/settings/discount/add' });
 
        const dropDownType = useRef();
        const auth = useAuth();

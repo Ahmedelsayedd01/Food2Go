@@ -4,8 +4,8 @@ import { usePost } from '../../../../../Hooks/usePostJson';
 import { LoaderLogin, SubmitButton, TextInput } from '../../../../../Components/Components';
 
 const DeliveryTimePage = () => {
-       const { refetch: refetchDeliveryTime, loading: loadingDeliveryTime, data: dataDeliveryTime } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/settings/delivery_time' });
-       const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/admin/settings/delivery_time_update' });
+       const { refetch: refetchDeliveryTime, loading: loadingDeliveryTime, data: dataDeliveryTime } = useGet({ url: 'https://bcknd.food2go.online/admin/settings/delivery_time' });
+       const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/settings/delivery_time_update' });
 
        const [deliveryTime, setDeliveryTime] = useState('');
 

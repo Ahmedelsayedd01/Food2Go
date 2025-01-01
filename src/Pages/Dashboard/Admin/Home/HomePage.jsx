@@ -100,7 +100,6 @@ const HomePage = () => {
   return (
     <>
       <OrdersComponent />
-      <strong>{userName || "asada"}</strong>
       <div className="w-full flex flex-col mb-0">
         {loading ? (
           <>
@@ -110,7 +109,7 @@ const HomePage = () => {
           </>
         ) : (
           <>
-            <div className="flex flex-col gap-7 items-start justify-center">
+            <div className="flex flex-col gap-7 items-start justify-center pb-16">
               <CartsOrderSection ordersNum={counters} />
               <Chart
               order_statistics={order_statistics}

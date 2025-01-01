@@ -23,6 +23,7 @@ import { useAuth } from "../../../../Context/Auth";
 const BusinessSettingsPage = () => {
   const LogoRef = useRef();
   const IconRef = useRef();
+
   const auth = useAuth();
   const CountriesRef = useRef();
   const TimeZoneRef = useRef();
@@ -46,47 +47,47 @@ const BusinessSettingsPage = () => {
   const [selectedCountry, setSelectedCountry] = useState("");
 
   const [countries, setCountries] = useState(
-           [
-           { name: 'Afghanistan' }, { name: 'Albania' }, { name: 'Algeria' }, { name: 'Andorra' }, { name: 'Angola' },
-           { name: 'Antigua and Barbuda' }, { name: 'Argentina' }, { name: 'Armenia' }, { name: 'Australia' }, { name: 'Austria' },
-           { name: 'Azerbaijan' }, { name: 'Bahamas' }, { name: 'Bahrain' }, { name: 'Bangladesh' }, { name: 'Barbados' },
-           { name: 'Belarus' }, { name: 'Belgium' }, { name: 'Belize' }, { name: 'Benin' }, { name: 'Bhutan' },
-           { name: 'Bolivia' }, { name: 'Bosnia and Herzegovina' }, { name: 'Botswana' }, { name: 'Brazil' }, { name: 'Brunei' },
-           { name: 'Bulgaria' }, { name: 'Burkina Faso' }, { name: 'Burundi' }, { name: 'Cabo Verde' }, { name: 'Cambodia' },
-           { name: 'Cameroon' }, { name: 'Canada' }, { name: 'Central African Republic' }, { name: 'Chad' }, { name: 'Chile' },
-           { name: 'China' }, { name: 'Colombia' }, { name: 'Comoros' }, { name: 'Congo, Democratic Republic of the' }, { name: 'Congo, Republic of the' },
-           { name: 'Costa Rica' }, { name: 'Croatia' }, { name: 'Cuba' }, { name: 'Cyprus' }, { name: 'Czech Republic' },
-           { name: 'Denmark' }, { name: 'Djibouti' }, { name: 'Dominica' }, { name: 'Dominican Republic' }, { name: 'Ecuador' },
-           { name: 'Egypt' }, { name: 'El Salvador' }, { name: 'Equatorial Guinea' }, { name: 'Eritrea' }, { name: 'Estonia' },
-           { name: 'Eswatini' }, { name: 'Ethiopia' }, { name: 'Fiji' }, { name: 'Finland' }, { name: 'France' },
-           { name: 'Gabon' }, { name: 'Gambia' }, { name: 'Georgia' }, { name: 'Germany' }, { name: 'Ghana' },
-           { name: 'Greece' }, { name: 'Grenada' }, { name: 'Guatemala' }, { name: 'Guinea' }, { name: 'Guinea-Bissau' },
-           { name: 'Guyana' }, { name: 'Haiti' }, { name: 'Honduras' }, { name: 'Hungary' }, { name: 'Iceland' },
-           { name: 'India' }, { name: 'Indonesia' }, { name: 'Iran' }, { name: 'Iraq' }, { name: 'Ireland' },
-           { name: 'Israel' }, { name: 'Italy' }, { name: 'Jamaica' }, { name: 'Japan' }, { name: 'Jordan' },
-           { name: 'Kazakhstan' }, { name: 'Kenya' }, { name: 'Kiribati' }, { name: 'Korea, North' }, { name: 'Korea, South' },
-           { name: 'Kosovo' }, { name: 'Kuwait' }, { name: 'Kyrgyzstan' }, { name: 'Laos' }, { name: 'Latvia' },
-           { name: 'Lebanon' }, { name: 'Lesotho' }, { name: 'Liberia' }, { name: 'Libya' }, { name: 'Liechtenstein' },
-           { name: 'Lithuania' }, { name: 'Luxembourg' }, { name: 'Madagascar' }, { name: 'Malawi' }, { name: 'Malaysia' },
-           { name: 'Maldives' }, { name: 'Mali' }, { name: 'Malta' }, { name: 'Marshall Islands' }, { name: 'Mauritania' },
-           { name: 'Mauritius' }, { name: 'Mexico' }, { name: 'Micronesia' }, { name: 'Moldova' }, { name: 'Monaco' },
-           { name: 'Mongolia' }, { name: 'Montenegro' }, { name: 'Morocco' }, { name: 'Mozambique' }, { name: 'Myanmar' },
-           { name: 'Namibia' }, { name: 'Nauru' }, { name: 'Nepal' }, { name: 'Netherlands' }, { name: 'New Zealand' },
-           { name: 'Nicaragua' }, { name: 'Niger' }, { name: 'Nigeria' }, { name: 'North Macedonia' }, { name: 'Norway' },
-           { name: 'Oman' }, { name: 'Pakistan' }, { name: 'Palau' }, { name: 'Palestine' }, { name: 'Panama' },
-           { name: 'Papua New Guinea' }, { name: 'Paraguay' }, { name: 'Peru' }, { name: 'Philippines' }, { name: 'Poland' },
-           { name: 'Portugal' }, { name: 'Qatar' }, { name: 'Romania' }, { name: 'Russia' }, { name: 'Rwanda' },
-           { name: 'Saint Kitts and Nevis' }, { name: 'Saint Lucia' }, { name: 'Saint Vincent and the Grenadines' }, { name: 'Samoa' }, { name: 'San Marino' },
-           { name: 'Sao Tome and Principe' }, { name: 'Saudi Arabia' }, { name: 'Senegal' }, { name: 'Serbia' }, { name: 'Seychelles' },
-           { name: 'Sierra Leone' }, { name: 'Singapore' }, { name: 'Slovakia' }, { name: 'Slovenia' }, { name: 'Solomon Islands' },
-           { name: 'Somalia' }, { name: 'South Africa' }, { name: 'South Sudan' }, { name: 'Spain' }, { name: 'Sri Lanka' },
-           { name: 'Sudan' }, { name: 'Suriname' }, { name: 'Sweden' }, { name: 'Switzerland' }, { name: 'Syria' },
-           { name: 'Taiwan' }, { name: 'Tajikistan' }, { name: 'Tanzania' }, { name: 'Thailand' }, { name: 'Timor-Leste' },
-           { name: 'Togo' }, { name: 'Tonga' }, { name: 'Trinidad and Tobago' }, { name: 'Tunisia' }, { name: 'Turkey' },
-           { name: 'Turkmenistan' }, { name: 'Tuvalu' }, { name: 'Uganda' }, { name: 'Ukraine' }, { name: 'United Arab Emirates' },
-           { name: 'United Kingdom' }, { name: 'United States' }, { name: 'Uruguay' }, { name: 'Uzbekistan' }, { name: 'Vanuatu' },
-           { name: 'Vatican City' }, { name: 'Venezuela' }, { name: 'Vietnam' }, { name: 'Yemen' }, { name: 'Zambia' },
-           { name: 'Zimbabwe' }
+    [
+      { name: 'Afghanistan' }, { name: 'Albania' }, { name: 'Algeria' }, { name: 'Andorra' }, { name: 'Angola' },
+      { name: 'Antigua and Barbuda' }, { name: 'Argentina' }, { name: 'Armenia' }, { name: 'Australia' }, { name: 'Austria' },
+      { name: 'Azerbaijan' }, { name: 'Bahamas' }, { name: 'Bahrain' }, { name: 'Bangladesh' }, { name: 'Barbados' },
+      { name: 'Belarus' }, { name: 'Belgium' }, { name: 'Belize' }, { name: 'Benin' }, { name: 'Bhutan' },
+      { name: 'Bolivia' }, { name: 'Bosnia and Herzegovina' }, { name: 'Botswana' }, { name: 'Brazil' }, { name: 'Brunei' },
+      { name: 'Bulgaria' }, { name: 'Burkina Faso' }, { name: 'Burundi' }, { name: 'Cabo Verde' }, { name: 'Cambodia' },
+      { name: 'Cameroon' }, { name: 'Canada' }, { name: 'Central African Republic' }, { name: 'Chad' }, { name: 'Chile' },
+      { name: 'China' }, { name: 'Colombia' }, { name: 'Comoros' }, { name: 'Congo, Democratic Republic of the' }, { name: 'Congo, Republic of the' },
+      { name: 'Costa Rica' }, { name: 'Croatia' }, { name: 'Cuba' }, { name: 'Cyprus' }, { name: 'Czech Republic' },
+      { name: 'Denmark' }, { name: 'Djibouti' }, { name: 'Dominica' }, { name: 'Dominican Republic' }, { name: 'Ecuador' },
+      { name: 'Egypt' }, { name: 'El Salvador' }, { name: 'Equatorial Guinea' }, { name: 'Eritrea' }, { name: 'Estonia' },
+      { name: 'Eswatini' }, { name: 'Ethiopia' }, { name: 'Fiji' }, { name: 'Finland' }, { name: 'France' },
+      { name: 'Gabon' }, { name: 'Gambia' }, { name: 'Georgia' }, { name: 'Germany' }, { name: 'Ghana' },
+      { name: 'Greece' }, { name: 'Grenada' }, { name: 'Guatemala' }, { name: 'Guinea' }, { name: 'Guinea-Bissau' },
+      { name: 'Guyana' }, { name: 'Haiti' }, { name: 'Honduras' }, { name: 'Hungary' }, { name: 'Iceland' },
+      { name: 'India' }, { name: 'Indonesia' }, { name: 'Iran' }, { name: 'Iraq' }, { name: 'Ireland' },
+      { name: 'Israel' }, { name: 'Italy' }, { name: 'Jamaica' }, { name: 'Japan' }, { name: 'Jordan' },
+      { name: 'Kazakhstan' }, { name: 'Kenya' }, { name: 'Kiribati' }, { name: 'Korea, North' }, { name: 'Korea, South' },
+      { name: 'Kosovo' }, { name: 'Kuwait' }, { name: 'Kyrgyzstan' }, { name: 'Laos' }, { name: 'Latvia' },
+      { name: 'Lebanon' }, { name: 'Lesotho' }, { name: 'Liberia' }, { name: 'Libya' }, { name: 'Liechtenstein' },
+      { name: 'Lithuania' }, { name: 'Luxembourg' }, { name: 'Madagascar' }, { name: 'Malawi' }, { name: 'Malaysia' },
+      { name: 'Maldives' }, { name: 'Mali' }, { name: 'Malta' }, { name: 'Marshall Islands' }, { name: 'Mauritania' },
+      { name: 'Mauritius' }, { name: 'Mexico' }, { name: 'Micronesia' }, { name: 'Moldova' }, { name: 'Monaco' },
+      { name: 'Mongolia' }, { name: 'Montenegro' }, { name: 'Morocco' }, { name: 'Mozambique' }, { name: 'Myanmar' },
+      { name: 'Namibia' }, { name: 'Nauru' }, { name: 'Nepal' }, { name: 'Netherlands' }, { name: 'New Zealand' },
+      { name: 'Nicaragua' }, { name: 'Niger' }, { name: 'Nigeria' }, { name: 'North Macedonia' }, { name: 'Norway' },
+      { name: 'Oman' }, { name: 'Pakistan' }, { name: 'Palau' }, { name: 'Palestine' }, { name: 'Panama' },
+      { name: 'Papua New Guinea' }, { name: 'Paraguay' }, { name: 'Peru' }, { name: 'Philippines' }, { name: 'Poland' },
+      { name: 'Portugal' }, { name: 'Qatar' }, { name: 'Romania' }, { name: 'Russia' }, { name: 'Rwanda' },
+      { name: 'Saint Kitts and Nevis' }, { name: 'Saint Lucia' }, { name: 'Saint Vincent and the Grenadines' }, { name: 'Samoa' }, { name: 'San Marino' },
+      { name: 'Sao Tome and Principe' }, { name: 'Saudi Arabia' }, { name: 'Senegal' }, { name: 'Serbia' }, { name: 'Seychelles' },
+      { name: 'Sierra Leone' }, { name: 'Singapore' }, { name: 'Slovakia' }, { name: 'Slovenia' }, { name: 'Solomon Islands' },
+      { name: 'Somalia' }, { name: 'South Africa' }, { name: 'South Sudan' }, { name: 'Spain' }, { name: 'Sri Lanka' },
+      { name: 'Sudan' }, { name: 'Suriname' }, { name: 'Sweden' }, { name: 'Switzerland' }, { name: 'Syria' },
+      { name: 'Taiwan' }, { name: 'Tajikistan' }, { name: 'Tanzania' }, { name: 'Thailand' }, { name: 'Timor-Leste' },
+      { name: 'Togo' }, { name: 'Tonga' }, { name: 'Trinidad and Tobago' }, { name: 'Tunisia' }, { name: 'Turkey' },
+      { name: 'Turkmenistan' }, { name: 'Tuvalu' }, { name: 'Uganda' }, { name: 'Ukraine' }, { name: 'United Arab Emirates' },
+      { name: 'United Kingdom' }, { name: 'United States' }, { name: 'Uruguay' }, { name: 'Uzbekistan' }, { name: 'Vanuatu' },
+      { name: 'Vatican City' }, { name: 'Venezuela' }, { name: 'Vietnam' }, { name: 'Yemen' }, { name: 'Zambia' },
+      { name: 'Zimbabwe' }
     ]
   );
 
@@ -112,7 +113,8 @@ const BusinessSettingsPage = () => {
   const [rightCurrency, setRightCurrency] = useState(0);
 
   const [companyCopyrightText, setCompanyCopyrightText] = useState("");
-  
+  const [timeFormats, setTimeFormats] = useState([]);
+
   const [allSystem, setAllSystem] = useState(0);
   const [branchPanel, setBranchPanel] = useState(0);
   const [customerApp, setCustomerApp] = useState(0);
@@ -132,7 +134,7 @@ const BusinessSettingsPage = () => {
     loading: loadingCompany,
     data: dataCompany,
   } = useGet({
-    url: "https://lamadabcknd.food2go.online/admin/settings/business_setup/company",
+    url: "https://bcknd.food2go.online/admin/settings/business_setup/company",
   });
 
   const {
@@ -140,14 +142,14 @@ const BusinessSettingsPage = () => {
     loading: loadingMaintenance,
     data: dataMaintennance,
   } = useGet({
-    url: "https://lamadabcknd.food2go.online/admin/settings/business_setup/maintenance",
+    url: "https://bcknd.food2go.online/admin/settings/business_setup/maintenance",
   });
 
   const {
     refetch: refetchCity,
     loading: loadingCity,
     data: dataCity,
-  } = useGet({ url: "https://lamadabcknd.food2go.online/admin/settings/city" });
+  } = useGet({ url: "https://bcknd.food2go.online/admin/settings/city" });
 
   const [dataCompany2, setDataCompany] = useState(null);
 
@@ -158,11 +160,11 @@ const BusinessSettingsPage = () => {
   const [stateCurrency, setStateCurrency] = useState("Select Currency");
   const [currencyId, setCurrencyId] = useState("");
   const [isOpenCurrency, setIsOpenCurrency] = useState(false);
-  const [dataMain,setDataMain] = useState([])
-    const [formDataMaintenance,setFormDataMaintenance] = useState({})
+  const [dataMain, setDataMain] = useState([])
+  const [formDataMaintenance, setFormDataMaintenance] = useState({})
 
   const { postData, loadingPost, response } = usePost({
-    url: "https://lamadabcknd.food2go.online/admin/settings/business_setup/company/add",
+    url: "https://bcknd.food2go.online/admin/settings/business_setup/company/add",
   });
 
 
@@ -170,9 +172,9 @@ const BusinessSettingsPage = () => {
   //      url: "https://lamadabckend.food2go.online/admin/settings/business_setup/maintenance/status",
   //    });
 
-    //  const { postDataMaintenance, loadingPostMaintenance, responseMaintenanace } = usePost({
-    //    url: "https://lamadabckend.food2go.online/admin/settings/business_setup/maintenance/add",
-    //  });
+  //  const { postDataMaintenance, loadingPostMaintenance, responseMaintenanace } = usePost({
+  //    url: "https://bcknd.food2go.online/admin/settings/business_setup/maintenance/add",
+  //  });
 
   useEffect(() => {
     refetchCompany();
@@ -184,18 +186,18 @@ const BusinessSettingsPage = () => {
   useEffect(() => {
     if (dataCompany) {
       setDataCompany(dataCompany);
-      setDataCurrency(dataCompany.currency || []);
-      setDataCompanyInfo(dataCompany.company_info || []);
-      setCompanyName(dataCompanyInfo.name);
-      setCompanyPhone(dataCompanyInfo.phone);
-      setCompanyEmail(dataCompanyInfo.email);
-      setCompanyAddress(dataCompanyInfo.address);
-      setIcon(dataCompanyInfo.fav_icon_link);
-      setLogo(dataCompanyInfo.logo_link);
-      setStateCountries(dataCompanyInfo.country);
-      setSelectedCountry(dataCompanyInfo.country)
-      setSelectedTimeZone(dataCompanyInfo.time_zone);
-      setStateTimeFormat(dataCompanyInfo.time_format)
+      // setDataCurrency(dataCompany?.currency || []);
+      // setDataCompanyInfo(dataCompany?.company_info || []);
+      setCompanyName(dataCompanyInfo?.name || '');
+      setCompanyPhone(dataCompanyInfo?.phone || '');
+      setCompanyEmail(dataCompanyInfo?.email || '');
+      setCompanyAddress(dataCompanyInfo?.address || '');
+      setIcon(dataCompanyInfo?.fav_icon_link || '');
+      setLogo(dataCompanyInfo?.logo_link || '');
+      setStateCountries(dataCompanyInfo?.country || stateCountries);
+      setSelectedCountry(dataCompanyInfo?.country || selectedCountry)
+      setSelectedTimeZone(dataCompanyInfo?.time_zone || selectedTimeZone);
+      setStateTimeFormat(dataCompanyInfo?.time_format || stateTimeFormat)
 
       if (dataCompanyInfo.currency_id) {
         const matchedCurrency = dataCompany.currency.find(
@@ -206,7 +208,7 @@ const BusinessSettingsPage = () => {
           setStateCurrency(matchedCurrency.name);
         }
       }
-      // setTimeFormats(dataCompanyInfo.time_format)
+      setTimeFormats(dataCompanyInfo.time_format)
       setCompanyCopyrightText(dataCompanyInfo.copy_right);
       if (dataCompanyInfo.currency_position === "right") {
         setLeftCurrency(0);
@@ -216,31 +218,31 @@ const BusinessSettingsPage = () => {
         setRightCurrency(0);
       }
 
-     
+
     }
 
     console.log("data fetch company :", dataCompany);
   }, [dataCompany, dataCompanyInfo]);
-  
-  useEffect(() => {
-  if(dataMaintennance){
 
-    setDataMain(dataMaintennance)
-     // data maintenance
-     setMaintenanceMode(dataMaintennance.maintenance.status)
-     setEndDate(dataMaintennance.maintenance.end_date)
-     setStartDate(dataMaintennance.maintenance.start_date)
-     setCustomize(dataMaintennance.maintenance.customize)
-     setUntilChange(dataMaintennance.maintenance.until_change)
-     setForWeek(dataMaintennance.maintenance.week)
-     setForDay(dataMaintennance.maintenance.day)
-     setDeliverymanApp(dataMaintennance.maintenance.delivery)
-     setBranchPanel(dataMaintennance.maintenance.branch)
-     setCustomerApp(dataMaintennance.maintenance.customer)
-     setAllSystem(dataMaintennance.maintenance.all)
-     setWebApp(dataMaintennance.maintenance.web)
-console.log('data menteneance100' ,dataMaintennance)
-  }
+  useEffect(() => {
+    if (dataMaintennance) {
+
+      setDataMain(dataMaintennance)
+      // data maintenance
+      setMaintenanceMode(dataMaintennance.maintenance.status)
+      setEndDate(dataMaintennance.maintenance.end_date)
+      setStartDate(dataMaintennance.maintenance.start_date)
+      setCustomize(dataMaintennance.maintenance.customize)
+      setUntilChange(dataMaintennance.maintenance.until_change)
+      setForWeek(dataMaintennance.maintenance.week)
+      setForDay(dataMaintennance.maintenance.day)
+      setDeliverymanApp(dataMaintennance.maintenance.delivery)
+      setBranchPanel(dataMaintennance.maintenance.branch)
+      setCustomerApp(dataMaintennance.maintenance.customer)
+      setAllSystem(dataMaintennance.maintenance.all)
+      setWebApp(dataMaintennance.maintenance.web)
+      console.log('data menteneance100', dataMaintennance)
+    }
   }, [dataMaintennance])
 
   // useEffect(() => {
@@ -250,7 +252,7 @@ console.log('data menteneance100' ,dataMaintennance)
   //   }
   //   console.log("data city ", dataCity?.cities?.[0]?.name);
   // }, [dataCity]);
-  
+
   // useEffect(() => {
   //      if (dataMain ) {
   //             setDataMaintenance(dataMain)
@@ -278,10 +280,10 @@ console.log('data menteneance100' ,dataMaintennance)
 
     console.log("data fetch company info :", dataCompanyInfo);
     console.log("data fetch maintenenn :", dataMain);
-  }, [dataCurrency, dataCompanyInfo,dataMain]);
+  }, [dataCurrency, dataCompanyInfo, dataMain]);
 
 
-  
+
 
   // useEffect(() => {
 
@@ -340,9 +342,9 @@ console.log('data menteneance100' ,dataMaintennance)
     }
 
     if (allSystem === 0 && branchPanel === 0 && customerApp === 0 && webApp === 0 && deliverymanApp === 0) {
-       auth.toastError("Please select at least one system.");
-   }
-    
+      auth.toastError("Please select at least one system.");
+    }
+
     // const formDataMaintenance = new FormData();
     // formDataMaintenance.append("status",maintenanceMode)
     // formDataMaintenance.append("all",allSystem)
@@ -358,7 +360,7 @@ console.log('data menteneance100' ,dataMaintennance)
     // formDataMaintenance.append("end_date",endDate)
 
 
-  
+
 
     // const updatedData = [
     //   ["status", maintenanceMode],
@@ -374,7 +376,7 @@ console.log('data menteneance100' ,dataMaintennance)
     //   ["start_date", startDate],
     //   ["end_date", endDate]
     // ];
-  
+
     // // Update the state with the new array
     // setFormDataMaintenance(updatedData);
 
@@ -383,25 +385,25 @@ console.log('data menteneance100' ,dataMaintennance)
 
     //     postDataMain(formDataMaintenance, "Branch Added Success");
 
-//  ----------------------------------
-const updatedData = {
-  status: maintenanceMode,  
-  all: allSystem,       
-  branch: branchPanel,  
-  customer: customerApp, 
-  web: webApp,        
-  delivery: deliverymanApp,  
-  day: forDay,         
-  week: forWeek,        
-  until_change: untilChange,  
-  customize: Customize,  
-  start_date: startDate,  
-  end_date: endDate     
-};
+    //  ----------------------------------
+    const updatedData = {
+      status: maintenanceMode,
+      all: allSystem,
+      branch: branchPanel,
+      customer: customerApp,
+      web: webApp,
+      delivery: deliverymanApp,
+      day: forDay,
+      week: forWeek,
+      until_change: untilChange,
+      customize: Customize,
+      start_date: startDate,
+      end_date: endDate
+    };
 
-// Update the state with the new object
+    // Update the state with the new object
 
-// setFormDataMaintenance(updatedData);
+    // setFormDataMaintenance(updatedData);
 
 
     const formData = new FormData();
@@ -417,8 +419,8 @@ const updatedData = {
     formData.append("time_zone", selectedTimeZone);
 
     formData.append("time_format", stateTimeFormat);
-    formData.append("currency_id", currencyId );
-    formData.append("country", selectedCountry );
+    formData.append("currency_id", currencyId);
+    formData.append("country", selectedCountry);
 
     if (leftCurrency === 0 && rightCurrency === 0) {
       formData.append("currency_position", "");
@@ -433,10 +435,10 @@ const updatedData = {
     for (const [key, value] of Object.entries(updatedData)) {
       formData.append(`maintenance[${key}]`, value);
     }
-  
+
 
     postData(formData, "Branch Added Success");
-    console.log("all data ",formData)
+    console.log("all data ", formData)
   };
 
   useEffect(() => {
@@ -571,18 +573,25 @@ const updatedData = {
     setCustomize(isChecked ? 1 : 0);
   };
 
+  // Logo handler
   const handleLogo = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setLogoFile(file);
-      setLogo(file.name);
+      setLogoFile(file); // Assuming setLogoFile is defined elsewhere
+      setLogo(file.name); // Set the file name as the value for logo
+    } else {
+      setLogo(''); // Reset logo value if no file is selected
     }
   };
+
+  // Icon handler
   const handleIcon = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setIconFile(file);
-      setIcon(file.name);
+      setIconFile(file); // Assuming setIconFile is defined elsewhere
+      setIcon(file.name); // Set the file name as the value for icon
+    } else {
+      setIcon(''); // Reset icon value if no file is selected
     }
   };
 
@@ -735,9 +744,7 @@ const updatedData = {
           </div>
           {/* Logo */}
           <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-            <span className="text-xl font-TextFontRegular text-thirdColor">
-              Logo:
-            </span>
+            <span className="text-xl font-TextFontRegular text-thirdColor">Logo:</span>
             <UploadInput
               value={logo}
               uploadFileRef={LogoRef}
@@ -749,9 +756,7 @@ const updatedData = {
           </div>
           {/* Icon */}
           <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-            <span className="text-xl font-TextFontRegular text-thirdColor">
-              Fav Icon:
-            </span>
+            <span className="text-xl font-TextFontRegular text-thirdColor">Fav Icon:</span>
             <UploadInput
               value={icon}
               uploadFileRef={IconRef}

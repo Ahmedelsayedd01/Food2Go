@@ -8,9 +8,9 @@ import { MultiSelect } from 'primereact/multiselect';
 
 
 const AddAddonsSection = ({ update, setUpdate }) => {
-       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/translation' });
-       const { refetch: refetchAddons, loading: loadingAddons, data: dataAddons } = useGet({ url: 'https://lamadabcknd.food2go.online/admin/addons' });
-       const { postData, loadingPost, response } = usePost({ url: 'https://lamadabcknd.food2go.online/admin/addons/add' });
+       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://bcknd.food2go.online/admin/translation' });
+       const { refetch: refetchAddons, loading: loadingAddons, data: dataAddons } = useGet({ url: 'https://bcknd.food2go.online/admin/addons' });
+       const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/addons/add' });
 
        const dropDownTax = useRef();
        const auth = useAuth();
@@ -127,10 +127,10 @@ const AddAddonsSection = ({ update, setUpdate }) => {
               //        return;
               // }
 
-              if (!addonTaxesId) {
-                     auth.toastError('please Select Addon Tax')
-                     return;
-              }
+              // if (!addonTaxesId) {
+              //        auth.toastError('please Select Addon Tax')
+              //        return;
+              // }
               if (!addonPrice) {
                      auth.toastError('please Enter Addon Price')
                      return;
