@@ -94,12 +94,9 @@ const BusinessSettingsPage = () => {
   const [stateTimeZone, setStateTimeZone] = useState("Select Time Zone");
   const [selectedTimeZone, setSelectedTimeZone] = useState("");
   const [timeZone, setTimeZone] = useState([]);
+
   const [isOpenTimeZone, setIsOpenTimeZone] = useState(false);
-  const [stateTimeFormat, setStateTimeFormat] = useState("Select Time Format");
-  const [timeFormat, setTimeFormat] = useState([
-    { name: "am/pm" },
-    { name: "24hours" },
-  ]);
+
   const [isOpenTimeFormat, setIsOpenTimeFormat] = useState(false);
 
   // const [stateCurrency, setStateCurrency] = useState('Select Currency');
@@ -110,7 +107,13 @@ const BusinessSettingsPage = () => {
   const [rightCurrency, setRightCurrency] = useState(0);
 
   const [companyCopyrightText, setCompanyCopyrightText] = useState("");
-  const [timeFormats, setTimeFormats] = useState([]);
+
+  const [stateTimeFormat, setStateTimeFormat] = useState("Select Time Format");
+  const [selectedTimeFormat, setSelectedTimeFormat] = useState("");
+  const [timeFormat, setTimeFormat] = useState([
+    { name: "am/pm" },
+    { name: "24hours" },
+  ]);
 
   const [allSystem, setAllSystem] = useState(0);
   const [branchPanel, setBranchPanel] = useState(0);
@@ -148,9 +151,9 @@ const BusinessSettingsPage = () => {
     data: dataCity,
   } = useGet({ url: "https://bcknd.food2go.online/admin/settings/city" });
 
-  
-  
-  
+
+
+
   const [dataCompanyInfo, setDataCompanyInfo] = useState([]);
 
   const [dataCurrency, setDataCurrency] = useState([]);
@@ -158,7 +161,7 @@ const BusinessSettingsPage = () => {
   const [currencyId, setCurrencyId] = useState("");
   const [isOpenCurrency, setIsOpenCurrency] = useState(false);
   const [dataMain, setDataMain] = useState([])
-  const [dataMaintennance,setDataMaintenance ] = useState({})
+  const [dataMaintennance, setDataMaintenance] = useState({})
   const [formDataMaintenance, setFormDataMaintenance] = useState({});
 
   const { postData, loadingPost, response } = usePost({
@@ -183,7 +186,7 @@ const BusinessSettingsPage = () => {
 
   useEffect(() => {
     if (dataCompany) {
-  
+
       // setDataCurrency(dataCompany?.currency || []);
       // setDataCompanyInfo(dataCompany?.company_info || []);
       setCompanyName(dataCompany?.company_info?.name || '');
@@ -193,9 +196,14 @@ const BusinessSettingsPage = () => {
       setIcon(dataCompany?.company_info?.fav_icon_link || '');
       setLogo(dataCompany?.company_info?.logo_link || '');
       setStateCountries(dataCompany?.company_info?.country || stateCountries);
-      // setSelectedCountry(dataCompany?.company_info?.country || selectedCountry)
-      setSelectedTimeZone(dataCompany?.company_info?.time_zone || selectedTimeZone);
+      setSelectedCountry(dataCompany?.company_info?.country || selectedCountry)
+
+      setStateTimeZone(dataCompany?.company_info?.time_zone || '');
+      setSelectedTimeZone(dataCompany?.company_info?.time_zone || '');
+
+      setSelectedTimeFormat(dataCompany?.company_info?.time_format || stateTimeFormat)
       setStateTimeFormat(dataCompany?.company_info?.time_format || stateTimeFormat)
+
       setDataMaintenance(dataCompany.maintenance)
       setAllSystem(dataCompany.maintenance.all)
       setBranchPanel(dataCompany.maintenance.branch)
@@ -221,7 +229,6 @@ const BusinessSettingsPage = () => {
           setCurrencyId(matchedCurrency.id);
         }
       }
-      setTimeFormats(dataCompany.company_info.time_format)
       setCompanyCopyrightText(dataCompany.company_info.copy_right);
       if (dataCompany.company_info.currency_position === "right") {
         setLeftCurrency(0);
@@ -373,7 +380,7 @@ const BusinessSettingsPage = () => {
       start_date: startDate,
       end_date: endDate
     };
-  
+
 
 
 
@@ -422,7 +429,7 @@ const BusinessSettingsPage = () => {
 
     formData.append("time_format", stateTimeFormat);
     formData.append("currency_id", currencyId);
-    formData.append("country", JSON.stringify(selectedCountry));
+    formData.append("country", selectedCountry);
 
     if (leftCurrency === 0 && rightCurrency === 0) {
       formData.append("currency_position", "");
@@ -489,7 +496,7 @@ const BusinessSettingsPage = () => {
     setStateTimeZone(timeZone.name);
   };
   const handleSelectTimeFormat = (timeFormat) => {
-    setTimeFormat(timeFormat.id);
+    setSelectedTimeFormat(timeFormat.name);
     setStateTimeFormat(timeFormat.name);
   };
   // const handleSelectCurrency = (currency) => {
@@ -636,24 +643,26 @@ const BusinessSettingsPage = () => {
   }, []);
 
   const handleReset = () => {
-    setMaintenanceMode(0);
     setCompanyName("");
     setCompanyPhone("");
     setCompanyEmail("");
     setCompanyAddress("");
+    setLogoFile("");
     setLogo("");
-    setIcon("");
-    setLogoFile(null);
-    setIconFile(null);
+    setIconFile("");
     setStateCountries("Select Country");
+    setSelectedCountry("");
     setStateTimeZone("Select Time Zone");
+    setSelectedTimeZone("");
     setStateTimeFormat("Select Time Format");
-    // setStateCurrency('Select Currency');
-    setStateCurrency("Select Currency");
-    setCurrencyId("");
+    setSelectedTimeFormat("");
+    setStateCurrency('Select Currency');
+    setCurrencyId('');
     setLeftCurrency(0);
     setRightCurrency(0);
     setCompanyCopyrightText("");
+
+    setMaintenanceMode(0);
     setAllSystem(0);
     setBranchPanel(0);
     setCustomerApp(0);
@@ -806,22 +815,12 @@ const BusinessSettingsPage = () => {
             <span className="text-xl font-TextFontRegular text-thirdColor">
               Time Zone:
             </span>
-            {/* <DropDown
-                                          ref={TimeZoneRef}
-                                          handleOpen={handleOpenTimeZone}
-                                          stateoption={stateTimeZone}
-                                          openMenu={isOpenTimeZone}
-                                          handleOpenOption={handleOpenTimeZone}
-                                          onSelectOption={handleSelectTimeZone}
-                                          options={timeZone}
-                                          border={false}
-                                   /> */}
             <Dropdown
               value={selectedTimeZone}
               onChange={(e) => setSelectedTimeZone(e.value)}
               options={timeZone}
               optionLabel="name"
-              placeholder="Select a Time Zone"
+              placeholder={stateTimeZone}
               filter
               className="w-full md:w-14rem"
             />
