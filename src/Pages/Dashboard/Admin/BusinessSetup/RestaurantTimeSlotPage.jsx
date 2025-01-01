@@ -11,38 +11,35 @@ const RestaurantTimeSlotPage = ({ refetch }) => {
 
     const [timeSlot, setTimeSlot] = useState({ daily: [], custom: [] });
     const [day, setDay] = useState('');
-    const [optionName, setOptionName] = useState('');
-    const [selectDay,setSelectDay] = useState('')
+    const [optionName, setOptionName] = useState('daily');
+    const [selectDay, setSelectDay] = useState('');
     const [stateDay, setStateDay] = useState('Select Day');
-    
+    const [days, setDays] = useState([]);
+
     useEffect(() => {
         refetchTimeSlot();
     }, [refetchTimeSlot]);
 
     useEffect(() => {
-        
         if (dataSlot) {
             const { time_slot } = dataSlot;
             const setting = JSON.parse(time_slot.setting);
-           
+            setDays(dataSlot.days);
             setTimeSlot({
                 daily: setting.daily || [],
                 custom: setting.custom || [],
             });
-
             setDay(setting.custom || '');
-
+            setStateDay(setting.custom[0])
             setAllClosestTime(
                 (setting.daily || []).map(item => ({
                     closingTimeAm: item.from || '',
                     closingTimePm: item.to || '',
                 }))
             );
-           
         }
-
-        console.log("data fetch slot" ,dataSlot)
-        
+        // console.log("days", dataSlot.days);
+        console.log("data fetch slot", dataSlot);
     }, [dataSlot]);
 
     const preparePostData = () => {
@@ -54,7 +51,7 @@ const RestaurantTimeSlotPage = ({ refetch }) => {
             }));
 
         // Prepare custom times
-        const formattedCustom = day ? [day] : timeSlot.custom;  // If 'day' is not updated, fall back to the previous value
+        const formattedCustom = selectDay ? [selectDay] : timeSlot.custom;
 
         return { daily: formattedDaily, custom: formattedCustom };
     };
@@ -74,32 +71,49 @@ const RestaurantTimeSlotPage = ({ refetch }) => {
         setAllClosestTime([{ closingTimeAm: '', closingTimePm: '' }]);
         setOptionName('');
         setDay('');
+        setSelectDay('');
+        setStateDay('Select Day');
+    };
+
+    // Handle day selection in dropdown
+    const handleSelectDay = (e) => {
+        const selectedDay = e.value; // The selected day will be an object, but we need only its name
+        setSelectDay(selectedDay);
+        
+    
+        // Add the selected day to the custom array if it's not already there
+        setTimeSlot((prevState) => ({
+            ...prevState,
+            custom: selectedDay.name, // Only store the selected day in the custom array
+        }));
+
+        setStateDay(selectedDay ? selectedDay.name : 'Select Day');
+
     };
 
     return (
         <>
             {loadingTime || loadingPost ? (
-                <>
-                    <div className="w-full h-56 flex justify-center items-center">
-                        <LoaderLogin />
-                    </div>
-                </>
+                <div className="w-full h-56 flex justify-center items-center">
+                    <LoaderLogin />
+                </div>
             ) : (
-                <form
-                    className="w-full flex sm:flex-col lg:flex-row flex-wrap items-start justify-start gap-4"
-                    onSubmit={handleSubmit}
-                >
+                <form className="w-full flex sm:flex-col lg:flex-row flex-wrap items-start justify-start gap-4" onSubmit={handleSubmit}>
                     <TitleSection text={'Restaurant Closing Schedules'} />
 
                     <div className="w-full flex gap-8 mt-4">
                         <span
                             className={`text-xl font-TextFontRegular cursor-pointer ${optionName === 'daily' ? 'text-mainColor' : 'text-thirdColor'}`}
                             onClick={() => setOptionName('daily')}
-                        >Daily</span>
+                        >
+                            Daily
+                        </span>
                         <span
                             className={`text-xl font-TextFontRegular cursor-pointer ${optionName === 'customize' ? 'text-mainColor' : 'text-thirdColor'}`}
                             onClick={() => setOptionName('customize')}
-                        >Customize</span>
+                        >
+                            Customize
+                        </span>
                     </div>
 
                     {optionName === 'daily' && (
@@ -133,45 +147,42 @@ const RestaurantTimeSlotPage = ({ refetch }) => {
                             <div className="mt-6">
                                 <AddButton
                                     Text={'Add More'}
-                                    BgColor='mainColor'
-                                    Color='white'
-                                    iconColor='white'
-                                    rounded='rounded-full'
+                                    BgColor="mainColor"
+                                    Color="white"
+                                    iconColor="white"
+                                    rounded="rounded-full"
                                     handleClick={handleAddMore}
                                 />
                             </div>
                         </>
                     )}
 
-            {optionName === 'customize' && (
-                <div className="sm:w-full lg:w-[30%] flex flex-col items-start gap-y-1 mt-3">
-                    <span className="text-xl text-thirdColor">Day:</span>
-                    {/* <Dropdown
-                                                                   value={selectDay}
-                                                                   onChange={(e) => setSelectDay(e.value)}
-                                                                   options={cities}
-                                                                   optionLabel="name"
-                                                                   placeholder={stateCity}
-                                                                   filter
-                                                                   className="w-full md:w-14rem" /> */}
-                </div>
-            )}
+                    {optionName === 'customize' && (
+                        <div className="sm:w-full lg:w-[30%] flex flex-col items-start gap-y-1 mt-3">
+                            <span className="text-xl text-thirdColor">Day:</span>
+                            <Dropdown
+                                value={selectDay}
+                                onChange={handleSelectDay}
+                                options={days}
+                                optionLabel="name"
+                                placeholder={stateDay}
+                                filter
+                                className="w-full md:w-14rem"
+                            />
+                        </div>
+                    )}
 
                     <div className="w-full flex items-center justify-end gap-x-4 mt-6">
                         <StaticButton
                             text={'Reset'}
                             handleClick={handleReset}
-                            bgColor='bg-transparent'
-                            Color='text-mainColor'
-                            border={'border-2'}
-                            borderColor={'border-mainColor'}
-                            rounded='rounded-full'
+                            bgColor="bg-transparent"
+                            Color="text-mainColor"
+                            border="border-2"
+                            borderColor="border-mainColor"
+                            rounded="rounded-full"
                         />
-                        <SubmitButton
-                            text={'Submit'}
-                            rounded='rounded-full'
-                            handleClick={handleSubmit}
-                        />
+                        <SubmitButton text={'Submit'} rounded="rounded-full" handleClick={handleSubmit} />
                     </div>
                 </form>
             )}
