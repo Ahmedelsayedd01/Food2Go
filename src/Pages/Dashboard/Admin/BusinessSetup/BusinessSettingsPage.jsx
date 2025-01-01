@@ -188,29 +188,29 @@ const BusinessSettingsPage = () => {
       setDataCompany(dataCompany);
       // setDataCurrency(dataCompany?.currency || []);
       // setDataCompanyInfo(dataCompany?.company_info || []);
-      setCompanyName(dataCompanyInfo?.name || '');
-      setCompanyPhone(dataCompanyInfo?.phone || '');
-      setCompanyEmail(dataCompanyInfo?.email || '');
-      setCompanyAddress(dataCompanyInfo?.address || '');
-      setIcon(dataCompanyInfo?.fav_icon_link || '');
-      setLogo(dataCompanyInfo?.logo_link || '');
-      setStateCountries(dataCompanyInfo?.country || stateCountries);
-      setSelectedCountry(dataCompanyInfo?.country || selectedCountry)
-      setSelectedTimeZone(dataCompanyInfo?.time_zone || selectedTimeZone);
-      setStateTimeFormat(dataCompanyInfo?.time_format || stateTimeFormat)
+      setCompanyName(dataCompany?.company_info?.name || '');
+      setCompanyPhone(dataCompany?.company_info?.phone || '');
+      setCompanyEmail(dataCompany?.company_info?.email || '');
+      setCompanyAddress(dataCompany?.company_info?.address || '');
+      setIcon(dataCompany?.company_info?.fav_icon_link || '');
+      setLogo(dataCompany?.company_info?.logo_link || '');
+      setStateCountries(dataCompany?.company_info?.country || stateCountries);
+      setSelectedCountry(dataCompany?.company_info?.country || selectedCountry)
+      setSelectedTimeZone(dataCompany?.company_info?.time_zone || selectedTimeZone);
+      setStateTimeFormat(dataCompany?.company_info?.time_format || stateTimeFormat)
 
-      if (dataCompanyInfo.currency_id) {
+      if (dataCompany.company_info.currency_id) {
         const matchedCurrency = dataCompany.currency.find(
-          (curr) => curr.id === dataCompanyInfo.currency_id
+          (curr) => curr.id === dataCompany.company_info.currency_id
         );
 
         if (matchedCurrency) {
           setStateCurrency(matchedCurrency.name);
         }
       }
-      setTimeFormats(dataCompanyInfo.time_format)
-      setCompanyCopyrightText(dataCompanyInfo.copy_right);
-      if (dataCompanyInfo.currency_position === "right") {
+      setTimeFormats(dataCompany.company_info.time_format)
+      setCompanyCopyrightText(dataCompany.company_info.copy_right);
+      if (dataCompany.company_info.currency_position === "right") {
         setLeftCurrency(0);
         setRightCurrency(1);
       } else {
@@ -222,7 +222,7 @@ const BusinessSettingsPage = () => {
     }
 
     console.log("data fetch company :", dataCompany);
-  }, [dataCompany, dataCompanyInfo]);
+  }, [dataCompany, dataCompany.company_info]);
 
   useEffect(() => {
     if (dataMaintennance) {
