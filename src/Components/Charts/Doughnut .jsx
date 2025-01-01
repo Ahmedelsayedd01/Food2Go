@@ -6,10 +6,13 @@ import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
 Chart.register(ArcElement, Tooltip, Legend);
 
 const DonutChart = ({ordersData}) => {
-//    const [totalOrders,setTotalOrders] = useState(0)
+   const [totalOrders,setTotalOrders] = useState(0)
+
     useEffect(() => {
         // const newTotalOrders = ordersData.orders;
-        // setTotalOrders(newTotalOrders);
+        if(ordersData){
+            setTotalOrders(ordersData.orders);
+        }
     console.log("data order pi ",ordersData)
     }, [ordersData])
 
@@ -68,7 +71,7 @@ const DonutChart = ({ordersData}) => {
 
             const textX = width / 2;
             const textY = height / 2.3;
-            ctx.fillText(ordersData.orders, textX, textY);
+            ctx.fillText(totalOrders, textX, textY);
 
             ctx.font = `bold ${(fontSize / 2).toFixed(2)}px sans-serif`; 
             ctx.fillText('Order', textX, textY + 30);

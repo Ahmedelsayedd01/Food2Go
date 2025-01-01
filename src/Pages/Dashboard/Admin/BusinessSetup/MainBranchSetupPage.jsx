@@ -15,7 +15,7 @@ const MainBranchSetupPage = () => {
               refetch: refetchCity,
               loading: loadingCity,
               data: dataCity,
-       } = useGet({ url: "https://bcknd.food2go.online/admin/settings/city" });
+       }= useGet({ url: "https://bcknd.food2go.online/admin/settings/city" });
 
        useEffect(() => {
               refetchBranch();

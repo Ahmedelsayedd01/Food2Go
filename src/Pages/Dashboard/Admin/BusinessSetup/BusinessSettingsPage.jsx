@@ -31,7 +31,6 @@ const BusinessSettingsPage = () => {
   const CurrencyRef = useRef();
 
   const [maintenanceMode, setMaintenanceMode] = useState(0);
-
   const [companyName, setCompanyName] = useState("");
   const [companyPhone, setCompanyPhone] = useState("");
   const [companyEmail, setCompanyEmail] = useState("");
@@ -90,14 +89,12 @@ const BusinessSettingsPage = () => {
       { name: 'Zimbabwe' }
     ]
   );
-
   const [isOpenCountries, setIsOpenCountries] = useState(false);
 
   const [stateTimeZone, setStateTimeZone] = useState("Select Time Zone");
   const [selectedTimeZone, setSelectedTimeZone] = useState("");
   const [timeZone, setTimeZone] = useState([]);
   const [isOpenTimeZone, setIsOpenTimeZone] = useState(false);
-
   const [stateTimeFormat, setStateTimeFormat] = useState("Select Time Format");
   const [timeFormat, setTimeFormat] = useState([
     { name: "am/pm" },
@@ -152,8 +149,8 @@ const BusinessSettingsPage = () => {
   } = useGet({ url: "https://bcknd.food2go.online/admin/settings/city" });
 
   const [dataCompany2, setDataCompany] = useState(null);
-
-
+  
+  
   const [dataCompanyInfo, setDataCompanyInfo] = useState([]);
 
   const [dataCurrency, setDataCurrency] = useState([]);
