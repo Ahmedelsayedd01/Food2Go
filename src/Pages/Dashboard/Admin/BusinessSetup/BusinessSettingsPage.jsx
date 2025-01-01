@@ -219,7 +219,7 @@ const BusinessSettingsPage = () => {
     }
 
     console.log("data fetch company :", dataCompany);
-  }, [dataCompany, dataCompany.company_info]);
+  }, [dataCompany]);
 
   useEffect(() => {
     if (dataMaintennance) {
