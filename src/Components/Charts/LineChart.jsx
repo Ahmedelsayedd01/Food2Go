@@ -5,13 +5,15 @@ import 'chart.js/auto';
 const LineChart = ({ title, data }) => {
   const [selectedMonth, setSelectedMonth] = useState('All');
 
-  // Extract labels and datasets dynamically from props
+  // Extract labels (months) and values dynamically from props
   const labels = Object.keys(data);
   const values = Object.values(data);
+
   useEffect(() => {
-  console.log("data line ",data)
-  }, [data])
-  
+    console.log("data line ", data);
+  }, [data]);
+
+  // Prepare chart data
   const chartData = {
     labels: labels,
     datasets: [
@@ -34,7 +36,7 @@ const LineChart = ({ title, data }) => {
     ],
   };
 
-  // Filter data based on selected month
+  // Filter the data based on the selected month
   const filteredData = {
     labels: selectedMonth === 'All' ? labels : [selectedMonth],
     datasets: chartData.datasets.map((dataset) => ({
@@ -42,7 +44,7 @@ const LineChart = ({ title, data }) => {
       data:
         selectedMonth === 'All'
           ? dataset.data
-          : [dataset.data[labels.indexOf(selectedMonth)]],
+          : [dataset.data[labels.indexOf(selectedMonth)]], // Display data only for the selected month
     })),
   };
 
@@ -72,8 +74,8 @@ const LineChart = ({ title, data }) => {
   };
 
   return (
-    <div className="p-4 bg-white rounded-lg shadow-lg">
-      <div className="flex justify-between items-center mb-4">
+    <div className="p-2 bg-white rounded-lg shadow-lg">
+      <div className="flex justify-between items-center mb-2">
         <h2 className="text-lg font-semibold text-[#991b1b]">{title}</h2>
         <select
           className="bg-transparent text-[#991b1b] rounded px-3 py-2 text-sm font-bold"

@@ -8,6 +8,7 @@ import { useGet } from "../../../../Hooks/useGet";
 // import LineChartComponent from '../../../../Components/Charts/LineChart'
 import LineChartComponent from "../../../../Components/Charts/LineChart";
 import Chart from "../../../../Components/Charts/Chart";
+import FooterCard from "../../../../Components/FooterHome/FooterCard";
 // import { pData,uData,xLabels } from '../../../../Components/Charts/data'
 
 const HomePage = () => {
@@ -111,12 +112,23 @@ const HomePage = () => {
           <>
             <div className="flex flex-col gap-7 items-start justify-center pb-16">
               <CartsOrderSection ordersNum={counters} />
-              <Chart
-                order_statistics={order_statistics}
-                earning_statistics={earning_statistics}
-                recent_orders={recent_orders}
-              // orders={orders}  
+              <Chart 
               />
+  <div className="footer flex flex-wrap gap-1 p-6">
+  <div className="footer-card flex-1 min-w-[250px] max-w-[300px] p-4 bg-gray-100 rounded-lg shadow-md">
+    <FooterCard title={"Top Selling Products"} />
+  </div>
+  <div className="footer-card flex-1 min-w-[250px] max-w-[300px] p-4 bg-gray-100 rounded-lg shadow-md">
+    <FooterCard title={"Most Rated Products"} />
+  </div>
+  <div className="footer-card flex-1 min-w-[250px] max-w-[300px] p-4 bg-gray-100 rounded-lg shadow-md">
+    <FooterCard title={"Offers"} />
+  </div>
+  <div className="footer-card flex-1 min-w-[250px] max-w-[300px] p-4 bg-gray-100 rounded-lg shadow-md">
+    <FooterCard  title ={"Top Customer"} />
+  </div>
+</div>
+
             </div>
           </>
         )}
