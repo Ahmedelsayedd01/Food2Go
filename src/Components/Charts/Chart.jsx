@@ -35,7 +35,7 @@ const Chart = () => {
       setOrders(dataCharts.orders);
     }
     console.log("fetch data Home", dataHome);
-    console.log("fetch data chart", dataCharts);
+    console.log("fetch data Home", dataCharts);
     console.log("fetch data Home stat order", dataHome.order_statistics);
     console.log("fetch data Home stat earn", dataHome.earning_statistics);
     console.log("fetch data Home stat recent", dataHome.recent_orders);
@@ -44,7 +44,7 @@ const Chart = () => {
   }, [dataCharts, dataHome, order_statistics]);
   return (
     <>
-      {loadingChart ? (
+      {/* {loadingChart ? (
         <div className="w-full h-56 flex justify-center items-center mt-8">
           <LoaderLogin />
         </div>
