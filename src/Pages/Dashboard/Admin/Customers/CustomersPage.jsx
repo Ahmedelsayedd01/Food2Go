@@ -97,7 +97,7 @@ const CustomersPage = ({ refetch, setUpdate }) => {
             <thead className="w-full">
               <tr className="w-full border-b-2">
                 {headers.map((name, index) => (
-                  <th className="min-w-[120px] sm:w-[8%] lg:w-[5%] text-mainColor text-center font-TextFontLight sm:text-sm lg:text-base xl:text-lg pb-3" key={index}>
+                  <th className="min-w-[100px] sm:w-[8%] lg:w-[5%] text-mainColor text-center font-TextFontLight sm:text-sm lg:text-base xl:text-lg pb-3" key={index}>
                     {name}
                   </th>
                 ))}
