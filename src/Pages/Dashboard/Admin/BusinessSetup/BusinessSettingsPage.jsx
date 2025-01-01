@@ -835,7 +835,7 @@ const BusinessSettingsPage = () => {
               openMenu={isOpenTimeFormat}
               handleOpenOption={handleOpenTimeFormat}
               onSelectOption={handleSelectTimeFormat}
-              options={timeFormats}
+              options={timeFormat}
               border={false}
             />
           </div>
