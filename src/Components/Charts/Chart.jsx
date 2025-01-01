@@ -65,7 +65,7 @@ const Chart = () => {
           {/* Container for DoughnutChart */}
           <div className="w-full lg:w-[30%] ">
             <div className="bg-white p-3 rounded-lg shadow-xl h-full">
-              <DoughnutChart ordersData={ordersData} />
+              <DoughnutChart ordersData = {ordersData} />
             </div>
           </div>
         </div>
