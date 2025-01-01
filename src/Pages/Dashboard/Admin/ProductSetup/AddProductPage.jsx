@@ -17,6 +17,7 @@ const AddProductPage = () => {
   const variationTypeRef = useRef([]);
   const [openVariationIndex, setOpenVariationIndex] = useState(null); // Tracks which variation's dropdown is open
 
+
   const categoryRef = useRef();
   const subCategoryRef = useRef();
   const itemTypeRef = useRef();
@@ -459,6 +460,7 @@ const AddProductPage = () => {
   const handleSelectProductItemType = (option) => {
     setSelectedItemTypeName(option.id);
     setSelectedItemTypeState(option.name);
+    console.log('option', option)
   };
   const handleSelectProductStockType = (option) => {
     setSelectedStockTypeName(option.id);
@@ -578,6 +580,7 @@ const AddProductPage = () => {
   const handleReset = () => {
     console.log('productNames', productNames)
     console.log('descriptionNames', descriptionNames)
+
     setCurrentProductNamesTap(0)
     setCurrentExcludeNamesTap(0)
     setCurrentExtraNamesTap(0)
@@ -621,6 +624,23 @@ const AddProductPage = () => {
   /* Add Product */
   const handleproductAdd = (e) => {
     e.preventDefault();
+
+    // Filter out any invalid or empty entries in product Names
+    const validProductNames = productNames.filter(
+      (product) => product && product.tranlation_id && product.product_name && product.tranlation_name
+    );
+
+    if (validProductNames.length === 0) {
+      auth.toastError('Please enter a product name');
+      console.log('productNames', validProductNames);
+      return;
+    }
+
+    if (validProductNames.length !== taps.length) {
+      auth.toastError('Please enter all product names');
+      console.log('productNames', validProductNames);
+      return;
+    }
 
     // if (productNames.length === 0) {
     //   auth.toastError('please Enter product Name')
@@ -714,22 +734,7 @@ const AddProductPage = () => {
     // }
 
 
-    // Filter out any invalid or empty entries in product Names
-    const validProductNames = productNames.filter(
-      (product) => product && product.tranlation_id && product.product_name && product.tranlation_name
-    );
 
-    if (validProductNames.length === 0) {
-      auth.toastError('Please enter a product name');
-      console.log('productNames', validProductNames);
-      return;
-    }
-
-    // if (validProductNames.length !== taps.length) {
-    //   auth.toastError('Please enter all product names');
-    //   console.log('productNames', validProductNames);
-    //   return;
-    // }
 
     // Filter out any invalid or empty entries description Names
     const validDescriptionNames = descriptionNames.filter(
@@ -766,11 +771,14 @@ const AddProductPage = () => {
     formData.append('status', productStatus)
     formData.append('image', productImage)
 
-    const addonIds = selectedAddonsId.map((addon) => addon.id); // Extracts only the IDs
+    if (selectedAddonsId.length > 0) {
 
-    addonIds.forEach((id, indexID) => {
-      formData.append(`addons[${indexID}]`, id); // Appending each ID separately with 'addons[]'
-    });
+      const addonIds = selectedAddonsId.map((addon) => addon.id); // Extracts only the IDs
+
+      addonIds.forEach((id, indexID) => {
+        formData.append(`addons[${indexID}]`, id); // Appending each ID separately with 'addons[]'
+      });
+    }
 
 
 
@@ -1016,7 +1024,7 @@ const AddProductPage = () => {
                               return updatedDescriptionNames;
                             });
                           }}
-                          placeholder="Product Name"
+                          placeholder="Product Description"
                         />
                       </div>
 

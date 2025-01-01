@@ -48,6 +48,7 @@ const EditProductPage = () => {
 
        const [itemTypes, setItemTypes] = useState([{ id: '', name: 'Selected Item Type' }, , { id: 'online', name: 'online' }, { id: 'offline', name: 'offline' }, { id: 'all', name: 'all' }])
        const [stockTypes, setStockTypes] = useState([{ id: '', name: 'Selected Stock Type' }, , { id: 'unlimited', name: 'unlimited' }, { id: 'daily', name: 'daily' }, { id: 'fixed', name: 'fixed' }])
+
        /*  */
        const [productEdit, setProductEdit] = useState([]);
        // Selected Data 
@@ -181,16 +182,16 @@ const EditProductPage = () => {
                      setSelectedAddonsId(productEdit?.addons || [])
 
                      setSelectedCategoryId(productEdit?.category?.id || '')
-                     setSelectedCategoryState(productEdit?.category?.name || '')
+                     setSelectedCategoryState(productEdit?.category?.name || selectedCategoryState)
 
                      setSelectedSubCategoryId(productEdit?.sub_category?.id || '')
-                     setSelectedSubCategoryState(productEdit?.sub_category?.name || '')
+                     setSelectedSubCategoryState(productEdit?.sub_category?.name || selectedSubCategoryState)
 
                      setSelectedItemTypeName(productEdit?.item_type || '')
-                     setSelectedItemTypeState(productEdit?.item_type || '')
+                     setSelectedItemTypeState(productEdit?.item_type || selectedItemTypeState)
 
-                     setProductPrice(productEdit?.price || '')
-                     setSelectedStockTypeState(productEdit?.stock_type || '')
+                     setProductPrice(productEdit?.price || 0)
+                     setSelectedStockTypeState(productEdit?.stock_type || selectedStockTypeState)
                      setSelectedStockTypeName(productEdit?.stock_type || '')
                      setProductStockNumber(productEdit?.number || '')
 
@@ -198,11 +199,11 @@ const EditProductPage = () => {
                      setProductImageName(productEdit?.image_link || '')
 
                      setSelectedDiscountId(productEdit?.discount?.id || '')
-                     setSelectedDiscountState(productEdit?.discount?.name || '')
+                     setSelectedDiscountState(productEdit?.discount?.name || selectedDiscountState)
                      setSelectedTaxId(productEdit?.tax?.id || '')
-                     setSelectedTaxState(productEdit?.tax?.name || '')
+                     setSelectedTaxState(productEdit?.tax?.name || selectedTaxState)
 
-                     setProductPoint(productEdit?.points || '')
+                     setProductPoint(productEdit?.points || 0)
 
                      setProductStatusFrom(productEdit?.from || '')
                      setProductStatusTo(productEdit?.to || '')
@@ -213,6 +214,8 @@ const EditProductPage = () => {
                      setProductRecommended(productEdit?.recommended || 0)
 
                      // setDescriptionNames(productEdit?.product_descriptions || [])
+                     console.log('productEdit?.points', productEdit?.points)
+                     console.log('productPoint', productPoint)
                      console.log('productId', productId)
                      console.log('dataProductEdit', productEdit)
                      console.log('dataProductEdit', productEdit)
@@ -647,6 +650,27 @@ const EditProductPage = () => {
        const handleproductEdit = (e) => {
               e.preventDefault();
 
+              // Filter out any invalid or empty entries in product Names
+              const validProductNames = productNames.filter(
+                     (product) => product && product.tranlation_id && product.product_name && product.tranlation_name
+              );
+
+              if (validProductNames.length === 0) {
+                     auth.toastError('Please enter a product name');
+                     console.log('productNames', validProductNames);
+                     console.log('validProductNames.length', validProductNames.length);
+                     console.log('validProductNames', validProductNames)
+                     return;
+              }
+
+              if (validProductNames.length !== taps.length) {
+                     auth.toastError('Please enter all product names');
+                     console.log('productNames', validProductNames);
+                     console.log('taps.length', taps.length)
+                     console.log('validProductNames', validProductNames)
+                     return;
+              }
+
               // if (productNames.length === 0) {
               //   auth.toastError('please Enter product Name')
               //   console.log('productNames', productNames)
@@ -740,26 +764,7 @@ const EditProductPage = () => {
               //        }
               // }
 
-              // Filter out any invalid or empty entries in product Names
-              const validProductNames = productNames.filter(
-                     (product) => product && product.tranlation_id && product.product_name && product.tranlation_name
-              );
 
-              if (validProductNames.length === 0) {
-                     auth.toastError('Please enter a product name');
-                     console.log('productNames', validProductNames);
-                     console.log('validProductNames.length', validProductNames.length);
-                     console.log('validProductNames', validProductNames)
-                     return;
-              }
-
-              // if (validProductNames.length !== taps.length) {
-              //        auth.toastError('Please enter all product names');
-              //        console.log('productNames', validProductNames);
-              //        console.log('taps.length', taps.length)
-              //        console.log('validProductNames', validProductNames)
-              //        return;
-              // }
 
               // Filter out any invalid or empty entries description Names
               const validDescriptionNames = descriptionNames.filter(
@@ -796,11 +801,15 @@ const EditProductPage = () => {
               formData.append('status', productStatus)
               formData.append('image', productImage)
 
-              const addonIds = selectedAddonsId.map((addon) => addon.id); // Extracts only the IDs
+              if (selectedAddonsId.length > 0) {
 
-              addonIds.forEach((id, indexID) => {
-                     formData.append(`addons[${indexID}]`, id); // Appending each ID separately with 'addons[]'
-              });
+                     const addonIds = selectedAddonsId.map((addon) => addon.id); // Extracts only the IDs
+
+                     addonIds.forEach((id, indexID) => {
+                            formData.append(`addons[${indexID}]`, id); // Appending each ID separately with 'addons[]'
+                     });
+              }
+
 
 
 
@@ -1674,7 +1683,7 @@ const EditProductPage = () => {
                                                                                                                                                                  <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
                                                                                                                                                                         <span className="text-xl font-TextFontRegular text-thirdColor">Price:</span>
                                                                                                                                                                         <NumberInput
-                                                                                                                                                                               value={option.price || ''}
+                                                                                                                                                                               value={option?.price || 0}
                                                                                                                                                                                onChange={(e) => {
                                                                                                                                                                                       const updatedValue = e.target.value;
                                                                                                                                                                                       setProductVariations((prevProductVariations) =>
@@ -1700,7 +1709,7 @@ const EditProductPage = () => {
                                                                                                                                                                  <div className="sm:w-full lg:w-[33%] flex flex-col items-start justify-center gap-y-1">
                                                                                                                                                                         <span className="text-xl font-TextFontRegular text-thirdColor">Points:</span>
                                                                                                                                                                         <NumberInput
-                                                                                                                                                                               value={option.points || ''}
+                                                                                                                                                                               value={option?.points || 0}
                                                                                                                                                                                onChange={(e) => {
                                                                                                                                                                                       const updatedValue = e.target.value;
                                                                                                                                                                                       setProductVariations((prevProductVariations) =>
