@@ -15,10 +15,10 @@ const HomePage = () => {
 
   const {
     refetch: refetchCountOrders,
-    loading,
+    loading:loadingCountOrders,
     data: dataCountOrders,
   } = useGet({
-    url: "https://lamadabckend.food2go.online/admin/order/count",
+    url: "https://bcknd.food2go.online/admin/order/count",
   });
 
   const {
@@ -29,10 +29,10 @@ const HomePage = () => {
     url: "https://bcknd.food2go.online/admin/home",
   });
   const [dataHome, setDataHome] = useState([]);
-  const [order_statistics,setOrder_statistics] = useState({})
-  const [earning_statistics,setEarning_statistics] = useState({})
-//   const [orders,setOrders] = useState({})
-  const [recent_orders,setRecent_orders] = useState([])
+  const [order_statistics, setOrder_statistics] = useState({})
+  const [earning_statistics, setEarning_statistics] = useState({})
+  //   const [orders,setOrders] = useState({})
+  const [recent_orders, setRecent_orders] = useState([])
 
 
 
@@ -66,23 +66,23 @@ const HomePage = () => {
   const userName = useSelector((state) => state.user.name);
 
   useEffect(() => {
-       if (dataCharts) {
-         setDataHome(dataCharts);
-         setOrder_statistics(dataCharts.order_statistics)
-         setEarning_statistics(dataCharts.earning_statistics)
-         setRecent_orders(dataCharts.recent_orders)
-       //   setOrders(dataCharts.orders)
-   
-       }
-       console.log("fetch data Home", dataHome);
-       console.log("fetch data Home", dataCharts);
-       console.log("fetch data Home stat order", dataHome.order_statistics);
-       console.log("fetch data Home stat earn",dataHome.earning_statistics);
-       console.log("fetch data Home stat recent",dataHome.recent_orders);
-       console.log("fetch data Home stat order", order_statistics);
-       // console.log("fetch data Home stat order", dataCharts.orders);
-   
-     }, [dataCharts,dataHome,order_statistics]);
+    if (dataCharts) {
+      setDataHome(dataCharts);
+      setOrder_statistics(dataCharts.order_statistics)
+      setEarning_statistics(dataCharts.earning_statistics)
+      setRecent_orders(dataCharts.recent_orders)
+      //   setOrders(dataCharts.orders)
+
+    }
+    console.log("fetch data Home", dataHome);
+    console.log("fetch data Home", dataCharts);
+    console.log("fetch data Home stat order", dataHome.order_statistics);
+    console.log("fetch data Home stat earn", dataHome.earning_statistics);
+    console.log("fetch data Home stat recent", dataHome.recent_orders);
+    console.log("fetch data Home stat order", order_statistics);
+    // console.log("fetch data Home stat order", dataCharts.orders);
+
+  }, [dataCharts, dataHome, order_statistics]);
 
   const counters = {
     ordersAll: dataCountOrders?.orders || 0,
@@ -101,7 +101,7 @@ const HomePage = () => {
     <>
       <OrdersComponent />
       <div className="w-full flex flex-col mb-0">
-        {loading ? (
+        {loadingCountOrders && loadingChart ? (
           <>
             <div className="w-full flex justify-center items-center">
               <LoaderLogin />
@@ -112,9 +112,9 @@ const HomePage = () => {
             <div className="flex flex-col gap-7 items-start justify-center pb-16">
               <CartsOrderSection ordersNum={counters} />
               <Chart
-              order_statistics={order_statistics}
-              earning_statistics={earning_statistics}
-              recent_orders={recent_orders}
+                order_statistics={order_statistics}
+                earning_statistics={earning_statistics}
+                recent_orders={recent_orders}
               // orders={orders}  
               />
             </div>

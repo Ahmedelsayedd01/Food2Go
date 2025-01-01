@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 
 const orders = [
   {
@@ -66,46 +67,50 @@ const RecentOrders = ({ recent_orders }) => {
   }, [recent_orders]);
 
   return (
-    <div className="bg-white p-5 w-full mx-auto">
+    <div className="bg-white py-3 px-4 h-full w-full mx-auto">
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-semibold text-[#8c0000]">Recent Orders</h3>
-        <a href="#" className="text-sm text-[#8c0000] underline">
+        <h3 className="text-lg font-semibold text-mainColor">Recent Orders</h3>
+        <Link to={'/dashboard/orders/all'} className="text-sm text-mainColor underline">
           View All
-        </a>
+        </Link>
       </div>
 
-      <div className="max-h-80 overflow-y-scroll">
-        {recent_orders.map((order) => (
-          <div
-            key={order.id}
-            className="flex justify-between items-center  py-8 px-4 border-b border-gray-200 last:border-b-0"
-          >
-            <div >
-              <p className="font-medium">
-                Order# {order.order_number ? order.order_number : 0}
-              </p>
-              <p className="text-sm text-gray-500">
-                {order.order_date},{" "}
-                {(() => {
-                  const [hour, minute] = order.date.split(":").map(Number);
-                  const period = hour >= 12 ? "PM" : "AM";
-                  const formattedHour = hour % 12 || 12; // Convert 0 to 12 for 12 AM/PM
-                  return `${formattedHour}:${
-                    minute < 10 ? "0" + minute : minute
-                  } ${period}`;
-                })()}
-              </p>
-            </div>
+      {recent_orders.lenght === 0 ? (
+        <div className="text-center font-TextFontMedium text-mainColor">
+          Not Found Orders
+        </div>
+      ) : (
+        <div className="max-h-96 overflow-y-scroll scrollDrop">
+          {recent_orders.map((order) => (
             <div
-              className={`px-3 py-1  rounded-full text-sm font-medium ${
-                statusColors[order.order_status.toLowerCase().replace(" ", "_")]
-              }`}
+              key={order.id}
+              className="flex justify-between items-center  py-3 px-2 border-b border-gray-200 last:border-b-0"
             >
-              {order.order_status}
+              <div >
+                <p className="font-medium">
+                  Order# {order.order_number ? order.order_number : 0}
+                </p>
+                <p className="text-sm text-gray-500">
+                  {order.order_date},{" "}
+                  {(() => {
+                    const [hour, minute] = order.date.split(":").map(Number);
+                    const period = hour >= 12 ? "PM" : "AM";
+                    const formattedHour = hour % 12 || 12; // Convert 0 to 12 for 12 AM/PM
+                    return `${formattedHour}:${minute < 10 ? "0" + minute : minute
+                      } ${period}`;
+                  })()}
+                </p>
+              </div>
+              <div
+                className={`px-3 py-1  rounded-full text-sm font-medium ${statusColors[order.order_status.toLowerCase().replace(" ", "_")]
+                  }`}
+              >
+                {order.order_status}
+              </div>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

@@ -47,46 +47,46 @@ const BusinessSettingsPage = () => {
 
   const [countries, setCountries] = useState(
     [
-      { name: 'Afghanistan' }, { name: 'Albania' }, { name: 'Algeria' }, { name: 'Andorra' }, { name: 'Angola' },
-      { name: 'Antigua and Barbuda' }, { name: 'Argentina' }, { name: 'Armenia' }, { name: 'Australia' }, { name: 'Austria' },
-      { name: 'Azerbaijan' }, { name: 'Bahamas' }, { name: 'Bahrain' }, { name: 'Bangladesh' }, { name: 'Barbados' },
-      { name: 'Belarus' }, { name: 'Belgium' }, { name: 'Belize' }, { name: 'Benin' }, { name: 'Bhutan' },
-      { name: 'Bolivia' }, { name: 'Bosnia and Herzegovina' }, { name: 'Botswana' }, { name: 'Brazil' }, { name: 'Brunei' },
-      { name: 'Bulgaria' }, { name: 'Burkina Faso' }, { name: 'Burundi' }, { name: 'Cabo Verde' }, { name: 'Cambodia' },
-      { name: 'Cameroon' }, { name: 'Canada' }, { name: 'Central African Republic' }, { name: 'Chad' }, { name: 'Chile' },
-      { name: 'China' }, { name: 'Colombia' }, { name: 'Comoros' }, { name: 'Congo, Democratic Republic of the' }, { name: 'Congo, Republic of the' },
-      { name: 'Costa Rica' }, { name: 'Croatia' }, { name: 'Cuba' }, { name: 'Cyprus' }, { name: 'Czech Republic' },
-      { name: 'Denmark' }, { name: 'Djibouti' }, { name: 'Dominica' }, { name: 'Dominican Republic' }, { name: 'Ecuador' },
-      { name: 'Egypt' }, { name: 'El Salvador' }, { name: 'Equatorial Guinea' }, { name: 'Eritrea' }, { name: 'Estonia' },
-      { name: 'Eswatini' }, { name: 'Ethiopia' }, { name: 'Fiji' }, { name: 'Finland' }, { name: 'France' },
-      { name: 'Gabon' }, { name: 'Gambia' }, { name: 'Georgia' }, { name: 'Germany' }, { name: 'Ghana' },
-      { name: 'Greece' }, { name: 'Grenada' }, { name: 'Guatemala' }, { name: 'Guinea' }, { name: 'Guinea-Bissau' },
-      { name: 'Guyana' }, { name: 'Haiti' }, { name: 'Honduras' }, { name: 'Hungary' }, { name: 'Iceland' },
-      { name: 'India' }, { name: 'Indonesia' }, { name: 'Iran' }, { name: 'Iraq' }, { name: 'Ireland' },
-      { name: 'Israel' }, { name: 'Italy' }, { name: 'Jamaica' }, { name: 'Japan' }, { name: 'Jordan' },
-      { name: 'Kazakhstan' }, { name: 'Kenya' }, { name: 'Kiribati' }, { name: 'Korea, North' }, { name: 'Korea, South' },
-      { name: 'Kosovo' }, { name: 'Kuwait' }, { name: 'Kyrgyzstan' }, { name: 'Laos' }, { name: 'Latvia' },
-      { name: 'Lebanon' }, { name: 'Lesotho' }, { name: 'Liberia' }, { name: 'Libya' }, { name: 'Liechtenstein' },
-      { name: 'Lithuania' }, { name: 'Luxembourg' }, { name: 'Madagascar' }, { name: 'Malawi' }, { name: 'Malaysia' },
-      { name: 'Maldives' }, { name: 'Mali' }, { name: 'Malta' }, { name: 'Marshall Islands' }, { name: 'Mauritania' },
-      { name: 'Mauritius' }, { name: 'Mexico' }, { name: 'Micronesia' }, { name: 'Moldova' }, { name: 'Monaco' },
-      { name: 'Mongolia' }, { name: 'Montenegro' }, { name: 'Morocco' }, { name: 'Mozambique' }, { name: 'Myanmar' },
-      { name: 'Namibia' }, { name: 'Nauru' }, { name: 'Nepal' }, { name: 'Netherlands' }, { name: 'New Zealand' },
-      { name: 'Nicaragua' }, { name: 'Niger' }, { name: 'Nigeria' }, { name: 'North Macedonia' }, { name: 'Norway' },
-      { name: 'Oman' }, { name: 'Pakistan' }, { name: 'Palau' }, { name: 'Palestine' }, { name: 'Panama' },
-      { name: 'Papua New Guinea' }, { name: 'Paraguay' }, { name: 'Peru' }, { name: 'Philippines' }, { name: 'Poland' },
-      { name: 'Portugal' }, { name: 'Qatar' }, { name: 'Romania' }, { name: 'Russia' }, { name: 'Rwanda' },
-      { name: 'Saint Kitts and Nevis' }, { name: 'Saint Lucia' }, { name: 'Saint Vincent and the Grenadines' }, { name: 'Samoa' }, { name: 'San Marino' },
-      { name: 'Sao Tome and Principe' }, { name: 'Saudi Arabia' }, { name: 'Senegal' }, { name: 'Serbia' }, { name: 'Seychelles' },
-      { name: 'Sierra Leone' }, { name: 'Singapore' }, { name: 'Slovakia' }, { name: 'Slovenia' }, { name: 'Solomon Islands' },
-      { name: 'Somalia' }, { name: 'South Africa' }, { name: 'South Sudan' }, { name: 'Spain' }, { name: 'Sri Lanka' },
-      { name: 'Sudan' }, { name: 'Suriname' }, { name: 'Sweden' }, { name: 'Switzerland' }, { name: 'Syria' },
-      { name: 'Taiwan' }, { name: 'Tajikistan' }, { name: 'Tanzania' }, { name: 'Thailand' }, { name: 'Timor-Leste' },
-      { name: 'Togo' }, { name: 'Tonga' }, { name: 'Trinidad and Tobago' }, { name: 'Tunisia' }, { name: 'Turkey' },
-      { name: 'Turkmenistan' }, { name: 'Tuvalu' }, { name: 'Uganda' }, { name: 'Ukraine' }, { name: 'United Arab Emirates' },
-      { name: 'United Kingdom' }, { name: 'United States' }, { name: 'Uruguay' }, { name: 'Uzbekistan' }, { name: 'Vanuatu' },
-      { name: 'Vatican City' }, { name: 'Venezuela' }, { name: 'Vietnam' }, { name: 'Yemen' }, { name: 'Zambia' },
-      { name: 'Zimbabwe' }
+      'Afghanistan', 'Albania', 'Algeria', 'Andorra', 'Angola',
+      'Antigua and Barbuda', 'Argentina', 'Armenia', 'Australia', 'Austria',
+      'Azerbaijan', 'Bahamas', 'Bahrain', 'Bangladesh', 'Barbados',
+      'Belarus', 'Belgium', 'Belize', 'Benin', 'Bhutan',
+      'Bolivia', 'Bosnia and Herzegovina', 'Botswana', 'Brazil', 'Brunei',
+      'Bulgaria', 'Burkina Faso', 'Burundi', 'Cabo Verde', 'Cambodia',
+      'Cameroon', 'Canada', 'Central African Republic', 'Chad', 'Chile',
+      'China', 'Colombia', 'Comoros', 'Congo, Democratic Republic of the', 'Congo, Republic of the',
+      'Costa Rica', 'Croatia', 'Cuba', 'Cyprus', 'Czech Republic',
+      'Denmark', 'Djibouti', 'Dominica', 'Dominican Republic', 'Ecuador',
+      'Egypt', 'El Salvador', 'Equatorial Guinea', 'Eritrea', 'Estonia',
+      'Eswatini', 'Ethiopia', 'Fiji', 'Finland', 'France',
+      'Gabon', 'Gambia', 'Georgia', 'Germany', 'Ghana',
+      'Greece', 'Grenada', 'Guatemala', 'Guinea', 'Guinea-Bissau',
+      'Guyana', 'Haiti', 'Honduras', 'Hungary', 'Iceland',
+      'India', 'Indonesia', 'Iran', 'Iraq', 'Ireland',
+      'Israel', 'Italy', 'Jamaica', 'Japan', 'Jordan',
+      'Kazakhstan', 'Kenya', 'Kiribati', 'Korea, North', 'Korea, South',
+      'Kosovo', 'Kuwait', 'Kyrgyzstan', 'Laos', 'Latvia',
+      'Lebanon', 'Lesotho', 'Liberia', 'Libya', 'Liechtenstein',
+      'Lithuania', 'Luxembourg', 'Madagascar', 'Malawi', 'Malaysia',
+      'Maldives', 'Mali', 'Malta', 'Marshall Islands', 'Mauritania',
+      'Mauritius', 'Mexico', 'Micronesia', 'Moldova', 'Monaco',
+      'Mongolia', 'Montenegro', 'Morocco', 'Mozambique', 'Myanmar',
+      'Namibia', 'Nauru', 'Nepal', 'Netherlands', 'New Zealand',
+      'Nicaragua', 'Niger', 'Nigeria', 'North Macedonia', 'Norway',
+      'Oman', 'Pakistan', 'Palau', 'Palestine', 'Panama',
+      'Papua New Guinea', 'Paraguay', 'Peru', 'Philippines', 'Poland',
+      'Portugal', 'Qatar', 'Romania', 'Russia', 'Rwanda',
+      'Saint Kitts and Nevis', 'Saint Lucia', 'Saint Vincent and the Grenadines', 'Samoa', 'San Marino',
+      'Sao Tome and Principe', 'Saudi Arabia', 'Senegal', 'Serbia', 'Seychelles',
+      'Sierra Leone', 'Singapore', 'Slovakia', 'Slovenia', 'Solomon Islands',
+      'Somalia', 'South Africa', 'South Sudan', 'Spain', 'Sri Lanka',
+      'Sudan', 'Suriname', 'Sweden', 'Switzerland', 'Syria',
+      'Taiwan', 'Tajikistan', 'Tanzania', 'Thailand', 'Timor-Leste',
+      'Togo', 'Tonga', 'Trinidad and Tobago', 'Tunisia', 'Turkey',
+      'Turkmenistan', 'Tuvalu', 'Uganda', 'Ukraine', 'United Arab Emirates',
+      'United Kingdom', 'United States', 'Uruguay', 'Uzbekistan', 'Vanuatu',
+      'Vatican City', 'Venezuela', 'Vietnam', 'Yemen', 'Zambia',
+      'Zimbabwe'
     ]
   );
   const [isOpenCountries, setIsOpenCountries] = useState(false);
@@ -149,8 +149,8 @@ const BusinessSettingsPage = () => {
   } = useGet({ url: "https://bcknd.food2go.online/admin/settings/city" });
 
   const [dataCompany2, setDataCompany] = useState(null);
-  
-  
+
+
   const [dataCompanyInfo, setDataCompanyInfo] = useState([]);
 
   const [dataCurrency, setDataCurrency] = useState([]);
@@ -166,7 +166,7 @@ const BusinessSettingsPage = () => {
 
 
   // const { postDataStatus, loadingPostStatus, responseStatus } = usePost({
-  //      url: "https://lamadabckend.food2go.online/admin/settings/business_setup/maintenance/status",
+  //      url: "https://bcknd.food2go.online/admin/settings/business_setup/maintenance/status",
   //    });
 
   //  const { postDataMaintenance, loadingPostMaintenance, responseMaintenanace } = usePost({
@@ -203,6 +203,7 @@ const BusinessSettingsPage = () => {
 
         if (matchedCurrency) {
           setStateCurrency(matchedCurrency.name);
+          setCurrencyId(matchedCurrency.id);
         }
       }
       setTimeFormats(dataCompany.company_info.time_format)
@@ -413,11 +414,11 @@ const BusinessSettingsPage = () => {
 
     formData.append("logo", logo);
     formData.append("fav_icon", icon);
-    formData.append("time_zone", selectedTimeZone);
+    formData.append("time_zone", JSON.stringify(selectedTimeZone));
 
     formData.append("time_format", stateTimeFormat);
     formData.append("currency_id", currencyId);
-    formData.append("country", selectedCountry);
+    formData.append("country", JSON.stringify(selectedCountry));
 
     if (leftCurrency === 0 && rightCurrency === 0) {
       formData.append("currency_position", "");
