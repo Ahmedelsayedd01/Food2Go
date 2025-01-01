@@ -23,12 +23,12 @@ const CustomerLoginPage = () => {
     loading: loadingLogin,
     data: dataLogin,
   } = useGet({
-    url: "https://bcknd.food2go.online/admin/settings/business_setup/customer_login",
+    url: "https://lamadabckend.food2go.online/admin/settings/business_setup/customer_login",
   });
   const [Loign, setLogin] = useState([]);
 
   const { postData, loadingPost, response } = usePost({
-    url: "https://bcknd.food2go.online/admin/settings/business_setup/customer_login/add ",
+    url: "https://lamadabckend.food2go.online/admin/settings/business_setup/customer_login/add ",
   });
   useEffect(() => {
     if (dataLogin && dataLogin.customer_login) {

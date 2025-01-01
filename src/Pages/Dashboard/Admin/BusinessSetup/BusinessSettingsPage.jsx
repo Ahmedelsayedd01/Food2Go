@@ -112,7 +112,7 @@ const BusinessSettingsPage = () => {
   const [rightCurrency, setRightCurrency] = useState(0);
 
   const [companyCopyrightText, setCompanyCopyrightText] = useState("");
-
+  
   const [allSystem, setAllSystem] = useState(0);
   const [branchPanel, setBranchPanel] = useState(0);
   const [customerApp, setCustomerApp] = useState(0);
@@ -167,11 +167,11 @@ const BusinessSettingsPage = () => {
 
 
   // const { postDataStatus, loadingPostStatus, responseStatus } = usePost({
-  //      url: "https://bcknd.food2go.online/admin/settings/business_setup/maintenance/status",
+  //      url: "https://lamadabckend.food2go.online/admin/settings/business_setup/maintenance/status",
   //    });
 
     //  const { postDataMaintenance, loadingPostMaintenance, responseMaintenanace } = usePost({
-    //    url: "https://bcknd.food2go.online/admin/settings/business_setup/maintenance/add",
+    //    url: "https://lamadabckend.food2go.online/admin/settings/business_setup/maintenance/add",
     //  });
 
   useEffect(() => {
@@ -830,7 +830,7 @@ const updatedData = {
               openMenu={isOpenTimeFormat}
               handleOpenOption={handleOpenTimeFormat}
               onSelectOption={handleSelectTimeFormat}
-              options={timeFormats}
+              options={timeFormat}
               border={false}
             />
           </div>

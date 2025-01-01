@@ -1,18 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart, ArcElement, Tooltip, Legend } from 'chart.js';
 
 // Register required Chart.js components
 Chart.register(ArcElement, Tooltip, Legend);
 
-const DonutChart = () => {
-    const totalOrders = 8;
+const DonutChart = ({ordersData}) => {
+//    const [totalOrders,setTotalOrders] = useState(0)
+    useEffect(() => {
+        // const newTotalOrders = ordersData.orders;
+        // setTotalOrders(newTotalOrders);
+    console.log("data order pi ",ordersData)
+    }, [ordersData])
 
     const data = {
         labels: ['Pending', 'Canceled', 'Ongoing', 'Returned', 'Delivered', 'Failed To Deliver'],
         datasets: [
             {
-                data: [1, 1, 2, 1, 2, 1],
+                data: [
+                    ordersData.pending,              // Pending
+                    ordersData.canceled,             // Canceled
+                    ordersData.processing,           // Ongoing (assuming processing is ongoing)
+                    ordersData.returned,             // Returned
+                    ordersData.delivered,            // Delivered
+                    ordersData.faild_to_deliver      // Failed To Deliver
+                ],
                 backgroundColor: [
                     '#f3d9d9',  // Pending
                     '#f28c8c',  // Canceled
@@ -56,7 +68,7 @@ const DonutChart = () => {
 
             const textX = width / 2;
             const textY = height / 2.3;
-            ctx.fillText(totalOrders, textX, textY);
+            ctx.fillText(ordersData.orders, textX, textY);
 
             ctx.font = `bold ${(fontSize / 2).toFixed(2)}px sans-serif`; 
             ctx.fillText('Order', textX, textY + 30);
@@ -65,7 +77,7 @@ const DonutChart = () => {
     };
 
     return (
-        <div className="chart-container" style={{ width: '250px', margin: 'auto' }}>
+        <div className="chart-container" style={{ width: 'fit', margin: 'auto' }}>
             <Doughnut data={data} options={options} plugins={[centerTextPlugin]} />
             
             <div className="legend" style={{
