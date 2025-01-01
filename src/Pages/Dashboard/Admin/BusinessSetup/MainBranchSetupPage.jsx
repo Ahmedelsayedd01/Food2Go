@@ -29,7 +29,6 @@ const MainBranchSetupPage = () => {
                      setCities(dataCity?.cities || []);
 
               }
-              console.log("data city ", dataCity?.cities?.[0]?.name);
 
        }, [dataCity]);
 
@@ -39,12 +38,14 @@ const MainBranchSetupPage = () => {
                      setName(dataBranch?.branches?.name || '')
                      setAddress(dataBranch?.branches?.address || '')
                      setBranchCover(dataBranch?.branches?.cover_image_link || '')
+                     setBranchCoverFile(dataBranch?.branches?.cover_image_link || '')
                      setBranchImage(dataBranch?.branches?.image_link || '')
+                     setBranchImageFile(dataBranch?.branches?.image_link || '')
                      setLatitude(dataBranch?.branches?.latitude || '')
                      setCoverage(dataBranch?.branches?.coverage || '')
                      setLongitude(dataBranch?.branches?.longitude || '')
                      setStateCity(dataBranch?.branches?.city?.name || stateCity)
-                     setSelectedCity(dataBranch?.branches?.city?.name || selectedCity)
+                     setSelectedCity(dataBranch?.branches?.city?.id || selectedCity)
                      setPhone(dataBranch?.branches?.phone || '')
                      setEmail(dataBranch?.branches?.email || '')
                      setFoodPreparationTime(dataBranch?.branches?.food_preparion_time || '')
@@ -67,7 +68,6 @@ const MainBranchSetupPage = () => {
        const [password, setPassword] = useState('');
        const [stateCity, setStateCity] = useState('Select City');
        const [selectedCity, setSelectedCity] = useState('');
-       const [city_id, setCityID] = useState();
 
        useEffect(() => {
               console.log('stateCity', stateCity)
@@ -165,7 +165,7 @@ const MainBranchSetupPage = () => {
               formData.append('longitude', longitude || dataBranch?.branches?.longitude);
               formData.append('coverage', coverage || dataBranch?.branches?.coverage);
               formData.append('status', 1);
-              formData.append('city_id', city_id);
+              formData.append('city_id', selectedCity.id);
 
               postData(formData, 'Branch Added Success done');
               console.log("all data submitted", formData)
