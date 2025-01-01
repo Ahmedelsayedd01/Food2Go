@@ -8,8 +8,8 @@ import { useAuth } from '../../../../Context/Auth';
 const MainBranchSetupPage = () => {
        const { refetch: refetchBranch, loading: loadingBranch, data: dataBranch } = useGet({ url: 'https://bcknd.food2go.online/admin/settings/business_setup/branch' });
        const [branch, setBranch] = useState([])
-       const [previousBranchData, setPreviousBranchData] = useState({});
-       const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/settings/business_setup/branch/add' });
+       const [previousBranchData, setPreviousBranchData] = useState({}); 
+       const { postData, loadingPost, response } = usePost({ url: 'https://lamadabckend.food2go.online/admin/settings/business_setup/branch/add' });
 
        const {
               refetch: refetchCity,

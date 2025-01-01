@@ -5,8 +5,8 @@ import { usePost } from '../../../../Hooks/usePostJson';
 
 const RestaurantTimeSlotPage = ({ refetch }) => {
     const [allClosestTime, setAllClosestTime] = useState([{ closingTimeAm: '', closingTimePm: '' }]);
-    const { refetch: refetchTimeSlot, loading: loadingTime,  data: dataSlot} = useGet({ url: 'https://bcknd.food2go.online/admin/settings/business_setup/time_slot' });
-    const { postData ,loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/settings/business_setup/time_slot/add' });
+    const { refetch: refetchTimeSlot, loading: loadingTime,  data: dataSlot} = useGet({ url: 'https://lamadabckend.food2go.online/admin/settings/business_setup/time_slot' });
+    const { postData ,loadingPost, response } = usePost({ url: 'https://lamadabckend.food2go.online/admin/settings/business_setup/time_slot/add' });
 
     const [timeSlot, setTimeSlot] = useState({ daily: [], custom: [] });
     const [day, setDay] = useState('');

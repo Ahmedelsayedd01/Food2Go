@@ -12,12 +12,12 @@ const OrdersPage = () => {
            loading: loadingOrder,
            data: dataOrder,
          } = useGet({
-           url: "https://bcknd.food2go.online/admin/settings/business_setup/order_setting",
+           url: "https://lamadabckend.food2go.online/admin/settings/business_setup/order_setting",
          });
          const [Order, setOrder] = useState([]);
        
          const { postData, loadingPost, response } = usePost({
-           url: "https://bcknd.food2go.online/admin/settings/business_setup/order_setting/add ",
+           url: "https://lamadabckend.food2go.online/admin/settings/business_setup/order_setting/add ",
          });
          useEffect(() => {
               refetchOrder()

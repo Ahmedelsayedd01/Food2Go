@@ -169,7 +169,7 @@ const BusinessSettingsPage = () => {
 
 
   // const { postDataStatus, loadingPostStatus, responseStatus } = usePost({
-  //      url: "https://bcknd.food2go.online/admin/settings/business_setup/maintenance/status",
+  //      url: "https://lamadabckend.food2go.online/admin/settings/business_setup/maintenance/status",
   //    });
 
   //  const { postDataMaintenance, loadingPostMaintenance, responseMaintenanace } = usePost({
