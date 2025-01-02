@@ -1,58 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-const orders = [
-  {
-    id: 1,
-    number: "100008",
-    status: "Pending",
-    date: "28-09-24",
-    time: "03:09 PM",
-  },
-  {
-    id: 2,
-    number: "100008",
-    status: "Canceled",
-    date: "28-09-24",
-    time: "03:09 PM",
-  },
-  {
-    id: 3,
-    number: "100008",
-    status: "Pending",
-    date: "28-09-24",
-    time: "03:09 PM",
-  },
-  {
-    id: 4,
-    number: "100008",
-    status: "Processing",
-    date: "28-09-24",
-    time: "03:09 PM",
-  },
-  {
-    id: 5,
-    number: "100008",
-    status: "Canceled",
-    date: "28-09-24",
-    time: "03:09 PM",
-  },
-  {
-    id: 6,
-    number: "100008",
-    status: "Confirmed",
-    date: "28-09-24",
-    time: "03:09 PM",
-  },
-  {
-    id: 7,
-    number: "100008",
-    status: "Out for Delivery",
-    date: "28-09-24",
-    time: "03:09 PM",
-  },
-];
-
 const statusColors = {
   pending: "bg-yellow-100 text-yellow-700",
   canceled: "bg-red-100 text-red-700",
