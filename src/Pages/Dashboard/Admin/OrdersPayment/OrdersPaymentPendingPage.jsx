@@ -10,10 +10,17 @@ import { useAuth } from '../../../../Context/Auth';
 
 const OrdersPaymentPending = () => {
   const auth = useAuth()
+  const [orderId, setOrderId] = useState('');
+
   const { refetch: refetchOrdersPaymentPending, loading: loadingOrdersPaymentPending, data: dataOrdersPaymentPending } = useGet({ url: 'https://bcknd.food2go.online/admin/payment/pending' });
+  const { refetch: refetchReceiptImage, loading: loadingReceiptImage, data: dataReceiptImage } = useGet({ url: `https://bcknd.food2go.online/admin/payment/receipt/${orderId}` });
+
   const { changeState, loadingChange, responseChange } = useChangeState();
   const [ordersPaymentPending, setOrdersPaymentPending] = useState([]);
   const [reasonReject, setReasonReject] = useState('');
+
+  const [receiptImage, setReceiptImage] = useState('');
+  const [openReceipt, setOpenReceipt] = useState(null);
   const [openReject, setOpenReject] = useState(null);
 
 
@@ -40,8 +47,25 @@ const OrdersPaymentPending = () => {
     refetchOrdersPaymentPending();
   }, [refetchOrdersPaymentPending]); // Empty dependency array to only call refetch once on mount
 
+  useEffect(() => {
+    if (orderId) {
+      refetchReceiptImage();
+    }
+  }, [orderId, refetchReceiptImage]);
+
+  const handleOpenReceipt = (id) => {
+    setOrderId(id);
+    setOpenReceipt(id);
+  };
+
+  const handleCloseReceipt = () => {
+    setOpenReceipt(null);
+  };
+
+
   const handleOpenReject = (orderId) => {
     setOpenReject(orderId);
+
   };
   const handleCloseReject = () => {
     setOpenReject(null);
@@ -54,6 +78,14 @@ const OrdersPaymentPending = () => {
     }
     console.log('OrdersPaymentPending', ordersPaymentPending)
   }, [dataOrdersPaymentPending]); // Only run this effect when `data` changes
+
+  // Update OrdersPayment Pending when `data` changes
+  useEffect(() => {
+    if (dataReceiptImage && dataReceiptImage.receipt) {
+      setReceiptImage(dataReceiptImage.receipt);
+    }
+    console.log('receiptImage', receiptImage)
+  }, [dataReceiptImage]); // Only run this effect when `data` changes
 
   const handleApprove = async (id) => {
     const response = await changeState(
@@ -132,12 +164,60 @@ const OrdersPaymentPending = () => {
                       {paymentPending?.user?.order_amount || '-'}
                     </td>
                     <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                      <div className="flex justify-center">
+                      {/* <div className="flex justify-center">
                         <img src={paymentPending?.receipt_link}
                           className="bg-mainColor border-2 border-mainColor rounded-full min-w-14 min-h-14 max-w-14 max-h-14"
                           alt="Photo"
                         />
-                      </div>
+                      </div> */}
+                      <span className='text-mainColor text-xl border-b-2 border-mainColor font-semibold cursor-pointer'
+                        onClick={() => handleOpenReceipt(paymentPending.id)}>
+                        View
+                      </span>
+                      {openReceipt === paymentPending.id && (
+                        <Dialog open={true} onClose={handleCloseReceipt} className="relative z-10">
+                          <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                          <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                              <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl">
+
+                                {/* Permissions List */}
+                                {/* <div className="w-full flex flex-col items-start justify-center gap-4 my-4 px-4 sm:p-6 sm:pb-4">
+                                  sdf
+                                </div> */}
+                                <div className="w-full flex justify-center items-center">
+                                  {loadingReceiptImage ? (
+                                    <LoaderLogin
+                                      mt={0}
+                                    />
+                                  ) : (
+                                    <div className="w-full p-5  ">
+                                      <img src={`data:image/jpeg;base64,${receiptImage}`}
+                                        // <img src={'/src/Assets/Images/receipt.jpg'}
+                                        className="w-full h-full object-center object-contain bg-mainColor border-2 border-mainColor shadow-md rounded-2xl"
+                                        alt="Photo"
+                                      />
+                                    </div>
+                                  )
+                                  }
+                                </div>
+
+                                {/* Dialog Footer */}
+                                <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-x-3">
+                                  <button
+                                    type="button"
+                                    onClick={handleCloseReceipt}
+                                    className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-medium text-white sm:mt-0 sm:w-auto"
+                                  >
+                                    Close
+                                  </button>
+                                </div>
+
+                              </DialogPanel>
+                            </div>
+                          </div>
+                        </Dialog>
+                      )}
                     </td>
                     <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
                       {paymentPending?.order_number || '-'}
