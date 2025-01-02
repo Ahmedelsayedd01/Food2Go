@@ -74,7 +74,7 @@ const LineChart = ({ title, data }) => {
   };
 
   return (
-    <div className="p-2 bg-white rounded-lg shadow-lg">
+    <div className="p-2 bg-white rounded-lg">
       <div className="flex justify-between items-center mb-2">
         <h2 className="text-lg font-semibold text-[#991b1b]">{title}</h2>
         <select
