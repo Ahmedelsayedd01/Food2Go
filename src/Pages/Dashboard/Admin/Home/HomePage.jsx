@@ -4,6 +4,7 @@ import { LoaderLogin } from "../../../../Components/Components";
 import { OrdersComponent } from "../../../../Store/CreateSlices";
 import { useGet } from "../../../../Hooks/useGet";
 import Chart from "./Charts/Chart";
+import FooterCard from "./FooterHome/FooterCard";
 
 const HomePage = () => {
 
@@ -88,6 +89,20 @@ const HomePage = () => {
                 recent_orders={recent_orders}
                 orders={orders}
               />
+               <div className="footer flex flex-wrap gap-5 p-6">
+  <div className="footer-card flex-1 min-w-[350px] max-w-[300px] p-4 bg-gray-100 rounded-lg shadow-md">
+    <FooterCard title={"Top Selling Products"} layout="TopSelling" />
+  </div>
+  {/* <div className="footer-card flex-1 min-w-[250px] max-w-[300px] p-4 bg-gray-100 rounded-lg shadow-md">
+    <FooterCard title={"Most Rated Products"} layout="MostRated" />
+  </div> */}
+  <div className="footer-card flex-1 min-w-[350px] max-w-[300px] p-4 bg-gray-100 rounded-lg shadow-md">
+    <FooterCard title={"Offers"} layout="Offers" />
+  </div>
+  <div className="footer-card flex-1 min-w-[350px] max-w-[300px] p-4 bg-gray-100 rounded-lg shadow-md">
+    <FooterCard  title ={"Top Customer"} layout="default"  />
+  </div>
+</div>
             </div>
           </>
         )}
