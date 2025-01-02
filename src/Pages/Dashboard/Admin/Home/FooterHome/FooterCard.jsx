@@ -33,14 +33,14 @@ const statusColors = {
   out_for_delivery: "bg-purple-100 text-purple-700",
 };
 
-const FooterCard = ({title}) => {
+const FooterCard = ({ title, link }) => {
 
 
   return (
-    <div className="bg-white py-3 px-4 h-full mx-auto">
+    <div className="w-[23%] rounded-xl h-full bg-white py-3 px-4">
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-1sm font-semibold text-mainColor">{title}</h3>
-        <Link to={'/dashboard/orders/all'} className="text-sm text-mainColor underline">
+        <Link to={link} className="text-sm text-mainColor underline">
           View All
         </Link>
       </div>
@@ -62,7 +62,7 @@ const FooterCard = ({title}) => {
                 </p>
                 <p className="text-sm text-gray-500">
                   {order.order_date},{order.time}
-                
+
                 </p>
               </div>
               <div

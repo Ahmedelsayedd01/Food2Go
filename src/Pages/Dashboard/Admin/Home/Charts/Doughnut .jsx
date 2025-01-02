@@ -11,8 +11,8 @@ const DonutChart = ({ ordersData }) => {
 
    useEffect(() => {
        if (ordersData) {
-           setTotalOrders(ordersData.orders);
-           totalOrdersRef.current = ordersData.orders;  // Update the ref value immediately
+           setTotalOrders(ordersData.orders || 0);
+           totalOrdersRef.current = ordersData.orders || 0;  // Update the ref value immediately
            console.log("Total Orders:", ordersData.orders);
        }
    }, [ordersData]);

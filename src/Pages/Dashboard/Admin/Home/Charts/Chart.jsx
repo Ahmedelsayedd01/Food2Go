@@ -5,9 +5,9 @@ import RecentOrders from "./RecentOrder";
 const Chart = ({ order_statistics, earning_statistics, orders, recent_orders }) => {
   return (
     <>
-      <div className="w-full text-black gap-10 pb-10">
+      <div className="w-full text-black gap-10">
         {/* First Row */}
-        <div className="w-full px-3 flex flex-col justify-between lg:flex-row gap-6">
+        <div className="w-full flex flex-col justify-between lg:flex-row gap-6">
           {/* Chart Container for LineChart */}
           <div className="w-full lg:w-[70%]  flex flex-1">
             <div
@@ -27,7 +27,7 @@ const Chart = ({ order_statistics, earning_statistics, orders, recent_orders }) 
         </div>
 
         {/* Second Row */}
-        <div className="w-full pt-4 px-3 flex flex-col  justify-start lg:flex-row gap-6">
+        <div className="w-full pt-4 flex flex-col  justify-start lg:flex-row gap-6">
           {/* Chart Container for Earning Statistics */}
           <div className="w-full lg:w-[70%] flex flex-1">
             <div
