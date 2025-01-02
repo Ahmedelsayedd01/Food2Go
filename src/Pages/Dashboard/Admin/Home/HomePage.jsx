@@ -29,7 +29,9 @@ const HomePage = () => {
   const [earning_statistics, setEarning_statistics] = useState({})
   const [orders, setOrders] = useState({})
   const [recent_orders, setRecent_orders] = useState([])
-
+  const [offers, setOffers] = useState([])
+  const [topSelling, SetTopSelling] = useState([])
+  const [topCustomers, setTopCustomers] = useState({})
 
   useEffect(() => {
     console.log("Fetching Count Orders...");
@@ -44,6 +46,10 @@ const HomePage = () => {
       setEarning_statistics(dataCharts.earning_statistics)
       setRecent_orders(dataCharts.recent_orders)
       setOrders(dataCharts.orders)
+      setOffers( dataCharts.offers[0])
+      SetTopSelling(dataCharts.top_selling)
+      setTopCustomers(dataCharts.top_customers)
+
 
     }
     console.log("fetch data Home", dataHome);
@@ -52,6 +58,9 @@ const HomePage = () => {
     console.log("fetch data Home stat earn", dataHome.earning_statistics);
     console.log("fetch data Home stat recent", dataHome.recent_orders);
     console.log("fetch data Home stat order", order_statistics);
+    console.log("fetch data Home stat offers", dataHome.offers);
+    console.log("fetch data Home stat top_customers", dataHome.top_customers);
+    console.log("fetch data Home stat top_selling", dataHome.top_selling);
     // console.log("fetch data Home stat order", dataCharts.orders);
 
   }, [dataCharts, dataHome, order_statistics]);
@@ -91,10 +100,10 @@ const HomePage = () => {
                   orders={orders}
                 />
                 <div className="w-full flex justify-between flex-wrap gap-5">
-                  <FooterCard title={"Top Selling Products"} link="/dashboard/setup_product/product" />
-                  <FooterCard title={"Most Rated Products"} link="/dashboard/setup_product/product" />
-                  <FooterCard title={"Deals"} link="/dashboard/deals" />
-                  <FooterCard title={"Top Customer"} link="/dashboard/customers/customers_list" />
+                  <FooterCard title={"Top Selling Products"} link="/dashboard/setup_product/product" layout={"TopSelling"} topCustomers={topCustomers} topSelling={topSelling} offers={offers} />
+                  {/* <FooterCard title={"Most Rated Products"} link="/dashboard/setup_product/product" /> */}
+                  <FooterCard title={"Deals"} link="/dashboard/deals" layout={"Deals"} topCustomers={topCustomers} topSelling={topSelling} offers={offers} />
+                  <FooterCard title={"Top Customer"} link="/dashboard/customers/customers_list" layout={"default"} topCustomers={topCustomers} topSelling={topSelling} offers={offers} />
                 </div>
               </div>
             </div>
