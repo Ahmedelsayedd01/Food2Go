@@ -65,9 +65,8 @@ const FooterCard = ({
                         className="w-20 h-20 rounded-full object-cover object-center"
                       />
                     </div>
-                    <div className="w-8/12 flex items-center justify-between gap-x-2
+                    <div className="w-8/12 flex flex-col items-center gap-y-2
                     font-TextFontSemiBold text-4xl text-mainColor">
-
                       <span>
                         {offer.title}
                       </span>
