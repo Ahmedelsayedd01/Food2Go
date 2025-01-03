@@ -181,10 +181,10 @@ const EditBranchPage = () => {
                      auth.toastError('Please Add @ after branch email')
                      return;
               }
-              if (!branchPassword) {
-                     auth.toastError('Please Enter Branch Password')
-                     return;
-              }
+              // if (!branchPassword) {
+              //        auth.toastError('Please Enter Branch Password')
+              //        return;
+              // }
               if (!branchCoverage) {
                      auth.toastError('Please Enter Branch Coverage')
                      return;
@@ -234,7 +234,7 @@ const EditBranchPage = () => {
 
 
 
-              postData(formData, 'Branch Added Success');
+              postData(formData, 'Branch Edited Success');
 
        };
        return (
