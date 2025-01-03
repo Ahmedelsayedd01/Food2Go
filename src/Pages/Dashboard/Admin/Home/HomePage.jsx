@@ -46,7 +46,7 @@ const HomePage = () => {
       setEarning_statistics(dataCharts.earning_statistics)
       setRecent_orders(dataCharts.recent_orders)
       setOrders(dataCharts.orders)
-      setOffers( dataCharts.offers[0])
+      setOffers( dataCharts.offers)
       SetTopSelling(dataCharts.top_selling)
       setTopCustomers(dataCharts.top_customers)
 
@@ -92,14 +92,14 @@ const HomePage = () => {
           <>
             <div className="w-full flex flex-col gap-7 items-start justify-center pb-28">
               <CartsOrderSection ordersNum={counters} />
-              <div className="flex flex-col gap-7 items-start justify-center px-4">
+              <div className="w-full flex flex-col gap-7 items-start justify-center px-4">
                 <Chart
                   order_statistics={order_statistics}
                   earning_statistics={earning_statistics}
                   recent_orders={recent_orders}
                   orders={orders}
                 />
-                <div className="w-full flex justify-between flex-wrap gap-5">
+                <div className="w-full flex items-center justify-between flex-wrap gap-5">
                   <FooterCard title={"Top Selling Products"} link="/dashboard/setup_product/product" layout={"TopSelling"} topCustomers={topCustomers} topSelling={topSelling} offers={offers} />
                   {/* <FooterCard title={"Most Rated Products"} link="/dashboard/setup_product/product" /> */}
                   <FooterCard title={"Deals"} link="/dashboard/deals" layout={"Deals"} topCustomers={topCustomers} topSelling={topSelling} offers={offers} />

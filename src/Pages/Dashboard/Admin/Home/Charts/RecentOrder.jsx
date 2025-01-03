@@ -15,7 +15,7 @@ const RecentOrders = ({ recent_orders }) => {
   }, [recent_orders]);
 
   return (
-    <div className="bg-white py-3 px-4 h-full w-full mx-auto">
+    <div className="bg-white py-3 px-4 w-full h-[32rem] overflow-hidden mx-auto">
       <div className="flex justify-between items-center mb-4">
         <h3 className="text-lg font-semibold text-mainColor">Recent Orders</h3>
         <Link to={'/dashboard/orders/all'} className="text-sm text-mainColor underline">
@@ -28,7 +28,7 @@ const RecentOrders = ({ recent_orders }) => {
           Not Found Orders
         </div>
       ) : (
-        <div className="max-h-96 overflow-y-scroll scrollDrop">
+        <div className="h-full overflow-y-scroll scrollDrop">
           {recent_orders.map((order) => (
             <div
               key={order.id}
