@@ -320,7 +320,7 @@ const AddBannerSection = ({ update, setUpdate }) => {
                 {/* Branch Latitude */}
                 <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                   <span className="text-xl font-TextFontRegular text-thirdColor">Branch Latitude:</span>
-                  <TextInput
+                  <NumberInput
                     value={branchLatitude}
                     onChange={(e) => setBranchLatitude(e.target.value)}
                     placeholder="Branch Latitude"
@@ -329,7 +329,7 @@ const AddBannerSection = ({ update, setUpdate }) => {
                 {/* Branch Longitude */}
                 <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                   <span className="text-xl font-TextFontRegular text-thirdColor">Branch Longitude:</span>
-                  <TextInput
+                  <NumberInput
                     value={branchLongitude}
                     onChange={(e) => setBranchLongitude(e.target.value)}
                     placeholder="Branch Longitude"

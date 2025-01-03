@@ -340,7 +340,7 @@ const MainBranchSetupPage = () => {
                                    {/* Latitude */}
                                    <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                                           <span className="text-xl font-TextFontRegular text-thirdColor">Latitude:</span>
-                                          <TextInput
+                                          <NumberInput
                                                  value={latitude}
                                                  onChange={(e) => setLatitude(e.target.value)}
                                                  placeholder="Latitude"
@@ -349,7 +349,7 @@ const MainBranchSetupPage = () => {
                                    {/* Longitude */}
                                    <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                                           <span className="text-xl font-TextFontRegular text-thirdColor">Longitude:</span>
-                                          <TextInput
+                                          <NumberInput
                                                  value={longitude}
                                                  onChange={(e) => setLongitude(e.target.value)}
                                                  placeholder="Longitude"
@@ -359,7 +359,7 @@ const MainBranchSetupPage = () => {
                                    {/* Coverage */}
                                    <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                                           <span className="text-xl font-TextFontRegular text-thirdColor">Coverage (km):</span>
-                                          <TextInput
+                                          <NumberInput
                                                  value={coverage}
                                                  onChange={(e) => setCoverage(e.target.value)}
                                                  placeholder="Coverage (km)"
