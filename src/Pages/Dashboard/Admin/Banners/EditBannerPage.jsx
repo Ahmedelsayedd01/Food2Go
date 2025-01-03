@@ -65,9 +65,9 @@ const EditBannerPage = () => {
                      allData?.deals) {
                      setTaps(allData?.translations || []);
                      setCategories([{ id: '', name: 'Select Category' }, ...dataCategory.parent_categories] || []);
-                     setProducts([{ id: '', name: 'Select product' }, ...allData?.products] || []);
-                     setFilterProducts([{ id: '', name: 'Select product' }, ...allData?.products] || []);
-                     setDeals([{ id: '', name: 'Select deal' }, ...allData?.deals] || []);
+                     setProducts([{ id: '', name: 'Select Product' }, ...allData?.products] || []);
+                     // setFilterProducts([{ id: '', name:'Select Product' }, ...allData?.products] || []);
+                     setDeals([{ id: '', name: 'Select Deal' }, ...allData?.deals] || []);
               }
        }, [allData, dataCategory]);
 
@@ -78,6 +78,12 @@ const EditBannerPage = () => {
                      setStateCategories(data?.category_banner?.name || 'Select Category')
                      setCategoryId(data?.category_banner?.id || '')
                      setStateProducts(data?.product?.name || 'Select Product')
+
+                     const filterP = products.filter((product) => {
+                            return product.category_id === data?.category_banner?.id
+                     });
+
+                     setFilterProducts([{ id: '', name: 'Select Product' }, ...filterP] || []);
                      setProductId(data?.product?.id || '')
                      setStateDeals(data?.deal?.title || 'Select Deal')
                      setDealId(data?.deal?.id || '')
@@ -110,6 +116,8 @@ const EditBannerPage = () => {
               setCategoryId(option.id);
               setStateCategories(option.name);
 
+              setDealId('')
+
               const filterProducts = products.filter((product) => {
                      return product.category_id === option.id
               });
@@ -138,6 +146,8 @@ const EditBannerPage = () => {
        const handleOpenOptionDeal = () => setIsOpenDeal(false);
 
        const handleSelectDeal = (option) => {
+              setCategoryId('');
+              setProductId('');
               setDealId(option.id);
               setStateDeals(option.name || option.title);
        };
@@ -162,17 +172,14 @@ const EditBannerPage = () => {
 
        useEffect(() => {
               const handleClickOutside = (event) => {
-                     // Close dropdown if clicked outside
                      if (
                             dropDownCategories.current && !dropDownCategories.current.contains(event.target) &&
                             dropDownProducts.current && !dropDownProducts.current.contains(event.target) &&
                             dropDownDeals.current && !dropDownDeals.current.contains(event.target)
-
-                            // )
                      ) {
-                            setIsOpenCategory(null);
-                            setIsOpenProduct(null);
-                            setIsOpenDeal(null);
+                            setIsOpenCategory(false);
+                            setIsOpenProduct(false);
+                            setIsOpenDeal(false);
                      }
               };
 
@@ -199,17 +206,27 @@ const EditBannerPage = () => {
               // }
 
 
-              if (!categoryId) {
-                     auth.toastError('please Select Category')
-                     return;
+              if (!categoryId && !dealId) {
+                     if (!categoryId) {
+                            auth.toastError('please Select Category')
+                            return;
+                     }
+                     if (!productId) {
+                            auth.toastError('please Select Product')
+                            return;
+                     }
+                     if (!dealId) {
+                            auth.toastError('please Select Deal')
+                            return;
+                     }
               }
-              if (!productId) {
-                     auth.toastError('please Select Product')
-                     return;
-              }
-              if (!dealId) {
-                     auth.toastError('please Select Deal')
-                     return;
+
+              if (categoryId && !productId) {
+                     if (!productId) {
+                            auth.toastError('please Select Product')
+                            return;
+                     }
+
               }
 
               if (!bannerOrder) {
@@ -321,59 +338,66 @@ const EditBannerPage = () => {
 
                                           </div>
 
-                                          <div className="w-full flex sm:flex-col lg:flex-row flex-wrap items-center justify-start gap-4 mb-4">
-                                                 {/* Categoriess */}
-                                                 <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                                        <span className="text-xl font-TextFontRegular text-thirdColor">Category:</span>
-                                                        <DropDown
-                                                               ref={dropDownCategories}
-                                                               handleOpen={handleOpenCategory}
-                                                               stateoption={stateCategories}
-                                                               openMenu={isOpenCategory}
-                                                               handleOpenOption={handleOpenOptionCategory}
-                                                               onSelectOption={handleSelectCategory}
-                                                               options={categories}
-                                                               border={false}
-                                                        />
-                                                 </div>
-                                                 {/* Products */}
-                                                 <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                                        <span className="text-xl font-TextFontRegular text-thirdColor">Product:</span>
-                                                        <DropDown
-                                                               ref={dropDownProducts}
-                                                               handleOpen={handleOpenProduct}
-                                                               stateoption={stateProducts}
-                                                               openMenu={isOpenProduct}
-                                                               handleOpenOption={handleOpenOptionProduct}
-                                                               onSelectOption={handleSelectProduct}
-                                                               options={filterProducts}
-                                                               border={false}
-                                                        />
-                                                 </div>
+                                          <div className="w-full flex flex-wrap items-center justify-start gap-4 mb-4">
+                                                 {!dealId && (
+                                                        <>
+                                                               {/* Categoriess */}
+                                                               <div className="sm:w-full xl:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                                                      <span className="text-xl font-TextFontRegular text-thirdColor">Category:</span>
+                                                                      <DropDown
+                                                                             ref={dropDownCategories}
+                                                                             handleOpen={handleOpenCategory}
+                                                                             stateoption={stateCategories}
+                                                                             openMenu={isOpenCategory}
+                                                                             handleOpenOption={handleOpenOptionCategory}
+                                                                             onSelectOption={handleSelectCategory}
+                                                                             options={categories}
+                                                                             border={false}
+                                                                      />
+                                                               </div>
+                                                               {/* Products */}
+                                                               <div className="sm:w-full xl:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                                                      <span className="text-xl font-TextFontRegular text-thirdColor">Product:</span>
+                                                                      <DropDown
+                                                                             ref={dropDownProducts}
+                                                                             handleOpen={handleOpenProduct}
+                                                                             stateoption={stateProducts}
+                                                                             openMenu={isOpenProduct}
+                                                                             handleOpenOption={handleOpenOptionProduct}
+                                                                             onSelectOption={handleSelectProduct}
+                                                                             options={filterProducts}
+                                                                             border={false}
+                                                                      />
+                                                               </div>
+                                                        </>
+                                                 )}
                                                  {/* Deals */}
-                                                 <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                                        <span className="text-xl font-TextFontRegular text-thirdColor">Deal:</span>
-                                                        <DropDown
-                                                               ref={dropDownDeals}
-                                                               handleOpen={handleOpenDeal}
-                                                               stateoption={stateDeals}
-                                                               openMenu={isOpenDeal}
-                                                               handleOpenOption={handleOpenOptionDeal}
-                                                               onSelectOption={handleSelectDeal}
-                                                               options={deals}
-                                                               border={false}
-                                                        />
-                                                 </div>
+                                                 {!categoryId && (
+                                                        <div className="sm:w-full xl:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                                               <span className="text-xl font-TextFontRegular text-thirdColor">Deal:</span>
+                                                               <DropDown
+                                                                      ref={dropDownDeals}
+                                                                      handleOpen={handleOpenDeal}
+                                                                      stateoption={stateDeals}
+                                                                      openMenu={isOpenDeal}
+                                                                      handleOpenOption={handleOpenOptionDeal}
+                                                                      onSelectOption={handleSelectDeal}
+                                                                      options={deals}
+                                                                      border={false}
+                                                               />
+                                                        </div>
+                                                 )}
 
-                                                 {/* Banner Order */}
-                                                 <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                                        <span className="text-xl font-TextFontRegular text-thirdColor">Banner Order:</span>
-                                                        <NumberInput
-                                                               value={bannerOrder}
-                                                               onChange={(e) => setBannerOrder(e.target.value)}
-                                                               placeholder="Banner Order"
-                                                        />
-                                                 </div>
+                                          </div>
+
+                                          {/* Banner Order */}
+                                          <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                                 <span className="text-xl font-TextFontRegular text-thirdColor">Banner Order:</span>
+                                                 <NumberInput
+                                                        value={bannerOrder}
+                                                        onChange={(e) => setBannerOrder(e.target.value)}
+                                                        placeholder="Banner Order"
+                                                 />
                                           </div>
 
 
