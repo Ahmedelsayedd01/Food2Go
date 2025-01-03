@@ -450,7 +450,7 @@ const AddProductPage = () => {
     setSelectedCategoryState(option.name);
     const filterSup = subCategories.filter(sup => sup.category_id === option.id)
 
-    setFilterSubCategories([{ id: '', name: 'Select Subcategory Parent' }, ...filterSup])
+    setFilterSubCategories([{ id: '', name: 'Selected Subcategory' }, ...filterSup])
     console.log('filterSup', filterSup)
   };
   const handleSelectProductSubCategory = (option) => {
