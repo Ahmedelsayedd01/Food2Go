@@ -59,6 +59,7 @@ const OrdersPaymentPending = () => {
   };
 
   const handleCloseReceipt = () => {
+    setReceiptImage('');
     setOpenReceipt(null);
   };
 
@@ -81,11 +82,19 @@ const OrdersPaymentPending = () => {
 
   // Update OrdersPayment Pending when `data` changes
   useEffect(() => {
-    if (dataReceiptImage && dataReceiptImage.receipt) {
-      setReceiptImage(dataReceiptImage.receipt);
+    if (dataReceiptImage && dataReceiptImage.receipt.receipt) {
+      // Assuming receipt is an object with a 'data' field that contains the base64 string
+      const base64Receipt =
+        typeof dataReceiptImage.receipt.receipt === 'string'
+          ? dataReceiptImage.receipt.receipt
+          : dataReceiptImage.receipt.receipt;
+      if (base64Receipt) {
+        setReceiptImage(base64Receipt);
+      } else {
+        console.error('Receipt data is not valid:', dataReceiptImage.receipt.receipt);
+      }
     }
-    console.log('receiptImage', receiptImage)
-  }, [dataReceiptImage]); // Only run this effect when `data` changes
+  }, [dataReceiptImage]);
 
   const handleApprove = async (id) => {
     const response = await changeState(
@@ -192,11 +201,12 @@ const OrdersPaymentPending = () => {
                                     />
                                   ) : (
                                     <div className="w-full p-5  ">
-                                      <img src={`data:image/jpeg;base64,${receiptImage}`}
-                                        // <img src={'/src/Assets/Images/receipt.jpg'}
-                                        className="w-full h-full object-center object-contain bg-mainColor border-2 border-mainColor shadow-md rounded-2xl"
-                                        alt="Photo"
+                                      <img
+                                        src={receiptImage ? `data:image/jpeg;base64,${receiptImage}` : ''}
+                                        className="w-full h-full object-center object-contain shadow-md rounded-2xl"
+                                        alt="Receipt"
                                       />
+
                                     </div>
                                   )
                                   }
