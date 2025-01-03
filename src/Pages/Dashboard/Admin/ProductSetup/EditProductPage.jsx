@@ -146,7 +146,7 @@ const EditProductPage = () => {
               if (dataCategory) {
                      setCategories([{ id: '', name: 'Select Category' }, ...dataCategory.parent_categories] || [])
                      setSubCategories([{ id: '', name: 'Select Subcategory ' }, ...dataCategory?.sub_categories] || [])
-                     // setFilterSubCategories(dataCategory?.sub_categories || [])
+                     // setFilterSubCategories([{ id: '', name: 'Select Subcategory ' }, ...dataCategory?.sub_categories] || [])
                      setAddons(dataCategory?.addons || [])
               }
               /* Set data to Discounts && Taxes */
@@ -186,6 +186,10 @@ const EditProductPage = () => {
 
                      setSelectedSubCategoryId(productEdit?.sub_category?.id || '')
                      setSelectedSubCategoryState(productEdit?.sub_category?.name || selectedSubCategoryState)
+
+                     const filterSup = subCategories.filter(sup => sup.category_id === productEdit?.category?.id)
+
+                     setFilterSubCategories([{ id: '', name: 'Select Subcategory ' }, ...filterSup] || [])
 
                      setSelectedItemTypeName(productEdit?.item_type || '')
                      setSelectedItemTypeState(productEdit?.item_type || selectedItemTypeState)
@@ -524,7 +528,7 @@ const EditProductPage = () => {
               setSelectedCategoryState(option.name);
               const filterSup = subCategories.filter(sup => sup.category_id === option.id)
 
-              setFilterSubCategories(filterSup)
+              setFilterSubCategories([{ id: '', name: 'Selected Subcategory' }, ...filterSup])
               console.log('filterSup', filterSup)
        };
        const handleSelectProductSubCategory = (option) => {
@@ -898,7 +902,7 @@ const EditProductPage = () => {
                                                         if (Array.isArray(extraOption.extra_names)) {
                                                                extraOption.extra_names.forEach((extraName, indexNextra) => {
                                                                       formData.append(`variations[${indexVar}][options][${indexOption}][extra][${indexExtra}][extra_names][${indexNextra}][extra_name]`,
-                                                                             extraName.extra_name);
+                                                                             extraName.extra_name === null ? '' : extraName.extra_name);
                                                                       formData.append(`variations[${indexVar}][options][${indexOption}][extra][${indexExtra}][extra_names][${indexNextra}][tranlation_name]`,
                                                                              typeof extraName.tranlation_name === 'string' ? extraName.tranlation_name : '');
                                                                       formData.append(`variations[${indexVar}][options][${indexOption}][extra][${indexExtra}][extra_names][${indexNextra}][tranlation_id]`,
@@ -908,7 +912,9 @@ const EditProductPage = () => {
                                                                console.warn(`extraOption.extra_names is not a valid array at index ${indexExtra}`);
                                                         }
 
-                                                        formData.append(`variations[${indexVar}][options][${indexOption}][extra][${indexExtra}][extra_price]`, extraOption.extra_price);
+                                                        formData.append(`variations[${indexVar}][options][${indexOption}][extra][${indexExtra}][extra_price]`,
+                                                               extraOption.extra_price === null ? '' : extraOption.extra_price
+                                                        );
                                                  });
                                           }
 
