@@ -41,7 +41,7 @@ const InvoiceOrderPage = () => {
         <div className="p-6 w-2/4 mx-auto text-black font-sans mb-20">
           {/* Header */}
           <div className="text-center mb-4">
-            <h1 className="text-lg font-bold">{user.name}</h1>
+            <h1 className="text-lg font-TextFontSemiBold">{user.name}</h1>
             <p className="text-sm">
               {invoiceData?.branch?.name || '-'}
               {invoiceData?.branch?.address || '-'}
@@ -289,7 +289,7 @@ const InvoiceOrderPage = () => {
             <p>
               <strong>Delivery Fee: </strong>  {invoiceData?.address?.zone?.price || 0}
             </p>
-            <p className="font-bold text-lg">
+            <p className="semibold text-lg">
               <strong>Total: </strong>
               {invoiceData?.amount}
             </p>
