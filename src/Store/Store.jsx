@@ -1,12 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { userReducer, categoryReducer, ordersAllReducer, ordersPendingReducer, ordersConfirmedReducer, ordersProcessingReducer, ordersOutForDeliveryReducer, ordersDeliveredReducer, ordersReturnedReducer, ordersFailedReducer, ordersCanceledReducer, ordersScheduleReducer, newOrdersReducer } from "./CreateSlices";
+import { userReducer, categoryReducer, ordersAllReducer, ordersPendingReducer, ordersConfirmedReducer, ordersProcessingReducer, ordersOutForDeliveryReducer, ordersDeliveredReducer, ordersReturnedReducer, ordersFailedReducer, ordersCanceledReducer, ordersScheduleReducer, newOrdersReducer, soundNotificationReducer } from "./CreateSlices";
 import { combineReducers } from 'redux';
 
 // All reducers
 const reducers = combineReducers({
        newOrders: newOrdersReducer,
+       soundNotification: soundNotificationReducer,
        category: categoryReducer,
        ordersAll: ordersAllReducer,
        ordersPending: ordersPendingReducer,

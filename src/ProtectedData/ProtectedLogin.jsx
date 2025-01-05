@@ -21,7 +21,8 @@ const ProtectedLogin = () => {
                      // If not logged in and accessing a protected route, redirect to login
                      navigate('/', { state: { from: location }, replace: true });
               }
-       }, [auth, location.pathname, navigate]);
+       }, [auth]);
+       // }, [auth, location.pathname, navigate]);
 
        return <Outlet />;
 };

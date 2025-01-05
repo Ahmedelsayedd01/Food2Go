@@ -8,9 +8,12 @@ import { useDispatch } from "react-redux";
 // Initial states
 const initialUserState = null;
 const initialCategoryState = null;
+
 const initialNewOrders = {
        count: 0,
 };
+const initialSoundNotification = { data: null };
+
 const initialOrdersAllState = {
        data: [],
        loading: false,
@@ -61,6 +64,17 @@ const newOrdersSlice = createSlice({
               setNewOrders: (state, action) => {
                      console.log("Payload received:", action.payload);
                      return { ...state, ...action.payload }; // Merges payload into the existing state
+              },
+       },
+});
+// Sound Notification slice
+const soundNotification = createSlice({
+       name: "soundNotification",
+       initialState: initialSoundNotification,
+       reducers: {
+              setSoundNotification: (state, action) => {
+                     console.log("SoundNotificationSlice:", action.payload);
+                     state.data = action.payload;
               },
        },
 });
@@ -331,6 +345,7 @@ export const OrdersComponent = () => {
 
 // Export actions
 export const { setNewOrders } = newOrdersSlice.actions;
+export const { setSoundNotification } = soundNotification.actions;
 
 export const { setUser, removeUser } = userSlice.actions;
 export const { setCategory, removeCategory } = categorySlice.actions;
@@ -347,6 +362,7 @@ export const { setOrdersSchedule } = ordersScheduleSlice.actions;
 
 // Export reducers
 export const newOrdersReducer = newOrdersSlice.reducer;
+export const soundNotificationReducer = soundNotification.reducer;
 
 export const userReducer = userSlice.reducer;
 export const categoryReducer = categorySlice.reducer;
