@@ -17,7 +17,7 @@ const RecentOrders = ({ recent_orders }) => {
   return (
     <div className="bg-white py-3 px-4 w-full h-[32rem] overflow-hidden mx-auto">
       <div className="flex justify-between items-center mb-4">
-        <h3 className="text-lg font-semibold text-mainColor">Recent Orders</h3>
+        <h3 className="text-lg font-TextFontSemiBold text-mainColor">Recent Orders</h3>
         <Link to={'/dashboard/orders/all'} className="text-sm text-mainColor underline">
           View All
         </Link>
@@ -35,7 +35,7 @@ const RecentOrders = ({ recent_orders }) => {
               className="flex justify-between items-center  py-3 px-2 border-b border-gray-200 last:border-b-0"
             >
               <div >
-                <p className="font-medium">
+                <p className="font-TextFontMedium">
                   Order# {order.order_number ? order.order_number : 0}
                 </p>
                 <p className="text-sm text-gray-500">
@@ -50,7 +50,7 @@ const RecentOrders = ({ recent_orders }) => {
                 </p>
               </div>
               <div
-                className={`px-3 py-1  rounded-full text-sm font-medium ${statusColors[order.order_status.toLowerCase().replace(" ", "_")]
+                className={`px-3 py-1  rounded-full text-sm font-TextFontMedium ${statusColors[order.order_status.toLowerCase().replace(" ", "_")]
                   }`}
               >
                 {order.order_status}
