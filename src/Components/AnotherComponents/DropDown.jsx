@@ -37,7 +37,7 @@ const DropDown = forwardRef(({
                             {options.map((option, index) => (
                                    <div
                                           key={`${option.id}-${index}`}
-                                          className="flex items-center py-1 px-2 gap-2 justify-center text-xl font-medium text-mainColor hover:cursor-pointer hover:bg-mainColor hover:text-white transition-colors duration-300"
+                                          className="flex items-center py-1 px-2 gap-2 justify-center text-xl font-TextFontMedium text-mainColor hover:cursor-pointer hover:bg-mainColor hover:text-white transition-colors duration-300"
                                           onClick={() => handleOptionClick(option)}
                                    >
                                           {option.name || option.title}
@@ -47,7 +47,7 @@ const DropDown = forwardRef(({
                      </div>
               </div>
 
-);
+       );
 });
 
 export default DropDown;

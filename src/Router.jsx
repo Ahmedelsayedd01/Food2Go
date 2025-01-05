@@ -57,7 +57,11 @@ import {
   AutomaticPaymentLayout,
   CustomersLayout,
   EditCustomersLayout,
-  BusinessSetupLayout
+  BusinessSetupLayout,
+  EditRoleLayout,
+  RolesLayout,
+  AdminsLayout,
+  EditAdminLayout
 } from "./layouts/Layouts";
 import ProtectedLogin from "./ProtectedData/ProtectedLogin";
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
@@ -177,6 +181,19 @@ export const router = createBrowserRouter([
             element: <SettingLayout />,
             children: [
               {
+                path: 'roles',
+                children: [
+                  {
+                    path: '',
+                    element: <RolesLayout />,
+                  },
+                  {
+                    path: 'edit/:roleId',
+                    element: <EditRoleLayout />,
+                  }
+                ]
+              },
+              {
                 path: 'payment_method',
                 children: [
                   {
@@ -257,6 +274,7 @@ export const router = createBrowserRouter([
               {
                 path: 'cancel_time',
                 element: <CancelTimeLayout />,
+                
               },
               {
                 path: 'delivery_time',
@@ -319,10 +337,23 @@ export const router = createBrowserRouter([
             ]
           },
           {
-            path: 'customers',
+            path: 'users',
             children: [
               {
-                path: 'customers_list',
+                path: 'admins',
+                children: [
+                  {
+                    path: '',
+                    element: <AdminsLayout />,
+                  },
+                  {
+                    path: 'edit/:adminId',
+                    element: <EditAdminLayout />,
+                  }
+                ]
+              },
+              {
+                path: 'customers',
                 children: [
                   {
                     path: '',
