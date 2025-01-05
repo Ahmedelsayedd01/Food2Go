@@ -123,19 +123,19 @@ const OrdersPaymentHistory = () => {
           {ordersPaymentHistory.length > 0 && (
             <div className="my-6 flex items-center justify-center gap-x-4">
               {currentPage !== 1 && (
-                <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-white font-medium' onClick={() => setCurrentPage(currentPage - 1)}>Prev</button>
+                <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-white font-TextFontMedium' onClick={() => setCurrentPage(currentPage - 1)}>Prev</button>
               )}
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                 <button
                   key={page}
                   onClick={() => handlePageChange(page)}
-                  className={`px-4 py-2 mx-1 text-lg font-semibold rounded-full duration-300 ${currentPage === page ? 'bg-mainColor text-white' : ' text-mainColor'}`}
+                  className={`px-4 py-2 mx-1 text-lg font-TextFontSemiBold rounded-full duration-300 ${currentPage === page ? 'bg-mainColor text-white' : ' text-mainColor'}`}
                 >
                   {page}
                 </button>
               ))}
               {totalPages !== currentPage && (
-                <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-white font-medium' onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
+                <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-white font-TextFontMedium' onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
               )}
             </div>
           )}

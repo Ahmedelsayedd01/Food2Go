@@ -171,7 +171,7 @@ const ProductPage = () => {
                                                                              </td>
                                                                              <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12  py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
                                                                                     {/* <p className='h-4'>{product?.description || '-'}</p> */}
-                                                                                    <span className='text-mainColor text-xl border-b-2 border-mainColor font-semibold cursor-pointer'
+                                                                                    <span className='text-mainColor text-xl border-b-2 border-mainColor font-TextFontSemiBold cursor-pointer'
                                                                                            onClick={() => handleOpenDescriptionView(product.id)}>
                                                                                            View
                                                                                     </span>
@@ -183,14 +183,14 @@ const ProductPage = () => {
                                                                                     {product.sub_category?.name || '-'}
                                                                              </td>
                                                                              <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                                    <span className='text-mainColor text-xl border-b-2 border-mainColor font-semibold cursor-pointer'
+                                                                                    <span className='text-mainColor text-xl border-b-2 border-mainColor font-TextFontSemiBold cursor-pointer'
                                                                                            onClick={() => handleOpenAddonsView(product.id)}>
                                                                                            View
                                                                                     </span>
                                                                              </td>
 
                                                                              <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                                    <span className='text-mainColor text-xl border-b-2 border-mainColor font-semibold cursor-pointer'
+                                                                                    <span className='text-mainColor text-xl border-b-2 border-mainColor font-TextFontSemiBold cursor-pointer'
                                                                                            onClick={() => handleOpenVariationsView(product.id)}>
                                                                                            View
                                                                                     </span>
@@ -202,13 +202,13 @@ const ProductPage = () => {
                                                                                     {product.tax?.name || '-'}
                                                                              </td>
                                                                              <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                                    <span className='text-mainColor text-xl border-b-2 border-mainColor font-semibold cursor-pointer'
+                                                                                    <span className='text-mainColor text-xl border-b-2 border-mainColor font-TextFontSemiBold cursor-pointer'
                                                                                            onClick={() => handleOpenExcludesView(product.id)}>
                                                                                            View
                                                                                     </span>
                                                                              </td>
                                                                              <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                                    <span className='text-mainColor text-xl border-b-2 border-mainColor font-semibold cursor-pointer'
+                                                                                    <span className='text-mainColor text-xl border-b-2 border-mainColor font-TextFontSemiBold cursor-pointer'
                                                                                            onClick={() => handleOpenExtraView(product.id)}>
                                                                                            View
                                                                                     </span>
@@ -264,7 +264,7 @@ const ProductPage = () => {
                                                                                                                                      </div>
                                                                                                                               </div>
                                                                                                                               <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                                                                                                                     <button className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto" onClick={() => handleDelete(product.id, product.name)}>
+                                                                                                                                     <button className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-TextFontSemiBold text-white shadow-sm sm:ml-3 sm:w-auto" onClick={() => handleDelete(product.id, product.name)}>
                                                                                                                                             Delete
                                                                                                                                      </button>
 
@@ -272,7 +272,7 @@ const ProductPage = () => {
                                                                                                                                             type="button"
                                                                                                                                             data-autofocus
                                                                                                                                             onClick={handleCloseDelete}
-                                                                                                                                            className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-6 py-3 text-sm font-medium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:mt-0 sm:w-auto"
+                                                                                                                                            className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-6 py-3 text-sm font-TextFontMedium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:mt-0 sm:w-auto"
                                                                                                                                      >
                                                                                                                                             Cancel
                                                                                                                                      </button>
@@ -295,7 +295,7 @@ const ProductPage = () => {
                                                                                                                               <div className="w-full flex flex-wrap items-center justify-center gap-4 my-4 px-4 sm:p-6 sm:pb-4">
 
                                                                                                                                      <ul className=' p-4 rounded-xl shadow-md'>
-                                                                                                                                            <li className="list-disc mx-4 text-mainColor text-lg lg:text-xl font-semibold capitalize">
+                                                                                                                                            <li className="list-disc mx-4 text-mainColor text-lg lg:text-xl font-TextFontSemiBold capitalize">
                                                                                                                                                    {product?.description}
                                                                                                                                             </li>
                                                                                                                                      </ul>
@@ -307,7 +307,7 @@ const ProductPage = () => {
                                                                                                                                      <button
                                                                                                                                             type="button"
                                                                                                                                             onClick={handleCloseDescriptionView}
-                                                                                                                                            className="mt-3 inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-medium text-white shadow-sm sm:mt-0 sm:w-auto hover:bg-mainColor-dark focus:outline-none"
+                                                                                                                                            className="mt-3 inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-TextFontMedium text-white shadow-sm sm:mt-0 sm:w-auto hover:bg-mainColor-dark focus:outline-none"
                                                                                                                                      >
                                                                                                                                             Close
                                                                                                                                      </button>
@@ -329,7 +329,7 @@ const ProductPage = () => {
                                                                                                                               {/* Permissions List */}
                                                                                                                               <div className="w-full flex flex-wrap items-center justify-center gap-4 my-4 px-4 sm:p-6 sm:pb-4">
                                                                                                                                      {product.addons.length === 0 ? (
-                                                                                                                                            <div className="w-full text-center text-lg font-semibold text-gray-500 my-4">
+                                                                                                                                            <div className="w-full text-center text-lg font-TextFontSemiBold text-gray-500 my-4">
                                                                                                                                                    No Addons available for this product.
                                                                                                                                             </div>
                                                                                                                                      ) : (
@@ -340,7 +340,7 @@ const ProductPage = () => {
                                                                                                                                                                  key={index}
                                                                                                                                                                  className="sm:w-full lg:w-5/12 xl:w-3/12 flex items-center justify-center shadow-md hover:shadow-none duration-300 py-3 px-4 rounded-xl bg-gray-50"
                                                                                                                                                           >
-                                                                                                                                                                 <span className="text-mainColor text-lg lg:text-xl font-semibold capitalize">
+                                                                                                                                                                 <span className="text-mainColor text-lg lg:text-xl font-TextFontSemiBold capitalize">
                                                                                                                                                                         {displayIndex}. {addon.name}
                                                                                                                                                                  </span>
                                                                                                                                                           </div>
@@ -355,7 +355,7 @@ const ProductPage = () => {
                                                                                                                                      <button
                                                                                                                                             type="button"
                                                                                                                                             onClick={handleCloseAddonsView}
-                                                                                                                                            className="mt-3 inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-medium text-white shadow-sm sm:mt-0 sm:w-auto hover:bg-mainColor-dark focus:outline-none"
+                                                                                                                                            className="mt-3 inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-TextFontMedium text-white shadow-sm sm:mt-0 sm:w-auto hover:bg-mainColor-dark focus:outline-none"
                                                                                                                                      >
                                                                                                                                             Close
                                                                                                                                      </button>
@@ -377,7 +377,7 @@ const ProductPage = () => {
                                                                                                                               {/* Permissions List */}
                                                                                                                               <div className="w-full flex flex-col items-start justify-start gap-4 my-4 px-4 sm:p-6 sm:pb-4">
                                                                                                                                      {product.variations.length === 0 ? (
-                                                                                                                                            <div className="w-full text-center text-lg font-semibold text-gray-500 my-4">
+                                                                                                                                            <div className="w-full text-center text-lg font-TextFontSemiBold text-gray-500 my-4">
                                                                                                                                                    No Variations available for this product.
                                                                                                                                             </div>
                                                                                                                                      ) : (
@@ -391,7 +391,7 @@ const ProductPage = () => {
                                                                                                                                                                  >
                                                                                                                                                                         <div className="w-full flex flex-col items-start justify-start gap-3">
 
-                                                                                                                                                                               <span className="text-white text-lg lg:text-xl font-semibold capitalize">
+                                                                                                                                                                               <span className="text-white text-lg lg:text-xl font-TextFontSemiBold capitalize">
                                                                                                                                                                                       {displayIndex}. {variation.name}
                                                                                                                                                                                </span>
                                                                                                                                                                         </div>
@@ -421,7 +421,7 @@ const ProductPage = () => {
                                                                                                                                      <button
                                                                                                                                             type="button"
                                                                                                                                             onClick={handleCloseVariationsView}
-                                                                                                                                            className="mt-3 inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-medium text-white shadow-sm sm:mt-0 sm:w-auto hover:bg-mainColor-dark focus:outline-none"
+                                                                                                                                            className="mt-3 inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-TextFontMedium text-white shadow-sm sm:mt-0 sm:w-auto hover:bg-mainColor-dark focus:outline-none"
                                                                                                                                      >
                                                                                                                                             Close
                                                                                                                                      </button>
@@ -443,7 +443,7 @@ const ProductPage = () => {
                                                                                                                               {/* Permissions List */}
                                                                                                                               <div className="w-full flex flex-wrap items-center justify-center gap-4 my-4 px-4 sm:p-6 sm:pb-4">
                                                                                                                                      {product.excludes.length === 0 ? (
-                                                                                                                                            <div className="w-full text-center text-lg font-semibold text-gray-500 my-4">
+                                                                                                                                            <div className="w-full text-center text-lg font-TextFontSemiBold text-gray-500 my-4">
                                                                                                                                                    No Excludes available for this product.
                                                                                                                                             </div>
                                                                                                                                      ) : (
@@ -454,7 +454,7 @@ const ProductPage = () => {
                                                                                                                                                                  key={index}
                                                                                                                                                                  className="sm:w-full lg:w-5/12 xl:w-3/12 flex items-center justify-center shadow-md hover:shadow-none duration-300 py-3 px-4 rounded-xl bg-gray-50"
                                                                                                                                                           >
-                                                                                                                                                                 <span className="text-mainColor text-lg lg:text-xl font-semibold capitalize">
+                                                                                                                                                                 <span className="text-mainColor text-lg lg:text-xl font-TextFontSemiBold capitalize">
                                                                                                                                                                         {displayIndex}. {exclude.name}
                                                                                                                                                                  </span>
                                                                                                                                                           </div>
@@ -469,7 +469,7 @@ const ProductPage = () => {
                                                                                                                                      <button
                                                                                                                                             type="button"
                                                                                                                                             onClick={handleCloseExcludesView}
-                                                                                                                                            className="mt-3 inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-medium text-white shadow-sm sm:mt-0 sm:w-auto hover:bg-mainColor-dark focus:outline-none"
+                                                                                                                                            className="mt-3 inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-TextFontMedium text-white shadow-sm sm:mt-0 sm:w-auto hover:bg-mainColor-dark focus:outline-none"
                                                                                                                                      >
                                                                                                                                             Close
                                                                                                                                      </button>
@@ -491,7 +491,7 @@ const ProductPage = () => {
                                                                                                                               {/* Permissions List */}
                                                                                                                               <div className="w-full flex flex-wrap items-center justify-center gap-4 my-4 px-4 sm:p-6 sm:pb-4">
                                                                                                                                      {product.extra.length === 0 ? (
-                                                                                                                                            <div className="w-full text-center text-lg font-semibold text-gray-500 my-4">
+                                                                                                                                            <div className="w-full text-center text-lg font-TextFontSemiBold text-gray-500 my-4">
                                                                                                                                                    No extra available for this product.
                                                                                                                                             </div>
                                                                                                                                      ) : (
@@ -502,7 +502,7 @@ const ProductPage = () => {
                                                                                                                                                                  key={index}
                                                                                                                                                                  className="sm:w-full lg:w-5/12 xl:w-3/12 flex items-center justify-center shadow-md hover:shadow-none duration-300 py-3 px-4 rounded-xl bg-gray-50"
                                                                                                                                                           >
-                                                                                                                                                                 <span className="text-mainColor text-lg lg:text-xl font-semibold capitalize">
+                                                                                                                                                                 <span className="text-mainColor text-lg lg:text-xl font-TextFontSemiBold capitalize">
                                                                                                                                                                         {displayIndex}. {ext.name}
                                                                                                                                                                  </span>
                                                                                                                                                           </div>
@@ -517,7 +517,7 @@ const ProductPage = () => {
                                                                                                                                      <button
                                                                                                                                             type="button"
                                                                                                                                             onClick={handleCloseExtraView}
-                                                                                                                                            className="mt-3 inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-medium text-white shadow-sm sm:mt-0 sm:w-auto hover:bg-mainColor-dark focus:outline-none"
+                                                                                                                                            className="mt-3 inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-TextFontMedium text-white shadow-sm sm:mt-0 sm:w-auto hover:bg-mainColor-dark focus:outline-none"
                                                                                                                                      >
                                                                                                                                             Close
                                                                                                                                      </button>
@@ -542,19 +542,19 @@ const ProductPage = () => {
                                           {products.length > 0 && (
                                                  <div className="my-6 flex items-center justify-center gap-x-4">
                                                         {currentPage !== 1 && (
-                                                               <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-white font-medium' onClick={() => setCurrentPage(currentPage - 1)}>Prev</button>
+                                                               <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-white font-TextFontMedium' onClick={() => setCurrentPage(currentPage - 1)}>Prev</button>
                                                         )}
                                                         {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                                                                <button
                                                                       key={page}
                                                                       onClick={() => handlePageChange(page)}
-                                                                      className={`px-4 py-2 mx-1 text-lg font-semibold rounded-full duration-300 ${currentPage === page ? 'bg-mainColor text-white' : ' text-mainColor'}`}
+                                                                      className={`px-4 py-2 mx-1 text-lg font-TextFontSemiBold rounded-full duration-300 ${currentPage === page ? 'bg-mainColor text-white' : ' text-mainColor'}`}
                                                                >
                                                                       {page}
                                                                </button>
                                                         ))}
                                                         {totalPages !== currentPage && (
-                                                               <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-white font-medium' onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
+                                                               <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-white font-TextFontMedium' onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
                                                         )}
                                                  </div>
                                           )}
