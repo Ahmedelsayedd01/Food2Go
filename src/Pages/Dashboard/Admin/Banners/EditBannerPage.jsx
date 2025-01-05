@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useGet } from '../../../../Hooks/useGet';
 import { usePost } from '../../../../Hooks/usePostJson';
 import { useNavigate, useParams } from 'react-router-dom';
-import { DropDown, LoaderLogin, NumberInput, StaticButton, SubmitButton, UploadInput } from '../../../../Components/Components';
+import { DropDown, LoaderLogin, NumberInput, StaticButton, SubmitButton, Switch, UploadInput } from '../../../../Components/Components';
 import { useAuth } from '../../../../Context/Auth';
 
 
@@ -44,6 +44,7 @@ const EditBannerPage = () => {
 
        const [stateDeals, setStateDeals] = useState('Select Deal');
        const [dealId, setDealId] = useState('');
+       const [bannerStatus, setBannerStatus] = useState(0);
        const [isOpenDeal, setIsOpenDeal] = useState(false);
 
 
@@ -91,6 +92,7 @@ const EditBannerPage = () => {
                      setImage(data?.images || [])
                      setImageFile(data?.images || [])
                      setBannerOrder(data?.order || '')
+                     setBannerStatus(data?.status || 0)
                      console.log('data', data)
 
               }
@@ -165,6 +167,10 @@ const EditBannerPage = () => {
               }
        }, [loadingPost, response]);
 
+       const handleStatusBanner = () => {
+              const currentActive = bannerStatus;
+              { currentActive === 0 ? setBannerStatus(1) : setBannerStatus(0) }
+       }
 
        const handleCancel = () => {
               navigate(-1, { replace: true });
@@ -246,6 +252,7 @@ const EditBannerPage = () => {
               formData.append("category_id", categoryId);
               formData.append("product_id", productId);
               formData.append("deal_id", dealId);
+              formData.append("status", bannerStatus);
 
 
               console.log(...formData.entries());
@@ -390,14 +397,21 @@ const EditBannerPage = () => {
 
                                           </div>
 
-                                          {/* Banner Order */}
-                                          <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-                                                 <span className="text-xl font-TextFontRegular text-thirdColor">Banner Order:</span>
-                                                 <NumberInput
-                                                        value={bannerOrder}
-                                                        onChange={(e) => setBannerOrder(e.target.value)}
-                                                        placeholder="Banner Order"
-                                                 />
+                                          <div className="w-full flex flex-wrap items-center justify-start gap-8 mb-4">
+                                                 {/* Banner Order */}
+                                                 <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                                                        <span className="text-xl font-TextFontRegular text-thirdColor">Banner Order:</span>
+                                                        <NumberInput
+                                                               value={bannerOrder}
+                                                               onChange={(e) => setBannerOrder(e.target.value)}
+                                                               placeholder="Banner Order"
+                                                        />
+                                                 </div>
+                                                 {/* Banner Status */}
+                                                 <div className='sm:w-full lg:w-[30%] flex items-center justify-start lg:mt-8 gap-x-3'>
+                                                        <span className="text-xl font-TextFontRegular text-thirdColor">Active:</span>
+                                                        <Switch handleClick={handleStatusBanner} checked={bannerStatus} />
+                                                 </div>
                                           </div>
 
 

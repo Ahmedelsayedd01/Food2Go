@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { DeleteIcon, EditIcon } from '../../../../Assets/Icons/AllIcons';
 import { Link } from 'react-router-dom';
-import { StaticLoader, } from '../../../../Components/Components';
+import { StaticLoader, Switch, } from '../../../../Components/Components';
 import { useGet } from '../../../../Hooks/useGet';
 import { useChangeState } from '../../../../Hooks/useChangeState';
 import { useDelete } from '../../../../Hooks/useDelete';
@@ -10,6 +10,7 @@ import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 
 const BannersPage = ({ refetch, setUpdate }) => {
        const { refetch: refetchBanners, loading: loadingBanners, data: dataBanners } = useGet({ url: 'https://bcknd.food2go.online/admin/banner' });
+
        const { changeState, loadingChange, responseChange } = useChangeState();
        const { deleteData, loadingDelete, responseDelete } = useDelete();
 
@@ -33,7 +34,7 @@ const BannersPage = ({ refetch, setUpdate }) => {
               setCurrentPage(pageNumber);
        };
 
-       // Fetch categories when the component mounts or when refetch is called
+       // Fetch Banners when the component mounts or when refetch is called
        useEffect(() => {
               refetchBanners();
        }, [refetchBanners, refetch]); // Empty dependency array to only call refetch once on mount
@@ -48,12 +49,32 @@ const BannersPage = ({ refetch, setUpdate }) => {
               setOpenDelete(null);
        };
 
+       // Change Banner status 
+       const handleChangeStaus = async (id, status) => {
+              const response = await changeState(
+                     `https://bcknd.food2go.online/admin/banner/status/${id}`,
+                     `Banner Changed Status.`,
+                     { status } // Pass status as an object if changeState expects an object
+              );
+
+              if (response) {
+                     // Update Banners only if changeState succeeded
+                     setBanners((prevBanners) =>
+                            prevBanners.map((banner) =>
+                                   banner.id === id ? { ...banner, status: status } : banner
+                            )
+                     );
+              }
+
+       };
+
+
        // Delete Category
        const handleDelete = async (id, name) => {
               const success = await deleteData(`https://bcknd.food2go.online/admin/banner/delete/${id}`, `${name} Deleted Success.`);
 
               if (success) {
-                     // Update categories only if changeState succeeded
+                     // Update Banners only if changeState succeeded
                      setBanners(
                             banners.filter((category) =>
                                    category.id !== id
@@ -64,7 +85,7 @@ const BannersPage = ({ refetch, setUpdate }) => {
               console.log('banners', banners)
        };
 
-       // Update categories when `data` changes
+       // Update Banners when `data` changes
        useEffect(() => {
               if (dataBanners && dataBanners.banners) {
                      setBanners(dataBanners.banners);
@@ -72,7 +93,7 @@ const BannersPage = ({ refetch, setUpdate }) => {
        }, [dataBanners]); // Only run this effect when `data` changes
 
 
-       const headers = ['SL', 'Image', 'Category', 'Product', 'Deal', 'Action'];
+       const headers = ['SL', 'Image', 'Category', 'Product', 'Deal', 'Status', 'Action'];
 
        return (
               <div className="w-full pb-28 flex items-start justify-start overflow-x-scroll scrollSection">
@@ -123,6 +144,14 @@ const BannersPage = ({ refetch, setUpdate }) => {
                                                                       <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
                                                                              {banner?.deal?.title || '-'}
                                                                       </td>
+                                                                      <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
+                                                                             <Switch
+                                                                                    checked={banner.status === 1}
+                                                                                    handleClick={() => {
+                                                                                           handleChangeStaus(banner.id, banner.status === 1 ? 0 : 1);
+                                                                                    }}
+                                                                             />
+                                                                      </td>
                                                                       <td className="px-4 py-3 text-center">
                                                                              <div className="flex items-center justify-center gap-2">
                                                                                     <Link to={`edit/${banner.id}`}  ><EditIcon /></Link>
@@ -155,7 +184,7 @@ const BannersPage = ({ refetch, setUpdate }) => {
                                                                                                                               </div>
                                                                                                                        </div>
                                                                                                                        <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                                                                                                              <button className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto" onClick={() => handleDelete(banner.id, "Banner")}>
+                                                                                                                              <button className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-TextFontSemiBold text-white shadow-sm sm:ml-3 sm:w-auto" onClick={() => handleDelete(banner.id, "Banner")}>
                                                                                                                                      Delete
                                                                                                                               </button>
 
@@ -163,7 +192,7 @@ const BannersPage = ({ refetch, setUpdate }) => {
                                                                                                                                      type="button"
                                                                                                                                      data-autofocus
                                                                                                                                      onClick={handleCloseDelete}
-                                                                                                                                     className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-6 py-3 text-sm font-medium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:mt-0 sm:w-auto"
+                                                                                                                                     className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-6 py-3 text-sm font-TextFontMedium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:mt-0 sm:w-auto"
                                                                                                                               >
                                                                                                                                      Cancel
                                                                                                                               </button>
@@ -185,19 +214,19 @@ const BannersPage = ({ refetch, setUpdate }) => {
                                    {banners.length > 0 && (
                                           <div className="my-6 flex items-center justify-center gap-x-4">
                                                  {currentPage !== 1 && (
-                                                        <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-white font-medium' onClick={() => setCurrentPage(currentPage - 1)}>Prev</button>
+                                                        <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-white font-TextFontMedium' onClick={() => setCurrentPage(currentPage - 1)}>Prev</button>
                                                  )}
                                                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                                                         <button
                                                                key={page}
                                                                onClick={() => handlePageChange(page)}
-                                                               className={`px-4 py-2 mx-1 text-lg font-semibold rounded-full duration-300 ${currentPage === page ? 'bg-mainColor text-white' : ' text-mainColor'}`}
+                                                               className={`px-4 py-2 mx-1 text-lg font-TextFontSemiBold rounded-full duration-300 ${currentPage === page ? 'bg-mainColor text-white' : ' text-mainColor'}`}
                                                         >
                                                                {page}
                                                         </button>
                                                  ))}
                                                  {totalPages !== currentPage && (
-                                                        <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-white font-medium' onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
+                                                        <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-white font-TextFontMedium' onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
                                                  )}
                                           </div>
                                    )}
