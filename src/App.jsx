@@ -6,7 +6,7 @@ import { PrimeReactProvider } from 'primereact/api';
 import 'primereact/resources/themes/lara-light-blue/theme.css';
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { setNewOrders } from './Store/CreateSlices';
+import { setNewOrders, setSoundNotification } from './Store/CreateSlices';
 import { usePost } from './Hooks/usePostJson';
 import { useNavigate } from 'react-router-dom';
 import { useGet } from './Hooks/useGet';
@@ -26,7 +26,6 @@ const App = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-
   const [isOpen, setIsOpen] = useState(false);
   const [orderCounts, setOrderCounts] = useState(0);
 
@@ -38,13 +37,10 @@ const App = () => {
   // Update song source when API data is received
   useEffect(() => {
     if (dataSong && dataSong.notification_sound) {
-      // setSoundNotification(dataSong.notification_sound);
-      console.log('Fetched song from API:', dataSong.notification_sound);
+      dispatch(setSoundNotification(dataSong.notification_sound));
+      console.log('Fetched song from API At App:', dataSong.notification_sound);
     }
-  }, [dataSong]);
-
-  const audio = new Audio(soundNotification); // Create an audio object
-
+  }, [dataSong, dispatch]);
 
   const handleClose = () => setIsOpen(false);
 
@@ -68,15 +64,23 @@ const App = () => {
     }
   }, [response]);
 
-  // Update `newOrders` in Redux store
+  // Update `newOrders` in Redux store and play sound
   useEffect(() => {
     if (orderCounts > 0) {
       dispatch(setNewOrders({ count: orderCounts }));
 
-      // Play sound notification
-      audio.play().catch((err) => console.error('Audio play failed:', err));
+      if (soundNotification && soundNotification.data) {
+        const audio = new Audio(soundNotification.data); // Create a new Audio object
+        audio.play().catch((error) => {
+          console.error('Error playing audio:', error);
+        });
+        console.log('Playing sound notification.');
+        console.log('audio', audio);
+      } else {
+        console.log('No sound notification available.');
+      }
     }
-  }, [orderCounts, dispatch]);
+  }, [orderCounts, soundNotification, dispatch]);
 
   // Open/close modal based on `newOrders` count
   useEffect(() => {
@@ -88,9 +92,7 @@ const App = () => {
       {isOpen && (
         <NewOrdersComponent
           isOpen={isOpen}
-          onClose={() => {
-            handleClose();
-          }}
+          onClose={handleClose}
         />
       )}
       <div className="relative w-full flex h-screen overflow-hidden bg-secoundBgColor">
@@ -105,6 +107,23 @@ const App = () => {
           <div className="sticky top-0 z-10 bg-secoundBgColor">
             <Navbar />
           </div>
+
+          {/* <button
+            onClick={() => {
+              if (soundNotification && soundNotification.data) {
+                const audio = new Audio(soundNotification.data); // Create a new Audio object
+                audio.play().catch((error) => {
+                  console.error('Error playing audio:', error);
+                });
+                console.log('Playing sound notification.');
+                console.log('audio', audio);
+              } else {
+                console.log('No sound notification available.');
+              }
+            }}
+          >
+            Play
+          </button> */}
 
           {/* Main Content Area */}
           <div className="relative w-full px-3 h-full overflow-y-scroll scrollPage">

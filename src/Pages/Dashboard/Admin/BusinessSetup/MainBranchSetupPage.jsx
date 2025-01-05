@@ -44,8 +44,8 @@ const MainBranchSetupPage = () => {
                      setLatitude(dataBranch?.branches?.latitude || '')
                      setCoverage(dataBranch?.branches?.coverage || '')
                      setLongitude(dataBranch?.branches?.longitude || '')
-                     setStateCity(dataBranch?.branches?.city?.name || stateCity)
-                     setSelectedCity(dataBranch?.branches?.city?.id || selectedCity)
+                     setStateCity(dataBranch?.branches?.city || stateCity)
+                     setSelectedCity(dataBranch?.branches?.city || selectedCity)
                      setPhone(dataBranch?.branches?.phone || '')
                      setEmail(dataBranch?.branches?.email || '')
                      setFoodPreparationTime(dataBranch?.branches?.food_preparion_time || '')
@@ -331,7 +331,7 @@ const MainBranchSetupPage = () => {
                                                  onChange={(e) => setSelectedCity(e.value)}
                                                  options={cities}
                                                  optionLabel="name"
-                                                 placeholder={stateCity}
+                                                 placeholder={stateCity.name}
                                                  filter
                                                  className="w-full md:w-14rem" />
                                    </div>
