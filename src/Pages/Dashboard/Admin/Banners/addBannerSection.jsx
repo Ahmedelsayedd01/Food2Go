@@ -27,6 +27,8 @@ const AddBannerSection = ({ update, setUpdate }) => {
 
   const [bannerOrder, setBannerOrder] = useState('');
 
+  const [bannerStatus, setBannerStatus] = useState(0);
+
   const [stateCategories, setStateCategories] = useState('Select Category');
   const [categoryId, setCategoryId] = useState('');
   const [isOpenCategory, setIsOpenCategory] = useState(false);
@@ -132,6 +134,11 @@ const AddBannerSection = ({ update, setUpdate }) => {
     setUpdate(!update)
   }, [response])
 
+  const handleStatusBanner = () => {
+    const currentActive = bannerStatus;
+    { currentActive === 0 ? setBannerStatus(1) : setBannerStatus(0) }
+  }
+
   const handleReset = () => {
     setCurrentTap(0);
     setBannerOrder('');
@@ -144,6 +151,7 @@ const AddBannerSection = ({ update, setUpdate }) => {
     setDealId('');
     setImage([]);
     setImageFile([]);
+    setBannerStatus(0);
   }
 
 
@@ -201,7 +209,7 @@ const AddBannerSection = ({ update, setUpdate }) => {
         return;
       }
     }
-    
+
     if (categoryId && !productId) {
       if (!productId) {
         auth.toastError('please Select Product')
@@ -227,6 +235,7 @@ const AddBannerSection = ({ update, setUpdate }) => {
     formData.append("category_id", categoryId);
     formData.append("product_id", productId);
     formData.append("deal_id", dealId);
+    formData.append("status", bannerStatus);
 
 
     console.log(...formData.entries());
@@ -371,14 +380,21 @@ const AddBannerSection = ({ update, setUpdate }) => {
 
             </div>
 
-            {/* Banner Order */}
-            <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
-              <span className="text-xl font-TextFontRegular text-thirdColor">Banner Order:</span>
-              <NumberInput
-                value={bannerOrder}
-                onChange={(e) => setBannerOrder(e.target.value)}
-                placeholder="Banner Order"
-              />
+            <div className="w-full flex flex-wrap items-center justify-start gap-8 mb-4">
+              {/* Banner Order */}
+              <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
+                <span className="text-xl font-TextFontRegular text-thirdColor">Banner Order:</span>
+                <NumberInput
+                  value={bannerOrder}
+                  onChange={(e) => setBannerOrder(e.target.value)}
+                  placeholder="Banner Order"
+                />
+              </div>
+              {/* Banner Status */}
+              <div className='sm:w-full lg:w-[30%] flex items-center justify-start lg:mt-8 gap-x-3'>
+                <span className="text-xl font-TextFontRegular text-thirdColor">Active:</span>
+                <Switch handleClick={handleStatusBanner} checked={bannerStatus} />
+              </div>
             </div>
 
 

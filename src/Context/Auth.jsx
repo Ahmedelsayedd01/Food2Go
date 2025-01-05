@@ -13,8 +13,6 @@ export const ContextProvider = ({ children }) => {
   });
 
 
-  const [sidebar, setSidebar] = useState(null);
-  // const [sidebar, setSidebar] = useState(() => {
   //   const saveLinks = localStorage.getItem('stateLinks');
   //   return saveLinks ? JSON.parse(saveLinks) : null;
   // });
@@ -31,7 +29,6 @@ export const ContextProvider = ({ children }) => {
       localStorage.setItem('user', JSON.stringify(user));
     } else {
       localStorage.removeItem('user');
-      setSidebar(null); // Reset sidebar state when the user logs out
     }
   }, [user]);
 
@@ -42,11 +39,9 @@ export const ContextProvider = ({ children }) => {
 
   const logout = () => {
     setUser(null);
-    setSidebar(null);
     setHideSidebar(true);
     localStorage.removeItem('user');
     localStorage.removeItem('stateSidebar');
-    localStorage.removeItem('stateLinks');
   };
 
   // const updateSidebar = (list) => {
@@ -66,8 +61,6 @@ export const ContextProvider = ({ children }) => {
         logout,
         toastSuccess: (text) => toast.success(text),
         toastError: (text) => toast.error(text),
-        sidebar,
-        // updateSidebar,
         hideSide,
         hideSidebar
       }}
