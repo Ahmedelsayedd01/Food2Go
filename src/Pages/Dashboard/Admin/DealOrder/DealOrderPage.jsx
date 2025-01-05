@@ -115,7 +115,7 @@ const DealOrderPage = () => {
                                                                              </td>
                                                                              <td className="min-w-[80px] py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
                                                                                     <span
-                                                                                           className="text-mainColor text-xl border-b-2 border-mainColor font-semibold cursor-pointer"
+                                                                                           className="text-mainColor text-xl border-b-2 border-mainColor font-TextFontSemiBold cursor-pointer"
                                                                                            onClick={() => setOpenDescriptionView(true)}
                                                                                     >
                                                                                            View
@@ -128,7 +128,7 @@ const DealOrderPage = () => {
                                                                                                                 <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl">
                                                                                                                        <div className="w-full flex flex-wrap items-center justify-center gap-4 my-4 px-4 sm:p-6 sm:pb-4">
                                                                                                                               <ul className="p-4 rounded-xl shadow-md">
-                                                                                                                                     <li className="list-disc mx-4 text-mainColor text-lg lg:text-xl font-semibold capitalize">
+                                                                                                                                     <li className="list-disc mx-4 text-mainColor text-lg lg:text-xl font-TextFontSemiBold capitalize">
                                                                                                                                             {currentResponse.data.deal.description}
                                                                                                                                      </li>
                                                                                                                               </ul>
@@ -137,7 +137,7 @@ const DealOrderPage = () => {
                                                                                                                               <button
                                                                                                                                      type="button"
                                                                                                                                      onClick={() => setOpenDescriptionView(false)}
-                                                                                                                                     className="mt-3 inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-medium text-white shadow-sm sm:mt-0 sm:w-auto hover:bg-mainColor-dark focus:outline-none"
+                                                                                                                                     className="mt-3 inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-TextFontMedium text-white shadow-sm sm:mt-0 sm:w-auto hover:bg-mainColor-dark focus:outline-none"
                                                                                                                               >
                                                                                                                                      Close
                                                                                                                               </button>
