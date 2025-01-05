@@ -67,7 +67,9 @@ const LineChart = ({ title, data }) => {
         },
         beginAtZero: true,
         ticks: {
-          stepSize: 1,
+          // Dynamically set stepSize or remove it entirely
+          stepSize: Math.ceil(Math.max(...values) / 10), // Divide range into 10 steps
+          maxTicksLimit: 10, // Limit the maximum number of ticks
         },
       },
     },
@@ -76,9 +78,9 @@ const LineChart = ({ title, data }) => {
   return (
     <div className="p-2 bg-white rounded-lg">
       <div className="flex justify-between items-center mb-2">
-        <h2 className="text-lg font-semibold text-[#991b1b]">{title}</h2>
+        <h2 className="text-lg font-TextFontSemiBold text-[#991b1b]">{title}</h2>
         <select
-          className="bg-transparent text-[#991b1b] rounded px-3 py-2 text-sm font-bold"
+          className="bg-transparent text-[#991b1b] rounded px-3 py-2 text-sm font-TextFontSemiBold"
           value={selectedMonth}
           onChange={(e) => setSelectedMonth(e.target.value)}
         >
