@@ -295,12 +295,12 @@ const DetailsOrderPage = () => {
                                                                                            {/* Header */}
                                                                                            <div className="flex flex-wrap justify-between items-start border-b border-gray-300 pb-4 mb-4">
                                                                                                   <div className="w-full md:w-auto">
-                                                                                                         <h1 className="text-xl font-bold text-gray-800">Order #{detailsData?.order_number || ''}</h1>
+                                                                                                         <h1 className="text-xl font-TextFontSemiBold text-gray-800">Order #{detailsData?.order_number || ''}</h1>
                                                                                                          <p className="text-sm text-gray-700 mt-1">
-                                                                                                                <span className="font-semibold">Branch:</span> {detailsData?.branch?.address || ''}
+                                                                                                                <span className="font-TextFontSemiBold">Branch:</span> {detailsData?.branch?.address || ''}
                                                                                                          </p>
                                                                                                          <p className="text-sm text-gray-700 mt-1">
-                                                                                                                <span className="font-semibold">Order Date & Time:</span> {detailsData?.order_date || ''} / {detailsData?.date || ''}
+                                                                                                                <span className="font-TextFontSemiBold">Order Date & Time:</span> {detailsData?.order_date || ''} / {detailsData?.date || ''}
                                                                                                          </p>
                                                                                                   </div>
                                                                                            </div>
@@ -309,22 +309,22 @@ const DetailsOrderPage = () => {
                                                                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                                                                                                   <div className="bg-white p-4 shadow-md rounded-md">
                                                                                                          <p className="text-sm text-gray-800">
-                                                                                                                <span className="font-semibold text-mainColor">Status:</span> {detailsData?.order_status || ''}
+                                                                                                                <span className="font-TextFontSemiBold text-mainColor">Status:</span> {detailsData?.order_status || ''}
                                                                                                          </p>
                                                                                                          <p className="text-sm text-gray-800 mt-2">
-                                                                                                                <span className="font-semibold text-mainColor">Payment Method:</span> {detailsData?.pament_method?.name || ''}
+                                                                                                                <span className="font-TextFontSemiBold text-mainColor">Payment Method:</span> {detailsData?.pament_method?.name || ''}
                                                                                                          </p>
                                                                                                          <p className="text-sm text-gray-800 mt-2">
-                                                                                                                <span className="font-semibold text-mainColor">Payment Status:</span>
-                                                                                                                <span className="text-green-600 font-semibold ml-1">{detailsData?.payment_status || ''}</span>
+                                                                                                                <span className="font-TextFontSemiBold text-mainColor">Payment Status:</span>
+                                                                                                                <span className="text-green-600 font-TextFontSemiBold ml-1">{detailsData?.payment_status || ''}</span>
                                                                                                          </p>
                                                                                                   </div>
                                                                                                   <div className="bg-white p-4 shadow-md rounded-md">
                                                                                                          <p className="text-sm text-gray-800">
-                                                                                                                <span className="font-semibold text-mainColor">Order Type:</span> {detailsData?.order_type || ''}
+                                                                                                                <span className="font-TextFontSemiBold text-mainColor">Order Type:</span> {detailsData?.order_type || ''}
                                                                                                          </p>
                                                                                                          <p className="text-sm text-gray-800 mt-2">
-                                                                                                                <span className="font-semibold text-mainColor">Order Note:</span> {detailsData?.notes || "No Notes"}
+                                                                                                                <span className="font-TextFontSemiBold text-mainColor">Order Note:</span> {detailsData?.notes || "No Notes"}
                                                                                                          </p>
                                                                                                   </div>
                                                                                            </div>
@@ -550,7 +550,7 @@ const DetailsOrderPage = () => {
                                                                                            <p className='w-full flex items-center justify-between'>
                                                                                                   Delivery Fee:<span>  {detailsData?.address?.zone?.price || 0}</span>
                                                                                            </p>
-                                                                                           <p className="w-full flex items-center justify-between font-bold text-lg">
+                                                                                           <p className="w-full flex items-center justify-between font-TextFontSemiBold text-lg">
                                                                                                   Total:<span>
                                                                                                          {detailsData?.amount}
                                                                                                   </span>
@@ -567,7 +567,7 @@ const DetailsOrderPage = () => {
                                                                <div className="w-full bg-white rounded-xl shadow-md p-4 m">
 
                                                                       <div className="flex flex-col gap-y-2">
-                                                                             <span className="font-semibold">Change Order Status</span>
+                                                                             <span className="font-TextFontSemiBold">Change Order Status</span>
 
                                                                              <DropDown
                                                                                     ref={StatusRef}
@@ -603,14 +603,14 @@ const DetailsOrderPage = () => {
                                                                                                                        <button
                                                                                                                               type="button"
                                                                                                                               onClick={handleCloseOrderNumber}
-                                                                                                                              className="inline-flex w-full justify-center rounded-md bg-white border-2 px-6 py-3 text-sm font-medium text-mainColor sm:mt-0 sm:w-auto"
+                                                                                                                              className="inline-flex w-full justify-center rounded-md bg-white border-2 px-6 py-3 text-sm font-TextFontMedium text-mainColor sm:mt-0 sm:w-auto"
                                                                                                                        >
                                                                                                                               Close
                                                                                                                        </button>
                                                                                                                        <button
                                                                                                                               type="button"
                                                                                                                               onClick={() => handleOrderNumber(detailsData.id)}
-                                                                                                                              className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-medium text-white sm:mt-0 sm:w-auto"
+                                                                                                                              className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-TextFontMedium text-white sm:mt-0 sm:w-auto"
                                                                                                                        >
                                                                                                                               Change Status
                                                                                                                        </button>
@@ -668,7 +668,7 @@ const DetailsOrderPage = () => {
                                                                                                                                      <button
                                                                                                                                             type="button"
                                                                                                                                             onClick={() => handleAssignDelivery(delivery.id, detailsData.id, detailsData.order_number)}
-                                                                                                                                            className="mt-3 inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-medium text-white shadow-sm sm:mt-0 sm:w-auto hover:bg-mainColor-dark focus:outline-none"
+                                                                                                                                            className="mt-3 inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-TextFontMedium text-white shadow-sm sm:mt-0 sm:w-auto hover:bg-mainColor-dark focus:outline-none"
                                                                                                                                      >
                                                                                                                                             Assign
                                                                                                                                      </button>
@@ -682,7 +682,7 @@ const DetailsOrderPage = () => {
                                                                                                                 <button
                                                                                                                        type="button"
                                                                                                                        onClick={handleCloseDeliveries}
-                                                                                                                       className="mt-3 inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-medium text-white shadow-sm sm:mt-0 sm:w-auto hover:bg-mainColor-dark focus:outline-none"
+                                                                                                                       className="mt-3 inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-TextFontMedium text-white shadow-sm sm:mt-0 sm:w-auto hover:bg-mainColor-dark focus:outline-none"
                                                                                                                 >
                                                                                                                        Close
                                                                                                                 </button>
@@ -700,7 +700,7 @@ const DetailsOrderPage = () => {
                                                                       detailsData.order_status === 'processing' ||
                                                                       detailsData.order_status === 'out_for_delivery') && (
                                                                              <div className="w-full bg-white rounded-xl shadow-md p-4 mt-4">
-                                                                                    <h3 className="text-lg font-semibold">Food Preparation Time</h3>
+                                                                                    <h3 className="text-lg font-TextFontSemiBold">Food Preparation Time</h3>
                                                                                     <div className="flex items-center">
                                                                                            <FaClock className="mr-2 text-gray-500" />
                                                                                            {preparationTime ? (
@@ -752,7 +752,7 @@ const DetailsOrderPage = () => {
                                                                {detailsData.delivery_id !== null && (
 
                                                                       <div className="w-full bg-white rounded-xl shadow-md p-4 mt-4">
-                                                                             <div className="flex items-center gap-x-2 text-lg font-semibold"><span><FaUser className='text-mainColor' /></span>Delivery Man</div>
+                                                                             <div className="flex items-center gap-x-2 text-lg font-TextFontSemiBold"><span><FaUser className='text-mainColor' /></span>Delivery Man</div>
                                                                              <p className="text-sm">Name: {detailsData?.delivery?.f_name || '-'} {detailsData?.delivery?.l_name || '-'}</p>
                                                                              <p className="text-sm">Orders: {detailsData?.delivery?.count_orders || '-'}</p>
                                                                              <p className="text-sm">Contact: {detailsData?.delivery?.phone || '-'}</p>
@@ -765,7 +765,7 @@ const DetailsOrderPage = () => {
                                                                {/* Delivery Information */}
                                                                {detailsData.order_type === 'delivery' && (
                                                                       <div className="w-full bg-white rounded-xl shadow-md p-4 mt-4">
-                                                                             <div className="flex items-center gap-x-2 text-lg font-semibold"><span><FaUser className='text-mainColor' /></span>Delivery Information</div>
+                                                                             <div className="flex items-center gap-x-2 text-lg font-TextFontSemiBold"><span><FaUser className='text-mainColor' /></span>Delivery Information</div>
                                                                              <p className="text-sm">Name: {detailsData?.user?.f_name || '-'} {detailsData?.user?.l_name || '-'}</p>
                                                                              <p className="text-sm">Contact: {detailsData?.user?.phone || '-'}</p>
                                                                              <p className="text-sm">Floor: {detailsData?.address?.floor_num || '-'}</p>
@@ -784,7 +784,7 @@ const DetailsOrderPage = () => {
                                                                )}
 
                                                                <div className="w-full bg-white rounded-xl shadow-md p-4 mt-4">
-                                                                      <div className="flex items-center gap-x-2 text-lg font-semibold"><span><FaUser className='text-mainColor' /></span>Customer Information</div>
+                                                                      <div className="flex items-center gap-x-2 text-lg font-TextFontSemiBold"><span><FaUser className='text-mainColor' /></span>Customer Information</div>
                                                                       <p className="text-sm">Name: {detailsData?.user?.f_name || '-'} {detailsData?.user?.l_name || '-'}</p>
                                                                       <p className="text-sm">Orders: {detailsData?.user?.count_orders || '-'}</p>
                                                                       <p className="text-sm">Contact: {detailsData?.user?.phone || '-'}</p>
@@ -793,7 +793,7 @@ const DetailsOrderPage = () => {
 
                                                                {/* Branch Information */}
                                                                <div className="w-full bg-white rounded-xl shadow-md p-4 mt-4">
-                                                                      <h3 className="text-lg font-semibold">Branch Information</h3>
+                                                                      <h3 className="text-lg font-TextFontSemiBold">Branch Information</h3>
                                                                       <p className="text-sm">Branch: {detailsData?.branch?.address || '-'}</p>
                                                                       <p className="text-sm">Orders Served: {detailsData?.branch?.count_orders || '-'}</p>
                                                                       <p className="text-sm">Contact: {detailsData?.branch?.phone || '-'}</p>

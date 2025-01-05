@@ -179,7 +179,7 @@ const OrdersPaymentPending = () => {
                           alt="Photo"
                         />
                       </div> */}
-                      <span className='text-mainColor text-xl border-b-2 border-mainColor font-semibold cursor-pointer'
+                      <span className='text-mainColor text-xl border-b-2 border-mainColor font-TextFontSemiBold cursor-pointer'
                         onClick={() => handleOpenReceipt(paymentPending.id)}>
                         View
                       </span>
@@ -217,7 +217,7 @@ const OrdersPaymentPending = () => {
                                   <button
                                     type="button"
                                     onClick={handleCloseReceipt}
-                                    className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-medium text-white sm:mt-0 sm:w-auto"
+                                    className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-TextFontMedium text-white sm:mt-0 sm:w-auto"
                                   >
                                     Close
                                   </button>
@@ -261,7 +261,7 @@ const OrdersPaymentPending = () => {
                         <button className="text-red-500 text-xl" onClick={() => handleOpenReject(paymentPending.id)}>
                           <FaTimes />
                         </button>
-                        {/* <span className='text-mainColor text-xl border-b-2 border-mainColor font-semibold cursor-pointer'
+                        {/* <span className='text-mainColor text-xl border-b-2 border-mainColor font-TextFontSemiBold cursor-pointer'
                         onClick={() => handleOpenReject(paymentPending.id)}>
                         View
                       </span> */}
@@ -291,14 +291,14 @@ const OrdersPaymentPending = () => {
                                   <button
                                     type="button"
                                     onClick={handleCloseReject}
-                                    className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-medium text-white sm:mt-0 sm:w-auto"
+                                    className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-TextFontMedium text-white sm:mt-0 sm:w-auto"
                                   >
                                     Close
                                   </button>
                                   <button
                                     type="button"
                                     onClick={() => handleReject(paymentPending.id, paymentPending.id)}
-                                    className="inline-flex w-full justify-center rounded-md bg-green-500 px-6 py-3 text-sm font-medium text-white sm:mt-0 sm:w-auto"
+                                    className="inline-flex w-full justify-center rounded-md bg-green-500 px-6 py-3 text-sm font-TextFontMedium text-white sm:mt-0 sm:w-auto"
                                   >
                                     Reject
                                   </button>
@@ -319,19 +319,19 @@ const OrdersPaymentPending = () => {
           {ordersPaymentPending.length > 0 && (
             <div className="my-6 flex items-center justify-center gap-x-4">
               {currentPage !== 1 && (
-                <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-white font-medium' onClick={() => setCurrentPage(currentPage - 1)}>Prev</button>
+                <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-white font-TextFontMedium' onClick={() => setCurrentPage(currentPage - 1)}>Prev</button>
               )}
               {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                 <button
                   key={page}
                   onClick={() => handlePageChange(page)}
-                  className={`px-4 py-2 mx-1 text-lg font-semibold rounded-full duration-300 ${currentPage === page ? 'bg-mainColor text-white' : ' text-mainColor'}`}
+                  className={`px-4 py-2 mx-1 text-lg font-TextFontSemiBold rounded-full duration-300 ${currentPage === page ? 'bg-mainColor text-white' : ' text-mainColor'}`}
                 >
                   {page}
                 </button>
               ))}
               {totalPages !== currentPage && (
-                <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-white font-medium' onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
+                <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-white font-TextFontMedium' onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
               )}
             </div>
           )}
