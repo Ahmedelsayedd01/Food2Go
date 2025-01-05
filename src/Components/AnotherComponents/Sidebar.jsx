@@ -28,14 +28,14 @@ const Sidebar = () => {
        return (
               <aside className="bg-mainColor py-3 px-3 rounded-tr-[38px] rounded-br-[38px]  overflow-hidden h-screen duration-300">
                      {/* <aside className=""> */}
-                            <div className="w-full flex items-center justify-between cursor-pointer border-b-2 border-b-gray-300 pb-1"
-                                   onClick={handleSidebar}>
-                                   <span className={`${stateSide ? 'block' : 'hidden'} font-TextFontLight text-white text-4xl`}>Food2go</span>
-                                   <WhiteLogo width={50} height={50} />
-                            </div>
-                            <div className="w-full h-[40rem] overflow-scroll scrollSidebar scroll-smooth mt-2">
-                                   <LinksSidebar />
-                            </div>
+                     <div className="w-full flex items-center justify-between cursor-pointer border-b-2 border-b-gray-300 pb-1"
+                            onClick={handleSidebar}>
+                            <span className={`${stateSide ? 'block' : 'hidden'} font-TextFontLight text-white text-4xl`}>Food2go</span>
+                            <WhiteLogo width={50} height={50} />
+                     </div>
+                     <div className="w-full h-[40rem] overflow-scroll scrollSidebar scroll-smooth mt-2">
+                            <LinksSidebar />
+                     </div>
                      {/* </aside> */}
               </aside>
        )

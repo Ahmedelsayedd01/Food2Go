@@ -8,7 +8,7 @@ const UploadInput = ({ uploadFileRef, handleFileChange, required = true, borderC
                             <input type='text'
                                    placeholder={placeholder}
                                    className={`w-full border-2 ${textDirection ? "text-right" : "text-left"} rounded-2xl border-${borderColor} 
-                       outline-none p-2 py-3 shadow cursor-pointer ${paddinLeft} ${paddinRight} text-2xl  ${placeholderSize ? 'text-lg' : 'text-2xl'} font-normal eleValueInput ${upload ? "text-mainColor cursor-pointer pr-10" : "text-thirdColor"}`}
+                       outline-none p-2 py-3 shadow cursor-pointer ${paddinLeft} ${paddinRight} text-2xl  ${placeholderSize ? 'text-lg' : 'text-2xl'} font-TextFontRegular eleValueInput ${upload ? "text-mainColor cursor-pointer pr-10" : "text-thirdColor"}`}
                                    value={value}
                                    onClick={onClick}
                                    onChange={onChange}

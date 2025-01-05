@@ -14,7 +14,7 @@ const SearchBar = ({ type = "text", bgColor = 'bg-mainBgColor', textColor = 'mai
                             text-${textColor}
                             pr-${pr}`}
                             placeholder={placeholder} />
-                     <IoSearch className='absolute top-3 left-4 text-mainColor font-bold text-xl' />
+                     <IoSearch className='absolute top-3 left-4 text-mainColor font-TextFontSemiBold text-xl' />
               </div>
        )
 }
