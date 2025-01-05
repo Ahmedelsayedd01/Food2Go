@@ -27,6 +27,9 @@ export { default as EditProductLayout } from "./Dashboard/ProductSetup/EditProdu
 export { default as AddProductLayout } from "./Dashboard/ProductSetup/AddProductLayout";
 
 /*  Setting */
+// Setting -> Roles
+export { default as RolesLayout } from "./Dashboard/Setting/Roles/RolesLayout";
+export { default as EditRoleLayout } from "./Dashboard/Setting/Roles/EditRoleLayout";
 // Setting -> Payment Method
 export { default as PaymentMethodLayout } from "./Dashboard/Setting/PaymentMethod/PaymentMethodLayout";
 export { default as EditPaymentMethodLayout } from "./Dashboard/Setting/PaymentMethod/EditPaymentMethodLayout";
@@ -63,9 +66,11 @@ export { default as OrdersPaymentLayout } from "./Dashboard/OrdersPayment/OrderP
 /* Delivery Man */
 export { default as DeliveryManLayout } from "./Dashboard/DeliveryMan/DeliveryManLayout";
 export { default as EditDeliveryManLayout } from "./Dashboard/DeliveryMan/EditDeliveryManLayout";
-// Customers
-export { default as CustomersLayout } from "./Dashboard/Customers/CustomersLayout";
-export { default as EditCustomersLayout } from "./Dashboard/Customers/EditCustomersLayout";
+// Users
+export { default as AdminsLayout } from "./Dashboard/Users/Admins/AdminsLayout";
+export { default as EditAdminLayout } from "./Dashboard/Users/Admins/EditAdminLayout";
+export { default as CustomersLayout } from "./Dashboard/Users/Customers/CustomersLayout";
+export { default as EditCustomersLayout } from "./Dashboard/Users/Customers/EditCustomersLayout";
 /* Business Setup */
 export { default as BusinessSetupLayout } from "./Dashboard/BusinessSetup/BusinessSetupLayout";
 /* Deals */
