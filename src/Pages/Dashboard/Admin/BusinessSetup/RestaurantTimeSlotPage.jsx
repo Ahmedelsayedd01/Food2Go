@@ -79,8 +79,8 @@ const RestaurantTimeSlotPage = ({ refetch }) => {
     const handleSelectDay = (e) => {
         const selectedDay = e.value; // The selected day will be an object, but we need only its name
         setSelectDay(selectedDay);
-        
-    
+
+
         // Add the selected day to the custom array if it's not already there
         setTimeSlot((prevState) => ({
             ...prevState,

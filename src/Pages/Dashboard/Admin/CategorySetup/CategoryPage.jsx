@@ -268,7 +268,7 @@ const CategoryPage = ({ refetch, setUpdate }) => {
 
                                                                       </td>
                                                                       <td className="min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">
-                                                                             <span className='text-mainColor text-xl border-b-2 border-mainColor font-semibold cursor-pointer'
+                                                                             <span className='text-mainColor text-xl border-b-2 border-mainColor font-TextFontSemiBold cursor-pointer'
                                                                                     onClick={() => handleOpenSupCategory(category.id)}>
                                                                                     View
                                                                              </span>
@@ -283,7 +283,7 @@ const CategoryPage = ({ refetch, setUpdate }) => {
                                                                                                                 {/* Permissions List */}
                                                                                                                 <div className="w-full flex flex-wrap items-center justify-center gap-4 my-4 px-4 sm:p-6 sm:pb-4">
                                                                                                                        {category.sub_categories.length === 0 ? (
-                                                                                                                              <div className="w-full text-center text-lg font-semibold text-gray-500 my-4">
+                                                                                                                              <div className="w-full text-center text-lg font-TextFontSemiBold text-gray-500 my-4">
                                                                                                                                      No subcategory available for this category.
                                                                                                                               </div>
                                                                                                                        ) : (
@@ -294,7 +294,7 @@ const CategoryPage = ({ refetch, setUpdate }) => {
                                                                                                                                                    key={index}
                                                                                                                                                    className=" flex items-center justify-between shadow-md hover:shadow-none duration-300 py-3 px-3 rounded-xl bg-gray-50 gap-x-2"
                                                                                                                                             >
-                                                                                                                                                   <span className="text-mainColor text-lg lg:text-xl font-semibold capitalize">
+                                                                                                                                                   <span className="text-mainColor text-lg lg:text-xl font-TextFontSemiBold capitalize">
                                                                                                                                                           {displayIndex}. {supcategory.name}
                                                                                                                                                    </span>
                                                                                                                                                    <Link to={`edit/${supcategory.id}`}  ><EditIcon /></Link>
@@ -327,7 +327,7 @@ const CategoryPage = ({ refetch, setUpdate }) => {
                                                                                                                                                                                              </div>
                                                                                                                                                                                       </div>
                                                                                                                                                                                       <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                                                                                                                                                                             <button className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto" onClick={() => handleSupDelete(supcategory.id, supcategory.name)}>
+                                                                                                                                                                                             <button className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-TextFontSemiBold text-white shadow-sm sm:ml-3 sm:w-auto" onClick={() => handleSupDelete(supcategory.id, supcategory.name)}>
                                                                                                                                                                                                     Delete
                                                                                                                                                                                              </button>
 
@@ -335,7 +335,7 @@ const CategoryPage = ({ refetch, setUpdate }) => {
                                                                                                                                                                                                     type="button"
                                                                                                                                                                                                     data-autofocus
                                                                                                                                                                                                     onClick={handleCloseSupDelete}
-                                                                                                                                                                                                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-6 py-3 text-sm font-medium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:mt-0 sm:w-auto"
+                                                                                                                                                                                                    className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-6 py-3 text-sm font-TextFontMedium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:mt-0 sm:w-auto"
                                                                                                                                                                                              >
                                                                                                                                                                                                     Cancel
                                                                                                                                                                                              </button>
@@ -357,7 +357,7 @@ const CategoryPage = ({ refetch, setUpdate }) => {
                                                                                                                        <button
                                                                                                                               type="button"
                                                                                                                               onClick={handleCloseSupCategory}
-                                                                                                                              className="mt-3 inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-medium text-white shadow-sm sm:mt-0 sm:w-auto hover:bg-mainColor-dark focus:outline-none"
+                                                                                                                              className="mt-3 inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-TextFontMedium text-white shadow-sm sm:mt-0 sm:w-auto hover:bg-mainColor-dark focus:outline-none"
                                                                                                                        >
                                                                                                                               Close
                                                                                                                        </button>
@@ -386,7 +386,7 @@ const CategoryPage = ({ refetch, setUpdate }) => {
                                                                              />
                                                                       </td>
                                                                       <td className="relative min-w-[150px] sm:min-w-[100px] sm:w-2/12 lg:w-2/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl">
-                                                                             <span className='text-mainColor text-xl border-b-2 border-mainColor font-semibold cursor-pointer'
+                                                                             <span className='text-mainColor text-xl border-b-2 border-mainColor font-TextFontSemiBold cursor-pointer'
                                                                                     onClick={() => handleOpenPriority(category.id)}>
                                                                                     {category.priority}
                                                                              </span>
@@ -414,14 +414,14 @@ const CategoryPage = ({ refetch, setUpdate }) => {
                                                                                                                        <button
                                                                                                                               type="button"
                                                                                                                               onClick={handleClosePriority}
-                                                                                                                              className="inline-flex w-full justify-center rounded-xl bg-mainColor px-6 py-3 text-sm font-medium text-white shadow-sm sm:mt-0 sm:w-auto hover:bg-mainColor-dark focus:outline-none"
+                                                                                                                              className="inline-flex w-full justify-center rounded-xl bg-mainColor px-6 py-3 text-sm font-TextFontMedium text-white shadow-sm sm:mt-0 sm:w-auto hover:bg-mainColor-dark focus:outline-none"
                                                                                                                        >
                                                                                                                               Close
                                                                                                                        </button>
                                                                                                                        <button
                                                                                                                               type="button"
                                                                                                                               onClick={() => handleChangePriority(category.id, category.name)} // Renamed 'handleClick' to 'onClick'
-                                                                                                                              className="inline-flex w-full justify-center rounded-xl bg-white px-6 py-3 text-sm font-medium text-mainColor border-2 shadow-sm sm:mt-0 sm:w-auto hover:bg-mainColor-dark focus:outline-none"
+                                                                                                                              className="inline-flex w-full justify-center rounded-xl bg-white px-6 py-3 text-sm font-TextFontMedium text-mainColor border-2 shadow-sm sm:mt-0 sm:w-auto hover:bg-mainColor-dark focus:outline-none"
                                                                                                                        >
                                                                                                                               Change Priority
                                                                                                                        </button>
@@ -463,7 +463,7 @@ const CategoryPage = ({ refetch, setUpdate }) => {
                                                                                                                                      <div className="mt-2 text-center">
                                                                                                                                             {/* <DialogTitle
                                                                                                                                             as="h3"
-                                                                                                                                            className="text-xl font-semibold leading-10 text-gray-900"
+                                                                                                                                            className="text-xl font-TextFontSemiBold leading-10 text-gray-900"
                                                                                                                                      > */}
                                                                                                                                             You will delete category {category?.name || "-"}
                                                                                                                                             {/* </DialogTitle> */}
@@ -471,7 +471,7 @@ const CategoryPage = ({ refetch, setUpdate }) => {
                                                                                                                               </div>
                                                                                                                        </div>
                                                                                                                        <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                                                                                                              <button className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-semibold text-white shadow-sm sm:ml-3 sm:w-auto" onClick={() => handleDelete(category.id, category.name)}>
+                                                                                                                              <button className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-TextFontSemiBold text-white shadow-sm sm:ml-3 sm:w-auto" onClick={() => handleDelete(category.id, category.name)}>
                                                                                                                                      Delete
                                                                                                                               </button>
 
@@ -479,7 +479,7 @@ const CategoryPage = ({ refetch, setUpdate }) => {
                                                                                                                                      type="button"
                                                                                                                                      data-autofocus
                                                                                                                                      onClick={handleCloseDelete}
-                                                                                                                                     className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-6 py-3 text-sm font-medium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:mt-0 sm:w-auto"
+                                                                                                                                     className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-6 py-3 text-sm font-TextFontMedium text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 sm:mt-0 sm:w-auto"
                                                                                                                               >
                                                                                                                                      Cancel
                                                                                                                               </button>
@@ -500,19 +500,19 @@ const CategoryPage = ({ refetch, setUpdate }) => {
                                    {categories.length > 0 && (
                                           <div className="my-6 flex items-center justify-center gap-x-4">
                                                  {currentPage !== 1 && (
-                                                        <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-white font-medium' onClick={() => setCurrentPage(currentPage - 1)}>Prev</button>
+                                                        <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-white font-TextFontMedium' onClick={() => setCurrentPage(currentPage - 1)}>Prev</button>
                                                  )}
                                                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
                                                         <button
                                                                key={page}
                                                                onClick={() => handlePageChange(page)}
-                                                               className={`px-4 py-2 mx-1 text-lg font-semibold rounded-full duration-300 ${currentPage === page ? 'bg-mainColor text-white' : ' text-mainColor'}`}
+                                                               className={`px-4 py-2 mx-1 text-lg font-TextFontSemiBold rounded-full duration-300 ${currentPage === page ? 'bg-mainColor text-white' : ' text-mainColor'}`}
                                                         >
                                                                {page}
                                                         </button>
                                                  ))}
                                                  {totalPages !== currentPage && (
-                                                        <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-white font-medium' onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
+                                                        <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-white font-TextFontMedium' onClick={() => setCurrentPage(currentPage + 1)}>Next</button>
                                                  )}
                                           </div>
                                    )}
