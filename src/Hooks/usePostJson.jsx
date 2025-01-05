@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
 import { useAuth } from "../Context/Auth"; // Make sure to import useAuth if required
-import { TfiUppercase } from "react-icons/tfi";
 import { useSelector } from "react-redux";
 
 export const usePost = ({ url, login = false, type = false }) => {
@@ -29,12 +28,23 @@ export const usePost = ({ url, login = false, type = false }) => {
 
                      if (response.status === 200) {
                             setResponse(response);
-                            { name ? auth.toastSuccess(name) : '' }   
+                            { name ? auth.toastSuccess(name) : '' }
                             // auth.toastSuccess(name)
                      }
               } catch (error) {
-                     auth.toastError(error.message)
-                     console.error('error post Json', error);
+                     if (error.response?.data?.errors) {
+                            Object.entries(error.response.data.errors).forEach(([messages]) => {
+                                   // Show a toast for each error message
+                                   messages.forEach((message) => {
+                                          auth.toastError(`${message}`);
+                                   });
+                            });
+                     } else {
+                            auth.toastError(error.message);
+                     }
+
+                     console.error('Error posting JSON:', error);
+
               } finally {
                      setLoadingPost(false);
               }

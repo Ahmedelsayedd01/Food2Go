@@ -24,6 +24,10 @@ export { default as ProductPage } from "./Dashboard/Admin/ProductSetup/ProductPa
 export { default as AddProductPage } from "./Dashboard/Admin/ProductSetup/AddProductPage";
 export { default as EditProductPage } from "./Dashboard/Admin/ProductSetup/EditProductPage";
 /* Setting */
+// Setting -> Roles
+export { default as RolesPage } from "./Dashboard/Admin/Setting/Roles/RolesPage";
+export { default as AddRoleSection } from "./Dashboard/Admin/Setting/Roles/AddRoleSection";
+export { default as EditRolePage } from "./Dashboard/Admin/Setting/Roles/EditRole";
 // Setting -> Payment Method
 export { default as PaymentMethodPage } from "./Dashboard/Admin/Setting/PaymentMethod/PaymentMethodPage";
 export { default as AddPaymentMethodSection } from "./Dashboard/Admin/Setting/PaymentMethod/AddPaymentMethodSection";
@@ -64,10 +68,15 @@ export { default as OrdersPaymentHistoryPage } from "./Dashboard/Admin/OrdersPay
 export { default as AddDeliveryManSection } from "./Dashboard/Admin/DeliveryMan/AddDeliveryManSection";
 export { default as EditDeliveryManPage } from "./Dashboard/Admin/DeliveryMan/EditDeliveryManPage";
 export { default as DeliveryManPage } from "./Dashboard/Admin/DeliveryMan/DeliveryManPage";
-// Customers
-export { default as CustomersPage } from "./Dashboard/Admin/Customers/CustomersPage";
-export { default as AddCustomersSection } from "./Dashboard/Admin/Customers/AddCustomersSection";
-export { default as EditCustomersPage } from "./Dashboard/Admin/Customers/EditCustomersPage";
+/* Users */
+// Users -> Admins
+export { default as AdminsPage } from "./Dashboard/Admin/Users/Admins/AdminsPage";
+export { default as AddAdminSection } from "./Dashboard/Admin/Users/Admins/AddAdminSection";
+export { default as EditAdminPage } from "./Dashboard/Admin/Users/Admins/EditAdminPage";
+// Users -> Customers
+export { default as CustomersPage } from "./Dashboard/Admin/Users/Customers/CustomersPage";
+export { default as AddCustomersSection } from "./Dashboard/Admin/Users/Customers/AddCustomersSection";
+export { default as EditCustomersPage } from "./Dashboard/Admin/Users/Customers/EditCustomersPage";
 
 // Business Setup
 export { default as BusinessSettingsPage } from "./Dashboard/Admin/BusinessSetup/BusinessSettingsPage";
