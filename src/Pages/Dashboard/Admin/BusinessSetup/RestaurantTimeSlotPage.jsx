@@ -165,7 +165,7 @@ const RestaurantTimeSlotPage = ({ refetch }) => {
                                 onChange={handleSelectDay}
                                 options={days}
                                 optionLabel="name"
-                                placeholder={stateDay}
+                                placeholder={stateDay || "Select Day"}
                                 filter
                                 className="w-full md:w-14rem"
                             />
