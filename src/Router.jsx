@@ -66,7 +66,7 @@ import {
 import ProtectedLogin from "./ProtectedData/ProtectedLogin";
 import NotFoundPage from "./Pages/NotFoundPage/NotFoundPage";
 import App from "./App";
-import { BusinessSettingsPage, CustomerLoginPage, MainBranchSetupPage, OrdersPage, OrdersPaymentHistoryPage, OrdersPaymentPendingPage, RestaurantTimeSlotPage } from "./Pages/Pages";
+import { BusinessSettingsPage, CustomerLoginPage, LandingPage, MainBranchSetupPage, OrdersPage, OrdersPaymentHistoryPage, OrdersPaymentPendingPage, RestaurantTimeSlotPage } from "./Pages/Pages";
 
 const ProductSetupLayout = () => {
   return <Outlet />;
@@ -81,9 +81,20 @@ const OrderLayout = () => {
 };
 
 export const router = createBrowserRouter([
-  /* Login Admin */
   {
     path: "/",
+    // element: <ProtectedLogin />,
+    element: <LandingPage />,
+    // children: [
+    //   {
+    //     path: '',
+    //     element: <LoginLayout />,
+    //   }
+    // ]
+  },
+  /* Login Admin */
+  {
+    path: "/login",
     element: <ProtectedLogin />,
     children: [
       {
