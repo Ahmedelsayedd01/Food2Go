@@ -9,8 +9,11 @@ import { Dropdown } from 'primereact/dropdown';
 
 
 const AddDealSection = ({ refetch, setRefetch }) => {
-       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://bcknd.food2go.online/admin/translation' });
-       const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/deal/add' });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({
+              url: `${apiUrl}/admin/translation`
+       });
+       const { postData, loadingPost, response } = usePost({ url: `${apiUrl}/admin/deal/add` });
 
        const auth = useAuth();
 

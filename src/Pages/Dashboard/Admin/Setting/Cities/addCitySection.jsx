@@ -5,7 +5,10 @@ import { useAuth } from '../../../../../Context/Auth';
 
 
 const AddCitySection = ({ update, setUpdate }) => {
-  const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/settings/city/add' });
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+  const { postData, loadingPost, response } = usePost({
+    url: `${apiUrl}/admin/settings/city/add`
+  });
 
   const auth = useAuth();
 

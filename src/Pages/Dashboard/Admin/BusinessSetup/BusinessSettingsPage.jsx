@@ -129,12 +129,13 @@ const BusinessSettingsPage = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const {
     refetch: refetchCompany,
     loading: loadingCompany,
     data: dataCompany,
   } = useGet({
-    url: "https://bcknd.food2go.online/admin/settings/business_setup/company",
+    url: `${apiUrl}/admin/settings/business_setup/company`,
   });
 
   // const {
@@ -142,14 +143,16 @@ const BusinessSettingsPage = () => {
   //   loading: loadingMaintenance,
   //   data: dataMaintennance,
   // } = useGet({
-  //   url: "https://bcknd.food2go.online/admin/settings/business_setup/maintenance",
+  //   url: `${ apiUrl } / admin / settings / business_setup / maintenance``,
   // });
 
   const {
     refetch: refetchCity,
     loading: loadingCity,
     data: dataCity,
-  } = useGet({ url: "https://bcknd.food2go.online/admin/settings/city" });
+  } = useGet({
+    url: `${apiUrl}/admin/settings/city`
+  });
 
 
 
@@ -165,16 +168,16 @@ const BusinessSettingsPage = () => {
   const [formDataMaintenance, setFormDataMaintenance] = useState({});
 
   const { postData, loadingPost, response } = usePost({
-    url: "https://bcknd.food2go.online/admin/settings/business_setup/company/add",
+    url: `${apiUrl}/admin/settings/business_setup/company/add`,
   });
 
 
   // const { postDataStatus, loadingPostStatus, responseStatus } = usePost({
-  //      url: "https://bcknd.food2go.online/admin/settings/business_setup/maintenance/status",
+  //      url: `${ apiUrl } / admin / settings / business_setup / maintenance / status",
   //    });
 
   //  const { postDataMaintenance, loadingPostMaintenance, responseMaintenanace } = usePost({
-  //    url: "https://bcknd.food2go.online/admin/settings/business_setup/maintenance/add",
+  //    url: `${apiUrl}/admin/settings/business_setup/maintenance/add",
   //  });
 
   useEffect(() => {
@@ -204,19 +207,19 @@ const BusinessSettingsPage = () => {
       setSelectedTimeFormat(dataCompany?.company_info?.time_format || stateTimeFormat)
       setStateTimeFormat(dataCompany?.company_info?.time_format || stateTimeFormat)
 
-      setDataMaintenance(dataCompany.maintenance)
-      setAllSystem(dataCompany.maintenance.all)
-      setBranchPanel(dataCompany.maintenance.branch)
-      setCustomerApp(dataCompany.maintenance.customer)
-      setWebApp(dataCompany.maintenance.web)
-      setDeliverymanApp(dataCompany.maintenance.delivery)
-      setForDay(dataCompany.maintenance.day)
-      setForWeek(dataCompany.maintenance.week)
-      setUntilChange(dataCompany.maintenance.until_change)
-      setCustomize(dataCompany.maintenance.customize)
-      setMaintenanceMode(dataCompany.maintenance.status)
-      setStartDate(dataCompany.maintenance.start_date)
-      setEndDate(dataCompany.maintenance.end_date)
+      setDataMaintenance(dataCompany?.maintenance || {})
+      setAllSystem(dataCompany?.maintenance?.all || 0)
+      setBranchPanel(dataCompany?.maintenance?.branch || 0)
+      setCustomerApp(dataCompany?.maintenance?.customer || 0)
+      setWebApp(dataCompany?.maintenance?.web || 0)
+      setDeliverymanApp(dataCompany?.maintenance?.delivery || 0)
+      setForDay(dataCompany?.maintenance?.day || 0)
+      setForWeek(dataCompany?.maintenance?.week || 0)
+      setUntilChange(dataCompany?.maintenance?.until_change || 0)
+      setCustomize(dataCompany?.maintenance?.customize || 0)
+      setMaintenanceMode(dataCompany?.maintenance?.status || 0)
+      setStartDate(dataCompany?.maintenance?.start_date || '')
+      setEndDate(dataCompany?.maintenance?.end_date || '')
 
 
       if (dataCompany.company_info.currency_id) {
@@ -377,9 +380,13 @@ const BusinessSettingsPage = () => {
       week: forWeek,
       until_change: untilChange,
       customize: Customize,
-      start_date: startDate,
-      end_date: endDate
     };
+
+    if (Customize === 1) {
+      updatedData.start_date = startDate;
+      updatedData.end_date = endDate;
+    }
+
 
 
 
@@ -446,7 +453,7 @@ const BusinessSettingsPage = () => {
     }
 
 
-    postData(formData, "Branch Added Success");
+    postData(formData, "Business Setup Success");
     console.log("all data ", formData)
   };
 
@@ -560,6 +567,9 @@ const BusinessSettingsPage = () => {
     setForWeek(0);
     setUntilChange(0);
     setCustomize(0);
+
+    setStartDate(startDate || '')
+    setEndDate(endDate || '')
   };
   const handleClickForWeek = (e) => {
     const isChecked = e.target.checked;
@@ -567,6 +577,9 @@ const BusinessSettingsPage = () => {
     setForWeek(isChecked ? 1 : 0);
     setUntilChange(0);
     setCustomize(0);
+
+    setStartDate(startDate || '')
+    setEndDate(endDate || '')
   };
   const handleClickUntilChange = (e) => {
     const isChecked = e.target.checked;
@@ -574,6 +587,11 @@ const BusinessSettingsPage = () => {
     setForWeek(0);
     setUntilChange(isChecked ? 1 : 0);
     setCustomize(0);
+
+    setStartDate(startDate || '')
+    setEndDate(endDate || '')
+    console.log(startDate)
+    console.log(endDate)
   };
   const handleClickCustomize = (e) => {
     const isChecked = e.target.checked;
@@ -581,6 +599,9 @@ const BusinessSettingsPage = () => {
     setForWeek(0);
     setUntilChange(0);
     setCustomize(isChecked ? 1 : 0);
+
+    setStartDate(startDate || '')
+    setEndDate(endDate || '')
   };
 
   // Logo handler
@@ -1015,36 +1036,42 @@ const BusinessSettingsPage = () => {
                   />
                 </div>
               </div>
-              {/* Start Date */}
-              <div className="sm:w-full xl:w-[30%] flex items-center justify-start gap-3">
-                <span className="text-xl font-TextFontRegular text-thirdColor">
-                  Start Date:
-                </span>
-                <div>
-                  <DateInput
-                    value={startDate}
-                    onChange={(e) => setStartDate(e.target.value)}
-                    maxDate={false}
-                    minDate={true}
-                  />
-                </div>
-              </div>
-              {/* End Date */}
-              <div className="sm:w-full xl:w-[30%] flex items-center justify-start gap-3">
-                <span className="text-xl font-TextFontRegular text-thirdColor">
-                  End Date:
-                </span>
-                <div>
-                  <DateInput
-                    value={endDate}
-                    onChange={(e) => setEndDate(e.target.value)}
-                    maxDate={false}
-                    minDate={true}
-                  />
-                </div>
-              </div>
+              {Customize === 1 && (
+
+                <>
+                  {/* Start Date */}
+                  <div className="sm:w-full xl:w-[30%] flex items-center justify-start gap-3">
+                    <span className="text-xl font-TextFontRegular text-thirdColor">
+                      Start Date:
+                    </span>
+                    <div>
+                      <DateInput
+                        value={startDate}
+                        onChange={(e) => setStartDate(e.target.value)}
+                        maxDate={false}
+                        minDate={true}
+                      />
+                    </div>
+                  </div>
+                  {/* End Date */}
+                  <div className="sm:w-full xl:w-[30%] flex items-center justify-start gap-3">
+                    <span className="text-xl font-TextFontRegular text-thirdColor">
+                      End Date:
+                    </span>
+                    <div>
+                      <DateInput
+                        value={endDate}
+                        onChange={(e) => setEndDate(e.target.value)}
+                        maxDate={false}
+                        minDate={true}
+                      />
+                    </div>
+                  </div>
+                </>
+              )}
             </>
-          )}
+          )
+          }
 
           {/* Buttons */}
           <div className="w-full flex items-center justify-end gap-x-4 mb-32">

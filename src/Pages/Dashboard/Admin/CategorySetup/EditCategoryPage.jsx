@@ -10,11 +10,14 @@ import { useAuth } from '../../../../Context/Auth';
 
 const EditCategoryPage = () => {
        const { categoryId } = useParams();
-       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://bcknd.food2go.online/admin/translation' });
-       const { refetch: refetchCategories, loading: loadingCategories, data: dataCategories } = useGet({ url: 'https://bcknd.food2go.online/admin/category' });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({
+              url: `${apiUrl}/admin/translation`
+       });
+       const { refetch: refetchCategories, loading: loadingCategories, data: dataCategories } = useGet({ url: `${apiUrl}/admin/category` });
 
-       const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: `https://bcknd.food2go.online/admin/category/item/${categoryId}` });
-       const { postData, loadingPost, response } = usePost({ url: `https://bcknd.food2go.online/admin/category/update/${categoryId}` });
+       const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: `${apiUrl}/admin/category/item/${categoryId}` });
+       const { postData, loadingPost, response } = usePost({ url: `${apiUrl}/admin/category/update/${categoryId}` });
 
        const dropDownCategoriesParent = useRef();
        const ImageRef = useRef();

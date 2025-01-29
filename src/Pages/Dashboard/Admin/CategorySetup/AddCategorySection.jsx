@@ -8,9 +8,19 @@ import { MultiSelect } from 'primereact/multiselect';
 
 
 const AddCategorySection = ({ update, setUpdate }) => {
-       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://bcknd.food2go.online/admin/translation' });
-       const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: 'https://bcknd.food2go.online/admin/category' });
-       const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/category/add' });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+
+       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({
+              url: `${apiUrl}/admin/translation`
+       });
+
+       const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({
+              url: `${apiUrl}/admin/category`
+       });
+
+       const { postData, loadingPost, response } = usePost({
+              url: `${apiUrl}/admin/category/add`
+       });
 
        const dropDownCategoriesParent = useRef();
        const ImageRef = useRef();

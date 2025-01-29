@@ -7,9 +7,14 @@ import { useGet } from '../../../../../Hooks/useGet';
 
 
 const AddZoneSection = ({ update, setUpdate }) => {
-  const { refetch: refetchCities, loading: loadingCities, data: dataCities } = useGet({ url: 'https://bcknd.food2go.online/admin/settings/city' });
-  const { refetch: refetchBranches, loading: loadingBranches, data: dataBranches } = useGet({ url: 'https://bcknd.food2go.online/admin/branch' });
-  const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/settings/zone/add' });
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+  const { refetch: refetchCities, loading: loadingCities, data: dataCities } = useGet({
+    url: `${apiUrl}/admin/settings/city`
+  });
+  const { refetch: refetchBranches, loading: loadingBranches, data: dataBranches } = useGet({ url: `${apiUrl}/admin/branch` });
+  const { postData, loadingPost, response } = usePost({
+    url: `${apiUrl}/admin/settings/zone/add`
+  });
 
   const dropDownCities = useRef();
   const dropDownBranches = useRef();
@@ -64,7 +69,10 @@ const AddZoneSection = ({ update, setUpdate }) => {
     setCityId(option.id);
     setStateCity(option.name);
 
-    const filterBranchs = branches.filter((branch, index) => branch.city.id == option.id);
+    setStateBranch('Select Branch')
+    setBranchId('');
+
+    const filterBranchs = branches.filter((branch, index) => branch.city_id == option.id);
     setFilterBranches(filterBranchs)
   };
 
@@ -143,10 +151,10 @@ const AddZoneSection = ({ update, setUpdate }) => {
       auth.toastError('Please Select City')
       return;
     }
-    if (!branchId) {
-      auth.toastError('Please Select Branch')
-      return;
-    }
+    // if (!branchId) {
+    //   auth.toastError('Please Select Branch')
+    //   return;
+    // }
 
 
     const formData = new FormData();

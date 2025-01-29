@@ -9,8 +9,9 @@ const AddAdminSection = () => {
        const { adminId } = useParams();
        const navigate = useNavigate();
 
-       const { refetch: refetchAdmin, loading: loadingAdmin, data: dataAdmin } = useGet({ url: `https://bcknd.food2go.online/admin/admin/item/${adminId}` });
-       const { postData, loadingPost, response } = usePost({ url: `https://bcknd.food2go.online/admin/admin/update/${adminId}` });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchAdmin, loading: loadingAdmin, data: dataAdmin } = useGet({ url: `${apiUrl}/admin/admin/item/${adminId}` });
+       const { postData, loadingPost, response } = usePost({ url: `${apiUrl}/admin/admin/update/${adminId}` });
 
        const ImageRef = useRef();
        const IdentityImageRef = useRef();

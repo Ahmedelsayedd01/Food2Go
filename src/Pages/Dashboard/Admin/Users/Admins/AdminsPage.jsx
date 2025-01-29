@@ -9,6 +9,7 @@ import Warning from '../../../../../Assets/Icons/AnotherIcons/WarningIcon';
 
 const AdminsPage = ({ loadingAdmins, adminsData }) => {
 
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const { changeState, loadingChange, responseChange } = useChangeState();
   const { deleteData, loadingDelete, responseDelete } = useDelete();
   const [openDelete, setOpenDelete] = useState(null);
@@ -37,7 +38,7 @@ const AdminsPage = ({ loadingAdmins, adminsData }) => {
   // Change Admins status 
   const handleChangeStaus = async (id, name, status) => {
     const response = await changeState(
-      `https://bcknd.food2go.online/admin/admin/status/${id}`,
+      `${apiUrl}/admin/admin/status/${id}`,
       `${name} Changed Status.`,
       { status } // Pass status as an object if changeState expects an object
     );
@@ -61,7 +62,7 @@ const AdminsPage = ({ loadingAdmins, adminsData }) => {
 
   // Delete Admin
   const handleDelete = async (id, name) => {
-    const success = await deleteData(`https://bcknd.food2go.online/admin/admin/delete/${id}`, `${name} Deleted Success.`);
+    const success = await deleteData(`${apiUrl}/admin/admin/delete/${id}`, `${name} Deleted Success.`);
 
     if (success) {
       // Update Deliveries only if changeState succeeded

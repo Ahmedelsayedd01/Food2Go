@@ -7,9 +7,10 @@ import { usePost } from '../../../../Hooks/usePostJson';
 
 
 const EditDiscountPage = () => {
-       const { discountId } = useParams()
-       const { refetch: refetchDiscount, loading: loadingDiscount, data: dataDiscount } = useGet({ url: `https://bcknd.food2go.online/admin/settings/discount/item/${discountId}` });
-       const { postData, loadingPost, response } = usePost({ url: `https://bcknd.food2go.online/admin/settings/discount/update/${discountId}` });
+       const { discountId } = useParams();
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchDiscount, loading: loadingDiscount, data: dataDiscount } = useGet({ url: `${apiUrl}/admin/settings/discount/item/${discountId}` });
+       const { postData, loadingPost, response } = usePost({ url: `${apiUrl}/admin/settings/discount/update/${discountId}` });
 
        const auth = useAuth();
        const navigate = useNavigate();

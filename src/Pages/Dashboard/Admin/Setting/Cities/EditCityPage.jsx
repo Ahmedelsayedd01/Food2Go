@@ -7,10 +7,11 @@ import { useGet } from '../../../../../Hooks/useGet';
 
 
 const EditCityPage = () => {
-       const { cityId } = useParams()
-       const navigate = useNavigate()
-       const { refetch: refetchCity, loading: loadingCity, data: dataCity } = useGet({ url: `https://bcknd.food2go.online/admin/settings/city/item/${cityId}` });
-       const { postData, loadingPost, response } = usePost({ url: `https://bcknd.food2go.online/admin/settings/city/update/${cityId}` });
+       const { cityId } = useParams();
+       const navigate = useNavigate();
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchCity, loading: loadingCity, data: dataCity } = useGet({ url: `${apiUrl}/admin/settings/city/item/${cityId}` });
+       const { postData, loadingPost, response } = usePost({ url: `${apiUrl}/admin/settings/city/update/${cityId}` });
 
        const auth = useAuth();
 

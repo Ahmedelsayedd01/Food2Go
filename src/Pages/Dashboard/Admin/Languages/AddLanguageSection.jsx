@@ -4,7 +4,10 @@ import { StaticButton, StaticLoader, SubmitButton, Switch, TextInput } from '../
 import { useAuth } from '../../../../Context/Auth';
 
 const AddLanguageSection = ({ update, setUpdate }) => {
-       const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/translation/add' });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { postData, loadingPost, response } = usePost({
+              url: `${apiUrl}/admin/translation/add`
+       });
 
        const auth = useAuth();
 

@@ -11,8 +11,11 @@ const EditRolePage = () => {
        const { roleId } = useParams();
        const navigate = useNavigate();
 
-       const { refetch: refetchRoles, loading: loadingRoles, data: dataRoles } = useGet({ url: 'https://bcknd.food2go.online/admin/admin_roles' });
-       const { postData, loadingPost, response } = usePost({ url: `https://bcknd.food2go.online/admin/admin_roles/update/${roleId}` });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchRoles, loading: loadingRoles, data: dataRoles } = useGet({
+              url: `${apiUrl}/admin/admin_roles`
+       });
+       const { postData, loadingPost, response } = usePost({ url: `${apiUrl}/admin/admin_roles/update/${roleId}` });
 
        const auth = useAuth();
 

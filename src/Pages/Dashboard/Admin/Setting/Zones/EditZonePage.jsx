@@ -11,10 +11,13 @@ const EditZonePage = () => {
        const { zoneId } = useParams();
        const navigate = useNavigate();
 
-       const { refetch: refetchCities, loading: loadingCities, data: dataCities } = useGet({ url: 'https://bcknd.food2go.online/admin/settings/city' });
-       const { refetch: refetchBranches, loading: loadingBranches, data: dataBranches } = useGet({ url: 'https://bcknd.food2go.online/admin/branch' });
-       const { refetch: refetchZone, loading: loadingZone, data: dataZone } = useGet({ url: `https://bcknd.food2go.online/admin/settings/zone/item/${zoneId}` });
-       const { postData, loadingPost, response } = usePost({ url: `https://bcknd.food2go.online/admin/settings/zone/update/${zoneId}` });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchCities, loading: loadingCities, data: dataCities } = useGet({
+              url: `${apiUrl}/admin/settings/city`
+       });
+       const { refetch: refetchBranches, loading: loadingBranches, data: dataBranches } = useGet({ url: `${apiUrl}/admin/branch` });
+       const { refetch: refetchZone, loading: loadingZone, data: dataZone } = useGet({ url: `${apiUrl}/admin/settings/zone/item/${zoneId}` });
+       const { postData, loadingPost, response } = usePost({ url: `${apiUrl}/admin/settings/zone/update/${zoneId}` });
 
        const dropDownCities = useRef();
        const dropDownBranches = useRef();
@@ -22,6 +25,7 @@ const EditZonePage = () => {
 
        const [cities, setCities] = useState([])
        const [branches, setBranches] = useState([])
+       const [filterBranches, setFilterBranches] = useState([])
        const [zone, setZone] = useState([])
 
        const [zoneName, setZoneName] = useState('');
@@ -65,6 +69,9 @@ const EditZonePage = () => {
                      setStateBranch(dataZone.zones?.branch?.name || 'Select Branch');
                      setBranchId(dataZone.zones?.branch?.id || '');
 
+                     const filterBranchs = branches.filter((branch, index) => branch.city_id == dataZone.city_id);
+                     setFilterBranches(filterBranchs)
+
                      setActiveZone(dataZone.zones?.status || 0);
               }
               console.log('cities', cities)
@@ -84,6 +91,12 @@ const EditZonePage = () => {
        const handleSelectCity = (option) => {
               setCityId(option.id);
               setStateCity(option.name);
+
+              setStateBranch('Select Branch')
+              setBranchId('');
+
+              const filterBranchs = branches.filter((branch, index) => branch.city_id == option.id);
+              setFilterBranches(filterBranchs)
        };
 
        const handleOpenBranches = () => {
@@ -151,10 +164,10 @@ const EditZonePage = () => {
                      auth.toastError('Please Select City')
                      return;
               }
-              if (!branchId) {
-                     auth.toastError('Please Select Branch')
-                     return;
-              }
+              // if (!branchId) {
+              //        auth.toastError('Please Select Branch')
+              //        return;
+              // }
 
 
               const formData = new FormData();
@@ -228,7 +241,7 @@ const EditZonePage = () => {
                                                                       openMenu={isOpenBranch}
                                                                       handleOpenOption={handleOpenOptionBranches}
                                                                       onSelectOption={handleSelectBranch}
-                                                                      options={branches}
+                                                                      options={filterBranches}
                                                                       border={false}
                                                                />
                                                         </div>

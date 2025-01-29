@@ -17,17 +17,18 @@ const CustomerLoginPage = () => {
   const [phoneNumberVerification, setPhoneNumberVerification] = useState(0);
   const auth = useAuth()
 
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const {
     refetch: refetchLogin,
     loading: loadingLogin,
     data: dataLogin,
   } = useGet({
-    url: "https://bcknd.food2go.online/admin/settings/business_setup/customer_login",
+    url: `${apiUrl}/admin/settings/business_setup/customer_login`,
   });
   const [Loign, setLogin] = useState([]);
 
   const { postData, loadingPost, response } = usePost({
-    url: "https://bcknd.food2go.online/admin/settings/business_setup/customer_login/add ",
+    url: `${apiUrl}/admin/settings/business_setup/customer_login/add`,
   });
   useEffect(() => {
     if (dataLogin && dataLogin.customer_login) {

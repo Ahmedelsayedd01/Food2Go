@@ -7,8 +7,11 @@ import { useGet } from '../../../../../Hooks/useGet';
 
 
 const AddBannerSection = ({ update, setUpdate }) => {
-  const { refetch: refetchCities, loading: loadingCities, data: dataCities } = useGet({ url: 'https://bcknd.food2go.online/admin/settings/city' });
-  const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/branch/add' });
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+  const { refetch: refetchCities, loading: loadingCities, data: dataCities } = useGet({
+    url: `${apiUrl}/admin/settings/city`
+  });
+  const { postData, loadingPost, response } = usePost({ url: `${apiUrl}/admin/branch/add` });
 
   const dropDownCities = useRef();
   const ImageRef = useRef();

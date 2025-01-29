@@ -18,7 +18,10 @@ const AllOrdersLayout = () => {
        const ordersCanceledCount = useSelector(state => state.ordersCanceled.data);
        const ordersScheduleCount = useSelector(state => state.ordersSchedule.data);
 
-       const { refetch: refetchBranch, loading: loadingBranch, data: dataBranch } = useGet({ url: 'https://bcknd.food2go.online/admin/order/branches' });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchBranch, loading: loadingBranch, data: dataBranch } = useGet({
+              url: `${apiUrl}/admin/order/branches`
+       });
 
        console.log('orderAllCount', ordersAllCount)
        useEffect(() => {

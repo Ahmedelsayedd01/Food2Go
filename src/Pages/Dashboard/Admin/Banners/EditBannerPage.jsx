@@ -11,12 +11,17 @@ const EditBannerPage = () => {
        const navigate = useNavigate();
        const auth = useAuth();
 
-       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://bcknd.food2go.online/admin/translation' });
-       const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: 'https://bcknd.food2go.online/admin/category' });
-       const { refetch: refetchData, loading: loadingData, data: allData } = useGet({ url: 'https://bcknd.food2go.online/admin/banner' });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({
+              url: `${apiUrl}/admin/translation`
+       });
+       const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: `${apiUrl}/admin/category` });
+       const { refetch: refetchData, loading: loadingData, data: allData } = useGet({
+              url: `${apiUrl}/admin/banner`
+       });
 
-       const { refetch: refetchBanner, loading: loadingBanner, data: dataBanner } = useGet({ url: `https://bcknd.food2go.online/admin/banner/item/${bannerId}` });
-       const { postData, loadingPost, response } = usePost({ url: `https://bcknd.food2go.online/admin/banner/update/${bannerId}` });
+       const { refetch: refetchBanner, loading: loadingBanner, data: dataBanner } = useGet({ url: `${apiUrl}/admin/banner/item/${bannerId}` });
+       const { postData, loadingPost, response } = usePost({ url: `${apiUrl}/admin/banner/update/${bannerId}` });
 
        const dropDownCategories = useRef();
        const dropDownProducts = useRef();
@@ -281,7 +286,7 @@ const EditBannerPage = () => {
                                                         <span
                                                                key={tap.id}
                                                                onClick={() => handleTap(index)}
-                                                               className={`${currentTap === index ? 'text-mainColor border-b-4 border-mainColor' : 'text-thirdColor'}  pb-1 text-xl font-TextFontMedium transition-colors duration-300 cursor-pointer hover:text-mainColor`}
+                                                               className={`${currentTap === index ? 'text-mainColor border-b-4 border-mainColor' : 'text-thirdColor'}  pb-1 text - xl font - TextFontMedium transition - colors duration - 300 cursor - pointer hover: text - mainColor`}
                                                         >
                                                                {tap.name}
                                                         </span>

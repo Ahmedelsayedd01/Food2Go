@@ -9,7 +9,10 @@ import Warning from '../../../../Assets/Icons/AnotherIcons/WarningIcon';
 import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 
 const BannersPage = ({ refetch, setUpdate }) => {
-       const { refetch: refetchBanners, loading: loadingBanners, data: dataBanners } = useGet({ url: 'https://bcknd.food2go.online/admin/banner' });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchBanners, loading: loadingBanners, data: dataBanners } = useGet({
+              url: `${apiUrl}/admin/banner`
+       });
 
        const { changeState, loadingChange, responseChange } = useChangeState();
        const { deleteData, loadingDelete, responseDelete } = useDelete();
@@ -52,7 +55,7 @@ const BannersPage = ({ refetch, setUpdate }) => {
        // Change Banner status 
        const handleChangeStaus = async (id, status) => {
               const response = await changeState(
-                     `https://bcknd.food2go.online/admin/banner/status/${id}`,
+                     `${apiUrl}/admin/banner/status/${id}`,
                      `Banner Changed Status.`,
                      { status } // Pass status as an object if changeState expects an object
               );
@@ -71,7 +74,7 @@ const BannersPage = ({ refetch, setUpdate }) => {
 
        // Delete Category
        const handleDelete = async (id, name) => {
-              const success = await deleteData(`https://bcknd.food2go.online/admin/banner/delete/${id}`, `${name} Deleted Success.`);
+              const success = await deleteData(`${apiUrl}/admin/banner/delete/${id}`, `${name} Deleted Success.`);
 
               if (success) {
                      // Update Banners only if changeState succeeded

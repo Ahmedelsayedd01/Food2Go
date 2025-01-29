@@ -13,12 +13,17 @@ const EditProductPage = () => {
        const auth = useAuth();
        /* Get Data */
 
-       const { refetch: refetchProductEdit, loading: loadingProductEdit, data: dataProductEdit } = useGet({ url: `https://bcknd.food2go.online/admin/product/item/${productId}` });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchProductEdit, loading: loadingProductEdit, data: dataProductEdit } = useGet({ url: `${apiUrl}/admin/product/item/${productId}` });
 
-       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://bcknd.food2go.online/admin/translation' });
-       const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: 'https://bcknd.food2go.online/admin/category' });
-       const { refetch: refetchProduct, loading: loadingProduct, data: dataProduct } = useGet({ url: 'https://bcknd.food2go.online/admin/product' });
-       const { postData, loadingPost, response } = usePost({ url: `https://bcknd.food2go.online/admin/product/update/${productId}` });
+       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({
+              url: `${apiUrl}/admin/translation`
+       });
+       const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: `${apiUrl}/admin/category` });
+       const { refetch: refetchProduct, loading: loadingProduct, data: dataProduct } = useGet({
+              url: `${apiUrl}/admin/product`
+       });
+       const { postData, loadingPost, response } = usePost({ url: `${apiUrl}/admin/product/update/${productId}` });
        /* Refs */
        const variationTypeRef = useRef([]);
        const [openVariationIndex, setOpenVariationIndex] = useState(null); // Tracks which variation's dropdown is open
@@ -876,7 +881,7 @@ const EditProductPage = () => {
                             if (Array.isArray(variation.names)) {
                                    variation.names.forEach((name, index) => {
                                           // Log data for verification
-                                          console.log(`Processing name at index ${index}:`, name);
+                                          console.log(`Processing name at index ${index}: `, name);
 
                                           // Append formData fields for names
                                           formData.append(`variations[${indexVar}][names][${index}][name]`, name.name);
@@ -886,18 +891,18 @@ const EditProductPage = () => {
                                                  name.tranlation_id !== undefined ? String(name.tranlation_id) : '');
                                    });
                             } else {
-                                   console.warn(`variation.names is not a valid array for variation index ${indexVar}`);
+                                   console.warn(`variation.names is not a valid array for variation index ${indexVar} `);
                             }
 
                             /* Options */
                             if (Array.isArray(variation.options)) {
                                    variation.options.forEach((option, indexOption) => {
-                                          console.log(`Processing option at index ${indexOption}:`, option);
+                                          console.log(`Processing option at index ${indexOption}: `, option);
 
                                           // Extra Option Handling
                                           if (Array.isArray(option.extra)) {
                                                  option.extra.forEach((extraOption, indexExtra) => {
-                                                        console.log(`Processing extra option at index ${indexExtra}:`, extraOption);
+                                                        console.log(`Processing extra option at index ${indexExtra}: `, extraOption);
 
                                                         if (Array.isArray(extraOption.extra_names)) {
                                                                extraOption.extra_names.forEach((extraName, indexNextra) => {
@@ -909,7 +914,7 @@ const EditProductPage = () => {
                                                                              extraName.tranlation_id !== undefined ? String(extraName.tranlation_id) : '');
                                                                });
                                                         } else {
-                                                               console.warn(`extraOption.extra_names is not a valid array at index ${indexExtra}`);
+                                                               console.warn(`extraOption.extra_names is not a valid array at index ${indexExtra} `);
                                                         }
 
                                                         formData.append(`variations[${indexVar}][options][${indexOption}][extra][${indexExtra}][extra_price]`,
@@ -921,7 +926,7 @@ const EditProductPage = () => {
                                           // Names Option Handling
                                           if (Array.isArray(option.names)) {
                                                  option.names.forEach((optionNa, indexOpNa) => {
-                                                        console.log(`Processing option name at index ${indexOpNa}:`, optionNa);
+                                                        console.log(`Processing option name at index ${indexOpNa}: `, optionNa);
 
                                                         formData.append(`variations[${indexVar}][options][${indexOption}][names][${indexOpNa}][name]`, optionNa.name);
                                                         formData.append(`variations[${indexVar}][options][${indexOption}][names][${indexOpNa}][tranlation_id]`,
@@ -937,7 +942,7 @@ const EditProductPage = () => {
                                           formData.append(`variations[${indexVar}][options][${indexOption}][points]`, option.points);
                                    });
                             } else {
-                                   console.warn(`variation.options is not a valid array for variation index ${indexVar}`);
+                                   console.warn(`variation.options is not a valid array for variation index ${indexVar} `);
                             }
 
                             // Append general variation data
@@ -952,7 +957,7 @@ const EditProductPage = () => {
 
 
               for (const [key, value] of formData.entries()) {
-                     console.log(`${key}: ${value}`);
+                     console.log(`${key}: ${value} `);
               }
 
 
@@ -990,7 +995,7 @@ const EditProductPage = () => {
                                                                <span
                                                                       key={tap.id}
                                                                       onClick={() => handleProductNamesTap(index)}
-                                                                      className={`${currentProductNamesTap === index ? 'text-mainColor border-b-4 border-mainColor' : 'text-thirdColor'}  pb-1 text-xl font-TextFontMedium transition-colors duration-300 cursor-pointer hover:text-mainColor`}
+                                                                      className={`${currentProductNamesTap === index ? 'text-mainColor border-b-4 border-mainColor' : 'text-thirdColor'} pb - 1 text - xl font - TextFontMedium transition - colors duration - 300 cursor - pointer hover: text - mainColor`}
                                                                >
                                                                       {tap.name}
                                                                </span>
@@ -1298,7 +1303,7 @@ const EditProductPage = () => {
                                                                       <span
                                                                              key={tap.id}
                                                                              onClick={() => handleExcludeNamesTap(index)}
-                                                                             className={`${currentExcludeNamesTap === index ? 'text-mainColor border-b-4 border-mainColor' : 'text-thirdColor'}  pb-1 text-xl font-TextFontMedium transition-colors duration-300 cursor-pointer hover:text-mainColor`}
+                                                                             className={`${currentExcludeNamesTap === index ? 'text-mainColor border-b-4 border-mainColor' : 'text-thirdColor'} pb - 1 text - xl font - TextFontMedium transition - colors duration - 300 cursor - pointer hover: text - mainColor`}
                                                                       >
                                                                              {tap.name}
                                                                       </span>
@@ -1312,7 +1317,7 @@ const EditProductPage = () => {
                                                                              {(productExclude || []).map((ele, indexMap) => (
                                                                                     <div
                                                                                            className="w-full flex items-center justify-start gap-5"
-                                                                                           key={`${tap.id}-${indexMap}`}
+                                                                                           key={`${tap.id} -${indexMap} `}
                                                                                     >
                                                                                            {/* Exclude Name Input */}
                                                                                            <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
@@ -1359,7 +1364,7 @@ const EditProductPage = () => {
                                                                                     </div>
                                                                              ))}
                                                                              {index === 0 && (
-                                                                                    <div className={`w-full flex items-center ${productExclude.length === 0 ? 'justify-center' : 'justify-start'}`}>
+                                                                                    <div className={`w - full flex items - center ${productExclude.length === 0 ? 'justify-center' : 'justify-start'} `}>
                                                                                            <ButtonAdd
                                                                                                   isWidth={true}
                                                                                                   Color="mainColor"
@@ -1386,7 +1391,7 @@ const EditProductPage = () => {
                                                                       <span
                                                                              key={tap.id}
                                                                              onClick={() => handleExtraNamesTap(index)}
-                                                                             className={`${currentExtraNamesTap === index ? 'text-mainColor border-b-4 border-mainColor' : 'text-thirdColor'}  pb-1 text-xl font-TextFontMedium transition-colors duration-300 cursor-pointer hover:text-mainColor`}
+                                                                             className={`${currentExtraNamesTap === index ? 'text-mainColor border-b-4 border-mainColor' : 'text-thirdColor'} pb - 1 text - xl font - TextFontMedium transition - colors duration - 300 cursor - pointer hover: text - mainColor`}
                                                                       >
                                                                              {tap.name}
                                                                       </span>
@@ -1400,7 +1405,7 @@ const EditProductPage = () => {
                                                                              {(productExtra || []).map((ele, indexMap) => (
                                                                                     <div
                                                                                            className="w-full flex items-center justify-start gap-5"
-                                                                                           key={`${tap.id}-${indexMap}`}
+                                                                                           key={`${tap.id} -${indexMap} `}
                                                                                     >
                                                                                            {/* Extra Name Input */}
                                                                                            <div className="sm:w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
@@ -1470,7 +1475,7 @@ const EditProductPage = () => {
                                                                                     </div>
                                                                              ))}
                                                                              {index === 0 && (
-                                                                                    <div className={`w-full flex items-center ${productExtra.length === 0 ? 'justify-center' : 'justify-start'}`}>
+                                                                                    <div className={`w - full flex items - center ${productExtra.length === 0 ? 'justify-center' : 'justify-start'} `}>
                                                                                            <ButtonAdd
                                                                                                   isWidth={true}
                                                                                                   Color="mainColor"
@@ -1497,7 +1502,7 @@ const EditProductPage = () => {
                                                                       <span
                                                                              key={tap.id}
                                                                              onClick={() => handleVariationTap(index)}
-                                                                             className={`${currentVariationTap === index ? 'text-mainColor border-b-4 border-mainColor' : 'text-thirdColor'}  pb-1 text-xl font-TextFontMedium transition-colors duration-300 cursor-pointer hover:text-mainColor`}
+                                                                             className={`${currentVariationTap === index ? 'text-mainColor border-b-4 border-mainColor' : 'text-thirdColor'} pb - 1 text - xl font - TextFontMedium transition - colors duration - 300 cursor - pointer hover: text - mainColor`}
                                                                       >
                                                                              {tap.name}
                                                                       </span>
@@ -1511,7 +1516,7 @@ const EditProductPage = () => {
                                                                              {(productVariations || []).map((ele, indexVariation) => (
                                                                                     <div
                                                                                            className="w-full border-4 border-mainColor p-3 rounded-2xl  flex sm:flex-col lg:flex-row flex-wrap shadow  items-start justify-start gap-5"
-                                                                                           key={`${tap.id}-${indexVariation}`}
+                                                                                           key={`${tap.id} -${indexVariation} `}
                                                                                     >
                                                                                            {/* Variation Name */}
                                                                                            <div className="sm:w-full lg:w-[30%] flex sm:flex-col lg:flex-row items-start justify-start gap-5">
@@ -1624,8 +1629,8 @@ const EditProductPage = () => {
                                                                                                                        <span
                                                                                                                               key={tap.id}
                                                                                                                               onClick={() => handleVariationOptionTap(index)}
-                                                                                                                              className={`${currentVariationOptionTap === index ? 'text-mainColor border-b-4 border-mainColor' : 'text-thirdColor'} 
-                                                                                                                              pb-1 text-xl font-TextFontMedium transition-colors duration-300 cursor-pointer hover:text-mainColor`}
+                                                                                                                              className={`${currentVariationOptionTap === index ? 'text-mainColor border-b-4 border-mainColor' : 'text-thirdColor'}
+       pb - 1 text - xl font - TextFontMedium transition - colors duration - 300 cursor - pointer hover: text - mainColor`}
                                                                                                                        >
                                                                                                                               {tap.name}
                                                                                                                        </span>
@@ -1639,7 +1644,7 @@ const EditProductPage = () => {
                                                                                                                               <div className="sm:w-full flex flex-wrap items-start justify-start gap-5">
                                                                                                                                      {/* Render options */}
                                                                                                                                      {(Array.isArray(ele.options) ? ele.options : Object.values(ele.options || {})).map((option, indexOption) => (
-                                                                                                                                            <div className="sm:w-full flex flex-wrap items-start justify-start gap-5 shadow-md p-5 pt-0 rounded-xl" key={`${indexOption}-${tapOption.id}`}>
+                                                                                                                                            <div className="sm:w-full flex flex-wrap items-start justify-start gap-5 shadow-md p-5 pt-0 rounded-xl" key={`${indexOption} -${tapOption.id} `}>
                                                                                                                                                    {/* Option Name */}
                                                                                                                                                    <div className="w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                                                                                                                                                           <span className="text-xl font-TextFontRegular text-thirdColor">
@@ -1767,7 +1772,7 @@ const EditProductPage = () => {
 
                                                                                                                                                    {/* Render extras for this option */}
                                                                                                                                                    {option.extra.map((extra, extraIndex) => (
-                                                                                                                                                          <div className="w-full flex flex-wrap items-start justify-start gap-5" key={`${tapOption.id}-${indexOption}-${extraIndex}`}>
+                                                                                                                                                          <div className="w-full flex flex-wrap items-start justify-start gap-5" key={`${tapOption.id} -${indexOption} -${extraIndex} `}>
                                                                                                                                                                  {/* Extra Name */}
                                                                                                                                                                  <div className="w-full lg:w-[30%] flex flex-col items-start justify-center gap-y-1">
                                                                                                                                                                         <span className="text-xl font-TextFontRegular text-thirdColor">
@@ -1918,7 +1923,7 @@ const EditProductPage = () => {
                                                                                     </div>
                                                                              ))}
                                                                              {index === 0 && (
-                                                                                    <div className={`w-full flex items-center ${productVariations.length === 0 ? 'justify-center' : 'justify-start'}`}>
+                                                                                    <div className={`w - full flex items - center ${productVariations.length === 0 ? 'justify-center' : 'justify-start'} `}>
                                                                                            <ButtonAdd
                                                                                                   isWidth={true}
                                                                                                   Color="mainColor"

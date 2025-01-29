@@ -6,9 +6,14 @@ import { useAuth } from '../../../../Context/Auth';
 
 
 const AddBannerSection = ({ update, setUpdate }) => {
-  const { refetch: refetchData, loading: loadingData, data: allData } = useGet({ url: 'https://bcknd.food2go.online/admin/banner' });
-  const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: 'https://bcknd.food2go.online/admin/category' });
-  const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/banner/add' });
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+  const { refetch: refetchData, loading: loadingData, data: allData } = useGet({
+    url: `${apiUrl}/admin/banner`
+  });
+  const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: `${apiUrl}/admin/category` });
+  const { postData, loadingPost, response } = usePost({
+    url: `${apiUrl}/admin/banner/add`
+  });
 
   const dropDownCategories = useRef();
   const dropDownProducts = useRef();
@@ -44,6 +49,7 @@ const AddBannerSection = ({ update, setUpdate }) => {
 
   const [image, setImage] = useState([]);
   const [imageFile, setImageFile] = useState([]);
+
 
   useEffect(() => {
     refetchData(); // Refetch data when the component mounts
@@ -264,7 +270,7 @@ const AddBannerSection = ({ update, setUpdate }) => {
                 <span
                   key={tap.id}
                   onClick={() => handleTap(index)}
-                  className={`${currentTap === index ? 'text-mainColor border-b-4 border-mainColor' : 'text-thirdColor'}  pb-1 text-xl font-TextFontMedium transition-colors duration-300 cursor-pointer hover:text-mainColor`}
+                  className={`${currentTap === index ? 'text-mainColor border-b-4 border-mainColor' : 'text-thirdColor'}  pb-1 text - xl font - TextFontMedium transition - colors duration - 300 cursor - pointer hover: text - mainColor`}
                 >
                   {tap.name}
                 </span>

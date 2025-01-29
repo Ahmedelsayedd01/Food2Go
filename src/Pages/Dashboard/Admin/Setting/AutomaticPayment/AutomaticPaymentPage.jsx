@@ -5,14 +5,15 @@ import { Switch, TextInput, UploadInput, StaticLoader, SubmitButton, DropDown } 
 import { useChangeState } from '../../../../../Hooks/useChangeState';
 
 const AutomaticPaymentPage = ({ refetch }) => {
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const { refetch: refetchAutomaticPayment, loading: loadingAutomaticPayment, data: dataAutomaticPayment } = useGet({
-    url: 'https://bcknd.food2go.online/admin/settings/payment_methods_auto',
+    url: `${apiUrl}/admin/settings/payment_methods_auto`,
   });
 
   const [automaticPayments, setAutomaticPayments] = useState([]);
   const [currentTap, setCurrentTap] = useState(0);
   const { postData, loadingPost, response } = usePost({
-    url: `https://bcknd.food2go.online/admin/settings/payment_methods_auto/update/${automaticPayments[currentTap]?.id || 0}`,
+    url: `${apiUrl}/admin/settings/payment_methods_auto/update/${automaticPayments[currentTap]?.id || 0}`,
   });
 
   const { changeState, loadingChange, responseChange } = useChangeState();
@@ -104,7 +105,7 @@ const AutomaticPaymentPage = ({ refetch }) => {
   // Change Payment status 
   const handleChangeStaus = async (id, name, status) => {
     const response = await changeState(
-      ` https://bcknd.food2go.online/admin/settings/payment_methods_auto/status/${id}`,
+      ` ${apiUrl} / admin / settings / payment_methods_auto / status / ${id}`,
       `${name} Changed Status.`,
       { status } // Pass status as an object if changeState expects an object
     );
@@ -162,7 +163,7 @@ const AutomaticPaymentPage = ({ refetch }) => {
                   className={`${currentTap === index
                     ? 'text-mainColor border-b-4 border-mainColor'
                     : 'text-thirdColor'
-                    } pb-1 text-xl font-TextFontMedium transition-colors duration-300 cursor-pointer hover:text-mainColor`}
+                    } pb-1 text - xl font - TextFontMedium transition - colors duration - 300 cursor - pointer hover: text - mainColor`}
                 >
                   {payment.name}
                 </span>

@@ -3,8 +3,7 @@ import { useGet } from "../Hooks/useGet";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 
-// Redux slices
-
+const apiUrl = import.meta.env.VITE_API_BASE_URL;
 // Initial states
 const initialUserState = null;
 const initialCategoryState = null;
@@ -81,7 +80,7 @@ const soundNotification = createSlice({
 
 // User slice
 const userSlice = createSlice({
-       name: "user",
+       name: "userState",
        initialState: initialUserState,
        reducers: {
               setUser: (state, action) => {
@@ -277,7 +276,7 @@ const ordersScheduleSlice = createSlice({
 export const OrdersComponent = () => {
        const dispatch = useDispatch();
        const { refetch: refetchOrders, data: dataOrders, loading, error } = useGet({
-              url: "https://bcknd.food2go.online/admin/order",
+              url: `${apiUrl}/admin/order`,
        });
 
        // Log data to debug
@@ -327,7 +326,7 @@ export const OrdersComponent = () => {
 
 // const dispatch = useDispatch();
 // const { refetch: refetchOrders, data: dataOrders, loading, error } = useGet({
-//        url: "https://bcknd.food2go.online/admin/order",
+//        url: `${ apiUrl } / admin / order`,
 // });
 
 // useEffect(() => {

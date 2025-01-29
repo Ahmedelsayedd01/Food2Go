@@ -5,7 +5,10 @@ import { useGet } from '../../../../Hooks/useGet';
 import { LoaderLogin } from '../../../../Components/Components';
 
 const OrdersPaymentHistory = () => {
-  const { refetch: refetchOrdersPaymentHistory, loading: loadingOrdersPaymentHistory, data: dataOrdersPaymentHistory } = useGet({ url: 'https://bcknd.food2go.online/admin/payment/history' });
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+  const { refetch: refetchOrdersPaymentHistory, loading: loadingOrdersPaymentHistory, data: dataOrdersPaymentHistory } = useGet({
+    url: `${apiUrl}/admin/payment/history`
+  });
   const [ordersPaymentHistory, setOrdersPaymentHistory] = useState([]);
 
   // Fetch Orders Payment History when the component mounts or when refetch is called
@@ -129,7 +132,7 @@ const OrdersPaymentHistory = () => {
                 <button
                   key={page}
                   onClick={() => handlePageChange(page)}
-                  className={`px-4 py-2 mx-1 text-lg font-TextFontSemiBold rounded-full duration-300 ${currentPage === page ? 'bg-mainColor text-white' : ' text-mainColor'}`}
+                  className={`px - 4 py - 2 mx - 1 text - lg font - TextFontSemiBold rounded - full duration - 300 ${currentPage === page ? 'bg-mainColor text-white' : ' text-mainColor'}`}
                 >
                   {page}
                 </button>

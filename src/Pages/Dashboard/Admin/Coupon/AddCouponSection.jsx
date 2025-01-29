@@ -6,8 +6,11 @@ import { useAuth } from '../../../../Context/Auth';
 import { MultiSelect } from 'primereact/multiselect';
 
 const AddCouponPage = ({ update, setUpdate }) => {
-        const { refetch: refetchCoupon, loading: loadingCoupon, data: dataCoupon } = useGet({ url: 'https://bcknd.food2go.online/admin/coupon' });
-        const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/coupon/add' });
+        const apiUrl = import.meta.env.VITE_API_BASE_URL;
+        const { refetch: refetchCoupon, loading: loadingCoupon, data: dataCoupon } = useGet({
+                url: `${apiUrl}/admin/coupon`
+        });
+        const { postData, loadingPost, response } = usePost({ url: `${apiUrl}/admin/coupon/add` });
 
         const auth = useAuth();
 

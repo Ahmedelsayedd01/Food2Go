@@ -8,7 +8,10 @@ import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import Warning from '../../../../Assets/Icons/AnotherIcons/WarningIcon';
 
 const TaxesPage = ({ refetch, setUpdate }) => {
-       const { refetch: refetchTaxes, loading: loadingTaxes, data: dataTaxes } = useGet({ url: 'https://bcknd.food2go.online/admin/settings/tax' });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchTaxes, loading: loadingTaxes, data: dataTaxes } = useGet({
+              url: `${apiUrl}/admin/settings/tax`
+       });
        // const { changeState, loadingChange, responseChange } = useChangeState();
        const { deleteData, loadingDelete, responseDelete } = useDelete();
 
@@ -48,8 +51,8 @@ const TaxesPage = ({ refetch, setUpdate }) => {
 
        // const handleChangeActive = async (id, name, status) => {
        //        const response = await changeState(
-       //               `https://bcknd.food2go.online/admin/translation/active/${id}`,
-       //               `${name} Changed Active.`,
+       //               `${ apiUrl } / admin / translation / active / ${ id }`,
+       //               `${ name } Changed Active.`,
        //               { active: status } // Pass status as an object if changeState expects an object
        //        );
 
@@ -76,7 +79,7 @@ const TaxesPage = ({ refetch, setUpdate }) => {
 
        // Delete Language
        const handleDelete = async (id, name) => {
-              const success = await deleteData(`https://bcknd.food2go.online/admin/settings/tax/delete/${id}`, `${name} Deleted Success.`);
+              const success = await deleteData(`${apiUrl}/admin/settings/tax/delete/${id}`, `${name} Deleted Success.`);
 
               if (success) {
                      // Update taxes only if changeState succeeded

@@ -7,9 +7,10 @@ import { DropDown, LoaderLogin, NumberInput, StaticButton, SubmitButton, TextInp
 
 
 const EditTaxPage = () => {
-       const { taxId } = useParams()
-       const { refetch: refetchTax, loading: loadingTax, data: dataTax } = useGet({ url: `https://bcknd.food2go.online/admin/settings/tax/item/${taxId}` });
-       const { postData, loadingPost, response } = usePost({ url: `https://bcknd.food2go.online/admin/settings/tax/update/${taxId}` });
+       const { taxId } = useParams();
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchTax, loading: loadingTax, data: dataTax } = useGet({ url: `${apiUrl}/admin/settings/tax/item/${taxId}` });
+       const { postData, loadingPost, response } = usePost({ url: `${apiUrl}/admin/settings/tax/update/${taxId}` });
 
        const auth = useAuth();
        const navigate = useNavigate();

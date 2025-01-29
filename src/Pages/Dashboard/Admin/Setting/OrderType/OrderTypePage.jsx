@@ -5,8 +5,9 @@ import { LoaderLogin, Switch } from '../../../../../Components/Components';
 import { useChangeState } from '../../../../../Hooks/useChangeState';
 
 const OrderTypePage = () => {
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
        const { refetch: refetchOrderType, loading: loadingOrderType, data: dataOrderType } = useGet({
-              url: 'https://bcknd.food2go.online/admin/settings/order_type',
+              url: `${apiUrl}/admin/settings/order_type`,
        });
 
        const { changeState, loadingChange, responseChange } = useChangeState();
@@ -29,7 +30,7 @@ const OrderTypePage = () => {
 
        const handleChangeStatus = async (id, name, status) => {
               const response = await changeState(
-                     'https://bcknd.food2go.online/admin/settings/order_type/update',
+                     `${apiUrl}/admin/settings/order_type/update`,
                      `${name} Changed Status.`,
                      { id, status } // Pass status as an object if changeState expects an object
               );

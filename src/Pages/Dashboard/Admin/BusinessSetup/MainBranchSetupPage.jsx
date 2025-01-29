@@ -6,16 +6,21 @@ import { useGet } from '../../../../Hooks/useGet';
 import { useAuth } from '../../../../Context/Auth';
 
 const MainBranchSetupPage = () => {
-       const { refetch: refetchBranch, loading: loadingBranch, data: dataBranch } = useGet({ url: 'https://bcknd.food2go.online/admin/settings/business_setup/branch' });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchBranch, loading: loadingBranch, data: dataBranch } = useGet({
+              url: `${apiUrl}/admin/settings/business_setup/branch`
+       });
        const [branch, setBranch] = useState([])
        const [previousBranchData, setPreviousBranchData] = useState({});
-       const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/settings/business_setup/branch/add' });
+       const { postData, loadingPost, response } = usePost({ url: `${apiUrl}/admin/settings/business_setup/branch/add` });
 
        const {
               refetch: refetchCity,
               loading: loadingCity,
               data: dataCity,
-       } = useGet({ url: "https://bcknd.food2go.online/admin/settings/city" });
+       } = useGet({
+              url: `${apiUrl}/admin/settings/city`
+       });
 
        useEffect(() => {
               refetchBranch();
@@ -396,8 +401,8 @@ const CustomTimeInput = ({ value, onChange }) => {
        const handleTimeChange = (type, newValue) => {
               const [currentHours, currentMinutes] = value.split(':');
               const updatedTime = type === 'hours'
-                     ? `${newValue}:${currentMinutes}`
-                     : `${currentHours}:${newValue}`;
+                     ? `${newValue}: ${currentMinutes}`
+                     : `${currentHours}: ${newValue}`;
               onChange(updatedTime);  // Ensure value is always in HH:mm format
        };
 

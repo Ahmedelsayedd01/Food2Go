@@ -19,16 +19,16 @@ export const ContextProvider = ({ children }) => {
 
 
   const [user, setUser] = useState(() => {
-    const userData = localStorage.getItem('user');
+    const userData = localStorage.getItem('userFood2go');
     return userData ? JSON.parse(userData) : null;
   });
 
 
   useEffect(() => {
     if (user) {
-      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('userFood2go', JSON.stringify(user));
     } else {
-      localStorage.removeItem('user');
+      localStorage.removeItem('userFood2go');
     }
   }, [user]);
 
@@ -40,7 +40,7 @@ export const ContextProvider = ({ children }) => {
   const logout = () => {
     setUser(null);
     setHideSidebar(true);
-    localStorage.removeItem('user');
+    localStorage.removeItem('userFood2go');
     localStorage.removeItem('stateSidebar');
   };
 

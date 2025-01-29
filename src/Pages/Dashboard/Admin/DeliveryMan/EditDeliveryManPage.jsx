@@ -7,10 +7,13 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 const EditDeliveryManPage = () => {
   const { deliveryManId } = useParams();
-  const { refetch: refetchDeliveries, loading: loadingDeliveries, data: dataDeliveries } = useGet({ url: 'https://bcknd.food2go.online/admin/delivery' });
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+  const { refetch: refetchDeliveries, loading: loadingDeliveries, data: dataDeliveries } = useGet({
+    url: `${apiUrl}/admin/delivery`
+  });
 
-  const { refetch: refetchDeliveryMan, loading: loadingDeliveryMan, data: dataDeliveryMan } = useGet({ url: `https://bcknd.food2go.online/admin/delivery/item/${deliveryManId}` });
-  const { postData, loadingPost, response } = usePost({ url: `https://bcknd.food2go.online/admin/delivery/update/${deliveryManId}` });
+  const { refetch: refetchDeliveryMan, loading: loadingDeliveryMan, data: dataDeliveryMan } = useGet({ url: `${apiUrl}/admin/delivery/item/${deliveryManId}` });
+  const { postData, loadingPost, response } = usePost({ url: `${apiUrl}/admin/delivery/update/${deliveryManId}` });
 
   const [branches, setBranches] = useState([]);
 

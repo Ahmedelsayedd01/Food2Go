@@ -8,11 +8,14 @@ import { useDispatch } from 'react-redux'
 import { setUser } from '../../Store/CreateSlices'
 
 const LoginPage = () => {
+  
   const auth = useAuth();
   const dispatch = useDispatch()
   const navigate = useNavigate();
-
-  const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/api/admin/auth/login' }); // Destructure as an object
+  
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+  
+  const { postData, loadingPost, response } = usePost({ url: `${apiUrl}/api/admin/auth/login` }); // Destructure as an object
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 

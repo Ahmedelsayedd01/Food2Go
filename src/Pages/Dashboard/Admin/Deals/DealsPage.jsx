@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import { DeleteIcon, EditIcon } from '../../../../Assets/Icons/AllIcons';
 
 const DealsPage = ({ data, setDeals, loading }) => {
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
        const { changeState, loadingChange, responseChange } = useChangeState();
        const { deleteData, loadingDelete, responseDelete } = useDelete();
 
@@ -57,7 +58,7 @@ const DealsPage = ({ data, setDeals, loading }) => {
        // Change Deal status 
        const handleChangeStaus = async (id, name, status) => {
               const response = await changeState(
-                     `https://bcknd.food2go.online/admin/deal/status/${id}`,
+                     `${apiUrl}/admin/deal/status/${id}`,
                      `${name} Changed Status.`,
                      { status } // Pass status as an object if changeState expects an object
               );
@@ -75,7 +76,7 @@ const DealsPage = ({ data, setDeals, loading }) => {
 
        // Delete Deal
        const handleDelete = async (id, name) => {
-              const success = await deleteData(`https://bcknd.food2go.online/admin/deal/delete/${id}`, `${name} Deleted Success.`);
+              const success = await deleteData(`${apiUrl}/admin/deal/delete/${id}`, `${name} Deleted Success.`);
 
               if (success) {
                      // Update Deliveries only if changeState succeeded

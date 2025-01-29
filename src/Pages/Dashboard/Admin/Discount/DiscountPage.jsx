@@ -8,7 +8,10 @@ import Warning from '../../../../Assets/Icons/AnotherIcons/WarningIcon';
 import { Link } from 'react-router-dom';
 
 const DiscountPage = ({ refetch, setUpdate }) => {
-       const { refetch: refetchDiscounts, loading: loadingDiscounts, data: dataDiscounts } = useGet({ url: 'https://bcknd.food2go.online/admin/settings/discount' });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchDiscounts, loading: loadingDiscounts, data: dataDiscounts } = useGet({
+              url: `${apiUrl}/admin/settings/discount`
+       });
        // const { changeState, loadingChange, responseChange } = useChangeState();
        const { deleteData, loadingDelete, responseDelete } = useDelete();
 
@@ -48,8 +51,8 @@ const DiscountPage = ({ refetch, setUpdate }) => {
 
        // const handleChangeActive = async (id, name, status) => {
        //        const response = await changeState(
-       //               `https://bcknd.food2go.online/admin/translation/active/${id}`,
-       //               `${name} Changed Active.`,
+       //               `${ apiUrl } / admin / translation / active / ${ id }`,
+       //               `${ name } Changed Active.`,
        //               { active: status } // Pass status as an object if changeState expects an object
        //        );
 
@@ -76,7 +79,7 @@ const DiscountPage = ({ refetch, setUpdate }) => {
 
        // Delete Language
        const handleDelete = async (id, name) => {
-              const success = await deleteData(`https://bcknd.food2go.online/admin/settings/discount/delete/${id}`, `${name} Deleted Success.`);
+              const success = await deleteData(`${apiUrl}/admin/settings/discount/delete/${id}`, `${name} Deleted Success.`);
 
               if (success) {
                      // Update Discounts only if changeState succeeded

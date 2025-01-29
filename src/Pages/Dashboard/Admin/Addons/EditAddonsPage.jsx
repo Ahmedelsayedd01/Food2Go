@@ -9,12 +9,15 @@ const EditAddonsPage = () => {
        const { addonId } = useParams();
        const navigate = useNavigate();
 
-       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://bcknd.food2go.online/admin/translation' });
-       const { refetch: refetchAddons, loading: loadingAddons, data: dataAddons } = useGet({ url: 'https://bcknd.food2go.online/admin/addons' });
-       const { refetch: refetchAddonsEdit, loading: loadingAddonsEdit, data: dataAddonsEdit } = useGet({ url: `https://bcknd.food2go.online/admin/addons/item/${addonId}` });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({
+              url: `${apiUrl}/admin/translation`
+       });
+       const { refetch: refetchAddons, loading: loadingAddons, data: dataAddons } = useGet({ url: `${apiUrl}/admin/addons` });
+       const { refetch: refetchAddonsEdit, loading: loadingAddonsEdit, data: dataAddonsEdit } = useGet({ url: `${apiUrl}/admin/addons/item/${addonId}` });
 
        const { postData, loadingPost, response } = usePost({
-              url: `https://bcknd.food2go.online/admin/addons/update/${addonId}`
+              url: `${apiUrl}/admin/addons/update/${addonId}`
        });
 
        const dropDownTax = useRef();

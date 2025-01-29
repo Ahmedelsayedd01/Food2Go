@@ -4,7 +4,10 @@ import { AddAdminSection, AdminsPage } from '../../../../Pages/Pages'
 import { useGet } from '../../../../Hooks/useGet';
 
 const AdminsLayout = () => {
-       const { refetch: refetchAdmins, loading: loadingAdmins, data: dataAdmins } = useGet({ url: 'https://bcknd.food2go.online/admin/admin' });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchAdmins, loading: loadingAdmins, data: dataAdmins } = useGet({
+              url: `${apiUrl}/admin/admin`
+       });
 
        const [admins, setAdmins] = useState([])
        const [update, setUpdate] = useState(false)

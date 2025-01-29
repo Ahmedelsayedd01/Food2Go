@@ -4,7 +4,10 @@ import { TitlePage, TitleSection } from '../../../Components/Components';
 import { AddDealSection, DealsPage } from '../../../Pages/Pages';
 
 const DealsLayout = () => {
-       const { refetch: refetchDeals, loading: loadingDeals, data: dataDeals } = useGet({ url: 'https://bcknd.food2go.online/admin/deal' });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchDeals, loading: loadingDeals, data: dataDeals } = useGet({
+              url: `${apiUrl}/admin/deal`
+       });
 
        const [refetch, setRefetch] = useState(false)
 

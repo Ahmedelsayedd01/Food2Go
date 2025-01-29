@@ -13,11 +13,11 @@ export const usePost = ({ url, login = false, type = false }) => {
               setLoadingPost(true);
               try {
                      const contentType = type ? 'application/json' : 'multipart/form-data';
-                     const config = !login && user?.token
+                     const config = !login && auth?.user?.token
                             ? {
                                    headers: {
                                           'Content-Type': contentType,
-                                          'Authorization': `Bearer ${user?.token || ''}`,
+                                          'Authorization': `Bearer ${auth?.user?.token || ''}`,
                                    },
                             }
                             : {

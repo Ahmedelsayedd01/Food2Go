@@ -4,8 +4,11 @@ import { usePost } from '../../../../../Hooks/usePostJson';
 import { LoaderLogin, SubmitButton, TimeInput } from '../../../../../Components/Components';
 
 const ResturantTimePage = () => {
-  const { refetch: refetchResturantTime, loading: loadingResturantTime, data: dataResturantTime } = useGet({ url: 'https://bcknd.food2go.online/admin/settings/resturant_time' });
-  const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/settings/resturant_time_update' });
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+  const { refetch: refetchResturantTime, loading: loadingResturantTime, data: dataResturantTime } = useGet({
+    url: `${apiUrl}/admin/settings/resturant_time`
+  });
+  const { postData, loadingPost, response } = usePost({ url: `${apiUrl}/admin/settings/resturant_time_update` });
 
   const [resturantTimeFrom, setResturantTimeFrom] = useState('');
   const [resturantTimeTo, setResturantTimeTo] = useState('');

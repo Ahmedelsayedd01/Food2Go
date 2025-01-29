@@ -4,8 +4,11 @@ import { usePost } from '../../../../Hooks/usePostJson';
 import { DropDown, LoaderLogin, StaticLoader, SubmitButton, TextInput } from '../../../../Components/Components';
 
 const TaxTypePage = () => {
-       const { refetch: refetchTaxType, loading: loadingTaxType, data: dataTaxType } = useGet({ url: 'https://bcknd.food2go.online/admin/settings/tax_type' });
-       const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/settings/tax_update' });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchTaxType, loading: loadingTaxType, data: dataTaxType } = useGet({
+              url: `${apiUrl}/admin/settings/tax_type`
+       });
+       const { postData, loadingPost, response } = usePost({ url: `${apiUrl}/admin/settings/tax_update` });
 
        const dropDownType = useRef();
        const [taxType, setTaxType] = useState('');

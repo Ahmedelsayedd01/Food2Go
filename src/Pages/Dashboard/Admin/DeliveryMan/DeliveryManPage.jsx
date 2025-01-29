@@ -8,6 +8,7 @@ import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import Warning from '../../../../Assets/Icons/AnotherIcons/WarningIcon';
 
 const DeliveryManPage = ({ data, setDeliveries, loading }) => {
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const { changeState, loadingChange, responseChange } = useChangeState();
   const { deleteData, loadingDelete, responseDelete } = useDelete();
   const [openDelete, setOpenDelete] = useState(null);
@@ -33,7 +34,7 @@ const DeliveryManPage = ({ data, setDeliveries, loading }) => {
   // Change Deliveries status 
   const handleChangeStaus = async (id, name, status) => {
     const response = await changeState(
-      `https://bcknd.food2go.online/admin/delivery/status/${id}`,
+      `${apiUrl}/admin/delivery/status/${id}`,
       `${name} Changed Status.`,
       { status } // Pass status as an object if changeState expects an object
     );
@@ -66,7 +67,7 @@ const DeliveryManPage = ({ data, setDeliveries, loading }) => {
 
   // Delete Delivery
   const handleDelete = async (id, name) => {
-    const success = await deleteData(`https://bcknd.food2go.online/admin/delivery/delete/${id}`, `${name} Deleted Success.`);
+    const success = await deleteData(`${apiUrl}/admin/delivery/delete/${id}`, `${name} Deleted Success.`);
 
     if (success) {
       // Update Deliveries only if changeState succeeded

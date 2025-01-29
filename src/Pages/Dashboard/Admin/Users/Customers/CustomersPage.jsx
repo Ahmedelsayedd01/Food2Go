@@ -9,7 +9,10 @@ import Warning from '../../../../../Assets/Icons/AnotherIcons/WarningIcon';
 import { useGet } from '../../../../../Hooks/useGet';
 
 const CustomersPage = ({ refetch, setUpdate }) => {
-  const { refetch: refetchCustomer, loading: loadingCustomer, data: dataCustomer } = useGet({ url: 'https://bcknd.food2go.online/admin/customer' });
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+  const { refetch: refetchCustomer, loading: loadingCustomer, data: dataCustomer } = useGet({
+    url: `${apiUrl}/admin/customer`
+  });
   const { changeState, loadingChange, responseChange } = useChangeState();
   const { deleteData, loadingDelete, responseDelete } = useDelete();
   const [openDelete, setOpenDelete] = useState(null);
@@ -46,7 +49,7 @@ const CustomersPage = ({ refetch, setUpdate }) => {
   // Change Customer status 
   const handleChangeStaus = async (id, name, status) => {
     const response = await changeState(
-      `https://bcknd.food2go.online/admin/customer/status/${id}`,
+      `${apiUrl}/admin/customer/status/${id}`,
       `${name} Changed Status.`,
       { status } // Pass status as an object if changeState expects an object
     );
@@ -70,7 +73,7 @@ const CustomersPage = ({ refetch, setUpdate }) => {
 
   // Delete Customer
   const handleDelete = async (id, name) => {
-    const success = await deleteData(`https://bcknd.food2go.online/admin/customer/delete/${id}`, `${name} Deleted Success.`);
+    const success = await deleteData(`${apiUrl}/admin/customer/delete/${id}`, `${name} Deleted Success.`);
 
     if (success) {
       // Update Deliveries only if changeState succeeded

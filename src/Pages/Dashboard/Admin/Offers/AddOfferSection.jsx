@@ -6,8 +6,11 @@ import { usePost } from '../../../../Hooks/usePostJson';
 
 
 const AddOfferSection = ({ refetch, setRefetch }) => {
-       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({ url: 'https://bcknd.food2go.online/admin/translation' });
-       const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/offer/add' });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchTranslation, loading: loadingTranslation, data: dataTranslation } = useGet({
+              url: `${apiUrl}/admin/translation`
+       });
+       const { postData, loadingPost, response } = usePost({ url: `${apiUrl}/admin/offer/add` });
 
        const ImageRef = useRef();
        const auth = useAuth();

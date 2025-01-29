@@ -4,7 +4,10 @@ import { AddOfferSection, OffersPage } from '../../../Pages/Pages';
 import { useGet } from '../../../Hooks/useGet';
 
 const OffersLayout = () => {
-       const { refetch: refetchOffers, loading: loadingOffers, data: dataOffers } = useGet({ url: 'https://bcknd.food2go.online/admin/offer' });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchOffers, loading: loadingOffers, data: dataOffers } = useGet({
+              url: `${apiUrl}/admin/offer`
+       });
 
        const [refetch, setRefetch] = useState(false)
 

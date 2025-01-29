@@ -6,12 +6,13 @@ import { Dialog } from '@headlessui/react';
 
 const DealOrderPage = () => {
        const auth = useAuth();
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
        const { postData: postDealOrder, loadingPost: loadingDealOrder, response: responseDealOrder } = usePost({
-              url: 'https://bcknd.food2go.online/admin/dealOrder',
+              url: `${apiUrl}/admin/dealOrder`,
        });
 
        const { postData: postDealOrderAdd, loadingPost: loadingDealOrderAdd, response: responseDealOrderAdd } = usePost({
-              url: 'https://bcknd.food2go.online/admin/dealOrder/add',
+              url: `${apiUrl}/admin/dealOrder/add`,
        });
 
 

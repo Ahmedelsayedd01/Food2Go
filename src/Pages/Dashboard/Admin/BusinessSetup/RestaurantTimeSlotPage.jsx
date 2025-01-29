@@ -5,9 +5,12 @@ import { usePost } from '../../../../Hooks/usePostJson';
 import { Dropdown } from 'primereact/dropdown';
 
 const RestaurantTimeSlotPage = ({ refetch }) => {
+    const apiUrl = import.meta.env.VITE_API_BASE_URL;
     const [allClosestTime, setAllClosestTime] = useState([{ closingTimeAm: '', closingTimePm: '' }]);
-    const { refetch: refetchTimeSlot, loading: loadingTime, data: dataSlot } = useGet({ url: 'https://bcknd.food2go.online/admin/settings/business_setup/time_slot' });
-    const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/settings/business_setup/time_slot/add' });
+    const { refetch: refetchTimeSlot, loading: loadingTime, data: dataSlot } = useGet({
+        url: `${apiUrl}/admin/settings/business_setup/time_slot`
+    });
+    const { postData, loadingPost, response } = usePost({ url: `${apiUrl}/admin/settings/business_setup/time_slot/add` });
 
     const [timeSlot, setTimeSlot] = useState({ daily: [], custom: [] });
     const [day, setDay] = useState('');

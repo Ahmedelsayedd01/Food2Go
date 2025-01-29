@@ -9,7 +9,10 @@ import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import Warning from '../../../../../Assets/Icons/AnotherIcons/WarningIcon';
 
 const BranchesPage = ({ refetch }) => {
-       const { refetch: refetchBranches, loading: loadingBranches, data: dataBranches } = useGet({ url: 'https://bcknd.food2go.online/admin/branch' });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchBranches, loading: loadingBranches, data: dataBranches } = useGet({
+              url: `${apiUrl}/admin/branch`
+       });
        const { changeState, loadingChange, responseChange } = useChangeState();
        const { deleteData, loadingDelete, responseDelete } = useDelete();
        const [branches, setBranches] = useState([]);
@@ -42,7 +45,7 @@ const BranchesPage = ({ refetch }) => {
        // Change paymentMethod status 
        const handleChangeStaus = async (id, name, status) => {
               const response = await changeState(
-                     `https://bcknd.food2go.online/admin/branch/status/${id}`,
+                     `${apiUrl}/admin/branch/status/${id}`,
                      `${name} Changed Status.`,
                      { status } // Pass status as an object if changeState expects an object
               );
@@ -66,7 +69,7 @@ const BranchesPage = ({ refetch }) => {
 
        // Delete payment Method
        const handleDelete = async (id, name) => {
-              const success = await deleteData(`https://bcknd.food2go.online/admin/branch/delete/${id}`, `${name} Deleted Success.`);
+              const success = await deleteData(`${apiUrl}/admin/branch/delete/${id}`, `${name} Deleted Success.`);
 
               if (success) {
                      setBranches(

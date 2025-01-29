@@ -4,8 +4,11 @@ import { AddRoleSection, RolesPage } from '../../../../Pages/Pages'
 import { useGet } from '../../../../Hooks/useGet'
 
 const RolesLayout = () => {
-  const { refetch: refetchRoles, loading: loadingRoles, data: dataRoles } = useGet({ url: 'https://bcknd.food2go.online/admin/admin_roles' });
-  
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+  const { refetch: refetchRoles, loading: loadingRoles, data: dataRoles } = useGet({
+    url: `${apiUrl}/admin/admin_roles`
+  });
+
   const [update, setUpdate] = useState(false)
   const [roles, setRoles] = useState([])
   const [permissionRoles, setPermissionRoles] = useState([])
@@ -15,7 +18,7 @@ const RolesLayout = () => {
   }, [refetchRoles, update]);
 
   useEffect(() => {
-    setRoles(dataRoles?.user_positions || []); 
+    setRoles(dataRoles?.user_positions || []);
     setPermissionRoles(dataRoles?.roles || []);
   }, [dataRoles]);
 

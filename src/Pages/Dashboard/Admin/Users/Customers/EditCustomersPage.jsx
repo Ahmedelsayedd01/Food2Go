@@ -7,8 +7,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 
 const EditCustomersPage = () => {
        const { customerId } = useParams();
-       const { refetch: refetchCustomer, loading: loadingCustomer, data: dataCustomer } = useGet({ url: `https://bcknd.food2go.online/admin/customer/item/${customerId}` });
-       const { postData, loadingPost, response } = usePost({ url: `https://bcknd.food2go.online/admin/customer/update/${customerId}` });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchCustomer, loading: loadingCustomer, data: dataCustomer } = useGet({ url: `${apiUrl}/admin/customer/item/${customerId}` });
+       const { postData, loadingPost, response } = usePost({ url: `${apiUrl}/admin/customer/update/${customerId}` });
 
        const auth = useAuth();
        const navigate = useNavigate();

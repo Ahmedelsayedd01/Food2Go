@@ -4,7 +4,10 @@ import { usePost } from '../../../../../Hooks/usePostJson';
 import { useAuth } from '../../../../../Context/Auth';
 
 const AddCustomersSection = ({ update, setUpdate }) => {
-       const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/customer/add' });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { postData, loadingPost, response } = usePost({
+              url: `${apiUrl}/admin/customer/add`
+       });
 
        const auth = useAuth();
        const ImageRef = useRef();

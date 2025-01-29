@@ -5,7 +5,10 @@ import { OrdersComponent } from '../../../../Store/CreateSlices'
 import { useGet } from '../../../../Hooks/useGet'
 
 const FailedOrdersLayout = () => {
-       const { refetch: refetchBranch, loading: loadingBranch, data: dataBranch } = useGet({ url: 'https://bcknd.food2go.online/admin/order/branches' });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchBranch, loading: loadingBranch, data: dataBranch } = useGet({
+              url: `${apiUrl}/admin/order/branches`
+       });
 
        useEffect(() => {
               refetchBranch(); // Refetch data when the component mounts

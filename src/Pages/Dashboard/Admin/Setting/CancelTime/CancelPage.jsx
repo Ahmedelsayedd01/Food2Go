@@ -4,8 +4,11 @@ import { usePost } from '../../../../../Hooks/usePostJson';
 import { LoaderLogin, SubmitButton, TextInput } from '../../../../../Components/Components';
 
 const CancelTimePage = () => {
-       const { refetch: refetchCancelTime, loading: loadingCancelTime, data: dataCancelTime } = useGet({ url: 'https://bcknd.food2go.online/admin/settings/view_time_cancel' });
-       const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/settings/update_time_cancel' });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchCancelTime, loading: loadingCancelTime, data: dataCancelTime } = useGet({
+              url: `${apiUrl}/admin/settings/view_time_cancel`
+       });
+       const { postData, loadingPost, response } = usePost({ url: `${apiUrl}/admin/settings/update_time_cancel` });
 
        const [cancelTime, setCancelTime] = useState('');
 

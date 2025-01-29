@@ -7,6 +7,7 @@ import Warning from '../../../../Assets/Icons/AnotherIcons/WarningIcon';
 import { Link } from 'react-router-dom';
 
 const OffersPage = ({ data, setOffers, loading }) => {
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
        const { deleteData, loadingDelete, responseDelete } = useDelete();
        const [openDelete, setOpenDelete] = useState(null);
        // const [deliveries, setDeliveries] = useState([data])
@@ -38,7 +39,7 @@ const OffersPage = ({ data, setOffers, loading }) => {
 
        // Delete Delivery
        const handleDelete = async (id, name) => {
-              const success = await deleteData(`https://bcknd.food2go.online/admin/offer/delete/${id}`, `${name} Deleted Success.`);
+              const success = await deleteData(`${apiUrl}/admin/offer/delete/${id}`, `${name} Deleted Success.`);
 
               if (success) {
                      // Update Deliveries only if changeState succeeded

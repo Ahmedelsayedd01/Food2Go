@@ -11,8 +11,11 @@ import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import Warning from '../../../../Assets/Icons/AnotherIcons/WarningIcon';
 
 const CategoryPage = ({ refetch, setUpdate }) => {
-       const dispatch = useDispatch()
-       const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({ url: 'https://bcknd.food2go.online/admin/category' });
+       const dispatch = useDispatch();
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchCategory, loading: loadingCategory, data: dataCategory } = useGet({
+              url: `${apiUrl}/admin/category`
+       });
        const { changeState, loadingChange, responseChange } = useChangeState();
        const { deleteData, loadingDelete, responseDelete } = useDelete();
        const dropDownRefs = useRef([]); // Array to store multiple refs
@@ -80,7 +83,7 @@ const CategoryPage = ({ refetch, setUpdate }) => {
        // Change categories status 
        const handleChangeStaus = async (id, name, status) => {
               const response = await changeState(
-                     `https://bcknd.food2go.online/admin/category/status/${id}`,
+                     `${apiUrl}/admin/category/status/${id}`,
                      `${name} Changed Status.`,
                      { status } // Pass status as an object if changeState expects an object
               );
@@ -97,7 +100,7 @@ const CategoryPage = ({ refetch, setUpdate }) => {
        };
        const handleChangeActive = async (id, name, status) => {
               const response = await changeState(
-                     `https://bcknd.food2go.online/admin/category/active/${id}`,
+                     `${apiUrl}/admin/category/active/${id}`,
                      `${name} Changed Active.`,
                      { active: status } // Pass status as an object if changeState expects an object
               );
@@ -125,7 +128,7 @@ const CategoryPage = ({ refetch, setUpdate }) => {
        // Change categories priority 
        const handleChangePriority = async (id, name) => {
               const response = await changeState(
-                     `https://bcknd.food2go.online/admin/category/priority/${id}`,
+                     `${apiUrl}/admin/category/priority/${id}`,
                      `${name} Changed Priority.`,
                      { priority: priorityChange } // Pass priority as an object if changeState expects an object
               );
@@ -141,7 +144,7 @@ const CategoryPage = ({ refetch, setUpdate }) => {
 
        // Delete Category
        const handleSupDelete = async (id, name) => {
-              const success = await deleteData(`https://bcknd.food2go.online/admin/category/delete/${id}`, `${name} Deleted Success.`);
+              const success = await deleteData(`${apiUrl}/admin/category/delete/${id}`, `${name} Deleted Success.`);
 
               if (success) {
                      // Update categories only if changeState succeeded
@@ -165,7 +168,7 @@ const CategoryPage = ({ refetch, setUpdate }) => {
               console.log('categories', categories)
        };
        const handleDelete = async (id, name) => {
-              const success = await deleteData(`https://bcknd.food2go.online/admin/category/delete/${id}`, `${name} Deleted Success.`);
+              const success = await deleteData(`${apiUrl}/admin/category/delete/${id}`, `${name} Deleted Success.`);
 
               if (success) {
                      // Update categories only if changeState succeeded

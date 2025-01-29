@@ -1014,7 +1014,7 @@ const LinksSidebar = () => {
 
        return (
               <>
-                     {auth.user.user_positions.name === 'Super Admin' ? (
+                     {auth?.user?.user_positions?.name === 'Super Admin' ? (
                             <div className="LinksSidebar w-full flex flex-col items-center justify-start gap-y-3">
 
                                    {/* Dashboard */}

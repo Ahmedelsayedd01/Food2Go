@@ -8,7 +8,8 @@ const InvoiceOrderPage = () => {
   const user = useSelector(state => state.user)
   const { orderId } = useParams();
 
-  const { refetch: refetchInvoiceOrder, loading: loadingInvoiceOrder, data: dataInvoiceOrder } = useGet({ url: `https://bcknd.food2go.online/admin/order/invoice/${orderId}` });
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+  const { refetch: refetchInvoiceOrder, loading: loadingInvoiceOrder, data: dataInvoiceOrder } = useGet({ url: `${apiUrl}/admin/order/invoice/${orderId}` });
 
   const [invoiceData, setInvoiceData] = useState([])
 

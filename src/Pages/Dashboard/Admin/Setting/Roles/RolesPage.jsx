@@ -9,6 +9,7 @@ import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import Warning from '../../../../../Assets/Icons/AnotherIcons/WarningIcon';
 
 const RolesPage = ({ loadingRoles, roles }) => {
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
        const { changeState, loadingChange, responseChange } = useChangeState();
        const { deleteData, loadingDelete, responseDelete } = useDelete();
 
@@ -39,7 +40,7 @@ const RolesPage = ({ loadingRoles, roles }) => {
        // Change paymentMethod status 
        const handleChangeStaus = async (id, name, status) => {
               const response = await changeState(
-                     `https://bcknd.food2go.online/admin/admin_roles/status/${id}`,
+                     `${apiUrl}/admin/admin_roles/status/${id}`,
                      `${name} Changed Status.`,
                      { status } // Pass status as an object if changeState expects an object
               );
@@ -70,7 +71,7 @@ const RolesPage = ({ loadingRoles, roles }) => {
 
        // Delete payment Method
        const handleDelete = async (id, name) => {
-              const success = await deleteData(`https://bcknd.food2go.online/admin/admin_roles/delete/${id}`, `${name} Deleted Success.`);
+              const success = await deleteData(`${apiUrl}/admin/admin_roles/delete/${id}`, `${name} Deleted Success.`);
 
               if (success) {
                      setRolesData(

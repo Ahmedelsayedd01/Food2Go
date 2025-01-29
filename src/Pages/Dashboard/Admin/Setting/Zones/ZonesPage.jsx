@@ -9,7 +9,10 @@ import { Dialog, DialogBackdrop, DialogPanel } from '@headlessui/react';
 import Warning from '../../../../../Assets/Icons/AnotherIcons/WarningIcon';
 
 const ZonePage = ({ refetch }) => {
-       const { refetch: refetchZones, loading: loadingZones, data: dataZones } = useGet({ url: 'https://bcknd.food2go.online/admin/settings/zone' });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchZones, loading: loadingZones, data: dataZones } = useGet({
+              url: `${apiUrl}/admin/settings/zone`
+       });
        const { changeState, loadingChange, responseChange } = useChangeState();
        const { deleteData, loadingDelete, responseDelete } = useDelete();
        const [zones, setZones] = useState([]);
@@ -41,7 +44,7 @@ const ZonePage = ({ refetch }) => {
        // Change paymentMethod status 
        const handleChangeStaus = async (id, name, status) => {
               const response = await changeState(
-                     `https://bcknd.food2go.online/admin/settings/zone/status/${id}`,
+                     `${apiUrl}/admin/settings/zone/status/${id}`,
                      `${name} Changed Status.`,
                      { status } // Pass status as an object if changeState expects an object
               );
@@ -65,7 +68,7 @@ const ZonePage = ({ refetch }) => {
 
        // Delete payment Method
        const handleDelete = async (id, name) => {
-              const success = await deleteData(`https://bcknd.food2go.online/admin/settings/zone/delete/${id}`, `${name} Deleted Success.`);
+              const success = await deleteData(`${apiUrl}/admin/settings/zone/delete/${id}`, `${name} Deleted Success.`);
 
               if (success) {
                      setZones(
@@ -175,7 +178,7 @@ const ZonePage = ({ refetch }) => {
                                                                                                                               </div>
                                                                                                                        </div>
                                                                                                                        <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-                                                                                                                              <button className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-TextFontSemiBold text-white shadow-sm sm:ml-3 sm:w-auto" onClick={() => handleDelete(zone.id, zone.branch.name)}>
+                                                                                                                              <button className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-TextFontSemiBold text-white shadow-sm sm:ml-3 sm:w-auto" onClick={() => handleDelete(zone.id, zone?.branch?.name || '')}>
                                                                                                                                      Delete
                                                                                                                               </button>
 

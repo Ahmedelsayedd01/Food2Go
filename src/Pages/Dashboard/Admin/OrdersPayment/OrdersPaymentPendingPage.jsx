@@ -12,8 +12,9 @@ const OrdersPaymentPending = () => {
   const auth = useAuth()
   const [orderId, setOrderId] = useState('');
 
-  const { refetch: refetchOrdersPaymentPending, loading: loadingOrdersPaymentPending, data: dataOrdersPaymentPending } = useGet({ url: 'https://bcknd.food2go.online/admin/payment/pending' });
-  const { refetch: refetchReceiptImage, loading: loadingReceiptImage, data: dataReceiptImage } = useGet({ url: `https://bcknd.food2go.online/admin/payment/receipt/${orderId}` });
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+  const { refetch: refetchOrdersPaymentPending, loading: loadingOrdersPaymentPending, data: dataOrdersPaymentPending } = useGet({ url: `${apiUrl}/admin/payment/pending` });
+  const { refetch: refetchReceiptImage, loading: loadingReceiptImage, data: dataReceiptImage } = useGet({ url: `${apiUrl}/admin/payment/receipt/${orderId}` });
 
   const { changeState, loadingChange, responseChange } = useChangeState();
   const [ordersPaymentPending, setOrdersPaymentPending] = useState([]);
@@ -98,7 +99,7 @@ const OrdersPaymentPending = () => {
 
   const handleApprove = async (id) => {
     const response = await changeState(
-      `https://bcknd.food2go.online/admin/payment/approve/${id}`,
+      `${apiUrl}/admin/payment/approve/${id}`,
       `${id} Is Approved.`
     );
     if (response) {
@@ -116,7 +117,7 @@ const OrdersPaymentPending = () => {
     }
 
     const response = await changeState(
-      `https://bcknd.food2go.online/admin/payment/rejected/${id}`,
+      `${apiUrl}/admin/payment/rejected/${id}`,
       `${id} Is Rejected.`,
       { rejected_reason: reasonReject }
     );

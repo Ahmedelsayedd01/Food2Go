@@ -4,11 +4,12 @@ import { usePost } from '../../../../Hooks/usePostJson';
 import { LoaderLogin, SubmitButton, UploadInput } from '../../../../Components/Components';
 
 const SongPage = () => {
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
   const { refetch: refetchSong, loading: loadingSong, data: dataSong } = useGet({
-    url: 'https://bcknd.food2go.online/admin/settings/notification_sound',
+    url: `${apiUrl}/admin/settings/notification_sound`,
   });
   const { postData, loadingPost, response } = usePost({
-    url: 'https://bcknd.food2go.online/admin/settings/notification_sound_update',
+    url: `${apiUrl}/admin/settings/notification_sound_update`,
   });
 
   const songRef = useRef();

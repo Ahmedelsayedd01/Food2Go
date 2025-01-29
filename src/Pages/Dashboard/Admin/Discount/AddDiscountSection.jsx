@@ -5,7 +5,10 @@ import { DropDown, NumberInput, StaticButton, StaticLoader, SubmitButton, TextIn
 
 
 const AddDiscountSection = ({ update, setUpdate }) => {
-       const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/settings/discount/add' });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { postData, loadingPost, response } = usePost({
+              url: `${apiUrl}/admin/settings/discount/add`
+       });
 
        const dropDownType = useRef();
        const auth = useAuth();

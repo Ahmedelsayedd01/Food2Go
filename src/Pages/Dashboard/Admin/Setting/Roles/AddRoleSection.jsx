@@ -6,7 +6,10 @@ import { MultiSelect } from 'primereact/multiselect';
 
 
 const AddRoleSection = ({ update, setUpdate, permissionRoles }) => {
-  const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/admin_roles/add' });
+  const apiUrl = import.meta.env.VITE_API_BASE_URL;
+  const { postData, loadingPost, response } = usePost({
+    url: `${apiUrl}/admin/admin_roles/add`
+  });
 
   const auth = useAuth();
 

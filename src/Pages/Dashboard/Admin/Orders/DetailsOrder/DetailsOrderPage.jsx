@@ -10,8 +10,11 @@ import { useChangeState } from '../../../../../Hooks/useChangeState';
 const DetailsOrderPage = () => {
        const StatusRef = useRef()
        const { orderId } = useParams();
-       const { refetch: refetchDetailsOrder, loading: loadingDetailsOrder, data: dataDetailsOrder } = useGet({ url: `https://bcknd.food2go.online/admin/order/order/${orderId}` });
-       const { postData, loadingPost, response } = usePost({ url: 'https://bcknd.food2go.online/admin/order/delivery' });
+       const apiUrl = import.meta.env.VITE_API_BASE_URL;
+       const { refetch: refetchDetailsOrder, loading: loadingDetailsOrder, data: dataDetailsOrder } = useGet({ url: `${apiUrl}/admin/order/order/${orderId}` });
+       const { postData, loadingPost, response } = usePost({
+              url: `${apiUrl}/admin/order/delivery`
+       });
        const { changeState, loadingChange, responseChange } = useChangeState();
 
        const [detailsData, setDetailsData] = useState([])
@@ -161,7 +164,7 @@ const DetailsOrderPage = () => {
        const handleChangeStaus = async (orderId, orderNumber, orderStatus) => {
               try {
                      const responseStatus = await changeState(
-                            `https://bcknd.food2go.online/admin/order/status/${orderId}`,
+                            `${apiUrl}/admin/order/status/${orderId}`,
                             `Changed Status Successes.`,
                             {
                                    order_status: orderStatus,
@@ -349,7 +352,7 @@ const DetailsOrderPage = () => {
                                                                                                          </thead>
                                                                                                          <tbody>
                                                                                                                 {item.product.map((itemProduct, indexProduct) => (
-                                                                                                                       <tr key={`product-${itemProduct.id}-${indexProduct}`} className='border-b-2'>
+                                                                                                                       <tr key={`product - ${itemProduct.id} - ${indexProduct}`} className='border-b-2'>
                                                                                                                               <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">{indexProduct + 1}</td>
                                                                                                                               <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">{itemProduct.product.name}</td>
                                                                                                                               <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">{itemProduct.product.price}</td>
@@ -768,8 +771,9 @@ const DetailsOrderPage = () => {
                                                                              <div className="flex items-center gap-x-2 text-lg font-TextFontSemiBold"><span><FaUser className='text-mainColor' /></span>Delivery Information</div>
                                                                              <p className="text-sm">Name: {detailsData?.user?.f_name || '-'} {detailsData?.user?.l_name || '-'}</p>
                                                                              <p className="text-sm">Contact: {detailsData?.user?.phone || '-'}</p>
+                                                                             <p className="text-sm">Build Num: {detailsData?.address?.building_num || '-'}</p>
                                                                              <p className="text-sm">Floor: {detailsData?.address?.floor_num || '-'}</p>
-                                                                             <p className="text-sm">House: {detailsData?.address?.building_num || '-'}</p>
+                                                                             <p className="text-sm">House: {detailsData?.address?.apartment || '-'}</p>
                                                                              <p className="text-sm">Road: {detailsData?.address?.street || '-'}</p>
                                                                              <p className="text-sm pb-2 text-center">
                                                                                     {detailsData?.address?.address || '-'}
