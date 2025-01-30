@@ -202,7 +202,7 @@ const BusinessSettingsPage = () => {
       setSelectedCountry(dataCompany?.company_info?.country || selectedCountry)
 
       setStateTimeZone(dataCompany?.company_info?.time_zone || '');
-      setSelectedTimeZone(dataCompany?.company_info?.time_zone || '');
+      setSelectedTimeZone({ name: dataCompany?.company_info?.time_zone || '' });
 
       setSelectedTimeFormat(dataCompany?.company_info?.time_format || stateTimeFormat)
       setStateTimeFormat(dataCompany?.company_info?.time_format || stateTimeFormat)
@@ -358,15 +358,18 @@ const BusinessSettingsPage = () => {
     if (leftCurrency === 0 && rightCurrency === 0) {
       auth.toastError("Please enter either leftCurrency or rightCurrency");
     }
-    // -----------------------------------
-    if (maintenanceMode === 0) {
-      auth.toastError("Please enter maintenanceMode ");
-      return;
+
+    // if (maintenanceMode === 0) {
+    //   auth.toastError("Please enter maintenanceMode ");
+    //   return;
+    // }
+    if (maintenanceMode !== 0) {
+      if (allSystem === 0 && branchPanel === 0 && customerApp === 0 && webApp === 0 && deliverymanApp === 0) {
+        auth.toastError("Please select at least one system.");
+        return;
+      }
     }
 
-    if (allSystem === 0 && branchPanel === 0 && customerApp === 0 && webApp === 0 && deliverymanApp === 0) {
-      auth.toastError("Please select at least one system.");
-    }
 
 
     const updatedData = {
@@ -432,7 +435,7 @@ const BusinessSettingsPage = () => {
 
     formData.append("logo", logo);
     formData.append("fav_icon", icon);
-    formData.append("time_zone", JSON.stringify(selectedTimeZone));
+    formData.append("time_zone", JSON.stringify(selectedTimeZone?.name || ""));
 
     formData.append("time_format", stateTimeFormat);
     formData.append("currency_id", currencyId);
@@ -841,7 +844,7 @@ const BusinessSettingsPage = () => {
               onChange={(e) => setSelectedTimeZone(e.value)}
               options={timeZone}
               optionLabel="name"
-              placeholder={stateTimeZone}
+              placeholder={stateTimeZone || selectedTimeZone.name}
               filter
               className="w-full md:w-14rem"
             />
