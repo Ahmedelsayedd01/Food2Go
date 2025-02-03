@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 export const useDelete = () => {
   const auth = useAuth();
-  const user = useSelector(state => state.user)
+  const user = useSelector(state => state.userFood2go)
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [responseDelete, setResponseDelete] = useState(null);
 
@@ -14,7 +14,7 @@ export const useDelete = () => {
     try {
       const config = {
         headers: {
-          'Authorization': `Bearer ${auth?.user?.token || ''}`,
+          'Authorization': `Bearer ${auth?.userState?.token || ''}`,
         },
       };
 

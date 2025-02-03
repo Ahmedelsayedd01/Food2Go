@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { useGet } from '../../../../../Hooks/useGet';
 import { DropDown, LoaderLogin, SearchBar, TextInput } from '../../../../../Components/Components';
 import { FaClock, FaUser } from 'react-icons/fa';
@@ -8,10 +8,13 @@ import { usePost } from '../../../../../Hooks/usePostJson';
 import { useChangeState } from '../../../../../Hooks/useChangeState';
 
 const DetailsOrderPage = () => {
-       const StatusRef = useRef()
+       const StatusRef = useRef(null)
        const { orderId } = useParams();
+       const location = useLocation();
+       const pathOrder = location.pathname;
+       const orderNumPath = pathOrder.split('/').pop();
        const apiUrl = import.meta.env.VITE_API_BASE_URL;
-       const { refetch: refetchDetailsOrder, loading: loadingDetailsOrder, data: dataDetailsOrder } = useGet({ url: `${apiUrl}/admin/order/order/${orderId}` });
+       const { refetch: refetchDetailsOrder, loading: loadingDetailsOrder, data: dataDetailsOrder } = useGet({ url: `${apiUrl}/admin/order/order/${orderNumPath}` });
        const { postData, loadingPost, response } = usePost({
               url: `${apiUrl}/admin/order/delivery`
        });
@@ -32,8 +35,38 @@ const DetailsOrderPage = () => {
 
        const [orderNumber, setOrderNumber] = useState('')
 
+       const [openReceipt, setOpenReceipt] = useState(null);
        const [openOrderNumber, setOpenOrderNumber] = useState(null);
        const [openDeliveries, setOpenDeliveries] = useState(null);
+
+       useEffect(() => {
+              refetchDetailsOrder();
+       }, [orderNumPath]);
+
+       useEffect(() => {
+              refetchDetailsOrder(); // Refetch data when the component mounts or orderId or path changes
+       }, [refetchDetailsOrder, orderId, location.pathname]);
+
+       useEffect(() => {
+              if (dataDetailsOrder && dataDetailsOrder?.order) {
+                     setDetailsData(dataDetailsOrder?.order)
+                     setOrderStatusName(dataDetailsOrder?.order?.order_status)
+                     const formattedOrderStatus = dataDetailsOrder?.order_status.map(status => ({ name: status }));
+
+                     setOrderStatus(formattedOrderStatus); // Update state with the transformed data
+                     setDeliveries(dataDetailsOrder?.deliveries)
+                     setDeliveriesFilter(dataDetailsOrder?.deliveries)
+                     setPreparationTime(dataDetailsOrder?.preparing_time)
+              }
+
+              console.log('dataDetailsOrder', dataDetailsOrder); // Refetch data when the component mounts
+              console.log('detailsData', detailsData); // Refetch data when the component mounts
+              console.log('OrderStatus', orderStatus); // Refetch data when the component mounts
+       }, [dataDetailsOrder]);
+       useEffect(() => {
+              console.log('orderId', orderId); // Refetch data when the component mounts
+       }, [orderId]);
+
 
        const timeString = dataDetailsOrder?.order?.date || '';
        const [olderHours, olderMinutes] = timeString.split(':').map(Number); // Extract hours and minutes as numbers
@@ -73,15 +106,6 @@ const DetailsOrderPage = () => {
 
 
 
-
-       // console.log('dayString', dayString);
-       // console.log('initialTime', initialTime)
-       // console.log('day', day);
-       // console.log('hour', hour);
-       // console.log('minute', minute);
-       // console.log('second', second);
-       // console.log('Updated time', time);
-
        const handleChangeDeliveries = (e) => {
               const value = e.target.value.toLowerCase(); // Normalize input value
               setSearchDelivery(value);
@@ -105,12 +129,21 @@ const DetailsOrderPage = () => {
        }
        useEffect(() => {
               if (response && response.status === 200) {
+                     setOrderStatusName('out_for_delivery')
                      setSearchDelivery('');
                      setOpenDeliveries(false);
                      setDeliveriesFilter(deliveries);
               }
               console.log('response', response)
        }, [response]);
+
+       const handleOpenReceipt = (id) => {
+              setOpenReceipt(id);
+       };
+
+       const handleCloseReceipt = () => {
+              setOpenReceipt(null);
+       };
 
        const handleOpenOrderNumber = (orderId) => {
               setOpenOrderNumber(orderId);
@@ -140,14 +173,12 @@ const DetailsOrderPage = () => {
 
               // Call handleChangeStaus with appropriate arguments
 
-              if (option.name === 'processing') {
-                     handleOpenOrderNumber(detailsData.id)
-                     // setOpenOrderNumber(detailsData.id)
-                     // handleChangeStaus(detailsData.id, detailsData.order_number, option.name);
-              } else {
-                     setOrderStatusName(option.name);
-                     handleChangeStaus(detailsData.id, '', option.name);
-              }
+              // if (option.name === 'processing') {
+              //        handleOpenOrderNumber(detailsData.id)
+              // } else {
+              setOrderStatusName(option.name);
+              handleChangeStaus(detailsData.id, '', option.name);
+              // }
        };
 
        const handleOrderNumber = (id) => {
@@ -180,30 +211,6 @@ const DetailsOrderPage = () => {
               }
        };
 
-
-       useEffect(() => {
-              refetchDetailsOrder(); // Refetch data when the component mounts
-       }, [refetchDetailsOrder]);
-
-       useEffect(() => {
-              if (dataDetailsOrder && dataDetailsOrder.order) {
-                     setDetailsData(dataDetailsOrder.order)
-                     setOrderStatusName(dataDetailsOrder.order.order_status)
-                     const formattedOrderStatus = dataDetailsOrder.order_status.map(status => ({ name: status }));
-
-                     setOrderStatus(formattedOrderStatus); // Update state with the transformed data
-                     setDeliveries(dataDetailsOrder.deliveries)
-                     setDeliveriesFilter(dataDetailsOrder.deliveries)
-                     setPreparationTime(dataDetailsOrder.preparing_time)
-              }
-
-              console.log('dataDetailsOrder', dataDetailsOrder); // Refetch data when the component mounts
-              console.log('detailsData', detailsData); // Refetch data when the component mounts
-              console.log('OrderStatus', orderStatus); // Refetch data when the component mounts
-       }, [dataDetailsOrder]);
-       useEffect(() => {
-              console.log('orderId', orderId); // Refetch data when the component mounts
-       }, [orderId]);
 
        useEffect(() => {
               const countdown = setInterval(() => {
@@ -267,7 +274,7 @@ const DetailsOrderPage = () => {
 
        return (
               <>
-                     {loadingPost || loadingChange ? (
+                     {loadingDetailsOrder || loadingPost || loadingChange ? (
                             <div className="mx-auto">
                                    <LoaderLogin />
                             </div>
@@ -281,8 +288,7 @@ const DetailsOrderPage = () => {
                                                  </div>
                                           ) : (
 
-
-                                                 <div div className="w-full flex sm:flex-col lg:flex-row items-start justify-between gap-5 mb-24">
+                                                 <div className="w-full flex sm:flex-col lg:flex-row items-start justify-between gap-5 mb-24">
                                                         {/* Left Section */}
                                                         <div className="sm:w-full lg:w-8/12">
                                                                <div className="w-full bg-white rounded-xl shadow-md p-4 ">
@@ -294,11 +300,28 @@ const DetailsOrderPage = () => {
                                                                       ) : (
                                                                              <div className="w-full">
                                                                                     {/* Header */}
-                                                                                    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 shadow rounded-lg">
+                                                                                    <div className="w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 shadow rounded-lg">
                                                                                            {/* Header */}
-                                                                                           <div className="flex flex-wrap justify-between items-start border-b border-gray-300 pb-4 mb-4">
-                                                                                                  <div className="w-full md:w-auto">
-                                                                                                         <h1 className="text-xl font-TextFontSemiBold text-gray-800">Order #{detailsData?.order_number || ''}</h1>
+                                                                                           <div className="flex flex-col justify-between items-start border-b border-gray-300 pb-4 mb-4">
+                                                                                                  <div className="w-full">
+                                                                                                         <div className="w-full flex flex-wrap items-center justify-between">
+                                                                                                                <h1 className="text-2xl font-TextFontMedium text-gray-800">Order <span className='text-mainColor'>#{detailsData?.order_number || ''}</span></h1>
+                                                                                                                <div className="sm:w-full lg:w-6/12 flex items-center justify-center gap-2">
+                                                                                                                       <Link
+                                                                                                                              to={`/dashboard/orders/details/${Number(orderNumPath) - 1}`}
+                                                                                                                              className='w-6/12 text-center text-xl text-white bg-mainColor border-2 border-mainColor px-4 py-1 rounded-lg transition-all ease-in-out duration-300  hover:bg-white hover:text-mainColor'
+                                                                                                                       >
+                                                                                                                              {'<<'} Prev Order
+                                                                                                                       </Link>
+                                                                                                                       <Link
+                                                                                                                              to={`/dashboard/orders/details/${Number(orderNumPath) + 1}`}
+                                                                                                                              className='w-6/12 text-center text-xl text-white bg-mainColor border-2 border-mainColor px-4 py-1 rounded-lg transition-all ease-in-out duration-300  hover:bg-white hover:text-mainColor'
+                                                                                                                       >
+                                                                                                                              Next Order {'>>'}
+                                                                                                                       </Link>
+                                                                                                                </div>
+
+                                                                                                         </div>
                                                                                                          <p className="text-sm text-gray-700 mt-1">
                                                                                                                 <span className="font-TextFontSemiBold">Branch:</span> {detailsData?.branch?.address || ''}
                                                                                                          </p>
@@ -309,26 +332,80 @@ const DetailsOrderPage = () => {
                                                                                            </div>
 
                                                                                            {/* Order Information */}
-                                                                                           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                                                                                                  <div className="bg-white p-4 shadow-md rounded-md">
-                                                                                                         <p className="text-sm text-gray-800">
+                                                                                           <div className="w-full flex sm:flex-col xl:flex-row justify-center items-start gap-4">
+                                                                                                  <div className="sm:w-full xl:w-6/12   bg-white p-4 shadow-md rounded-md">
+                                                                                                         <p className="text-xl text-gray-800">
                                                                                                                 <span className="font-TextFontSemiBold text-mainColor">Status:</span> {detailsData?.order_status || ''}
                                                                                                          </p>
-                                                                                                         <p className="text-sm text-gray-800 mt-2">
-                                                                                                                <span className="font-TextFontSemiBold text-mainColor">Payment Method:</span> {detailsData?.pament_method?.name || ''}
+                                                                                                         <p className="text-xl text-gray-800 mt-2">
+                                                                                                                <span className="font-TextFontSemiBold text-mainColor">Payment Method:</span> {detailsData?.payment_method?.name || ''}
                                                                                                          </p>
-                                                                                                         <p className="text-sm text-gray-800 mt-2">
-                                                                                                                <span className="font-TextFontSemiBold text-mainColor">Payment Status:</span>
+                                                                                                         <p className="text-xl text-gray-800 mt-2">
+                                                                                                                <span className="font-TextFontSemiBold text-mainColor">Payment Status:</span> {detailsData?.status_payment || ''}
                                                                                                                 <span className="text-green-600 font-TextFontSemiBold ml-1">{detailsData?.payment_status || ''}</span>
                                                                                                          </p>
                                                                                                   </div>
-                                                                                                  <div className="bg-white p-4 shadow-md rounded-md">
-                                                                                                         <p className="text-sm text-gray-800">
+                                                                                                  <div className="sm:w-full xl:w-6/12   bg-white p-4 shadow-md rounded-md">
+                                                                                                         <p className="text-xl text-gray-800">
                                                                                                                 <span className="font-TextFontSemiBold text-mainColor">Order Type:</span> {detailsData?.order_type || ''}
                                                                                                          </p>
-                                                                                                         <p className="text-sm text-gray-800 mt-2">
+                                                                                                         <p className="text-xl text-gray-800 mt-2">
                                                                                                                 <span className="font-TextFontSemiBold text-mainColor">Order Note:</span> {detailsData?.notes || "No Notes"}
                                                                                                          </p>
+                                                                                                         {detailsData?.payment_method?.id !== 2 && (
+                                                                                                                <p className="text-xl text-gray-800 mt-2">
+                                                                                                                       <span className="font-TextFontSemiBold text-mainColor">Order Recipt:</span>
+                                                                                                                       {detailsData?.receipt ? (
+                                                                                                                              <>
+
+                                                                                                                                     <span className='text-mainColor font-TextFontMedium ml-2 underline cursor-pointer'
+                                                                                                                                            onClick={() => handleOpenReceipt(detailsData.id)}
+                                                                                                                                     >
+                                                                                                                                            Receipt
+                                                                                                                                     </span>
+
+                                                                                                                                     {openReceipt === detailsData.id && (
+                                                                                                                                            <Dialog open={true} onClose={handleCloseReceipt} className="relative z-10">
+                                                                                                                                                   <DialogBackdrop className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" />
+                                                                                                                                                   <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                                                                                                                                                          <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                                                                                                                                                                 <DialogPanel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-4xl">
+
+                                                                                                                                                                        {/* Permissions List */}
+                                                                                                                                                                        {/* <div className="w-full flex flex-col items-start justify-center gap-4 my-4 px-4 sm:p-6 sm:pb-4">
+                                                                                                                                                         sdf
+                                                                                                                                                       </div> */}
+                                                                                                                                                                        <div className="w-full flex justify-center items-center p-5  ">
+
+                                                                                                                                                                               <img
+                                                                                                                                                                                      src={detailsData?.receipt ? `data:image/jpeg;base64,${detailsData?.receipt}` : ''}
+                                                                                                                                                                                      className=" max-h-[80vh] object-center object-contain shadow-md rounded-2xl"
+                                                                                                                                                                                      alt="Receipt"
+                                                                                                                                                                               />
+                                                                                                                                                                        </div>
+
+                                                                                                                                                                        {/* Dialog Footer */}
+                                                                                                                                                                        <div className="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-x-3">
+                                                                                                                                                                               <button
+                                                                                                                                                                                      type="button"
+                                                                                                                                                                                      onClick={handleCloseReceipt}
+                                                                                                                                                                                      className="inline-flex w-full justify-center rounded-md bg-mainColor px-6 py-3 text-sm font-TextFontMedium text-white sm:mt-0 sm:w-auto"
+                                                                                                                                                                               >
+                                                                                                                                                                                      Close
+                                                                                                                                                                               </button>
+                                                                                                                                                                        </div>
+
+                                                                                                                                                                 </DialogPanel>
+                                                                                                                                                          </div>
+                                                                                                                                                   </div>
+                                                                                                                                            </Dialog>
+                                                                                                                                     )}
+                                                                                                                              </>
+                                                                                                                       ) : (
+                                                                                                                              <span className='text-mainColor font-TextFontMedium ml-2 underline'>No Recipt</span>
+                                                                                                                       )}
+                                                                                                                </p>
+                                                                                                         )}
                                                                                                   </div>
                                                                                            </div>
                                                                                     </div>
@@ -337,7 +414,7 @@ const DetailsOrderPage = () => {
 
                                                                                     {/* Items Table */}
                                                                                     {(detailsData?.order_details || []).map((item, index) => (
-                                                                                           <div className='border-b-2 border-gray-500 mt-4' key={index} >
+                                                                                           <div className='border-b-2 border-gray-500 mt-4' key={`${item.product_id}-${index}`} >
                                                                                                   <div className="text-center mb-2">
                                                                                                          <strong>Product Num({index + 1})</strong>
                                                                                                   </div>
@@ -377,7 +454,7 @@ const DetailsOrderPage = () => {
                                                                                                          </thead>
                                                                                                          <tbody>
                                                                                                                 {item.addons.map((itemAddons, indexAddons) => (
-                                                                                                                       <tr key={itemAddons.addon.id} className='border-b-2'>
+                                                                                                                       <tr key={`${itemAddons.addon.id}-${index}-${indexAddons}`} className='border-b-2'>
                                                                                                                               <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">{indexAddons + 1}</td>
                                                                                                                               <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">{itemAddons.addon.name}</td>
                                                                                                                               <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">{itemAddons.addon.price}</td>
@@ -400,7 +477,7 @@ const DetailsOrderPage = () => {
                                                                                                          </thead>
                                                                                                          <tbody>
                                                                                                                 {item.excludes.map((itemExclude, indexExclude) => (
-                                                                                                                       <tr key={itemExclude.id} className='border-b-2'>
+                                                                                                                       <tr key={`${itemExclude.id}-${index}-${indexExclude}`} className='border-b-2'>
                                                                                                                               <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">{indexExclude + 1}</td>
                                                                                                                               <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">{itemExclude.name}</td>
                                                                                                                        </tr>
@@ -422,7 +499,7 @@ const DetailsOrderPage = () => {
                                                                                                          </thead>
                                                                                                          <tbody>
                                                                                                                 {item.extras.map((itemExtra, indexExtra) => (
-                                                                                                                       <tr key={itemExtra.id} className='border-b-2'>
+                                                                                                                       <tr key={`${itemExtra.id}-${index}-${indexExtra}`} className='border-b-2'>
                                                                                                                               <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">{indexExtra + 1}</td>
                                                                                                                               <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">{itemExtra.name}</td>
                                                                                                                               <td className="min-w-[80px] sm:min-w-[50px] sm:w-1/12 lg:w-1/12 py-2 text-center text-thirdColor text-sm sm:text-base lg:text-lg xl:text-xl overflow-hidden">{itemExtra.price}</td>
@@ -436,7 +513,7 @@ const DetailsOrderPage = () => {
                                                                                                          <strong>Variations Num({index + 1})</strong>
                                                                                                   </div>
                                                                                                   {item.variations.map((item, indexItem) => (
-                                                                                                         <div key={item.variation.id} className='border-b-2'>
+                                                                                                         <div key={`${item.variation.id}-${index}-${indexItem}`} className='border-b-2'>
 
                                                                                                                 <div className="text-center mb-2">
                                                                                                                        <strong>Variation({indexItem + 1})</strong>
@@ -465,7 +542,7 @@ const DetailsOrderPage = () => {
                                                                                                                 </table>
 
                                                                                                                 {item.options.map((option, indexOption) => (
-                                                                                                                       <div key={option.id}>
+                                                                                                                       <div key={`${option.id}-${index}-${indexItem}-${indexOption}`}>
 
                                                                                                                               <div className="text-center mb-2">
                                                                                                                                      <strong>Option({indexOption + 1})</strong>
@@ -633,7 +710,7 @@ const DetailsOrderPage = () => {
                                                                                     <input type="time" className="w-1/2 p-2 border rounded-md" value={detailsData.date} readOnly />
                                                                              </div>
                                                                       </div>
-                                                                      {detailsData.order_type === 'delivery' && detailsData.order_status === 'processing' && (
+                                                                      {detailsData.order_type === 'delivery' && (detailsData.order_status === 'processing' || detailsData.order_status === 'out_for_delivery') && (
                                                                              <button className="w-full bg-mainColor text-white py-2 rounded-md mt-4"
                                                                                     onClick={() => handleOpenDeliviers(detailsData.id)}>
                                                                                     Assign Delivery Man
@@ -663,7 +740,7 @@ const DetailsOrderPage = () => {
                                                                                                                        deliveriesFilter.map((delivery) => (
                                                                                                                               <div
                                                                                                                                      className="border-2 flex items-center justify-between border-gray-400 p-2 rounded-2xl"
-                                                                                                                                     key={delivery.id}
+                                                                                                                                     key={`${delivery.id}-${detailsData.id}`}
                                                                                                                               >
                                                                                                                                      <span className="font-TextFontRegular text-xl">
                                                                                                                                             {delivery?.f_name || '-'} {delivery?.l_name || '-'}
@@ -783,6 +860,19 @@ const DetailsOrderPage = () => {
                                                                                            {detailsData?.address?.additional_data || '-'}
                                                                                     </p>
                                                                              )}
+                                                                             {detailsData?.address?.map && (
+                                                                                    <p className="text-sm line-clamp-3">
+                                                                                           Location Map:
+                                                                                           <a
+                                                                                                  href={detailsData?.address?.map}
+                                                                                                  className='ml-1 text-mainColor font-TextFontMedium underline'
+                                                                                                  target="_blank"
+                                                                                                  rel="noopener noreferrer"
+                                                                                           >
+                                                                                                  {detailsData?.address?.map?.length > 30 ? `${detailsData?.address?.map?.slice(0, 30)}...` : detailsData?.address?.map}
+                                                                                           </a>
+                                                                                    </p>
+                                                                             )}
 
                                                                       </div>
                                                                )}
@@ -804,8 +894,8 @@ const DetailsOrderPage = () => {
                                                                       <p className="text-sm">Email: {detailsData?.branch?.email || '-'}</p>
                                                                       {/* <p className="text-sm">Location: Miami 45</p> */}
                                                                </div>
-                                                        </div >
-                                                 </div >
+                                                        </div>
+                                                 </div>
                                           )
                                    }
                             </>

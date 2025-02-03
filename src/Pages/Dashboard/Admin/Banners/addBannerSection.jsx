@@ -50,7 +50,6 @@ const AddBannerSection = ({ update, setUpdate }) => {
   const [image, setImage] = useState([]);
   const [imageFile, setImageFile] = useState([]);
 
-
   useEffect(() => {
     refetchData(); // Refetch data when the component mounts
     refetchCategory(); // Refetch data when the component mounts

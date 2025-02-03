@@ -14,10 +14,10 @@ const ProtectedLogin = () => {
               console.log('firstPath', isAuthRoute);
               console.log('auth', auth);
 
-              if (auth.user && isAuthRoute) {
+              if (auth?.userState && isAuthRoute) {
                      // If logged in and accessing public route, redirect to dashboard
                      navigate('/dashboard', { replace: true });
-              } else if (!auth.user && !isAuthRoute) {
+              } else if (!auth?.userState && !isAuthRoute) {
                      // If not logged in and accessing a protected route, redirect to login
                      navigate('/', { state: { from: location }, replace: true });
               }

@@ -86,7 +86,7 @@ const DealOrderPage = () => {
                                                  <span className="font-TextFontMedium text-mainColor text-xl mx-auto mt-5">Code Is Expired</span>
                                           ) : (
                                                  currentResponse && (
-                                                        <table className="w-full sm:min-w-0 mt-5">
+                                                        <table className="w-full sm:min-w-0 block overflow-x-scroll scrollPage mt-5">
                                                                <thead className="w-full">
                                                                       <tr className="w-full border-b-2">
                                                                              {headers.map((name, index) => (

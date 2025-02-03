@@ -1,68 +1,61 @@
 import React, { createContext, useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { removeUser, setUser } from '../Store/CreateSlices';
 
 // Create a context
-const AuthContext = createContext();
+const AuthContext = createContext(null);
 
+export const authSelector = (state) => state.userFood2go || null;
 export const ContextProvider = ({ children }) => {
-
   const [hideSidebar, setHideSidebar] = useState(() => {
     const savedState = localStorage.getItem('stateSidebar');
-    return savedState ? JSON.parse(savedState) : true; // Ensure boolean
+    return savedState ? JSON.parse(savedState) : true;
   });
 
+  const dispatch = useDispatch();
+  const userStore = useSelector(state => state.userFood2go);
 
-  //   const saveLinks = localStorage.getItem('stateLinks');
-  //   return saveLinks ? JSON.parse(saveLinks) : null;
-  // });
-
-
-  const [user, setUser] = useState(() => {
-    const userData = localStorage.getItem('userFood2go');
-    return userData ? JSON.parse(userData) : null;
+  const [userState, setUserState] = useState(() => {
+    const userData = userStore ? userStore : null;
+    return userData;
   });
-
 
   useEffect(() => {
-    if (user) {
-      localStorage.setItem('userFood2go', JSON.stringify(user));
+    if (userState) {
+      dispatch(setUser(userState));
     } else {
-      localStorage.removeItem('userFood2go');
+      dispatch(removeUser());
     }
-  }, [user]);
+  }, [userState, dispatch]);
 
   const login = (userData) => {
-    setUser(userData);
+    setUserState(userData);
     toast.success(`Welcome ${userData.name}`);
   };
 
   const logout = () => {
-    setUser(null);
+    setUserState(null);
     setHideSidebar(true);
-    localStorage.removeItem('userFood2go');
-    localStorage.removeItem('stateSidebar');
+    dispatch(removeUser());
   };
-
-  // const updateSidebar = (list) => {
-  //   setSidebar(list);
-  // };
 
   const hideSide = (isHidden) => {
     setHideSidebar(isHidden);
-    localStorage.setItem('stateSidebar', JSON.stringify(isHidden)); // Sync to localStorage
+    localStorage.setItem('stateSidebar', JSON.stringify(isHidden));
   };
 
   return (
     <AuthContext.Provider
       value={{
-        user,
+        userState,
         login,
         logout,
         toastSuccess: (text) => toast.success(text),
         toastError: (text) => toast.error(text),
         hideSide,
-        hideSidebar
+        hideSidebar,
       }}
     >
       <ToastContainer />
@@ -74,7 +67,7 @@ export const ContextProvider = ({ children }) => {
 // Custom hook to use auth context
 export const useAuth = () => {
   const context = React.useContext(AuthContext);
-  if (context === undefined) {
+  if (context === null) {
     throw new Error('useAuth must be used within a ContextProvider');
   }
   return context;

@@ -143,7 +143,7 @@ const BusinessSettingsPage = () => {
   //   loading: loadingMaintenance,
   //   data: dataMaintennance,
   // } = useGet({
-  //   url: `${ apiUrl } / admin / settings / business_setup / maintenance``,
+  //   url: `${apiUrl} / admin / settings / business_setup / maintenance``,
   // });
 
   const {
@@ -173,7 +173,7 @@ const BusinessSettingsPage = () => {
 
 
   // const { postDataStatus, loadingPostStatus, responseStatus } = usePost({
-  //      url: `${ apiUrl } / admin / settings / business_setup / maintenance / status",
+  //      url: `${apiUrl} / admin / settings / business_setup / maintenance / status",
   //    });
 
   //  const { postDataMaintenance, loadingPostMaintenance, responseMaintenanace } = usePost({

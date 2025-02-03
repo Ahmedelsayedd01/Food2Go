@@ -76,7 +76,7 @@ const Navbar = () => {
                                    <div className="relative z-10 w-14">
 
                                           {/* image profile */}
-                                          {auth.user?.image ? (<img src={auth.user?.image} className='min-w-14 max-w-14 min-h-14  max-h-14 p-1 bg-white border-2 border-mainColor rounded-full object-cover object-center' alt="Profile" />)
+                                          {auth?.userState?.image ? (<img src={auth?.userState?.image} className='min-w-14 max-w-14 min-h-14  max-h-14 p-1 bg-white border-2 border-mainColor rounded-full object-cover object-center' alt="Profile" />)
                                                  : (<RedLogo width={60} height={60} />)}
                                           <span
                                                  className={`absolute z-10 sm:right-0 lg:-right-0 ${isOnline ? 'bg-green-400' : 'bg-red-600'
@@ -85,7 +85,7 @@ const Navbar = () => {
                                    </div>
                                    {/* Name Admin */}
                                    <div className="sm:w-10/12">
-                                          <span className='w-full text-2xl text-left text-mainColor font-TextFontSemiBold'>Hello, {auth.user?.name || ""}</span>
+                                          <span className='w-full text-2xl text-left text-mainColor font-TextFontSemiBold'>Hello, {auth?.userState?.name || ""}</span>
                                    </div>
                             </div>
                             {/* <div className='sm:hidden lg:flex w-5/12'>

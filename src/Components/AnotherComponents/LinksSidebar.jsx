@@ -52,13 +52,13 @@ const LinksSidebar = () => {
        const [permission, setPermission] = useState([]);
 
        useEffect(() => {
-              const computedPermission = auth?.user?.user_positions?.roles?.map((role) => role.role) || [];
+              const computedPermission = auth?.userState?.user_positions?.roles?.map((role) => role.role) || [];
 
               setPermission(computedPermission);
 
               // Log the computed values
               console.log('Permission', computedPermission);
-       }, [auth.user?.user_positions?.roles]);
+       }, [auth?.userState?.user_positions?.roles]);
 
        /* Home */
        const [isActiveHome, setIsActiveHome] = useState(true);
@@ -1014,7 +1014,7 @@ const LinksSidebar = () => {
 
        return (
               <>
-                     {auth?.user?.user_positions?.name === 'Super Admin' ? (
+                     {auth?.userState?.user_positions?.name === 'Super Admin' ? (
                             <div className="LinksSidebar w-full flex flex-col items-center justify-start gap-y-3">
 
                                    {/* Dashboard */}
@@ -1041,32 +1041,141 @@ const LinksSidebar = () => {
                                           </div>
                                    </Link>
 
-                                   {/* Addons */}
-                                   <Link to="addons"
-                                          onMouseMove={() => setIsActiveAddonsIcon(true)}
-                                          onMouseOut={() => setIsActiveAddonsIcon(false)}
-                                          onClick={handleClickAddons}
-                                          className={`
-                                          ${isActiveAddons ? 'active' : ''}
-                                          ${hideSide ? 'justify-between' : 'justify-center'} 
-                                          hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
-                                          hover:text-mainColor w-full flex items-center 
-                                          transition-all duration-300 group`}
-                                   >
-                                          <div className="flex items-center gap-x-2">
-                                                 <RiVipDiamondLine
-                                                        className={`${isActiveAddonsIcon || isActiveAddons ? 'text-[#9E090F]' : 'text-[#fff]'} text-2xl`}
-                                                 />
-                                                 <span
-                                                        className={`${hideSide ? 'block' : 'hidden'}
-                                                  ${isActiveAddons ? "text-mainColor" : "text-white"}
-                                                 text-lg font-[400] transition-all duration-300
-                                                 group-hover:text-mainColor`}
-                                                 >
-                                                        Addons
-                                                 </span>
+                                   {/* Order */}
+                                   <div className="w-full flex flex-col">    
+                                          <Link to="orders"
+                                                 onMouseMove={() => setIsActiveOrdersIcon(true)}
+                                                 onMouseOut={() => setIsActiveOrdersIcon(false)}
+                                                 onClick={handleClickOrders}
+                                                 className={`
+                                   ${isActiveOrders ? 'active mb-2' : 'mb-0'}
+                                   ${hideSide ? 'justify-between' : 'justify-center'} 
+                                   hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
+                                   hover:text-mainColor w-full flex items-center 
+                                   transition-all duration-300 group`}
+                                          >
+                                                 <div className="flex items-center gap-x-2">
+                                                        <OrderIcon isActive={isActiveOrdersIcon || isActiveOrders} />
+                                                        <span className={`
+                                          ${hideSide ? 'block' : 'hidden'}
+                                           ${isActiveOrders ? "text-mainColor" : "text-white"}
+                                          text-lg font-[400] transition-all duration-300
+                                          group-hover:text-mainColor`}
+                                                        >
+                                                               Orders
+                                                        </span>
+                                                 </div>
+
+                                                 <div className={`${hideSide ? 'block' : 'hidden'}`}>
+                                                        <IoIosArrowForward className={`${isActiveOrders ? 'text-mainColor rotate-90' : 'text-white rotate-0'} text-xl transition-all duration-300 group-hover:text-mainColor`} />
+                                                 </div>
+                                          </Link>
+                                          <div className={`${isOpenOrders && hideSide ? "h-[29rem]" : "h-0 "}  overflow-hidden flex items-start justify-end  w-full transition-all duration-700`}>
+                                                 <ul className='list-disc w-full pl-2 transition-all duration-700 flex flex-col gap-y-2'>
+                                                        <Link to={"orders/all"} onClick={handleClickOrdersAll}>
+                                                               <li
+                                                                      className={`${isActiveOrdersAll ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                        text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
+                                                        hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                      }>
+                                                                      <span>All</span>
+                                                                      <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersAll || 0}</span>
+                                                               </li>
+                                                        </Link>
+                                                        <Link to={"orders/pending"} onClick={handleClickOrdersPending}>
+                                                               <li
+                                                                      className={`${isActiveOrdersPending ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                        text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
+                                                        hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                      }>
+                                                                      <span>Pending</span>
+                                                                      <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersPending || 0}</span>
+                                                               </li>
+                                                        </Link>
+                                                        <Link to={"orders/confirmed"} onClick={handleClickOrdersConfirmed}>
+                                                               <li
+                                                                      className={`${isActiveOrdersConfirmed ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                        text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
+                                                        hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                      }>
+                                                                      <span>Confirmed</span>
+                                                                      <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersConfirmed || 0}</span>
+                                                               </li>
+                                                        </Link>
+                                                        <Link to={"orders/processing"} onClick={handleClickOrdersProcessing}>
+                                                               <li
+                                                                      className={`${isActiveOrdersProcessing ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                        text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
+                                                        hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                      }>
+                                                                      <span>Processing</span>
+                                                                      <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersProcessing || 0}</span>
+                                                               </li>
+                                                        </Link>
+                                                        <Link to={"orders/out_for_delivery"} onClick={handleClickOrdersOutForDelivery}>
+                                                               <li
+                                                                      className={`${isActiveOrdersOutForDelivery ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                        text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
+                                                        hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                      }>
+                                                                      <span>OutForDelivery</span>
+                                                                      <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersOutForDelivery || 0}</span>
+                                                               </li>
+                                                        </Link>
+                                                        <Link to={"orders/delivered"} onClick={handleClickOrdersDelivered}>
+                                                               <li
+                                                                      className={`${isActiveOrdersDelivered ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                        text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
+                                                        hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                      }>
+                                                                      <span>Delivered</span>
+                                                                      <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersDelivered || 0}</span>
+                                                               </li>
+                                                        </Link>
+                                                        <Link to={"orders/returned"} onClick={handleClickOrdersReturned}>
+                                                               <li
+                                                                      className={`${isActiveOrdersReturned ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                        text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
+                                                        hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                      }>
+                                                                      <span>Returned</span>
+                                                                      <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersReturned || 0}</span>
+                                                               </li>
+                                                        </Link>
+                                                        <Link to={"orders/failed"} onClick={handleClickOrdersFailed}>
+                                                               <li
+                                                                      className={`${isActiveOrdersFailed ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                        text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
+                                                        hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                      }>
+                                                                      <span>Failed To Delivered</span>
+                                                                      <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersFailed || 0}</span>
+                                                               </li>
+                                                        </Link>
+                                                        <Link to={"orders/canceled"} onClick={handleClickOrdersCanceled}>
+                                                               <li
+                                                                      className={`${isActiveOrdersCanceled ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                        text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
+                                                        hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                      }>
+                                                                      <span>Canceled</span>
+                                                                      <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersCanceled || 0}</span>
+                                                               </li>
+                                                        </Link>
+                                                        <Link to={"orders/schedule"} onClick={handleClickOrdersSchedule}>
+                                                               <li
+                                                                      className={`${isActiveOrdersSchedule ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                        text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
+                                                        hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                      }>
+                                                                      <span>Schedule</span>
+                                                                      <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersSchedule || 0}</span>
+                                                               </li>
+                                                        </Link>
+                                                 </ul>
+
                                           </div>
-                                   </Link>
+                                   </div>
 
                                    {/* Category */}
                                    <Link to="category"
@@ -1089,33 +1198,6 @@ const LinksSidebar = () => {
                                           group-hover:text-mainColor`}
                                                  >
                                                         Category Setup
-                                                 </span>
-                                          </div>
-                                   </Link>
-
-                                   {/* Banners */}
-                                   <Link to="banners"
-                                          onMouseMove={() => setIsActiveBannersIcon(true)}
-                                          onMouseOut={() => setIsActiveBannersIcon(false)}
-                                          onClick={handleClickBanners}
-                                          className={`
-                                          ${isActiveBanners ? 'active' : ''}
-                                          ${hideSide ? 'justify-between' : 'justify-center'} 
-                                          hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
-                                          hover:text-mainColor w-full flex items-center 
-                                          transition-all duration-300 group`}
-                                   >
-                                          <div className="flex items-center gap-x-2">
-                                                 <PiFlagBanner
-                                                        className={`${isActiveBannersIcon || isActiveBanners ? 'text-[#9E090F]' : 'text-[#fff]'} text-2xl`}
-                                                 />
-                                                 <span
-                                                        className={`${hideSide ? 'block' : 'hidden'}
-                                                  ${isActiveBanners ? "text-mainColor" : "text-white"}
-                                                 text-lg font-[400] transition-all duration-300
-                                                 group-hover:text-mainColor`}
-                                                 >
-                                                        Banners
                                                  </span>
                                           </div>
                                    </Link>
@@ -1170,130 +1252,59 @@ const LinksSidebar = () => {
                                           </div>
                                    </div>
 
-                                   {/* Setting */}
-                                   <div className="w-full flex flex-col">
-                                          <Link to="setting"
-                                                 onMouseMove={() => setIsActiveSettingIcon(true)}
-                                                 onMouseOut={() => setIsActiveSettingIcon(false)}
-                                                 onClick={handleClickSetting}
-                                                 className={`
-                                   ${isActiveSetting ? 'active mb-2' : 'mb-0'}
-                                   ${hideSide ? 'justify-between' : 'justify-center'} 
-                                   hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
-                                   hover:text-mainColor w-full flex items-center 
-                                   transition-all duration-300 group`}
-                                          >
-                                                 <div className="flex items-center gap-x-2">
-                                                        <CiSettings
-                                                               className={`${isActiveSettingIcon || isActiveSetting ? 'text-[#9E090F]' : 'text-[#fff]'} text-3xl`}
-                                                        />
-                                                        <span className={`
-                                          ${hideSide ? 'block' : 'hidden'}
-                                           ${isActiveSetting ? "text-mainColor" : "text-white"}
-                                          text-lg font-[400] transition-all duration-300
-                                          group-hover:text-mainColor`}
-                                                        >
-                                                               Setting
-                                                        </span>
-                                                 </div>
-                                                 <div className={`${hideSide ? 'block' : 'hidden'}`}>
-                                                        <IoIosArrowForward className={`${isActiveSetting ? 'text-mainColor rotate-90' : 'text-white rotate-0'} text-xl transition-all duration-300 group-hover:text-mainColor`} />
-                                                 </div>
-                                          </Link>
-                                          <div className={`${isOpenSetting && hideSide ? "h-17" : "h-0 "} overflow-hidden flex items-start justify-end  w-full transition-all duration-700`}>
-                                                 <ul className='list-disc w-full pl-10 transition-all duration-700 flex flex-col gap-y-2'>
-                                                        <Link to={"setting/roles"} onClick={handleClickRoles}>
-                                                               <li
-                                                                      className={`${isActiveRoles ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                 text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                      }>
-                                                                      Admin Roles
-                                                               </li>
-                                                        </Link>
-                                                        <Link to={"setting/payment_method"} onClick={handleClickPaymentMethod}>
-                                                               <li
-                                                                      className={`${isActivePaymentMethod ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                 text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                      }>
-                                                                      Payment Method
-                                                               </li>
-                                                        </Link>
-                                                        <Link to={"setting/automatic_payment"} onClick={handleClickAutomaticPayment}>
-                                                               <li
-                                                                      className={`${isActiveAutomaticPayment ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                 text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                      }>
-                                                                      Automatic Payment
-                                                               </li>
-                                                        </Link>
-                                                        <Link to={"setting/cities"} onClick={handleClickCities}>
-                                                               <li
-                                                                      className={`${isActiveCities ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                 text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                      }>
-                                                                      Cities
-                                                               </li>
-                                                        </Link>
-                                                        <Link to={"setting/branches"} onClick={handleClickBranches}>
-                                                               <li
-                                                                      className={`${isActiveBranches ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                 text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                      }>
-                                                                      Branches
-                                                               </li>
-                                                        </Link>
-                                                        <Link to={"setting/zones"} onClick={handleClickZones}>
-                                                               <li
-                                                                      className={`${isActiveZones ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                 text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                      }>
-                                                                      Zones
-                                                               </li>
-                                                        </Link>
-                                                        <Link to={"setting/order_type"} onClick={handleClickOrderType}>
-                                                               <li
-                                                                      className={`${isActiveOrderType ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                 text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                      }>
-                                                                      Order Type
-                                                               </li>
-                                                        </Link>
-                                                        <Link to={"setting/resturant_time"} onClick={handleClickResturantTime}>
-                                                               <li
-                                                                      className={`${isActiveResturantTime ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                 text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                      }>
-                                                                      Resturant Time
-                                                               </li>
-                                                        </Link>
-                                                        <Link to={"setting/cancel_time"} onClick={handleClickCancelTime}>
-                                                               <li
-                                                                      className={`${isActiveCancelTime ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                 text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                      }>
-                                                                      Cancel Time
-                                                               </li>
-                                                        </Link>
-                                                        <Link to={"setting/delivery_time"} onClick={handleClickDeliveryTime}>
-                                                               <li
-                                                                      className={`${isActiveDeliveryTime ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                 text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                      }>
-                                                                      Delivery Time
-                                                               </li>
-                                                        </Link>
-                                                        <Link to={"setting/sound"} onClick={handleClickDeliveryTime}>
-                                                               <li
-                                                                      className={`${isActiveSound ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                 text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                      }>
-                                                                      Sound
-                                                               </li>
-                                                        </Link>
-                                                 </ul>
-
+                                   {/* Banners */}
+                                   <Link to="banners"
+                                          onMouseMove={() => setIsActiveBannersIcon(true)}
+                                          onMouseOut={() => setIsActiveBannersIcon(false)}
+                                          onClick={handleClickBanners}
+                                          className={`
+                                          ${isActiveBanners ? 'active' : ''}
+                                          ${hideSide ? 'justify-between' : 'justify-center'} 
+                                          hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
+                                          hover:text-mainColor w-full flex items-center 
+                                          transition-all duration-300 group`}
+                                   >
+                                          <div className="flex items-center gap-x-2">
+                                                 <PiFlagBanner
+                                                        className={`${isActiveBannersIcon || isActiveBanners ? 'text-[#9E090F]' : 'text-[#fff]'} text-2xl`}
+                                                 />
+                                                 <span
+                                                        className={`${hideSide ? 'block' : 'hidden'}
+                                                  ${isActiveBanners ? "text-mainColor" : "text-white"}
+                                                 text-lg font-[400] transition-all duration-300
+                                                 group-hover:text-mainColor`}
+                                                 >
+                                                        Banners
+                                                 </span>
                                           </div>
-                                   </div>
+                                   </Link>
+
+                                   {/* Addons */}
+                                   <Link to="addons"
+                                          onMouseMove={() => setIsActiveAddonsIcon(true)}
+                                          onMouseOut={() => setIsActiveAddonsIcon(false)}
+                                          onClick={handleClickAddons}
+                                          className={`
+                                          ${isActiveAddons ? 'active' : ''}
+                                          ${hideSide ? 'justify-between' : 'justify-center'} 
+                                          hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
+                                          hover:text-mainColor w-full flex items-center 
+                                          transition-all duration-300 group`}
+                                   >
+                                          <div className="flex items-center gap-x-2">
+                                                 <RiVipDiamondLine
+                                                        className={`${isActiveAddonsIcon || isActiveAddons ? 'text-[#9E090F]' : 'text-[#fff]'} text-2xl`}
+                                                 />
+                                                 <span
+                                                        className={`${hideSide ? 'block' : 'hidden'}
+                                                  ${isActiveAddons ? "text-mainColor" : "text-white"}
+                                                 text-lg font-[400] transition-all duration-300
+                                                 group-hover:text-mainColor`}
+                                                 >
+                                                        Addons
+                                                 </span>
+                                          </div>
+                                   </Link>
 
                                    {/* Taxes */}
                                    <div className="w-full flex flex-col">
@@ -1448,6 +1459,131 @@ const LinksSidebar = () => {
                                                  text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
                                                                       }>
                                                                       Customers
+                                                               </li>
+                                                        </Link>
+                                                 </ul>
+
+                                          </div>
+                                   </div>
+
+                                   {/* Setting */}
+                                   <div className="w-full flex flex-col">
+                                          <Link to="setting"
+                                                 onMouseMove={() => setIsActiveSettingIcon(true)}
+                                                 onMouseOut={() => setIsActiveSettingIcon(false)}
+                                                 onClick={handleClickSetting}
+                                                 className={`
+                                   ${isActiveSetting ? 'active mb-2' : 'mb-0'}
+                                   ${hideSide ? 'justify-between' : 'justify-center'} 
+                                   hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
+                                   hover:text-mainColor w-full flex items-center 
+                                   transition-all duration-300 group`}
+                                          >
+                                                 <div className="flex items-center gap-x-2">
+                                                        <CiSettings
+                                                               className={`${isActiveSettingIcon || isActiveSetting ? 'text-[#9E090F]' : 'text-[#fff]'} text-3xl`}
+                                                        />
+                                                        <span className={`
+                                          ${hideSide ? 'block' : 'hidden'}
+                                           ${isActiveSetting ? "text-mainColor" : "text-white"}
+                                          text-lg font-[400] transition-all duration-300
+                                          group-hover:text-mainColor`}
+                                                        >
+                                                               Setting
+                                                        </span>
+                                                 </div>
+                                                 <div className={`${hideSide ? 'block' : 'hidden'}`}>
+                                                        <IoIosArrowForward className={`${isActiveSetting ? 'text-mainColor rotate-90' : 'text-white rotate-0'} text-xl transition-all duration-300 group-hover:text-mainColor`} />
+                                                 </div>
+                                          </Link>
+                                          <div className={`${isOpenSetting && hideSide ? "h-17" : "h-0 "} overflow-hidden flex items-start justify-end  w-full transition-all duration-700`}>
+                                                 <ul className='list-disc w-full pl-10 transition-all duration-700 flex flex-col gap-y-2'>
+                                                        <Link to={"setting/roles"} onClick={handleClickRoles}>
+                                                               <li
+                                                                      className={`${isActiveRoles ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                 text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                      }>
+                                                                      Admin Roles
+                                                               </li>
+                                                        </Link>
+                                                        <Link to={"setting/payment_method"} onClick={handleClickPaymentMethod}>
+                                                               <li
+                                                                      className={`${isActivePaymentMethod ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                 text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                      }>
+                                                                      Payment Method
+                                                               </li>
+                                                        </Link>
+                                                        <Link to={"setting/automatic_payment"} onClick={handleClickAutomaticPayment}>
+                                                               <li
+                                                                      className={`${isActiveAutomaticPayment ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                 text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                      }>
+                                                                      Automatic Payment
+                                                               </li>
+                                                        </Link>
+                                                        <Link to={"setting/cities"} onClick={handleClickCities}>
+                                                               <li
+                                                                      className={`${isActiveCities ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                 text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                      }>
+                                                                      Cities
+                                                               </li>
+                                                        </Link>
+                                                        <Link to={"setting/branches"} onClick={handleClickBranches}>
+                                                               <li
+                                                                      className={`${isActiveBranches ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                 text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                      }>
+                                                                      Branches
+                                                               </li>
+                                                        </Link>
+                                                        <Link to={"setting/zones"} onClick={handleClickZones}>
+                                                               <li
+                                                                      className={`${isActiveZones ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                 text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                      }>
+                                                                      Zones
+                                                               </li>
+                                                        </Link>
+                                                        <Link to={"setting/order_type"} onClick={handleClickOrderType}>
+                                                               <li
+                                                                      className={`${isActiveOrderType ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                 text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                      }>
+                                                                      Order Type
+                                                               </li>
+                                                        </Link>
+                                                        <Link to={"setting/resturant_time"} onClick={handleClickResturantTime}>
+                                                               <li
+                                                                      className={`${isActiveResturantTime ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                 text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                      }>
+                                                                      Resturant Time
+                                                               </li>
+                                                        </Link>
+                                                        <Link to={"setting/cancel_time"} onClick={handleClickCancelTime}>
+                                                               <li
+                                                                      className={`${isActiveCancelTime ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                 text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                      }>
+                                                                      Cancel Time
+                                                               </li>
+                                                        </Link>
+                                                        <Link to={"setting/delivery_time"} onClick={handleClickDeliveryTime}>
+                                                               <li
+                                                                      className={`${isActiveDeliveryTime ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                 text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                      }>
+                                                                      Delivery Time
+                                                               </li>
+                                                        </Link>
+                                                        <Link to={"setting/sound"} onClick={handleClickDeliveryTime}>
+                                                               <li
+                                                                      className={`${isActiveSound ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                 text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                      }>
+                                                                      Sound
                                                                </li>
                                                         </Link>
                                                  </ul>
@@ -1671,141 +1807,6 @@ const LinksSidebar = () => {
                                           </div>
                                    </Link>
 
-                                   {/* Order */}
-                                   <div className="w-full flex flex-col">
-                                          <Link to="orders"
-                                                 onMouseMove={() => setIsActiveOrdersIcon(true)}
-                                                 onMouseOut={() => setIsActiveOrdersIcon(false)}
-                                                 onClick={handleClickOrders}
-                                                 className={`
-                                   ${isActiveOrders ? 'active mb-2' : 'mb-0'}
-                                   ${hideSide ? 'justify-between' : 'justify-center'} 
-                                   hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
-                                   hover:text-mainColor w-full flex items-center 
-                                   transition-all duration-300 group`}
-                                          >
-                                                 <div className="flex items-center gap-x-2">
-                                                        <OrderIcon isActive={isActiveOrdersIcon || isActiveOrders} />
-                                                        <span className={`
-                                          ${hideSide ? 'block' : 'hidden'}
-                                           ${isActiveOrders ? "text-mainColor" : "text-white"}
-                                          text-lg font-[400] transition-all duration-300
-                                          group-hover:text-mainColor`}
-                                                        >
-                                                               Order
-                                                        </span>
-                                                 </div>
-
-                                                 <div className={`${hideSide ? 'block' : 'hidden'}`}>
-                                                        <IoIosArrowForward className={`${isActiveOrders ? 'text-mainColor rotate-90' : 'text-white rotate-0'} text-xl transition-all duration-300 group-hover:text-mainColor`} />
-                                                 </div>
-                                          </Link>
-                                          <div className={`${isOpenOrders && hideSide ? "h-[29rem]" : "h-0 "}  overflow-hidden flex items-start justify-end  w-full transition-all duration-700`}>
-                                                 <ul className='list-disc w-full pl-2 transition-all duration-700 flex flex-col gap-y-2'>
-                                                        <Link to={"orders/all"} onClick={handleClickOrdersAll}>
-                                                               <li
-                                                                      className={`${isActiveOrdersAll ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                        text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
-                                                        hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                      }>
-                                                                      <span>All</span>
-                                                                      <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersAll || 0}</span>
-                                                               </li>
-                                                        </Link>
-                                                        <Link to={"orders/pending"} onClick={handleClickOrdersPending}>
-                                                               <li
-                                                                      className={`${isActiveOrdersPending ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                        text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
-                                                        hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                      }>
-                                                                      <span>Pending</span>
-                                                                      <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersPending || 0}</span>
-                                                               </li>
-                                                        </Link>
-                                                        <Link to={"orders/confirmed"} onClick={handleClickOrdersConfirmed}>
-                                                               <li
-                                                                      className={`${isActiveOrdersConfirmed ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                        text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
-                                                        hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                      }>
-                                                                      <span>Confirmed</span>
-                                                                      <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersConfirmed || 0}</span>
-                                                               </li>
-                                                        </Link>
-                                                        <Link to={"orders/processing"} onClick={handleClickOrdersProcessing}>
-                                                               <li
-                                                                      className={`${isActiveOrdersProcessing ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                        text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
-                                                        hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                      }>
-                                                                      <span>Processing</span>
-                                                                      <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersProcessing || 0}</span>
-                                                               </li>
-                                                        </Link>
-                                                        <Link to={"orders/out_for_delivery"} onClick={handleClickOrdersOutForDelivery}>
-                                                               <li
-                                                                      className={`${isActiveOrdersOutForDelivery ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                        text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
-                                                        hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                      }>
-                                                                      <span>OutForDelivery</span>
-                                                                      <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersOutForDelivery || 0}</span>
-                                                               </li>
-                                                        </Link>
-                                                        <Link to={"orders/delivered"} onClick={handleClickOrdersDelivered}>
-                                                               <li
-                                                                      className={`${isActiveOrdersDelivered ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                        text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
-                                                        hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                      }>
-                                                                      <span>Delivered</span>
-                                                                      <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersDelivered || 0}</span>
-                                                               </li>
-                                                        </Link>
-                                                        <Link to={"orders/returned"} onClick={handleClickOrdersReturned}>
-                                                               <li
-                                                                      className={`${isActiveOrdersReturned ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                        text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
-                                                        hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                      }>
-                                                                      <span>Returned</span>
-                                                                      <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersReturned || 0}</span>
-                                                               </li>
-                                                        </Link>
-                                                        <Link to={"orders/failed"} onClick={handleClickOrdersFailed}>
-                                                               <li
-                                                                      className={`${isActiveOrdersFailed ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                        text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
-                                                        hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                      }>
-                                                                      <span>Failed To Delivered</span>
-                                                                      <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersFailed || 0}</span>
-                                                               </li>
-                                                        </Link>
-                                                        <Link to={"orders/canceled"} onClick={handleClickOrdersCanceled}>
-                                                               <li
-                                                                      className={`${isActiveOrdersCanceled ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                        text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
-                                                        hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                      }>
-                                                                      <span>Canceled</span>
-                                                                      <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersCanceled || 0}</span>
-                                                               </li>
-                                                        </Link>
-                                                        <Link to={"orders/schedule"} onClick={handleClickOrdersSchedule}>
-                                                               <li
-                                                                      className={`${isActiveOrdersSchedule ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                        text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
-                                                        hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                      }>
-                                                                      <span>Schedule</span>
-                                                                      <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersSchedule || 0}</span>
-                                                               </li>
-                                                        </Link>
-                                                 </ul>
-
-                                          </div>
-                                   </div>
                             </div>
                      ) : (
                             <div className="LinksSidebar w-full flex flex-col items-center justify-start gap-y-3">
@@ -1835,33 +1836,144 @@ const LinksSidebar = () => {
                                           </Link>
                                    )}
 
-                                   {/* Addons */}
-                                   {permission.includes("Addons") && (
-                                          <Link to="addons"
-                                                 onMouseMove={() => setIsActiveAddonsIcon(true)}
-                                                 onMouseOut={() => setIsActiveAddonsIcon(false)}
-                                                 onClick={handleClickAddons}
-                                                 className={`
-                                   ${isActiveAddons ? 'active' : ''}
-                                   ${hideSide ? 'justify-between' : 'justify-center'} 
-                                   hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
-                                   hover:text-mainColor w-full flex items-center 
-                                   transition-all duration-300 group`}
-                                          >
-                                                 <div className="flex items-center gap-x-2">
-                                                        <RiVipDiamondLine
-                                                               className={`${isActiveAddonsIcon || isActiveAddons ? 'text-[#9E090F]' : 'text-[#fff]'} text-2xl`}
-                                                        />
-                                                        <span
-                                                               className={`${hideSide ? 'block' : 'hidden'}
-                                           ${isActiveAddons ? "text-mainColor" : "text-white"}
-                                          text-lg font-[400] transition-all duration-300
-                                          group-hover:text-mainColor`}
+                                   {/* Order */}
+                                   {permission.includes('Order') && (
+                                          <>
+                                                 <div className="w-full flex flex-col">
+                                                        <Link to="orders"
+                                                               onMouseMove={() => setIsActiveOrdersIcon(true)}
+                                                               onMouseOut={() => setIsActiveOrdersIcon(false)}
+                                                               onClick={handleClickOrders}
+                                                               className={`
+                            ${isActiveOrders ? 'active mb-2' : 'mb-0'}
+                            ${hideSide ? 'justify-between' : 'justify-center'} 
+                            hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
+                            hover:text-mainColor w-full flex items-center 
+                            transition-all duration-300 group`}
                                                         >
-                                                               Addons
-                                                        </span>
+                                                               <div className="flex items-center gap-x-2">
+                                                                      <OrderIcon isActive={isActiveOrdersIcon || isActiveOrders} />
+                                                                      <span className={`
+                                   ${hideSide ? 'block' : 'hidden'}
+                                    ${isActiveOrders ? "text-mainColor" : "text-white"}
+                                   text-lg font-[400] transition-all duration-300
+                                   group-hover:text-mainColor`}
+                                                                      >
+                                                                             Orders
+                                                                      </span>
+                                                               </div>
+
+                                                               <div className={`${hideSide ? 'block' : 'hidden'}`}>
+                                                                      <IoIosArrowForward className={`${isActiveOrders ? 'text-mainColor rotate-90' : 'text-white rotate-0'} text-xl transition-all duration-300 group-hover:text-mainColor`} />
+                                                               </div>
+                                                        </Link>
+                                                        <div className={`${isOpenOrders && hideSide ? "h-[29rem]" : "h-0 "}  overflow-hidden flex items-start justify-end  w-full transition-all duration-700`}>
+                                                               <ul className='list-disc w-full pl-2 transition-all duration-700 flex flex-col gap-y-2'>
+                                                                      <Link to={"orders/all"} onClick={handleClickOrdersAll}>
+                                                                             <li
+                                                                                    className={`${isActiveOrdersAll ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                 text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
+                                                 hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                                    }>
+                                                                                    <span>All</span>
+                                                                                    <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersAll || 0}</span>
+                                                                             </li>
+                                                                      </Link>
+                                                                      <Link to={"orders/pending"} onClick={handleClickOrdersPending}>
+                                                                             <li
+                                                                                    className={`${isActiveOrdersPending ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                 text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
+                                                 hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                                    }>
+                                                                                    <span>Pending</span>
+                                                                                    <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersPending || 0}</span>
+                                                                             </li>
+                                                                      </Link>
+                                                                      <Link to={"orders/confirmed"} onClick={handleClickOrdersConfirmed}>
+                                                                             <li
+                                                                                    className={`${isActiveOrdersConfirmed ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                 text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
+                                                 hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                                    }>
+                                                                                    <span>Confirmed</span>
+                                                                                    <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersConfirmed || 0}</span>
+                                                                             </li>
+                                                                      </Link>
+                                                                      <Link to={"orders/processing"} onClick={handleClickOrdersProcessing}>
+                                                                             <li
+                                                                                    className={`${isActiveOrdersProcessing ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                 text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
+                                                 hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                                    }>
+                                                                                    <span>Processing</span>
+                                                                                    <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersProcessing || 0}</span>
+                                                                             </li>
+                                                                      </Link>
+                                                                      <Link to={"orders/out_for_delivery"} onClick={handleClickOrdersOutForDelivery}>
+                                                                             <li
+                                                                                    className={`${isActiveOrdersOutForDelivery ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                 text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
+                                                 hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                                    }>
+                                                                                    <span>OutForDelivery</span>
+                                                                                    <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersOutForDelivery || 0}</span>
+                                                                             </li>
+                                                                      </Link>
+                                                                      <Link to={"orders/delivered"} onClick={handleClickOrdersDelivered}>
+                                                                             <li
+                                                                                    className={`${isActiveOrdersDelivered ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                 text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
+                                                 hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                                    }>
+                                                                                    <span>Delivered</span>
+                                                                                    <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersDelivered || 0}</span>
+                                                                             </li>
+                                                                      </Link>
+                                                                      <Link to={"orders/returned"} onClick={handleClickOrdersReturned}>
+                                                                             <li
+                                                                                    className={`${isActiveOrdersReturned ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                 text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
+                                                 hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                                    }>
+                                                                                    <span>Returned</span>
+                                                                                    <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersReturned || 0}</span>
+                                                                             </li>
+                                                                      </Link>
+                                                                      <Link to={"orders/failed"} onClick={handleClickOrdersFailed}>
+                                                                             <li
+                                                                                    className={`${isActiveOrdersFailed ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                 text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
+                                                 hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                                    }>
+                                                                                    <span>Failed To Delivered</span>
+                                                                                    <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersFailed || 0}</span>
+                                                                             </li>
+                                                                      </Link>
+                                                                      <Link to={"orders/canceled"} onClick={handleClickOrdersCanceled}>
+                                                                             <li
+                                                                                    className={`${isActiveOrdersCanceled ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                 text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
+                                                 hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                                    }>
+                                                                                    <span>Canceled</span>
+                                                                                    <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersCanceled || 0}</span>
+                                                                             </li>
+                                                                      </Link>
+                                                                      <Link to={"orders/schedule"} onClick={handleClickOrdersSchedule}>
+                                                                             <li
+                                                                                    className={`${isActiveOrdersSchedule ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                                 text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
+                                                 hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                                    }>
+                                                                                    <span>Schedule</span>
+                                                                                    <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersSchedule || 0}</span>
+                                                                             </li>
+                                                                      </Link>
+                                                               </ul>
+
+                                                        </div>
                                                  </div>
-                                          </Link>
+                                          </>
                                    )}
 
                                    {/* Category */}
@@ -1893,36 +2005,6 @@ const LinksSidebar = () => {
                             </div> */}
                                           </Link>
                                    )}
-
-                                   {/* Banners */}
-                                   {permission.includes("Banner") && (
-                                          <Link to="banners"
-                                                 onMouseMove={() => setIsActiveBannersIcon(true)}
-                                                 onMouseOut={() => setIsActiveBannersIcon(false)}
-                                                 onClick={handleClickBanners}
-                                                 className={`
-                                   ${isActiveBanners ? 'active' : ''}
-                                   ${hideSide ? 'justify-between' : 'justify-center'} 
-                                   hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
-                                   hover:text-mainColor w-full flex items-center 
-                                   transition-all duration-300 group`}
-                                          >
-                                                 <div className="flex items-center gap-x-2">
-                                                        <PiFlagBanner
-                                                               className={`${isActiveBannersIcon || isActiveBanners ? 'text-[#9E090F]' : 'text-[#fff]'} text-2xl`}
-                                                        />
-                                                        <span
-                                                               className={`${hideSide ? 'block' : 'hidden'}
-                                           ${isActiveBanners ? "text-mainColor" : "text-white"}
-                                          text-lg font-[400] transition-all duration-300
-                                          group-hover:text-mainColor`}
-                                                        >
-                                                               Banners
-                                                        </span>
-                                                 </div>
-                                          </Link>
-                                   )}
-
                                    {/* Product */}
                                    {permission.includes("Product") && (
                                           <>
@@ -1977,133 +2059,62 @@ const LinksSidebar = () => {
                                           </>
                                    )}
 
-                                   {/* Setting */}
-                                   {permission.includes("Setting") && (
-                                          <>
-                                                 <div className="w-full flex flex-col">
-                                                        <Link to="setting"
-                                                               onMouseMove={() => setIsActiveSettingIcon(true)}
-                                                               onMouseOut={() => setIsActiveSettingIcon(false)}
-                                                               onClick={handleClickSetting}
-                                                               className={`
-                            ${isActiveSetting ? 'active mb-2' : 'mb-0'}
-                            ${hideSide ? 'justify-between' : 'justify-center'} 
-                            hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
-                            hover:text-mainColor w-full flex items-center 
-                            transition-all duration-300 group`}
+                                   {/* Banners */}
+                                   {permission.includes("Banner") && (
+                                          <Link to="banners"
+                                                 onMouseMove={() => setIsActiveBannersIcon(true)}
+                                                 onMouseOut={() => setIsActiveBannersIcon(false)}
+                                                 onClick={handleClickBanners}
+                                                 className={`
+                                   ${isActiveBanners ? 'active' : ''}
+                                   ${hideSide ? 'justify-between' : 'justify-center'} 
+                                   hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
+                                   hover:text-mainColor w-full flex items-center 
+                                   transition-all duration-300 group`}
+                                          >
+                                                 <div className="flex items-center gap-x-2">
+                                                        <PiFlagBanner
+                                                               className={`${isActiveBannersIcon || isActiveBanners ? 'text-[#9E090F]' : 'text-[#fff]'} text-2xl`}
+                                                        />
+                                                        <span
+                                                               className={`${hideSide ? 'block' : 'hidden'}
+                                           ${isActiveBanners ? "text-mainColor" : "text-white"}
+                                          text-lg font-[400] transition-all duration-300
+                                          group-hover:text-mainColor`}
                                                         >
-                                                               <div className="flex items-center gap-x-2">
-                                                                      <CiSettings
-                                                                             className={`${isActiveSettingIcon || isActiveSetting ? 'text-[#9E090F]' : 'text-[#fff]'} text-3xl`}
-                                                                      />
-                                                                      <span className={`
-                                   ${hideSide ? 'block' : 'hidden'}
-                                    ${isActiveSetting ? "text-mainColor" : "text-white"}
-                                   text-lg font-[400] transition-all duration-300
-                                   group-hover:text-mainColor`}
-                                                                      >
-                                                                             Setting
-                                                                      </span>
-                                                               </div>
-                                                               <div className={`${hideSide ? 'block' : 'hidden'}`}>
-                                                                      <IoIosArrowForward className={`${isActiveSetting ? 'text-mainColor rotate-90' : 'text-white rotate-0'} text-xl transition-all duration-300 group-hover:text-mainColor`} />
-                                                               </div>
-                                                        </Link>
-                                                        <div className={`${isOpenSetting && hideSide ? "h-17" : "h-0 "} overflow-hidden flex items-start justify-end  w-full transition-all duration-700`}>
-                                                               <ul className='list-disc w-full pl-10 transition-all duration-700 flex flex-col gap-y-2'>
-                                                                      <Link to={"setting/roles"} onClick={handleClickRoles}>
-                                                                             <li
-                                                                                    className={`${isActiveRoles ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                                    }>
-                                                                                    Admin Roles
-                                                                             </li>
-                                                                      </Link>
-                                                                      <Link to={"setting/payment_method"} onClick={handleClickPaymentMethod}>
-                                                                             <li
-                                                                                    className={`${isActivePaymentMethod ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                                    }>
-                                                                                    Payment Method
-                                                                             </li>
-                                                                      </Link>
-                                                                      <Link to={"setting/automatic_payment"} onClick={handleClickAutomaticPayment}>
-                                                                             <li
-                                                                                    className={`${isActiveAutomaticPayment ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                                    }>
-                                                                                    Automatic Payment
-                                                                             </li>
-                                                                      </Link>
-                                                                      <Link to={"setting/cities"} onClick={handleClickCities}>
-                                                                             <li
-                                                                                    className={`${isActiveCities ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                                    }>
-                                                                                    Cities
-                                                                             </li>
-                                                                      </Link>
-                                                                      <Link to={"setting/branches"} onClick={handleClickBranches}>
-                                                                             <li
-                                                                                    className={`${isActiveBranches ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                                    }>
-                                                                                    Branches
-                                                                             </li>
-                                                                      </Link>
-                                                                      <Link to={"setting/zones"} onClick={handleClickZones}>
-                                                                             <li
-                                                                                    className={`${isActiveZones ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                                    }>
-                                                                                    Zones
-                                                                             </li>
-                                                                      </Link>
-                                                                      <Link to={"setting/order_type"} onClick={handleClickOrderType}>
-                                                                             <li
-                                                                                    className={`${isActiveOrderType ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                                    }>
-                                                                                    Order Type
-                                                                             </li>
-                                                                      </Link>
-                                                                      <Link to={"setting/resturant_time"} onClick={handleClickResturantTime}>
-                                                                             <li
-                                                                                    className={`${isActiveResturantTime ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                                    }>
-                                                                                    Resturant Time
-                                                                             </li>
-                                                                      </Link>
-                                                                      <Link to={"setting/cancel_time"} onClick={handleClickCancelTime}>
-                                                                             <li
-                                                                                    className={`${isActiveCancelTime ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                                    }>
-                                                                                    Cancel Time
-                                                                             </li>
-                                                                      </Link>
-                                                                      <Link to={"setting/delivery_time"} onClick={handleClickDeliveryTime}>
-                                                                             <li
-                                                                                    className={`${isActiveDeliveryTime ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                                    }>
-                                                                                    Delivery Time
-                                                                             </li>
-                                                                      </Link>
-                                                                      <Link to={"setting/sound"} onClick={handleClickDeliveryTime}>
-                                                                             <li
-                                                                                    className={`${isActiveSound ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                                    }>
-                                                                                    Sound
-                                                                             </li>
-                                                                      </Link>
-                                                               </ul>
-
-                                                        </div>
+                                                               Banners
+                                                        </span>
                                                  </div>
-                                          </>
+                                          </Link>
+                                   )}
+
+                                   {/* Addons */}
+                                   {permission.includes("Addons") && (
+                                          <Link to="addons"
+                                                 onMouseMove={() => setIsActiveAddonsIcon(true)}
+                                                 onMouseOut={() => setIsActiveAddonsIcon(false)}
+                                                 onClick={handleClickAddons}
+                                                 className={`
+                                   ${isActiveAddons ? 'active' : ''}
+                                   ${hideSide ? 'justify-between' : 'justify-center'} 
+                                   hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
+                                   hover:text-mainColor w-full flex items-center 
+                                   transition-all duration-300 group`}
+                                          >
+                                                 <div className="flex items-center gap-x-2">
+                                                        <RiVipDiamondLine
+                                                               className={`${isActiveAddonsIcon || isActiveAddons ? 'text-[#9E090F]' : 'text-[#fff]'} text-2xl`}
+                                                        />
+                                                        <span
+                                                               className={`${hideSide ? 'block' : 'hidden'}
+                                           ${isActiveAddons ? "text-mainColor" : "text-white"}
+                                          text-lg font-[400] transition-all duration-300
+                                          group-hover:text-mainColor`}
+                                                        >
+                                                               Addons
+                                                        </span>
+                                                 </div>
+                                          </Link>
                                    )}
 
                                    {/* Taxes */}
@@ -2282,6 +2293,134 @@ const LinksSidebar = () => {
                                           </div>
                                    </div>
 
+                                   {/* Setting */}
+                                   {permission.includes("Setting") && (
+                                          <>
+                                                 <div className="w-full flex flex-col">
+                                                        <Link to="setting"
+                                                               onMouseMove={() => setIsActiveSettingIcon(true)}
+                                                               onMouseOut={() => setIsActiveSettingIcon(false)}
+                                                               onClick={handleClickSetting}
+                                                               className={`
+                            ${isActiveSetting ? 'active mb-2' : 'mb-0'}
+                            ${hideSide ? 'justify-between' : 'justify-center'} 
+                            hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
+                            hover:text-mainColor w-full flex items-center 
+                            transition-all duration-300 group`}
+                                                        >
+                                                               <div className="flex items-center gap-x-2">
+                                                                      <CiSettings
+                                                                             className={`${isActiveSettingIcon || isActiveSetting ? 'text-[#9E090F]' : 'text-[#fff]'} text-3xl`}
+                                                                      />
+                                                                      <span className={`
+                                   ${hideSide ? 'block' : 'hidden'}
+                                    ${isActiveSetting ? "text-mainColor" : "text-white"}
+                                   text-lg font-[400] transition-all duration-300
+                                   group-hover:text-mainColor`}
+                                                                      >
+                                                                             Setting
+                                                                      </span>
+                                                               </div>
+                                                               <div className={`${hideSide ? 'block' : 'hidden'}`}>
+                                                                      <IoIosArrowForward className={`${isActiveSetting ? 'text-mainColor rotate-90' : 'text-white rotate-0'} text-xl transition-all duration-300 group-hover:text-mainColor`} />
+                                                               </div>
+                                                        </Link>
+                                                        <div className={`${isOpenSetting && hideSide ? "h-17" : "h-0 "} overflow-hidden flex items-start justify-end  w-full transition-all duration-700`}>
+                                                               <ul className='list-disc w-full pl-10 transition-all duration-700 flex flex-col gap-y-2'>
+                                                                      <Link to={"setting/roles"} onClick={handleClickRoles}>
+                                                                             <li
+                                                                                    className={`${isActiveRoles ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                                    }>
+                                                                                    Admin Roles
+                                                                             </li>
+                                                                      </Link>
+                                                                      <Link to={"setting/payment_method"} onClick={handleClickPaymentMethod}>
+                                                                             <li
+                                                                                    className={`${isActivePaymentMethod ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                                    }>
+                                                                                    Payment Method
+                                                                             </li>
+                                                                      </Link>
+                                                                      <Link to={"setting/automatic_payment"} onClick={handleClickAutomaticPayment}>
+                                                                             <li
+                                                                                    className={`${isActiveAutomaticPayment ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                                    }>
+                                                                                    Automatic Payment
+                                                                             </li>
+                                                                      </Link>
+                                                                      <Link to={"setting/cities"} onClick={handleClickCities}>
+                                                                             <li
+                                                                                    className={`${isActiveCities ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                                    }>
+                                                                                    Cities
+                                                                             </li>
+                                                                      </Link>
+                                                                      <Link to={"setting/branches"} onClick={handleClickBranches}>
+                                                                             <li
+                                                                                    className={`${isActiveBranches ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                                    }>
+                                                                                    Branches
+                                                                             </li>
+                                                                      </Link>
+                                                                      <Link to={"setting/zones"} onClick={handleClickZones}>
+                                                                             <li
+                                                                                    className={`${isActiveZones ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                                    }>
+                                                                                    Zones
+                                                                             </li>
+                                                                      </Link>
+                                                                      <Link to={"setting/order_type"} onClick={handleClickOrderType}>
+                                                                             <li
+                                                                                    className={`${isActiveOrderType ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                                    }>
+                                                                                    Order Type
+                                                                             </li>
+                                                                      </Link>
+                                                                      <Link to={"setting/resturant_time"} onClick={handleClickResturantTime}>
+                                                                             <li
+                                                                                    className={`${isActiveResturantTime ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                                    }>
+                                                                                    Resturant Time
+                                                                             </li>
+                                                                      </Link>
+                                                                      <Link to={"setting/cancel_time"} onClick={handleClickCancelTime}>
+                                                                             <li
+                                                                                    className={`${isActiveCancelTime ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                                    }>
+                                                                                    Cancel Time
+                                                                             </li>
+                                                                      </Link>
+                                                                      <Link to={"setting/delivery_time"} onClick={handleClickDeliveryTime}>
+                                                                             <li
+                                                                                    className={`${isActiveDeliveryTime ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                                    }>
+                                                                                    Delivery Time
+                                                                             </li>
+                                                                      </Link>
+                                                                      <Link to={"setting/sound"} onClick={handleClickDeliveryTime}>
+                                                                             <li
+                                                                                    className={`${isActiveSound ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
+                                          text-xl font-TextFontLight rounded-xl px-4 py-1  hover:bg-white transition-all duration-300 hover:text-mainColor`
+                                                                                    }>
+                                                                                    Sound
+                                                                             </li>
+                                                                      </Link>
+                                                               </ul>
+
+                                                        </div>
+                                                 </div>
+                                          </>
+                                   )}
 
                                    {/* Business Setup */}
                                    {permission.includes('Settings') && (
@@ -2515,145 +2654,6 @@ const LinksSidebar = () => {
                                           </Link>
                                    )}
 
-                                   {/* Order */}
-                                   {permission.includes('Order') && (
-                                          <>
-                                                 <div className="w-full flex flex-col">
-                                                        <Link to="orders"
-                                                               onMouseMove={() => setIsActiveOrdersIcon(true)}
-                                                               onMouseOut={() => setIsActiveOrdersIcon(false)}
-                                                               onClick={handleClickOrders}
-                                                               className={`
-                            ${isActiveOrders ? 'active mb-2' : 'mb-0'}
-                            ${hideSide ? 'justify-between' : 'justify-center'} 
-                            hover:rounded-xl pl-2 pr-1 hover:py-2 hover:bg-white 
-                            hover:text-mainColor w-full flex items-center 
-                            transition-all duration-300 group`}
-                                                        >
-                                                               <div className="flex items-center gap-x-2">
-                                                                      <OrderIcon isActive={isActiveOrdersIcon || isActiveOrders} />
-                                                                      <span className={`
-                                   ${hideSide ? 'block' : 'hidden'}
-                                    ${isActiveOrders ? "text-mainColor" : "text-white"}
-                                   text-lg font-[400] transition-all duration-300
-                                   group-hover:text-mainColor`}
-                                                                      >
-                                                                             Order
-                                                                      </span>
-                                                               </div>
-
-                                                               <div className={`${hideSide ? 'block' : 'hidden'}`}>
-                                                                      <IoIosArrowForward className={`${isActiveOrders ? 'text-mainColor rotate-90' : 'text-white rotate-0'} text-xl transition-all duration-300 group-hover:text-mainColor`} />
-                                                               </div>
-                                                        </Link>
-                                                        <div className={`${isOpenOrders && hideSide ? "h-[29rem]" : "h-0 "}  overflow-hidden flex items-start justify-end  w-full transition-all duration-700`}>
-                                                               <ul className='list-disc w-full pl-2 transition-all duration-700 flex flex-col gap-y-2'>
-                                                                      <Link to={"orders/all"} onClick={handleClickOrdersAll}>
-                                                                             <li
-                                                                                    className={`${isActiveOrdersAll ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                 text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
-                                                 hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                                    }>
-                                                                                    <span>All</span>
-                                                                                    <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersAll || 0}</span>
-                                                                             </li>
-                                                                      </Link>
-                                                                      <Link to={"orders/pending"} onClick={handleClickOrdersPending}>
-                                                                             <li
-                                                                                    className={`${isActiveOrdersPending ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                 text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
-                                                 hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                                    }>
-                                                                                    <span>Pending</span>
-                                                                                    <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersPending || 0}</span>
-                                                                             </li>
-                                                                      </Link>
-                                                                      <Link to={"orders/confirmed"} onClick={handleClickOrdersConfirmed}>
-                                                                             <li
-                                                                                    className={`${isActiveOrdersConfirmed ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                 text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
-                                                 hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                                    }>
-                                                                                    <span>Confirmed</span>
-                                                                                    <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersConfirmed || 0}</span>
-                                                                             </li>
-                                                                      </Link>
-                                                                      <Link to={"orders/processing"} onClick={handleClickOrdersProcessing}>
-                                                                             <li
-                                                                                    className={`${isActiveOrdersProcessing ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                 text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
-                                                 hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                                    }>
-                                                                                    <span>Processing</span>
-                                                                                    <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersProcessing || 0}</span>
-                                                                             </li>
-                                                                      </Link>
-                                                                      <Link to={"orders/out_for_delivery"} onClick={handleClickOrdersOutForDelivery}>
-                                                                             <li
-                                                                                    className={`${isActiveOrdersOutForDelivery ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                 text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
-                                                 hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                                    }>
-                                                                                    <span>OutForDelivery</span>
-                                                                                    <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersOutForDelivery || 0}</span>
-                                                                             </li>
-                                                                      </Link>
-                                                                      <Link to={"orders/delivered"} onClick={handleClickOrdersDelivered}>
-                                                                             <li
-                                                                                    className={`${isActiveOrdersDelivered ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                 text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
-                                                 hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                                    }>
-                                                                                    <span>Delivered</span>
-                                                                                    <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersDelivered || 0}</span>
-                                                                             </li>
-                                                                      </Link>
-                                                                      <Link to={"orders/returned"} onClick={handleClickOrdersReturned}>
-                                                                             <li
-                                                                                    className={`${isActiveOrdersReturned ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                 text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
-                                                 hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                                    }>
-                                                                                    <span>Returned</span>
-                                                                                    <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersReturned || 0}</span>
-                                                                             </li>
-                                                                      </Link>
-                                                                      <Link to={"orders/failed"} onClick={handleClickOrdersFailed}>
-                                                                             <li
-                                                                                    className={`${isActiveOrdersFailed ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                 text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
-                                                 hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                                    }>
-                                                                                    <span>Failed To Delivered</span>
-                                                                                    <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersFailed || 0}</span>
-                                                                             </li>
-                                                                      </Link>
-                                                                      <Link to={"orders/canceled"} onClick={handleClickOrdersCanceled}>
-                                                                             <li
-                                                                                    className={`${isActiveOrdersCanceled ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                 text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
-                                                 hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                                    }>
-                                                                                    <span>Canceled</span>
-                                                                                    <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersCanceled || 0}</span>
-                                                                             </li>
-                                                                      </Link>
-                                                                      <Link to={"orders/schedule"} onClick={handleClickOrdersSchedule}>
-                                                                             <li
-                                                                                    className={`${isActiveOrdersSchedule ? 'rounded-xl bg-white text-mainColor' : 'text-white'}
-                                                 text-xl font-TextFontLight rounded-xl  pl-3 pr-2 py-1 flex items-center justify-between
-                                                 hover:bg-white transition-all duration-300 hover:text-mainColor`
-                                                                                    }>
-                                                                                    <span>Schedule</span>
-                                                                                    <span className='bg-cyan-300 text-cyan-700 px-1 text-sm font-TextFontMedium rounded-2xl'>{lengths.ordersSchedule || 0}</span>
-                                                                             </li>
-                                                                      </Link>
-                                                               </ul>
-
-                                                        </div>
-                                                 </div>
-                                          </>
-                                   )}
                             </div>
                      )}
               </>

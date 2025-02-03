@@ -80,7 +80,7 @@ const soundNotification = createSlice({
 
 // User slice
 const userSlice = createSlice({
-       name: "userState",
+       name: "userFood2go",
        initialState: initialUserState,
        reducers: {
               setUser: (state, action) => {
@@ -326,7 +326,7 @@ export const OrdersComponent = () => {
 
 // const dispatch = useDispatch();
 // const { refetch: refetchOrders, data: dataOrders, loading, error } = useGet({
-//        url: `${ apiUrl } / admin / order`,
+//        url: `${apiUrl} / admin / order`,
 // });
 
 // useEffect(() => {

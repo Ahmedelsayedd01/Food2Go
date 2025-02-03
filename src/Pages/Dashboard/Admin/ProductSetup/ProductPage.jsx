@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useGet } from '../../../../Hooks/useGet';
-import { AddButton, LoaderLogin, StaticLoader } from '../../../../Components/Components';
+import { AddButton, LoaderLogin, SearchBar, StaticLoader } from '../../../../Components/Components';
 import { DeleteIcon, EditIcon } from '../../../../Assets/Icons/AllIcons';
 import { useDelete } from '../../../../Hooks/useDelete';
 import { Link } from 'react-router-dom';
@@ -13,7 +13,11 @@ const ProductPage = () => {
               url: `${apiUrl}/admin/product`
        });
        const { deleteData, loadingDelete, responseDelete } = useDelete();
+
        const [products, setProducts] = useState([])
+       const [textSearch, setTextSearch] = useState('');
+       const [filteredProducts, setFilteredProducts] = useState([]);
+
        const [openDescriptionView, setOpenDescriptionView] = useState(null);
        const [openAddonsView, setOpenAddonsView] = useState(null);
        const [openVariationsView, setOpenVariationsView] = useState(null);
@@ -26,13 +30,47 @@ const ProductPage = () => {
        const productsPerPage = 20; // Limit to 20 products per page
 
        // Calculate total number of pages
-       const totalPages = Math.ceil(products.length / productsPerPage);
+       const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
 
        // Get the products for the current page
-       const currentProducts = products.slice(
+       const currentProducts = filteredProducts.slice(
               (currentPage - 1) * productsPerPage,
               currentPage * productsPerPage
        );
+
+       useEffect(() => {
+              if (dataProducts && dataProducts.products) {
+                     setProducts(dataProducts.products)
+                     setFilteredProducts(dataProducts.products)
+              }
+
+              console.log('dataProducts', dataProducts)
+              console.log('products', products)
+       }, [dataProducts])
+
+       const handleFilterData = (e) => {
+              const text = e.target.value;
+              setTextSearch(text);
+
+              if (!products || !Array.isArray(products)) {
+                     console.error('Invalid products data:', products);
+                     return;
+              }
+
+              if (text === '') {
+                     setFilteredProducts(products); // Reset if input is empty
+              } else {
+                     console.log('Filtering for text:', text);
+
+                     const filter = products.filter((product) =>
+                            product.name.toLowerCase().includes(text.toLowerCase())
+                     );
+
+                     setFilteredProducts(filter); // Update state
+                     console.log('Filtered products:', filter); // Debugging
+              }
+
+       };
 
        // handle page change
        const handlePageChange = (pageNumber) => {
@@ -76,14 +114,6 @@ const ProductPage = () => {
                      refetchProducts()
               }, [refetchProducts]
        )
-       useEffect(() => {
-              if (dataProducts && dataProducts.products) {
-                     setProducts(dataProducts.products)
-              }
-
-              console.log('dataProducts', dataProducts)
-              console.log('products', products)
-       }, [dataProducts])
 
        const handleOpenDelete = (item) => {
               setOpenDelete(item);
@@ -130,12 +160,20 @@ const ProductPage = () => {
        ];
        return (
               <>
-                     <div className="w-full pb-28 flex items-start justify-start overflow-x-scroll scrollSection">
+                     <div className="w-full pb-28 flex items-start justify-start">
                             {loadingProducts || loadingDelete ? (
                                    <><LoaderLogin /></>
                             ) : (
                                    <div className='w-full flex flex-col'>
-                                          <table className="w-full sm:min-w-0">
+                                          <div className="sm:w-full lg:w-[70%] xl:w-[30%] mb-4">
+                                                 <SearchBar
+                                                        placeholder='Search by Product Name'
+                                                        value={textSearch}
+                                                        handleChange={handleFilterData}
+                                                 />
+                                          </div>
+
+                                          <table className="w-full sm:min-w-0 block overflow-x-scroll scrollPage">
                                                  <thead className="w-full">
                                                         <tr className="w-full border-b-2">
                                                                {headers.map((name, index) => (
@@ -146,7 +184,7 @@ const ProductPage = () => {
                                                         </tr>
                                                  </thead>
                                                  <tbody className="w-full">
-                                                        {products.length === 0 ? (
+                                                        {filteredProducts.length === 0 ? (
                                                                <tr>
                                                                       <td colSpan={12} className='text-center text-xl text-mainColor font-TextFontMedium  '>Not find products</td>
                                                                </tr>
@@ -542,8 +580,8 @@ const ProductPage = () => {
                                                  </tbody>
                                           </table>
 
-                                          {products.length > 0 && (
-                                                 <div className="my-6 flex items-center justify-center gap-x-4">
+                                          {filteredProducts.length > 0 && (
+                                                 <div className="my-6 flex flex-wrap items-center justify-center gap-x-4">
                                                         {currentPage !== 1 && (
                                                                <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-white font-TextFontMedium' onClick={() => setCurrentPage(currentPage - 1)}>Prev</button>
                                                         )}

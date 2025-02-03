@@ -92,7 +92,7 @@ const ConfirmedOrdersPage = () => {
             <LoaderLogin />
           ) : (
             <div className='w-full flex flex-col'>
-              <table className="w-full border-collapse">
+              <table className="w-full sm:min-w-0 block overflow-x-scroll scrollPage border-collapse">
                 {/* Table Header */}
                 <thead>
                   <tr className="border-b-2">
@@ -128,7 +128,12 @@ const ConfirmedOrdersPage = () => {
 
                         {/* Order ID */}
                         <td className="px-4 py-2 text-center text-thirdColor text-sm lg:text-base">
-                          {order?.id || '-'}
+                          <Link
+                            to={`/dashboard/orders/details/${order.id}`}
+                            className="text-secoundColor underline hover:text-mainColor text-xl font-TextFontMedium transition ease-in-out duration-200"
+                          >
+                            {order.id}
+                          </Link>
                         </td>
 
                         {/* Order Date */}
@@ -219,7 +224,7 @@ const ConfirmedOrdersPage = () => {
                 </tbody>
               </table>
               {filteredOrders.length > 0 && (
-                <div className="my-6 flex items-center justify-center gap-x-4">
+                <div className="my-6 flex flex-wrap items-center justify-center gap-x-4">
                   {currentPage !== 1 && (
                     <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-white font-TextFontMedium' onClick={() => setCurrentPage(currentPage - 1)}>Prev</button>
                   )}

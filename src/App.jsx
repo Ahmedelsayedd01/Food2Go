@@ -20,7 +20,7 @@ const App = () => {
   const { refetch: refetchSong, loading: loadingSong, data: dataSong } = useGet({
     url: `${apiUrl}/admin/settings/notification_sound`,
   });
-  const { postData, loadingPost, response } = usePost({ url: `${ apiUrl }/admin/order/notification` });
+  const { postData, loadingPost, response } = usePost({ url: `${apiUrl}/admin/order/notification` });
   const ordersAll = useSelector((state) => state.ordersAll.data);
   const newOrders = useSelector((state) => state.newOrders);
   const soundNotification = useSelector((state) => state.soundNotification);
@@ -109,23 +109,6 @@ const App = () => {
           <div className="sticky top-0 z-10 bg-secoundBgColor">
             <Navbar />
           </div>
-
-          {/* <button
-            onClick={() => {
-              if (soundNotification && soundNotification.data) {
-                const audio = new Audio(soundNotification.data); // Create a new Audio object
-                audio.play().catch((error) => {
-                  console.error('Error playing audio:', error);
-                });
-                console.log('Playing sound notification.');
-                console.log('audio', audio);
-              } else {
-                console.log('No sound notification available.');
-              }
-            }}
-          >
-            Play
-          </button> */}
 
           {/* Main Content Area */}
           <div className="relative w-full px-3 h-full overflow-y-scroll scrollPage">

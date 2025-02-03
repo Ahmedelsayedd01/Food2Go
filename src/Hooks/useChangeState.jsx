@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 
 export const useChangeState = () => {
   const auth = useAuth();
-  const user = useSelector(state => state.user)
+  const user = useSelector(state => state.userFood2go)
   const [loadingChange, setLoadingChange] = useState(false);
   const [responseChange, setResponseChange] = useState(null);
 
@@ -14,7 +14,7 @@ export const useChangeState = () => {
     try {
       const config = {
         headers: {
-          'Authorization': `Bearer ${user?.token || ''}`,
+          'Authorization': `Bearer ${auth?.userState?.token || ''}`,
         },
       };
 

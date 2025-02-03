@@ -54,7 +54,7 @@ const OrdersPaymentHistory = () => {
         </>
       ) : (
         <div className='w-full flex flex-col'>
-          <table className="w-full sm:min-w-0">
+          <table className="w-full sm:min-w-0 block overflow-x-scroll scrollPage">
             <thead className="w-full">
               <tr className="w-full border-b-2">
                 {headers.map((name, index) => (
@@ -124,7 +124,7 @@ const OrdersPaymentHistory = () => {
             </tbody>
           </table>
           {ordersPaymentHistory.length > 0 && (
-            <div className="my-6 flex items-center justify-center gap-x-4">
+            <div className="my-6 flex flex-wrap items-center justify-center gap-x-4">
               {currentPage !== 1 && (
                 <button type='button' className='text-lg px-4 py-2 rounded-xl bg-mainColor text-white font-TextFontMedium' onClick={() => setCurrentPage(currentPage - 1)}>Prev</button>
               )}
